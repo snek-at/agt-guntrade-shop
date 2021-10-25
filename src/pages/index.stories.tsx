@@ -10,4 +10,4 @@ export default {
 const Template: Story<IndexPageProps> = args => <IndexPage {...args} />
 
 export const Page = Template.bind({})
-Template.args = {}
+Page.args = {}
