@@ -1,5 +1,5 @@
 {
-  "name": "jaen-template",
+  "name": "agt-guntrade-shop",
   "version": "1.2.0",
   "description": "A template repository for Jaen",
   "homepage": "https://template.snek.at/",
@@ -15,10 +15,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/snek-at/jaen-template.git"
+    "url": "git+https://github.com/schett-net/agt-guntrade-shop.git"
   },
   "bugs": {
-    "url": "https://github.com/snek-at/jaen-template/issues"
+    "url": "https://github.com/schett-net/agt-guntrade-shop/issues"
   },
   "scripts": {
     "build": "gatsby build",
@@ -29,7 +29,9 @@
     "clean": "gatsby clean",
     "deploy": "gatsby build && cp CNAME public/ && gh-pages -d public",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
-    "commit": "git-cz --disable-emoji"
+    "commit": "git-cz --disable-emoji",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@chakra-ui/gatsby-plugin": "^2.0.1",
@@ -57,6 +59,12 @@
     "sharp": "^0.29.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.15.8",
+    "@storybook/addon-actions": "^6.3.12",
+    "@storybook/addon-essentials": "^6.3.12",
+    "@storybook/addon-links": "^6.3.12",
+    "@storybook/react": "^6.3.12",
+    "babel-loader": "^8.2.3",
     "cz-conventional-changelog": "^3.3.0",
     "gatsby-plugin-compile-es6-packages": "^2.1.1",
     "gatsby-plugin-emotion": "^6.13.0",

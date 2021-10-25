@@ -1,18 +1,10 @@
-import {Box, Heading, Center} from '@chakra-ui/react'
+import {Box, Heading} from '@chakra-ui/react'
+export interface IndexPageProps {}
 
-import {fields} from '@snek-at/jaen-pages'
-
-const IndexPage = () => {
+const IndexPage = ({}: IndexPageProps) => {
   return (
     <Box>
-      <Center mt="45vh">
-        <Heading>
-          <fields.TextField
-            fieldName="home-text"
-            initValue="<p>Hello World</p>"
-          />
-        </Heading>
-      </Center>
+      <Heading>Test</Heading>
     </Box>
   )
 }
