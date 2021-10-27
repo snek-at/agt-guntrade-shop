@@ -18,12 +18,9 @@ const ReviewCard = ({reviewbio, reviewimage, reviewtext}: ReviewCardProps) => {
       borderRadius="10px"
       p="10"
       minH="380px"
-      w={{base: '300px', md: '540px'}}>
-      <Text
-        onClick={() => (lines === 10 ? setLines(100) : setLines(10))}
-        noOfLines={{base: lines, md: 100}}>
-        {reviewtext}
-      </Text>
+      w={{base: '300px', md: '540px'}}
+      onClick={() => (lines === 10 ? setLines(100) : setLines(10))}>
+      <Text noOfLines={{base: lines, md: 100}}>{reviewtext}</Text>
       <Flex direction={{base: 'column', md: 'row'}}>
         <Box mx={{base: 'auto', md: '0'}}>{reviewimage}</Box>
         <Box px={{base: '0', md: '5'}} pt="6">
