@@ -10,7 +10,9 @@ const NewsSection = ({newscards, teaser}: NewsSectionProps) => {
     <Box>
       <Box textAlign="center">
         <Heading>Neuigkeiten und Informationen</Heading>
-        <Box mb="10">{teaser}</Box>
+        <Box mt="3" mb="10" fontSize="20">
+          {teaser}
+        </Box>
       </Box>
       {newscards}
     </Box>
