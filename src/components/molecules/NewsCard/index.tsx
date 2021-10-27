@@ -28,10 +28,10 @@ const NewsCard = ({heading, text, image}: NewsCardProps) => {
           {image}
         </Box>
         <Box onClick={() => (lines === 10 ? setLines(100) : setLines(10))}>
-          <Heading mb="5">{heading}</Heading>
-          <Text noOfLines={{base: lines, md: 100}} fontSize="18">
-            {text}
-          </Text>
+          <Heading mb="5" fontSize="25">
+            {heading}
+          </Heading>
+          <Text noOfLines={{base: lines, md: 100}}>{text}</Text>
         </Box>
       </Box>
     </NewsStyle>
