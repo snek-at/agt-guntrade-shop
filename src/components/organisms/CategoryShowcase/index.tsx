@@ -1,18 +1,24 @@
 import {Button} from '@chakra-ui/button'
-import {Box, Center, Flex, Text} from '@chakra-ui/layout'
-import CategoryTab, {CategoryTabProps} from '../../molecules/CategoryTab'
+import {Box, Center, Flex, Text, Grid, GridItem} from '@chakra-ui/layout'
+import {SlideFade} from '@chakra-ui/transition'
+import CategoryTab from '../../molecules/CategoryTab'
 import React from 'react'
 
-export interface CategoryShowcaseProps extends CategoryTabProps {
+interface Tab {
+  [category: string]: {
+    images: string[]
+    items: string[]
+  }
+}
+
+export interface CategoryShowcaseProps {
+  tabs: Tab
   categories: string[]
 }
 
-const CategoryShowcase = ({
-  categories,
-  items,
-  images
-}: CategoryShowcaseProps) => {
+const CategoryShowcase = ({categories, tabs}: CategoryShowcaseProps) => {
   const [current, setCurrent] = React.useState('New')
+  const [last, setLast] = React.useState('')
 
   return (
     <Center>
@@ -21,11 +27,16 @@ const CategoryShowcase = ({
           {categories.map(category => {
             return (
               <Box
+                _first={{borderTopLeftRadius: '10px'}}
+                _last={{borderTopRightRadius: '10px'}}
                 cursor="pointer"
                 bg={current === category ? 'white' : 'gray.700'}
                 py="5"
                 px="7"
-                onClick={() => setCurrent(category)}>
+                onClick={() => {
+                  setLast(current)
+                  setCurrent(category)
+                }}>
                 <Text color={current === category ? 'black' : 'white'}>
                   {category}
                 </Text>
@@ -33,7 +44,16 @@ const CategoryShowcase = ({
             )
           })}
         </Flex>
-        <CategoryTab items={items} images={images} />
+        {categories.map((category, index) => {
+          return (
+            <Box display={tabs[current] === tabs[category] ? 'static' : 'none'}>
+              <CategoryTab
+                items={tabs[category].items}
+                images={tabs[category].images}
+              />
+            </Box>
+          )
+        })}
         <Center>
           <Button
             bg="gray.700"
