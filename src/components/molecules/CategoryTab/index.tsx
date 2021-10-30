@@ -7,7 +7,14 @@ export interface CategoryTabProps {
 
 const CategoryTab = ({items, images}: CategoryTabProps) => {
   return (
-    <Box h="100%" w="100%" p="10" bg="white">
+    <Box
+      h="100%"
+      w="100%"
+      p="10"
+      pb="20"
+      bg="white"
+      borderBottomRadius="10px"
+      borderTopRightRadius="10px">
       <Flex>
         {images.map((image, index) => (
           <Box
@@ -21,9 +28,9 @@ const CategoryTab = ({items, images}: CategoryTabProps) => {
             borderRadius="3px"
             border="1px"
             borderColor="gray.200"
-            mx="3"
+            mx="5"
             mt="3">
-            <Image src={image} alt={items[index]} w="250px" h="150px" />
+            <Image src={image} alt={items[index]} w="150px" h="75px" />
             <Text mt="5">{items[index]}</Text>
           </Box>
         ))}
