@@ -13,7 +13,6 @@ const Template: Story<CategoryShowcaseProps> = args => (
 
 export const Showcase = Template.bind({})
 Showcase.args = {
-  categories: ['New', 'Handfeuerwaffen', 'Flinten'],
   tabs: {
     New: {
       items: ['Pistolen', 'Revolver', 'SMGs', 'Jagdgewehre', 'AR15'],

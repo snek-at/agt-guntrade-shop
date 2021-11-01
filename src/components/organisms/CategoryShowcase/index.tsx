@@ -13,18 +13,19 @@ interface Tab {
 
 export interface CategoryShowcaseProps {
   tabs: Tab
-  categories: string[]
 }
 
-const CategoryShowcase = ({categories, tabs}: CategoryShowcaseProps) => {
+const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
   const [current, setCurrent] = React.useState('New')
-  const [last, setLast] = React.useState('')
+  const [direction, setDirection] = React.useState('right')
+
+  const categories = Object.keys(tabs)
 
   return (
     <Center>
       <Box>
         <Flex>
-          {categories.map(category => {
+          {categories.map((category, index) => {
             return (
               <Box
                 _first={{borderTopLeftRadius: '10px'}}
@@ -34,8 +35,10 @@ const CategoryShowcase = ({categories, tabs}: CategoryShowcaseProps) => {
                 py="5"
                 px="7"
                 onClick={() => {
-                  setLast(current)
                   setCurrent(category)
+                  setDirection(
+                    index > categories.indexOf(current) ? 'right' : 'left'
+                  )
                 }}>
                 <Text color={current === category ? 'black' : 'white'}>
                   {category}
@@ -44,12 +47,14 @@ const CategoryShowcase = ({categories, tabs}: CategoryShowcaseProps) => {
             )
           })}
         </Flex>
-        {categories.map((category, index) => {
+        {categories.map(category => {
           return (
-            <Box display={tabs[current] === tabs[category] ? 'static' : 'none'}>
+            <Box display={category === current ? 'static' : 'none'}>
               <CategoryTab
+                key={current == category ? 'visible' : 'hidden'}
                 items={tabs[category].items}
                 images={tabs[category].images}
+                direction={direction}
               />
             </Box>
           )
