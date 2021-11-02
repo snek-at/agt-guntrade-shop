@@ -17,16 +17,16 @@ export interface WeaponShowcaseProps {
 const DescriptionBox = motion<BoxProps>(Box)
 const MotionImage = motion<ImageProps>(Image)
 
-const WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
+let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
   const [current, setCurrent] = React.useState(weapons[0])
-
-  const changeCurrent = window.setInterval(() => {
+  const intervalFunc = () => {
     const indexNext =
       weapons.indexOf(current) + 1 === weapons.length
         ? 0
         : weapons.indexOf(current) + 1
     setCurrent(weapons[indexNext])
-  }, 10000)
+  }
+  let changeCurrent = window.setInterval(intervalFunc, 10000)
 
   return (
     <Box bg="gray.400" p="20">
@@ -43,7 +43,7 @@ const WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                   alt={weapon.title}
                   initial={{opacity: 0, x: -300}}
                   animate={{opacity: 1, x: 0}}
-                  transition={{duration: 0.2, type: 'spring'}}
+                  transition={{duration: 0.3, type: 'spring'}}
                 />
               )
             )
@@ -58,7 +58,7 @@ const WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                   ml="10"
                   initial={{opacity: 0, x: 300}}
                   animate={{opacity: 1, x: 0}}
-                  transition={{duration: 0.15, delay: 0.33}}>
+                  transition={{duration: 0.25, delay: 0.33}}>
                   <Text fontWeight="bold" fontSize="55" casing="uppercase">
                     {weapon.title}
                   </Text>
@@ -84,7 +84,11 @@ const WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
               size="2"
               mr="1"
               bgColor={weapon === current ? 'orange' : 'white'}
-              onClick={() => setCurrent(weapon)}
+              onClick={() => {
+                setCurrent(weapon)
+                clearInterval(changeCurrent)
+                changeCurrent = window.setInterval(intervalFunc, 10000)
+              }}
             />
           )
         })}
