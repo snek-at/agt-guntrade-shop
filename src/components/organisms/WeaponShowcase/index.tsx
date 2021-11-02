@@ -26,8 +26,10 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
         : weapons.indexOf(current) + 1
     setCurrent(weapons[indexNext])
   }
-  let changeCurrent = window.setInterval(intervalFunc, 10000)
-
+  let interval
+  React.useEffect(() => {
+    interval = window.setInterval(intervalFunc, 10000)
+  }, [])
   return (
     <Box bg="gray.400" p="20">
       <Flex w="60%" mx="auto">
@@ -86,8 +88,6 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
               bgColor={weapon === current ? 'orange' : 'white'}
               onClick={() => {
                 setCurrent(weapon)
-                clearInterval(changeCurrent)
-                changeCurrent = window.setInterval(intervalFunc, 10000)
               }}
             />
           )
