@@ -6,7 +6,7 @@ export interface CategoryTabProps {
   items: string[]
   images: string[]
   direction: string
-  key: string
+  visible: string
 }
 
 const TabBox = motion<BoxProps>(Box)
@@ -14,41 +14,36 @@ const TabBox = motion<BoxProps>(Box)
 const variants = {
   enter: (direction: string) => {
     return {
-      x: direction === 'right' ? 500 : -500,
+      y: direction === 'right' ? 75 : -75,
       opacity: 0
     }
   },
   center: {
     opacity: 1,
-    x: 0
+    y: 0
   },
   exit: (direction: string) => {
     return {
-      x: direction === 'right' ? -500 : 500,
+      y: direction === 'right' ? -75 : 75,
       opacity: 0
     }
   }
 }
 
-const CategoryTab = ({items, images, direction, key}: CategoryTabProps) => {
+const CategoryTab = ({items, images, direction, visible}: CategoryTabProps) => {
   return (
-    <Box
-      h="100%"
-      w="100%"
-      p="10"
-      pb="20"
-      bg="white"
-      borderBottomRadius="10px"
-      borderTopRightRadius="10px">
-      <AnimatePresence exitBeforeEnter custom={direction}>
+    <AnimatePresence exitBeforeEnter custom={direction}>
+      {console.log(visible)}
+      {visible === 'visible' && (
         <TabBox
-          key={key}
+          position="absolute"
+          key={visible}
           custom={direction}
           variants={variants}
           initial="enter"
           animate="center"
           exit="exit"
-          transition={{duration: 0.2}}>
+          transition={{duration: 0.15}}>
           <Flex>
             {images.map((image, index) => (
               <Box
@@ -70,8 +65,8 @@ const CategoryTab = ({items, images, direction, key}: CategoryTabProps) => {
             ))}
           </Flex>
         </TabBox>
-      </AnimatePresence>
-    </Box>
+      )}
+    </AnimatePresence>
   )
 }
 
