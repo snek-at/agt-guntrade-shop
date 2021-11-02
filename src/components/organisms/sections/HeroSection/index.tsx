@@ -1,12 +1,14 @@
-import {Box} from '@chakra-ui/react'
+import {Box, Flex} from '@chakra-ui/react'
 
+import BulletShowcase from '../../BulletShowcase'
 import CategoryShowcase from '../../CategoryShowcase'
+import AccessorieShowcase from '../../AccessorieShowcase'
 
 export interface HeroSectionProps {}
 
 const HeroSection = () => {
   return (
-    <Box bg="gray.400" pt="10">
+    <Box bg="gray.400" p="10">
       <CategoryShowcase
         tabs={{
           New: {
@@ -41,6 +43,10 @@ const HeroSection = () => {
           }
         }}
       />
+      <Flex mt="8" justifyContent="center" alignContent="center" mx="auto">
+        <BulletShowcase />
+        <AccessorieShowcase />
+      </Flex>
     </Box>
   )
 }
