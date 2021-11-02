@@ -26,7 +26,7 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
         : weapons.indexOf(current) + 1
     setCurrent(weapons[indexNext])
   }
-  let interval
+  let interval: number
   React.useEffect(() => {
     interval = window.setInterval(intervalFunc, 10000)
   }, [])
@@ -38,6 +38,7 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
             return (
               weapon === current && (
                 <MotionImage
+                  mixBlendMode="multiply"
                   key={index}
                   w="450"
                   h="270"

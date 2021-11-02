@@ -3,12 +3,35 @@ import {Box, Flex} from '@chakra-ui/react'
 import BulletShowcase from '../../BulletShowcase'
 import CategoryShowcase from '../../CategoryShowcase'
 import AccessorieShowcase from '../../AccessorieShowcase'
+import WeaponShowcase from '../../WeaponShowcase'
 
 export interface HeroSectionProps {}
 
 const HeroSection = () => {
   return (
     <Box bg="gray.400" p="10">
+      <WeaponShowcase
+        weapons={[
+          {
+            title: 'Peng',
+            description: 'This is a weapon',
+            image:
+              'https://upload.wikimedia.org/wikipedia/commons/8/8f/Webley_IMG_6789.jpg'
+          },
+          {
+            title: 'Bang',
+            description: 'This is a weapon',
+            image:
+              'https://upload.wikimedia.org/wikipedia/commons/8/8f/Webley_IMG_6789.jpg'
+          },
+          {
+            title: 'Bum',
+            description: 'This is a weapon',
+            image:
+              'https://upload.wikimedia.org/wikipedia/commons/8/8f/Webley_IMG_6789.jpg'
+          }
+        ]}
+      />
       <CategoryShowcase
         tabs={{
           New: {
