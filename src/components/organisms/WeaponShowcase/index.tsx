@@ -63,8 +63,8 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                     mt="-150px"
                     w="fit-content"
                     border="4px"
-                    borderColor="orange.400"
-                    color="orange.400">
+                    borderColor="agt.orange"
+                    color="agt.orange">
                     {weapon.price} €
                   </Text>
                 </WeaponBox>
@@ -90,7 +90,8 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                     mt="10"
                     size="lg"
                     borderRadius="3px"
-                    colorScheme="orange"
+                    bg="agt.orange"
+                    _hover={{bg: 'white', color: 'black'}}
                     variant="solid">
                     LEARN MORE
                   </Button>
@@ -106,7 +107,7 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
             <Circle
               size="2"
               mr="1"
-              bgColor={weapon === current ? 'orange' : 'white'}
+              bgColor={weapon === current ? 'agt.orange' : 'white'}
               onClick={() => {
                 setCurrent(weapon)
               }}

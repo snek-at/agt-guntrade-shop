@@ -30,7 +30,7 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
                 _first={{borderTopLeftRadius: '3px'}}
                 _last={{borderTopRightRadius: '3px'}}
                 cursor="pointer"
-                bg={current === category ? 'white' : 'gray.800'}
+                bg={current === category ? 'white' : 'agt.gray'}
                 py="3"
                 px="5"
                 onClick={() => {
@@ -72,7 +72,7 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
         <Center>
           <Button
             borderRadius="3px"
-            bg="gray.800"
+            bg="agt.gray"
             color="white"
             _hover={{backgroundColor: 'gray.700'}}
             variant="solid"
