@@ -1,5 +1,5 @@
 import {Button} from '@chakra-ui/button'
-import {Image, ImageProps} from '@chakra-ui/image'
+import {Image} from '@chakra-ui/image'
 import {Box, BoxProps, Circle, Flex, Text} from '@chakra-ui/layout'
 import {AnimatePresence, motion} from 'framer-motion'
 import React from 'react'
@@ -8,6 +8,7 @@ interface WeaponType {
   image: string
   title: string
   description: string
+  price: number
 }
 
 export interface WeaponShowcaseProps {
@@ -15,7 +16,7 @@ export interface WeaponShowcaseProps {
 }
 
 const DescriptionBox = motion<BoxProps>(Box)
-const MotionImage = motion<ImageProps>(Image)
+const WeaponBox = motion<BoxProps>(Box)
 
 let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
   const [current, setCurrent] = React.useState(weapons[0])
@@ -30,24 +31,43 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
   React.useEffect(() => {
     interval = window.setInterval(intervalFunc, 10000)
   }, [])
+
   return (
-    <Box bg="gray.400" p="20">
+    <Box p="20" color="white">
       <Flex w="60%" mx="auto">
-        <AnimatePresence exitBeforeEnter>
+        <AnimatePresence initial={false}>
           {weapons.map((weapon, index) => {
             return (
               weapon === current && (
-                <MotionImage
-                  mixBlendMode="multiply"
+                <WeaponBox
                   key={index}
-                  w="450"
-                  h="270"
-                  src={weapon.image}
-                  alt={weapon.title}
                   initial={{opacity: 0, x: -300}}
                   animate={{opacity: 1, x: 0}}
-                  transition={{duration: 0.3, type: 'spring'}}
-                />
+                  transition={{duration: 0.3, type: 'spring'}}>
+                  <Image
+                    w="450"
+                    h="270"
+                    src={weapon.image}
+                    alt={weapon.title}
+                  />
+                  <Text
+                    transform="rotate(-20deg)"
+                    borderRadius="10px"
+                    py="1"
+                    px="3"
+                    fontSize="40"
+                    fontWeight="bold"
+                    zIndex="2"
+                    position="relative"
+                    ml="200px"
+                    mt="-150px"
+                    w="fit-content"
+                    border="4px"
+                    borderColor="orange.400"
+                    color="orange.400">
+                    {weapon.price} €
+                  </Text>
+                </WeaponBox>
               )
             )
           })}
@@ -80,7 +100,7 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
           })}
         </AnimatePresence>
       </Flex>
-      <Flex justifyContent="center" alignContent="center" mt="10">
+      <Flex justifyContent="center" alignContent="center" mt="20">
         {weapons.map(weapon => {
           return (
             <Circle

@@ -57,9 +57,10 @@ const CategoryTab = ({items, images, direction, visible}: CategoryTabProps) => {
                 borderRadius="3px"
                 border="1px"
                 borderColor="gray.200"
-                mx="5"
-                mt="3">
-                <Image src={image} alt={items[index]} w="150px" h="75px" />
+                mx="4"
+                mt="3"
+                _first={{mx: 0, mr: 4}}>
+                <Image src={image} alt={items[index]} w="130px" h="65px" />
                 <Text mt="5">{items[index]}</Text>
               </Box>
             ))}
