@@ -1,10 +1,12 @@
-import {Image} from '@chakra-ui/image'
 import {Box, Text} from '@chakra-ui/layout'
+
+import * as style from './style'
 
 export interface AccessorieShowcaseProps {}
 
 const AccessorieShowcase = ({}: AccessorieShowcaseProps) => {
   return (
+    <style.Shine>
       <Box
         w="280px"
         h="310"
@@ -17,9 +19,10 @@ const AccessorieShowcase = ({}: AccessorieShowcaseProps) => {
         backgroundSize="cover"
         backgroundImage="https://secondamendsports.com/wp-content/uploads/2019/10/4D5EB7A900000578-0-image-a-30_1529321909720-1.jpg">
         <Text casing="uppercase" color="white" mt="100px">
-        Acessories
-      </Text>
-    </Box>
+          Acessories
+        </Text>
+      </Box>
+    </style.Shine>
   )
 }
 
