@@ -5,15 +5,18 @@ export interface AccessorieShowcaseProps {}
 
 const AccessorieShowcase = ({}: AccessorieShowcaseProps) => {
   return (
-    <Box textAlign="center" bg="white" borderRadius="3px" p="10">
-      <Image
-        src="https://www.hunting-sport.com/media/image/product/37703/md/infiray-tl35-thermal-scope.jpg"
-        alt="accessorie"
-        w="300"
-        h="180"
-        mx="auto"
-      />
-      <Text mt="6" casing="uppercase">
+      <Box
+        w="280px"
+        h="310"
+        bg="gray.800"
+        className="shine"
+        textAlign="center"
+        borderRadius="3px"
+        p="10"
+        backgroundPosition="center"
+        backgroundSize="cover"
+        backgroundImage="https://secondamendsports.com/wp-content/uploads/2019/10/4D5EB7A900000578-0-image-a-30_1529321909720-1.jpg">
+        <Text casing="uppercase" color="white" mt="100px">
         Acessories
       </Text>
     </Box>
