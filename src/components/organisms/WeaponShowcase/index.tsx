@@ -20,17 +20,17 @@ const WeaponBox = motion<BoxProps>(Box)
 
 let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
   const [current, setCurrent] = React.useState(weapons[0])
-  const intervalFunc = () => {
-    const indexNext =
-      weapons.indexOf(current) + 1 === weapons.length
-        ? 0
-        : weapons.indexOf(current) + 1
-    setCurrent(weapons[indexNext])
-  }
-  let interval: number
+
   React.useEffect(() => {
-    interval = window.setInterval(intervalFunc, 10000)
-  }, [])
+    const interval = window.setInterval(() => {
+      let indexNext = 0
+      if (weapons.length !== weapons.indexOf(current) + 1) {
+        indexNext = weapons.indexOf(current) + 1
+      }
+      setCurrent(weapons[indexNext])
+    }, 10000)
+    return () => clearInterval(interval)
+  }, [current])
 
   return (
     <Box p="20" color="white">
