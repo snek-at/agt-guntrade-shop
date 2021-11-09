@@ -6,9 +6,9 @@ export interface AccessorieShowcaseProps {}
 
 const AccessorieShowcase = ({}: AccessorieShowcaseProps) => {
   return (
-    <style.Shine>
+    <style.Shine w="fit-content" alignSelf={{base: 'center', lg: 'auto'}}>
       <Box
-        w="280px"
+        w="300px"
         h="310"
         bg="gray.800"
         className="shine"
