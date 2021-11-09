@@ -7,14 +7,18 @@ export interface BulletShowcaseProps {}
 const BulletShowcase = ({}: BulletShowcaseProps) => {
   return (
     <style.BulletStyle
+      alignSelf="center"
       borderRadius="3px"
       bg="white"
-      mr="50px"
+      mr={{base: '0', md: '50px'}}
       p="30px"
+      px="50px"
       backgroundImage="https://www.rmrbullets.com/wp-content/uploads/2018/07/9-124gr-RMR-JHP-MPR.jpg"
       backgroundPosition="center"
-      backgroundSize="cover">
-      <Flex color="white">
+      backgroundSize="cover"
+      w={{base: '300px', md: 'auto'}}
+      h={{base: 'auto', md: 310}}>
+      <Flex color="white" direction={{base: 'column', md: 'row'}}>
         <Box textAlign="center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
