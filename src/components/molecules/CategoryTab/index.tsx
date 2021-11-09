@@ -33,7 +33,6 @@ const variants = {
 const CategoryTab = ({items, images, direction, visible}: CategoryTabProps) => {
   return (
     <AnimatePresence exitBeforeEnter custom={direction}>
-      {console.log(visible)}
       {visible === 'visible' && (
         <TabBox
           position="absolute"
@@ -44,25 +43,29 @@ const CategoryTab = ({items, images, direction, visible}: CategoryTabProps) => {
           animate="center"
           exit="exit"
           transition={{duration: 0.15}}>
-          <SimpleGrid
-            columns={{ base: 2, xl: 6 }}
-            mx={'auto'}>
+          <SimpleGrid columns={{base: 1, md: 2, xl: 6}}>
             {images.map((image, index) => (
               <Box
                 onClick={() => null}
                 cursor="pointer"
-                px="3"
+                px={{base: '1', md: '3'}}
                 py="5"
                 justifyContent="center"
                 alignContent="center"
                 textAlign="center"
-                borderRadius="3px"
+                borderRadius="5px"
                 border="1px"
                 borderColor="gray.200"
-                mx="4"
+                mx={{base: '0', md: '4'}}
+                ml={{base: '15px', md: '4'}}
                 mt="3"
-                _first={{mx: 0, mr: 4}}>
-                <Image src={image} alt={items[index]} w="130px" h="65px" />
+                _first={{md: {mr: 4, ml: '20px'}}}>
+                <Image
+                  src={image}
+                  alt={items[index]}
+                  w={{base: '260px', md: '130px'}}
+                  h={{base: '130px', md: '65px'}}
+                />
                 <Text mt="5">{items[index]}</Text>
               </Box>
             ))}
