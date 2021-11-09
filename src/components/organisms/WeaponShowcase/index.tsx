@@ -33,8 +33,13 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
   }, [current])
 
   return (
-    <Box p="20" color="white" zIndex="1">
-      <Flex w="60%" mx="auto">
+    <Box
+      color="white"
+      zIndex="1"
+      w={{base: '300px', md: '60%'}}
+      alignSelf="center"
+      mt="10">
+      <Flex>
         <AnimatePresence initial={false}>
           {weapons.map((weapon, index) => {
             return (
@@ -45,8 +50,10 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                   animate={{opacity: 1, x: 0}}
                   transition={{duration: 0.3, type: 'spring'}}>
                   <Image
-                    w="450"
-                    h="270"
+                    minW={{base: '150px', md: '450px'}}
+                    minH={{base: '90px', md: '270px'}}
+                    maxW={{base: '150px', md: '450px'}}
+                    maxH={{base: '90px', md: '270px'}}
                     src={weapon.image}
                     alt={weapon.title}
                   />
@@ -54,13 +61,13 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                     transform="rotate(-20deg)"
                     borderRadius="10px"
                     py="1"
-                    px="3"
-                    fontSize="40"
+                    px={{base: '1', md: '3'}}
+                    fontSize={{base: '13', md: '40'}}
                     fontWeight="bold"
                     position="relative"
-                    ml="200px"
-                    mt="-150px"
-                    w="fit-content"
+                    ml={{base: '50px', md: '200px'}}
+                    mt={{base: '-50px', md: '-150px'}}
+                    w="max-content"
                     border="4px"
                     borderColor="agt.orange"
                     color="agt.orange">
@@ -76,16 +83,23 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
             return (
               current === weapon && (
                 <DescriptionBox
+                  w={{base: '150px', md: '300px'}}
                   key={index}
-                  ml="10"
+                  ml={{base: '5', md: '10'}}
                   initial={{opacity: 0, x: 300}}
                   animate={{opacity: 1, x: 0}}
                   transition={{duration: 0.25, delay: 0.33}}>
-                  <Text fontWeight="bold" fontSize="55" casing="uppercase">
+                  <Text
+                    fontWeight="bold"
+                    fontSize={{base: '19.4', md: '55'}}
+                    casing="uppercase">
                     {weapon.title}
                   </Text>
-                  <Text fontSize="35">{weapon.description}</Text>
+                  <Text fontSize={{base: '11.6', md: '35'}}>
+                    {weapon.description}
+                  </Text>
                   <Button
+                    fontSize={{base: 12, md: 'auto'}}
                     mt="10"
                     size="lg"
                     borderRadius="3px"
@@ -100,7 +114,11 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
           })}
         </AnimatePresence>
       </Flex>
-      <Flex justifyContent="center" alignContent="center" mt="20">
+      <Flex
+        justifyContent="center"
+        alignContent="center"
+        mt={{base: 10, md: '20'}}
+        mb={{base: '10', md: '0'}}>
         {weapons.map(weapon => {
           return (
             <Circle

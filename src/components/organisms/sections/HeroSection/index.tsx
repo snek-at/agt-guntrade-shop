@@ -16,12 +16,12 @@ const HeroSection = () => {
     <>
       <Flex
         textAlign={'center'}
-        px={{ base: 40, md: 0 }}
         justifyContent={'center'}
         direction={'column'}
         width={'full'}
-        bg='gray.800'
-      >
+        bg="gray.800"
+        position="relative"
+        overflow="hidden">
         <MotionImage
           src="https://images4.alphacoders.com/968/thumb-1920-96814.jpg"
           alt="background"
@@ -114,16 +114,16 @@ const HeroSection = () => {
             }
           }}
         />
-      <Flex
-        mt="8"
-        // boxShadow={'lg'}
-        direction={{ base: 'column-reverse', md: 'row' }}
-        width={'full'}
-        rounded={'xl'}
-        p={10}
-        justifyContent={'center'}
-        position={'relative'}>
+        <Flex
+          mt="8"
+          direction={{base: 'column-reverse', lg: 'row'}}
+          width="full"
+          p={{base: 0, md: 10}}
+          justifyContent="center"
+          alignContent="center"
+          position={'relative'}>
           <BulletShowcase />
+          <Box mt={{base: '5', lg: '0'}} />
           <AccessorieShowcase />
         </Flex>
       </Flex>
