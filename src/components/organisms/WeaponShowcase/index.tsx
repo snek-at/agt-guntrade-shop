@@ -33,7 +33,7 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
   }, [current])
 
   return (
-    <Box p="20" color="white">
+    <Box p="20" color="white" zIndex="1">
       <Flex w="60%" mx="auto">
         <AnimatePresence initial={false}>
           {weapons.map((weapon, index) => {
@@ -57,7 +57,6 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                     px="3"
                     fontSize="40"
                     fontWeight="bold"
-                    zIndex="2"
                     position="relative"
                     ml="200px"
                     mt="-150px"

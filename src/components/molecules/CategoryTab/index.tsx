@@ -1,4 +1,4 @@
-import {Flex, Box, BoxProps, Text, Image} from '@chakra-ui/react'
+import {SimpleGrid, Flex, Box, BoxProps, Text, Image} from '@chakra-ui/react'
 
 import {AnimatePresence, motion} from 'framer-motion'
 
@@ -44,7 +44,9 @@ const CategoryTab = ({items, images, direction, visible}: CategoryTabProps) => {
           animate="center"
           exit="exit"
           transition={{duration: 0.15}}>
-          <Flex>
+          <SimpleGrid
+            columns={{ base: 2, xl: 6 }}
+            mx={'auto'}>
             {images.map((image, index) => (
               <Box
                 onClick={() => null}
@@ -64,7 +66,7 @@ const CategoryTab = ({items, images, direction, visible}: CategoryTabProps) => {
                 <Text mt="5">{items[index]}</Text>
               </Box>
             ))}
-          </Flex>
+          </SimpleGrid>
         </TabBox>
       )}
     </AnimatePresence>

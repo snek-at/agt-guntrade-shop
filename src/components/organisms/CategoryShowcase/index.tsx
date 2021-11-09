@@ -21,7 +21,7 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
   const categories = Object.keys(tabs)
 
   return (
-    <Box w="65%" mx="auto">
+    <Box w="65%" mx="auto" zIndex="2">
       <Flex>
         {categories.map((category, index) => {
           return (
