@@ -9,7 +9,7 @@ export const Shine = styled(Box)`
   .shine::before {
     pointer-events: none;
     margin-top: -350px;
-    width: 10px;
+    width: 30px;
     height: 616px;
     position: absolute;
     display: block;
@@ -26,9 +26,12 @@ export const Shine = styled(Box)`
       transform: translate(550px, 350px);
     }
   }
+  .shine:hover {
+    filter: brightness(80%);
+  }
   .shine:hover::before {
     animation-name: shine;
-    animation-duration: 1s;
+    animation-duration: 0.5s;
     animation-timing-function: linear;
   }
 `

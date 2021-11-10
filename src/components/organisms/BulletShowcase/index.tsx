@@ -13,7 +13,7 @@ const BulletShowcase = ({}: BulletShowcaseProps) => {
       mr={{base: '0', md: '50px'}}
       p="30px"
       px="50px"
-      backgroundImage="https://www.rmrbullets.com/wp-content/uploads/2018/07/9-124gr-RMR-JHP-MPR.jpg"
+      backgroundImage="https://cdn02.plentymarkets.com/uuybnujnq1oa/item/images/70949/full/70949-French-Terry-Sommersweat-Camouflage-Tarnmuster-braun-beige-gruen-1-55m-Breite-KW44-126938Capture0116.jpg"
       backgroundPosition="center"
       backgroundSize="cover"
       w={{base: '300px', md: 'auto'}}

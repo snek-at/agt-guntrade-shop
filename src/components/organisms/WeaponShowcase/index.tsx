@@ -36,7 +36,7 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
     <Box
       color="white"
       zIndex="1"
-      w={{base: '300px', md: '60%'}}
+      w={{base: '300px', md: '770px', lg: '60%'}}
       alignSelf="center"
       mt="10">
       <Flex>
@@ -85,7 +85,7 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                 <DescriptionBox
                   w={{base: '150px', md: '300px'}}
                   key={index}
-                  ml={{base: '5', md: '10'}}
+                  ml={{base: '5', lg: '10'}}
                   initial={{opacity: 0, x: 300}}
                   animate={{opacity: 1, x: 0}}
                   transition={{duration: 0.25, delay: 0.33}}>
@@ -118,7 +118,7 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
         justifyContent="center"
         alignContent="center"
         mt={{base: 10, md: '20'}}
-        mb={{base: '10', md: '0'}}>
+        mb={{base: '10', lg: '5'}}>
         {weapons.map(weapon => {
           return (
             <Circle

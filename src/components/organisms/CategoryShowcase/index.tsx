@@ -22,7 +22,7 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
 
   return (
     <Box
-      w={{base: '300px', md: '470px', lg: '1240px'}}
+      w={{base: '300px', md: '525px', lg: '1240px'}}
       mx={{md: 'auto'}}
       alignSelf="center"
       zIndex="2">
@@ -30,6 +30,7 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
         {categories.map((category, index) => {
           return (
             <Box
+              userSelect="none"
               _first={{borderTopLeftRadius: '3px'}}
               _last={{borderTopRightRadius: '3px'}}
               cursor="pointer"
@@ -56,11 +57,11 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
       <Box
         justifyContent="center"
         alignContent="center"
-        p={{md: '10'}}
-        pl={{base: '0', md: '10'}}
+        p={{md: '6', lg: '10'}}
+        pl={{base: '0', lg: '10'}}
         pb="20"
         bg="white"
-        h={{base: '1430px', md: '600px', lg: '300px'}}
+        h={{base: '600px', md: '450px', lg: '300px'}}
         borderBottomRadius="3px"
         borderTopRightRadius="3px">
         {categories.map(category => {

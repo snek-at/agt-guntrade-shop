@@ -19,7 +19,7 @@ const HeroSection = () => {
         justifyContent={'center'}
         direction={'column'}
         width={'full'}
-        bg="gray.800"
+        backgroundImage="linear-gradient(rgba(31, 31, 29, 0.95),rgba(31, 31, 29, 1))"
         position="relative"
         overflow="hidden">
         <MotionImage
