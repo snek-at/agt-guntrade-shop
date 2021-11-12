@@ -38,16 +38,6 @@ module.exports = {
         }
       }
     },
-    `gatsby-transformer-sharp`,
-    {
-      resolve: '@snek-at/jaen-pages',
-      options: {
-        templates: {
-          HousePage: path.resolve('src/templates/HousePage/index.tsx'),
-          ApartmentPage: path.resolve('src/templates/ApartmentPage/index.tsx'),
-          BlogPage: path.resolve('src/templates/BlogPage/index.tsx')
-        }
-      }
-    }
+    `gatsby-transformer-sharp`
   ]
 }

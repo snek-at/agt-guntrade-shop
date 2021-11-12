@@ -48,9 +48,10 @@ const CategoryTab = ({items, images, direction, visible}: CategoryTabProps) => {
           animate="center"
           exit="exit"
           transition={{duration: 0.15}}>
-          <SimpleGrid columns={{base: 2, md: 3, xl: 6}}>
+          <SimpleGrid columns={{base: 2, md: 3, xl: 6}} css={style.Borderline}>
             {images.map((image, index) => (
-              <style.Borderline
+              <Box
+                className="borderline"
                 onClick={() => null}
                 cursor="pointer"
                 px={{base: '1', md: '2', lg: '3'}}
@@ -75,7 +76,7 @@ const CategoryTab = ({items, images, direction, visible}: CategoryTabProps) => {
                 <Badge variant="solid" bg="agt.red" borderRadius="5px">
                   {items[index].split(';')[1]}
                 </Badge>
-              </style.Borderline>
+              </Box>
             ))}
           </SimpleGrid>
         </TabBox>

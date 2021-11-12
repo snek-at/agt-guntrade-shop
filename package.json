@@ -15,10 +15,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/schett-net/agt-guntrade-shop.git"
+    "url": "git+https://github.com/snek-at/agt-guntrade-shop.git"
   },
   "bugs": {
-    "url": "https://github.com/schett-net/agt-guntrade-shop/issues"
+    "url": "https://github.com/snek-at/agt-guntrade-shop/issues"
   },
   "scripts": {
     "build": "gatsby build",
@@ -72,6 +72,9 @@
     "gh-pages": "^3.2.3",
     "prettier": "2.3.2",
     "typescript": "^4.4.2"
+  },
+  "resolutions": {
+    "webpack": "5.52.0"
   },
   "browserslist": {
     "production": [
