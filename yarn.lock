@@ -17161,6 +17161,11 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
+react-magnetic-di@^2.2.6:
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/react-magnetic-di/-/react-magnetic-di-2.2.6.tgz#8a5738895538229196c3dfcb68cce0699deb2f40"
+  integrity sha512-7KEhcKbp2ik86I4uE7W6XRgygBt66rNWXeyGUn9CEWi8wOLgBR7Eg9IWLVxJdjnExnrSIWkCf1oiGuH4lwIZDQ==
+
 react-native-fetch-api@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-native-fetch-api/-/react-native-fetch-api-2.0.0.tgz#c4af188b4fce3f3eaf1f1ff4e61dae1a00d4ffa0"

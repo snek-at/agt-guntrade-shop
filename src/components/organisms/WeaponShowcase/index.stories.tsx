@@ -17,22 +17,19 @@ WShowcase.args = {
     {
       title: 'Pistole',
       description: 'This is a pistol',
-      image:
-        'https://www.fieldandstream.com/uploads/2019/01/18/7TUMLR2JZRP7F52FH3ENRNVQ6A.jpg',
+      image: 'https://i.imgur.com/sw7n0g8.png',
       price: 100
     },
     {
       title: 'Peng',
       description: 'This is a pistol',
-      image:
-        'https://www.fieldandstream.com/uploads/2019/01/18/7TUMLR2JZRP7F52FH3ENRNVQ6A.jpg',
+      image: 'https://i.imgur.com/OzO2Wsj.png',
       price: 700
     },
     {
       title: 'Bum',
       description: 'This is a pistol',
-      image:
-        'https://www.fieldandstream.com/uploads/2019/01/18/7TUMLR2JZRP7F52FH3ENRNVQ6A.jpg',
+      image: 'https://i.imgur.com/RWZXVAf.png',
       price: 800
     }
   ]

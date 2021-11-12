@@ -5,9 +5,9 @@ export const BulletStyle = styled(Box)`
   .bullet {
     margin-left: 20px;
     margin-right: 20px;
-    fill: #e2e8f0;
+    fill: #1f1f1d;
     :hover {
-      fill: #ff6000;
+      fill: #ef3340;
     }
   }
 `

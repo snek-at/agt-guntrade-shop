@@ -1,6 +1,7 @@
-import {SimpleGrid, Flex, Box, BoxProps, Text, Image} from '@chakra-ui/react'
+import {SimpleGrid, Badge, Box, BoxProps, Text, Image} from '@chakra-ui/react'
 
 import {AnimatePresence, motion} from 'framer-motion'
+import * as style from './style'
 
 export interface CategoryTabProps {
   items: string[]
@@ -14,16 +15,20 @@ const TabBox = motion<BoxProps>(Box)
 const variants = {
   enter: (direction: string) => {
     return {
+      position: 'absolute',
       y: direction === 'right' ? 75 : -75,
       opacity: 0
     }
   },
   center: {
+    position: 'relative',
     opacity: 1,
     y: 0
   },
   exit: (direction: string) => {
     return {
+      position: 'absolute',
+      display: 'none',
       y: direction === 'right' ? -75 : 75,
       opacity: 0
     }
@@ -35,7 +40,7 @@ const CategoryTab = ({items, images, direction, visible}: CategoryTabProps) => {
     <AnimatePresence exitBeforeEnter custom={direction}>
       {visible === 'visible' && (
         <TabBox
-          position="absolute"
+          position="relative"
           key={visible}
           custom={direction}
           variants={variants}
@@ -45,7 +50,7 @@ const CategoryTab = ({items, images, direction, visible}: CategoryTabProps) => {
           transition={{duration: 0.15}}>
           <SimpleGrid columns={{base: 2, md: 3, xl: 6}}>
             {images.map((image, index) => (
-              <Box
+              <style.Borderline
                 onClick={() => null}
                 cursor="pointer"
                 px={{base: '1', md: '2', lg: '3'}}
@@ -58,10 +63,19 @@ const CategoryTab = ({items, images, direction, visible}: CategoryTabProps) => {
                 borderColor="gray.200"
                 mx={{base: '5px', lg: '4'}}
                 mt="3"
-                _first={{lg: {mr: 4, ml: '20px'}}}>
-                <Image src={image} alt={items[index]} w="130px" h="65px" />
-                <Text mt="5">{items[index]}</Text>
-              </Box>
+                _first={{lg: {mr: 4, ml: '20px'}}}
+                _hover={{
+                  before: {borderColor: 'agt.red'},
+                  _after: {borderColor: 'agt.red'}
+                }}>
+                <Image src={image} alt={items[index]} w="130px" />
+                <Text w="130px" mt="5">
+                  {items[index].split(';')[0]}
+                </Text>
+                <Badge variant="solid" bg="agt.red" borderRadius="5px">
+                  {items[index].split(';')[1]}
+                </Badge>
+              </style.Borderline>
             ))}
           </SimpleGrid>
         </TabBox>

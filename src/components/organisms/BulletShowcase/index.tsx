@@ -13,12 +13,12 @@ const BulletShowcase = ({}: BulletShowcaseProps) => {
       mr={{base: '0', md: '50px'}}
       p="30px"
       px="50px"
-      backgroundImage="https://cdn02.plentymarkets.com/uuybnujnq1oa/item/images/70949/full/70949-French-Terry-Sommersweat-Camouflage-Tarnmuster-braun-beige-gruen-1-55m-Breite-KW44-126938Capture0116.jpg"
-      backgroundPosition="center"
-      backgroundSize="cover"
+      // backgroundImage="https://cdn02.plentymarkets.com/uuybnujnq1oa/item/images/70949/full/70949-French-Terry-Sommersweat-Camouflage-Tarnmuster-braun-beige-gruen-1-55m-Breite-KW44-126938Capture0116.jpg"
+      // backgroundPosition="center"
+      // backgroundSize="cover"
       w={{base: '300px', md: 'auto'}}
       h={{base: 'auto', md: 310}}>
-      <Flex color="white" direction={{base: 'column', md: 'row'}}>
+      <Flex direction={{base: 'column', md: 'row'}}>
         <Box textAlign="center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
