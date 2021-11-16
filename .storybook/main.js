@@ -4,5 +4,8 @@ module.exports = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@snek-at/storybook-addon-chakra-ui'
-  ]
+  ],
+  core: {
+    builder: 'webpack5'
+  }
 }
