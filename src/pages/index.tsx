@@ -1,9 +1,9 @@
-import HeroSection from '../components/organisms/sections/HeroSection'
+import {Box} from '@chakra-ui/layout'
 
 export interface IndexPageProps {}
 
 const IndexPage = ({}: IndexPageProps) => {
-  return <HeroSection />
+  return <Box />
 }
 //#endregion
 
