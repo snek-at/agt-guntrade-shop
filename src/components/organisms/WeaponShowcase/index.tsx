@@ -94,11 +94,11 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                     transition={{duration: 0.25, delay: 0.33}}>
                     <Text
                       fontWeight="bold"
-                      fontSize={{base: '19.4', md: '55'}}
+                      fontSize={{base: '20', md: '55'}}
                       casing="uppercase">
                       {weapon.title}
                     </Text>
-                    <Text fontSize={{base: '11.6', md: '35'}}>
+                    <Text fontSize={{base: '15', md: '35'}}>
                       {weapon.description}
                     </Text>
                     <Button
