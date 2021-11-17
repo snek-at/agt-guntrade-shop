@@ -21,7 +21,7 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
   const categories = Object.keys(tabs)
 
   return (
-    <Box mx={{md: 'auto'}} alignSelf="center" zIndex="2">
+    <Box zIndex="2" position="relative">
       <Flex direction={{base: 'column', md: 'row'}}>
         {categories.map((category, index) => {
           return (
@@ -70,14 +70,8 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
           )
         })}
       </Box>
-      <Center
-        position="relative"
-        w="full"
-        left="0"
-        top="-6"
-      >
+      <Center position="relative" w="full" left="0" top="-6">
         <Button
-          
           borderRadius="3px"
           bg="agt.gray"
           color="white"
