@@ -7,10 +7,10 @@ export const Borderline = css`
     text-align: center;
     border-collapse: collapse;
     text-decoration: none;
-    transition: all 0.4s;
+    transition: all 150ms;
 
     &:before {
-      transition: all 0.4s;
+      transition: all 150ms;
       position: absolute;
       content: '';
       width: 100%;
@@ -25,7 +25,7 @@ export const Borderline = css`
     }
 
     &:after {
-      transition: all 0.4s;
+      transition: all 150ms;
       position: absolute;
       content: '';
       width: 50%;

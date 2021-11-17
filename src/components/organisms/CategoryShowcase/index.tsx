@@ -70,15 +70,20 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
           )
         })}
       </Box>
-      <Center>
+      <Center
+        position="relative"
+        w="full"
+        left="0"
+        top="-6"
+      >
         <Button
+          
           borderRadius="3px"
           bg="agt.gray"
           color="white"
           _hover={{backgroundColor: 'gray.700'}}
           variant="solid"
           size="lg"
-          mt="-6"
           onClick={() => null}>
           Mehr davon
         </Button>

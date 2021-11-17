@@ -1,22 +1,24 @@
-import {Box, Flex, Text} from '@chakra-ui/layout'
+import {Center, Button, Box, Flex, Text} from '@chakra-ui/react'
 import {useBreakpointValue} from '@chakra-ui/media-query'
 
-import * as style from './style'
+import {Shine} from '../../../common/style/base'
+import {BulletStyle} from './style'
 
 export interface BulletShowcaseProps {}
 
 const Desktop = (
   <Box
-    css={style.BulletStyle}
-    alignSelf="center"
+    css={BulletStyle}
+    position="relative"
     borderRadius="3px"
     bg="white"
-    mr={{base: '0', lg: '65px'}}
-    p="30px"
-    pr="40px"
-    w={{base: '300px', md: 'auto'}}
-    h={{base: 'auto', md: 310}}>
-    <Flex direction={{base: 'column', md: 'row'}}>
+    mr={{base: '0', lg: '6'}}
+    mb="6"
+  >
+    <Flex direction={{base: 'column', md: 'row'}}
+      px={{base: '1', md: '2', lg: '3'}}
+      py="5"
+    >
       <Box textAlign="center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -126,13 +128,30 @@ const Desktop = (
         <Text mt="5">12 GAUGE</Text>
       </Box>
     </Flex>
+    <Center
+      position="relative"
+      w="full"
+      left="0"
+      bottom="-6"
+    >
+      <Button
+        borderRadius="3px"
+        bg="agt.gray"
+        color="white"
+        _hover={{backgroundColor: 'gray.700'}}
+        variant="solid"
+        size="lg"
+        onClick={() => null}>
+        Mehr davon
+      </Button>
+    </Center>
   </Box>
 )
 
 const Mobile = (
   <Box
-    w="300px"
-    h="310px"
+    css={Shine}
+    w="full"
     borderRadius="3px"
     textAlign="center"
     backgroundImage="https://cdna.asoundeffect.com/wp-content/uploads/2017/06/04045316/bullet_sound_effects.jpg"
@@ -146,9 +165,9 @@ const Mobile = (
 )
 
 const BulletShowcase = ({}: BulletShowcaseProps) => {
-  const rgw = useBreakpointValue({base: Mobile, md: Desktop})
+  const rgw = useBreakpointValue({base: Mobile, lg: Desktop})
   return (
-    <Flex justifyContent="center" alignItems="center">
+    <Flex w="full">
       {rgw}
     </Flex>
   )
