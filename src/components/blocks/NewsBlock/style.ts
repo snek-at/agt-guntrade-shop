@@ -1,10 +1,9 @@
-import {Box} from '@chakra-ui/layout'
-import styled from '@emotion/styled'
+import {css} from '@emotion/react'
 
 import {mq} from '../../../utils'
 
-const NewsStyle = styled(Box)`
-  .newssectionCardImage {
+export const NewsStyle = css`
+  .newsblock-image {
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     ${mq[0]} {
@@ -17,4 +16,3 @@ const NewsStyle = styled(Box)`
     }
   }
 `
-export default NewsStyle
