@@ -1,5 +1,3 @@
-import {Image} from '@chakra-ui/image'
-import {Heading, Text} from '@chakra-ui/layout'
 import {Story, Meta} from '@storybook/react'
 
 import NewsSection, {NewsSectionProps} from './index'

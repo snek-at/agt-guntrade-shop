@@ -1,12 +1,10 @@
 import {Box, Heading} from '@chakra-ui/react'
 export interface IndexPageProps {}
 
+import NewsSection from '../components/organisms/sections/NewsSection'
+
 const IndexPage = ({}: IndexPageProps) => {
-  return (
-    <Box>
-      <Heading>Test</Heading>
-    </Box>
-  )
+  return <NewsSection teaser="This is the teaser." />
 }
 //#endregion
 

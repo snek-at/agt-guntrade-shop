@@ -1,6 +1,6 @@
 import {Story, Meta} from '@storybook/react'
 
-import IndexPage, {IndexPageProps} from './index'
+import IndexPage, {IndexPageProps} from '../pages/index'
 
 export default {
   title: 'Stories/IndexPage',
