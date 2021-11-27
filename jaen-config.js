@@ -4,7 +4,7 @@ module.exports = {
   plugins: {
     pages: {
       resolve: require('@snek-at/jaen-pages/jaen-register'),
-      templates: []
+      templates: [require('./src/templates/NewsPage/index.tsx')]
     }
   }
 }

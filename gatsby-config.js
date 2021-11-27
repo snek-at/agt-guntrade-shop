@@ -1,4 +1,4 @@
-const path = require('path')
+const {resolve} = require('path')
 
 const siteMetadata = require('./site-metadata')
 
@@ -9,7 +9,7 @@ module.exports = {
     {
       resolve: '@snek-at/jaen-pages',
       options: {
-        templates: {}
+        templates: {NewsPage: resolve('src/templates/NewsPage/index.tsx')}
       }
     },
     {
