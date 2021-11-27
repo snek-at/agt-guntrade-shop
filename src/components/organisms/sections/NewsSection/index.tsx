@@ -68,9 +68,7 @@ const NewsSection = ({teaser}: NewsSectionProps) => {
                 animate={index === 0 ? {left: 0} : direction}
                 variants={{
                   left: {
-                    transform: `translateX(${
-                      scroll / ((page?.children?.length || 0) - index)
-                    }px)`
+                    transform: `translateX(${scroll * (index - 2)}px)`
                   },
                   right: {
                     transform: `translateX(-${scroll * index}px)`
