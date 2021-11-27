@@ -51,7 +51,7 @@ const NewsSection = ({teaser}: NewsSectionProps) => {
                 ? text.substring(3, text.length - 4)
                 : ''
             }
-            index === page?.chidren?.length || 0
+            index === (page?.children?.length - 3 || 0)
               ? setDisabled(true)
               : setDisabled(false)
 
