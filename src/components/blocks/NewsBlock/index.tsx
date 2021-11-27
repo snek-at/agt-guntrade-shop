@@ -1,5 +1,5 @@
 import {useDisclosure} from '@chakra-ui/hooks'
-import {AbsoluteCenter, Box, Heading, Text} from '@chakra-ui/layout'
+import {Box, Heading, Text} from '@chakra-ui/layout'
 import {
   Modal,
   ModalBody,
@@ -9,7 +9,6 @@ import {
   ModalOverlay
 } from '@chakra-ui/modal'
 import {JaenBlock, fields} from '@snek-at/jaen-pages'
-import React from 'react'
 
 import * as styles from './style'
 
