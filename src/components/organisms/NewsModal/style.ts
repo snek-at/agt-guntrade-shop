@@ -8,18 +8,18 @@ export const ScrollBar = css`
 
   /* Track */
   ::-webkit-scrollbar-track {
-    background: #1f1f1d;
     border-radius: 30px;
+    background: #cbd5e0;
   }
 
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: #ef3340;
+    background: #1f1f1d;
     border-radius: 30px;
   }
 
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
-    background: #d72d39;
+    background: #424240;
   }
 `
