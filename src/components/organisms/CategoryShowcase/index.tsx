@@ -58,6 +58,7 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
         alignContent="center"
         p={{md: '6', lg: '10'}}
         pl={{base: '0', lg: '10'}}
+        minH={{base: '1010px', md: '700px', lg: '390px'}}
         pb="20"
         bg="white"
         borderBottomRadius="3px"
