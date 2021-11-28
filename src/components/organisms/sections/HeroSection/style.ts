@@ -21,7 +21,11 @@ export const BG = styled(Box)`
     ${mq[0]} {
       min-width: 300vw;
     }
+    ${mq[2]} {
+      min-width: 200vw;
+    }
     ${mq[3]} {
+      min-width: auto;
       min-height: 80vh;
     }
   }
