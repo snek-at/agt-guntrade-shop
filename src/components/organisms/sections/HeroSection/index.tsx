@@ -21,11 +21,13 @@ const HeroSection = () => {
       <Box
         width={'full'}
         backgroundImage="linear-gradient(rgba(31, 31, 29, 0.95),rgba(31, 31, 29, 1))"
-        position="relative">
+        position="relative"
+        overflow="hidden">
         <style.BG>
           <GCImage
             gimg={
               <StaticImage
+                className="bg-div"
                 imgClassName="bg"
                 src="https://i.imgur.com/8zG2Ymd.jpeg"
                 alt="bg"
@@ -33,21 +35,6 @@ const HeroSection = () => {
             }
           />
         </style.BG>
-        {/* <MotionImage
-          src="https://honor.ancorathemes.com/wp-content/uploads/revslider/home-2/slide_2_11.jpg"
-          alt="background"
-          position="absolute"
-          top="0"
-          left="0"
-          zIndex="0"
-          w="full"
-          animate={{scale: 1.1}}
-          transition={{
-            ease: 'linear',
-            duration: 10,
-            repeat: Infinity
-          }}
-        /> */}
         <Container maxW="container.xl" py="6">
           <WeaponShowcase
             weapons={[

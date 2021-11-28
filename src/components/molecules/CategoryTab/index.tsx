@@ -70,7 +70,7 @@ const CategoryTab = ({items, images, direction, visible}: CategoryTabProps) => {
                   _after: {borderColor: 'agt.red'}
                 }}>
                 <Image src={image} alt={items[index]} w="fit-content" />
-                <Text w="100%" mt="5">
+                <Text w="100%" mt="5" color="black">
                   {items[index].split(';')[0]}
                 </Text>
                 <Badge variant="solid" bg="agt.red" borderRadius="5px">

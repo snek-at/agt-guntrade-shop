@@ -27,8 +27,11 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
           return (
             <Box
               userSelect="none"
-              _first={{borderTopLeftRadius: '3px'}}
-              _last={{borderTopRightRadius: '3px'}}
+              _first={{
+                base: {borderTopRadius: '3px'},
+                md: {borderTopLeftRadius: '3px'}
+              }}
+              _last={{md: {borderTopRightRadius: '3px'}}}
               cursor="pointer"
               bg={current === category ? 'white' : 'agt.gray'}
               py="3"
@@ -58,7 +61,7 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
         pb="20"
         bg="white"
         borderBottomRadius="3px"
-        borderTopRightRadius="3px">
+        borderTopRightRadius={{md: '3px'}}>
         {categories.map(category => {
           return (
             <CategoryTab
@@ -72,10 +75,9 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
       </Box>
       <Center position="relative" w="full" left="0" top="-6">
         <Button
-          borderRadius="3px"
-          bg="agt.gray"
           color="white"
-          _hover={{backgroundColor: 'gray.700'}}
+          borderRadius="3px"
+          colorScheme="agt.grayScheme"
           variant="solid"
           size="lg"
           onClick={() => null}>
