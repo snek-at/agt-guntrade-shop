@@ -77,6 +77,11 @@ const NewsSection = ({teaser}: NewsSectionProps) => {
                 width="max-content">
                 {page?.children.map((child: any) => {
                   const [isOpen, setIsOpen] = React.useState(false)
+                  const onClose = () => {
+                    setIsOpen(false)
+                    history.pushState('AGT-Guntrade News', '', '/')
+                  }
+
                   const queryString = window.location.search.substring(1)
                   React.useEffect(() => {
                     if (child?.page?.slug === queryString) {
@@ -135,6 +140,7 @@ const NewsSection = ({teaser}: NewsSectionProps) => {
                         heading={heading}
                         text={text}
                         imageSrc={imageSrc}
+                        onClose={onClose}
                       />
                     </>
                   )

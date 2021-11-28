@@ -18,6 +18,7 @@ export interface NewsModalProps {
   text: string
   imageSrc: string
   url: string
+  onClose: Function
 }
 
 export const NewsModal = ({
@@ -25,7 +26,8 @@ export const NewsModal = ({
   heading,
   text,
   imageSrc,
-  url
+  url,
+  onClose
 }: NewsModalProps) => {
   const [share, setShare] = React.useState(false)
   const toast = useToast()
@@ -33,20 +35,38 @@ export const NewsModal = ({
     history.pushState('AGT-Guntrade News', '', url)
   }
   return (
-    <Modal isOpen={isOpen} onClose={() => navigate('/')} size="3xl">
+    <Modal isOpen={isOpen} onClose={() => onClose()}>
       <ModalOverlay />
-      <ModalContent borderRadius="3px">
+      <ModalContent
+        borderRadius="3px"
+        minH="60vh"
+        maxH="fit-content"
+        minW="40vw"
+        maxW={{base: '90vw', md: '70vw', xl: '40vw'}}>
         <Image alt="newsmodal-image" borderTopRadius="3px" src={imageSrc} />
         <Box p="5">
           <Heading textAlign="center" mb="3">
             {heading}
           </Heading>
-          <Text css={style.ScrollBar} overflowY="auto" maxH="48" pr="3">
+          <Text
+            css={style.ScrollBar}
+            overflowY="auto"
+            maxH={{base: '300px', md: '32', xl: '20vh'}}
+            pr="3">
             {text}
           </Text>
-          <Flex mt="3" alignItems="flex-end" justifyContent="flex-end">
+          <Flex
+            mt="3"
+            direction={{base: 'column-reverse', md: 'row'}}
+            justifyContent="flex-end">
             <ScaleFade initialScale={0.9} in={share} unmountOnExit>
-              <Flex>
+              <Flex
+                alignSelf={{base: 'center', sm: 'flex-end'}}
+                mr={{base: 'auto', sm: '0'}}
+                mt={{base: '5', md: '0'}}
+                direction={{base: 'column-reverse', sm: 'row'}}
+                justifyContent="center"
+                alignItems="center">
                 <Input
                   isReadOnly
                   value={window.location.href}
@@ -70,6 +90,7 @@ export const NewsModal = ({
               </Flex>
             </ScaleFade>
             <Button
+              alignSelf="end"
               aria-label="teilen"
               leftIcon={<IoMdShareAlt />}
               onClick={() => setShare(!share)}>
