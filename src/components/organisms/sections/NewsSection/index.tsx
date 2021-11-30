@@ -2,6 +2,7 @@ import {Button, IconButton} from '@chakra-ui/button'
 import {ChevronLeftIcon, ChevronRightIcon} from '@chakra-ui/icons'
 import {Image} from '@chakra-ui/image'
 import {Box, Flex, FlexProps, Heading, Spacer, Text} from '@chakra-ui/layout'
+import {useBreakpointValue} from '@chakra-ui/media-query'
 import {fields} from '@snek-at/jaen-pages'
 import {motion} from 'framer-motion'
 import React from 'react'
@@ -12,7 +13,10 @@ export interface NewsSectionProps {
   teaser: React.ReactNode
 }
 
-/* TODO: Fix left calculation and setDisabled calculation */
+/* 
+TODO: Fix left calculation.
+TODO: Implement window jumping to section on sent modal-link.
+*/
 
 const MotionFlex = motion<FlexProps>(Flex)
 
@@ -21,6 +25,9 @@ const NewsSection = ({teaser}: NewsSectionProps) => {
   const [index, setIndex] = React.useState(0)
   const [disabled, setDisabled] = React.useState(true)
   const [isCentered, setIsCentered] = React.useState(true)
+
+  const isSmall = useBreakpointValue({base: true, lg: false})
+
   return (
     <>
       <Box overflow="hidden" w="100%">
@@ -56,19 +63,22 @@ const NewsSection = ({teaser}: NewsSectionProps) => {
                   : ''
               }
 
-              ;(page?.children?.length || 0) > 4
-                ? setIsCentered(false)
-                : setIsCentered(true)
-              ;(page?.children?.length || 0) <= 4 ||
-              index === (page?.children?.length - 4 || 0)
-                ? setDisabled(true)
-                : setDisabled(false)
-
               const vw = Math.max(
                 document.documentElement.clientWidth || 0,
                 window.innerWidth || 0
               )
-              const scroll = vw / 3
+              ;(page?.children?.length || 0) < 4 ||
+              (isSmall && vw < (page?.children?.length || 0) * 350)
+                ? setIsCentered(true)
+                : setIsCentered(false)
+              ;(!isSmall && (page?.children?.length || 0) <= 4) ||
+              index === (page?.children?.length - 4 || 0) ||
+              (isSmall &&
+                page?.children?.length - Math.floor(vw / 300) === index)
+                ? setDisabled(true)
+                : setDisabled(false)
+
+              const scroll = isSmall ? 320 : vw / 3
 
               return (
                 <MotionFlex
@@ -86,6 +96,7 @@ const NewsSection = ({teaser}: NewsSectionProps) => {
                       transform: `translateX(-${scroll * index}px)`
                     }
                   }}
+                  transition={{duration: 0.25}}
                   width="max-content">
                   {page?.children.map((child: any) => {
                     const [isOpen, setIsOpen] = React.useState(false)
@@ -118,13 +129,17 @@ const NewsSection = ({teaser}: NewsSectionProps) => {
                       <>
                         <Box
                           ml={{base: '5', lg: '16'}}
-                          _first={{lg: {ml: '4.5rem'}}}
+                          _first={
+                            isCentered && !isSmall
+                              ? {ml: 0}
+                              : {base: {ml: '3vw'}, lg: {ml: '4.5rem'}}
+                          }
                           boxShadow="lg"
                           borderRadius="3px"
                           onClick={() => setIsOpen(true)}
-                          w={{base: '300px', xl: '20vw'}}
-                          minH={{base: '390px', lg: '420px'}}
-                          maxH="45vh">
+                          maxW={{base: '300px', xl: '20vw'}}
+                          minH={{base: '390px', xl: 'max-content'}}
+                          maxH="fit-content">
                           <Image
                             objectFit="cover"
                             alt="newspage-image"

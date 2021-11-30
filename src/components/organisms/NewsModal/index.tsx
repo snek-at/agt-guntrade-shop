@@ -1,16 +1,15 @@
 import {Button, IconButton} from '@chakra-ui/button'
 import {Image} from '@chakra-ui/image'
+import {Input} from '@chakra-ui/input'
 import {Text, Box, Heading, Flex} from '@chakra-ui/layout'
 import {Modal, ModalContent, ModalOverlay} from '@chakra-ui/modal'
-import {navigate} from 'gatsby-link'
-import {IoMdShareAlt} from '@react-icons/all-files/io/IoMdShareAlt'
+import {useToast} from '@chakra-ui/toast'
+import {ScaleFade} from '@chakra-ui/transition'
 import {IoIosCopy} from '@react-icons/all-files/io/IoIosCopy'
+import {IoMdShareAlt} from '@react-icons/all-files/io/IoMdShareAlt'
+import React from 'react'
 
 import * as style from './style'
-import React from 'react'
-import {ScaleFade} from '@chakra-ui/transition'
-import {Input} from '@chakra-ui/input'
-import {useToast} from '@chakra-ui/toast'
 
 export interface NewsModalProps {
   isOpen: boolean
