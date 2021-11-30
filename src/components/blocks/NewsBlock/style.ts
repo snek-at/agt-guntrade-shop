@@ -1,6 +1,6 @@
 import {css} from '@emotion/react'
 
-import {mq} from '../../../utils'
+import {mq} from '../../../common/utils'
 
 export const NewsStyle = css`
   .newsblock-closed-image {
