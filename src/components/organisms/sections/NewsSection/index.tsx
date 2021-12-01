@@ -1,15 +1,7 @@
 import {Button, IconButton} from '@chakra-ui/button'
 import {ChevronLeftIcon, ChevronRightIcon} from '@chakra-ui/icons'
 import {Image} from '@chakra-ui/image'
-import {
-  Box,
-  BoxProps,
-  Flex,
-  FlexProps,
-  Heading,
-  Spacer,
-  Text
-} from '@chakra-ui/layout'
+import {Box, BoxProps, Flex, Heading, Spacer, Text} from '@chakra-ui/layout'
 import {useBreakpointValue} from '@chakra-ui/media-query'
 import {fields} from '@snek-at/jaen-pages'
 import {AnimatePresence, motion} from 'framer-motion'
@@ -22,7 +14,6 @@ export interface NewsSectionProps {
 }
 
 /* 
-TODO: Fix left calculation.
 TODO: Implement window jumping to section on sent modal-link.
 */
 
@@ -82,11 +73,11 @@ const NewsSection = ({teaser}: NewsSectionProps) => {
               ;(!isSmall && (page?.children?.length || 0) <= 4) ||
               index === (page?.children?.length - 4 || 0) ||
               (isSmall &&
-                page?.children?.length - Math.floor(vw / 300) === index)
+                page?.children?.length -
+                  Math.floor(vw / (isSmall ? 300 : vw * 0.2)) ===
+                  index)
                 ? setDisabled(true)
                 : setDisabled(false)
-
-              const scroll = isSmall ? 320 : (vw - vw * 0.08) / 4
 
               console.log('centered', isCentered)
               return (
