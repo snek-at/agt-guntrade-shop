@@ -1,11 +1,8 @@
-import {Box, Heading} from '@chakra-ui/react'
-export interface IndexPageProps {
-  location: any
-}
+export interface IndexPageProps {}
 
 import NewsSection from '../components/organisms/sections/NewsSection'
 
-const IndexPage = (props: {location: any}) => {
+const IndexPage = () => {
   return <NewsSection teaser="This is the teaser." />
 }
 //#endregion

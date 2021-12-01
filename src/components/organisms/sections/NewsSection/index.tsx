@@ -20,7 +20,7 @@ TODO: Implement window jumping to section on sent modal-link.
 const MotionBox = motion<BoxProps>(Box)
 
 const NewsSection = ({teaser}: NewsSectionProps) => {
-  const [direction, setDirection] = React.useState('')
+  const [direction, setDirection] = React.useState('center')
   const [index, setIndex] = React.useState(0)
   const [disabled, setDisabled] = React.useState(true)
   const [isCentered, setIsCentered] = React.useState(true)
@@ -49,7 +49,7 @@ const NewsSection = ({teaser}: NewsSectionProps) => {
             isDisabled={index === 0 ? true : false}
             onClick={() => {
               setDirection('left')
-              setIndex(index - 1)
+              setIndex(index - 4)
             }}
             icon={<ChevronLeftIcon boxSize="50px" color="agt.red" />}
           />
@@ -66,12 +66,17 @@ const NewsSection = ({teaser}: NewsSectionProps) => {
                 document.documentElement.clientWidth || 0,
                 window.innerWidth || 0
               )
-              ;(page?.children?.length || 0) < 4 ||
+              ;(page?.children?.length || 0) <
+                Math.floor(vw / (isSmall ? 300 : vw * 0.2)) ||
               (isSmall && vw < (page?.children?.length || 0) * 350)
                 ? setIsCentered(true)
                 : setIsCentered(false)
-              ;(!isSmall && (page?.children?.length || 0) <= 4) ||
-              index === (page?.children?.length - 4 || 0) ||
+              ;(!isSmall &&
+                (page?.children?.length || 0) <=
+                  Math.floor(vw / (isSmall ? 300 : vw * 0.2))) ||
+              index >=
+                (page?.children?.length -
+                  Math.floor(vw / (isSmall ? 300 : vw * 0.2)) || 0) ||
               (isSmall &&
                 page?.children?.length -
                   Math.floor(vw / (isSmall ? 300 : vw * 0.2)) ===
@@ -208,7 +213,7 @@ const NewsSection = ({teaser}: NewsSectionProps) => {
             disabled={disabled}
             onClick={() => {
               setDirection('right')
-              setIndex(index + 1)
+              setIndex(index + 4)
             }}
           />
         </Box>
