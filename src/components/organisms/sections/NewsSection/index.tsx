@@ -1,10 +1,18 @@
 import {Button, IconButton} from '@chakra-ui/button'
 import {ChevronLeftIcon, ChevronRightIcon} from '@chakra-ui/icons'
 import {Image} from '@chakra-ui/image'
-import {Box, Flex, FlexProps, Heading, Spacer, Text} from '@chakra-ui/layout'
+import {
+  Box,
+  BoxProps,
+  Flex,
+  FlexProps,
+  Heading,
+  Spacer,
+  Text
+} from '@chakra-ui/layout'
 import {useBreakpointValue} from '@chakra-ui/media-query'
 import {fields} from '@snek-at/jaen-pages'
-import {motion} from 'framer-motion'
+import {AnimatePresence, motion} from 'framer-motion'
 import React from 'react'
 
 import NewsModal from '../../NewsModal'
@@ -18,7 +26,7 @@ TODO: Fix left calculation.
 TODO: Implement window jumping to section on sent modal-link.
 */
 
-const MotionFlex = motion<FlexProps>(Flex)
+const MotionBox = motion<BoxProps>(Box)
 
 const NewsSection = ({teaser}: NewsSectionProps) => {
   const [direction, setDirection] = React.useState('')
@@ -78,27 +86,22 @@ const NewsSection = ({teaser}: NewsSectionProps) => {
                 ? setDisabled(true)
                 : setDisabled(false)
 
-              const scroll = isSmall ? 320 : vw / 3
+              const scroll = isSmall ? 320 : (vw - vw * 0.08) / 4
 
+              console.log('centered', isCentered)
               return (
-                <MotionFlex
+                <Flex
                   minW="100%"
                   justifyContent={isCentered ? 'center' : 'flex-start'}
                   alignItems={isCentered ? 'center' : 'flex-start'}
                   initial={{left: 0}}
                   py="10"
-                  animate={index === 0 ? {left: 0} : direction}
-                  variants={{
-                    left: {
-                      transform: `translateX(${scroll * (index - 2)}px)`
-                    },
-                    right: {
-                      transform: `translateX(-${scroll * index}px)`
-                    }
-                  }}
-                  transition={{duration: 0.25}}
                   width="max-content">
-                  {page?.children.map((child: any) => {
+                  {page?.children.map((child: any, i: number) => {
+                    const mlFirst = useBreakpointValue({
+                      base: {ml: '3vw'},
+                      lg: {ml: '4.5rem'}
+                    })
                     const [isOpen, setIsOpen] = React.useState(false)
                     const onClose = () => {
                       setIsOpen(false)
@@ -127,41 +130,67 @@ const NewsSection = ({teaser}: NewsSectionProps) => {
                     const readTime = Math.ceil(text.length / 1200)
                     return (
                       <>
-                        <Box
-                          ml={{base: '5', lg: '16'}}
-                          _first={
-                            isCentered && !isSmall
-                              ? {ml: 0}
-                              : {base: {ml: '3vw'}, lg: {ml: '4.5rem'}}
-                          }
-                          boxShadow="lg"
-                          borderRadius="3px"
-                          onClick={() => setIsOpen(true)}
-                          maxW={{base: '300px', xl: '20vw'}}
-                          minH={{base: '390px', xl: 'max-content'}}
-                          maxH="fit-content">
-                          <Image
-                            objectFit="cover"
-                            alt="newspage-image"
-                            src={imageSrc}
-                            borderTopRadius="3px"
-                          />
-                          <Box p="3">
-                            <Heading textAlign="center" mb="3">
-                              {heading}
-                            </Heading>
-                            <Text noOfLines={3} mt="3">
-                              {text}
-                            </Text>
-                            <Flex mt="3">
-                              <Text mt="3" color="gray">
-                                {readTime} min
-                              </Text>
-                              <Spacer />
-                              <Button variant="solid">Mehr lesen</Button>
-                            </Flex>
-                          </Box>
-                        </Box>
+                        <AnimatePresence>
+                          {index + 4 > i && i - index >= 0 && (
+                            <MotionBox
+                              key={i}
+                              display="relative"
+                              ml={{base: '5', lg: '16'}}
+                              _first={
+                                isCentered && !isSmall ? {ml: 0} : mlFirst
+                              }
+                              boxShadow="lg"
+                              borderRadius="3px"
+                              onClick={() => setIsOpen(true)}
+                              maxW={{base: '300px', xl: '20vw'}}
+                              minH={{base: '390px', xl: '400px'}}
+                              custom={direction}
+                              initial="enter"
+                              animate="center"
+                              exit="exit"
+                              variants={{
+                                enter: (direction: string) => {
+                                  return {
+                                    x: direction === 'right' ? 100 : -100,
+                                    opacity: 0
+                                  }
+                                },
+                                center: {
+                                  opacity: 1,
+                                  x: 0
+                                },
+                                exit: (direction: string) => {
+                                  return {
+                                    x: direction === 'right' ? -100 : 100,
+                                    opacity: 0
+                                  }
+                                }
+                              }}
+                              transition={{duration: 0.5}}>
+                              <Image
+                                objectFit="cover"
+                                alt="newspage-image"
+                                src={imageSrc}
+                                borderTopRadius="3px"
+                              />
+                              <Box p="3">
+                                <Heading textAlign="center" mb="3">
+                                  {heading}
+                                </Heading>
+                                <Text noOfLines={3} mt="3">
+                                  {text}
+                                </Text>
+                                <Flex mt="3">
+                                  <Text mt="3" color="gray">
+                                    {readTime} min
+                                  </Text>
+                                  <Spacer />
+                                  <Button variant="solid">Mehr lesen</Button>
+                                </Flex>
+                              </Box>
+                            </MotionBox>
+                          )}
+                        </AnimatePresence>
                         <NewsModal
                           url={url}
                           isOpen={isOpen}
@@ -173,7 +202,7 @@ const NewsSection = ({teaser}: NewsSectionProps) => {
                       </>
                     )
                   })}
-                </MotionFlex>
+                </Flex>
               )
             }}
           />
