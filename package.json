@@ -2,7 +2,7 @@
   "name": "agt-guntrade-shop",
   "version": "1.2.0",
   "description": "A template repository for Jaen",
-  "homepage": "https://template.snek.at/",
+  "homepage": "https://agt-guntrade-shop.snek-at.snek.at/",
   "author": "Florian Kleber",
   "license": "EUPL-1.2",
   "main": "lib/index.js",
