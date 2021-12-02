@@ -9,6 +9,7 @@ import React from 'react'
 
 import NewsModal from '../../NewsModal'
 import {useWindowWidth} from '../../../../common/utils'
+import {useColorModeValue} from '@chakra-ui/color-mode'
 
 const MotionBox = motion<BoxProps>(Box)
 
@@ -18,6 +19,8 @@ const NewsSection = () => {
   const [disabled, setDisabled] = React.useState(true)
 
   const isSmall = useBreakpointValue({base: true, xl: false})
+  const buttonColor = useColorModeValue('agt.grayScheme', 'gray')
+
   const vw = useWindowWidth()
   const numOfCards = Math.floor(vw / (isSmall ? 320 : vw * 0.25))
   return (
@@ -152,7 +155,11 @@ const NewsSection = () => {
                                     {readTime} min
                                   </Text>
                                   <Spacer />
-                                  <Button variant="solid">Mehr lesen</Button>
+                                  <Button
+                                    variant="solid"
+                                    colorScheme={buttonColor}>
+                                    Mehr lesen
+                                  </Button>
                                 </Flex>
                               </Box>
                             </MotionBox>
