@@ -8,37 +8,29 @@ import {AnimatePresence, motion} from 'framer-motion'
 import React from 'react'
 
 import NewsModal from '../../NewsModal'
-
-export interface NewsSectionProps {
-  teaser: React.ReactNode
-}
-
-/* 
-TODO: Implement window jumping to section on sent modal-link.
-*/
+import {useWindowWidth} from '../../../../common/utils'
 
 const MotionBox = motion<BoxProps>(Box)
 
-const NewsSection = ({teaser}: NewsSectionProps) => {
+const NewsSection = () => {
   const [direction, setDirection] = React.useState('')
   const [index, setIndex] = React.useState(0)
   const [disabled, setDisabled] = React.useState(true)
 
-  const isSmall = useBreakpointValue({base: true, lg: false})
-  const vw = Math.max(
-    document.documentElement.clientWidth || 0,
-    window.innerWidth || 0
-  )
+  const isSmall = useBreakpointValue({base: true, xl: false})
+  const vw = useWindowWidth()
   const numOfCards = Math.floor(vw / (isSmall ? 320 : vw * 0.25))
   return (
     <>
-      <Box h="100vh" bg="red"></Box>
-
       <Box overflow="hidden" w="100%" id="news" mt="20">
         <Box textAlign="center">
           <Heading>Neuigkeiten und Informationen</Heading>
           <Box mt="3" mb="10" fontSize="20">
-            {teaser}
+            <fields.TextField
+              fieldName="newssection-teaser"
+              initValue="<p>some teaser text</p>"
+              rtf={false}
+            />
           </Box>
         </Box>
         <Box h="fit-content" position="relative">
@@ -196,7 +188,6 @@ const NewsSection = ({teaser}: NewsSectionProps) => {
             }}
           />
         </Box>
-        <Box h="100vh" bg="red"></Box>
       </Box>
     </>
   )
