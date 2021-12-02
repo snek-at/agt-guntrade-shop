@@ -20,18 +20,21 @@ TODO: Implement window jumping to section on sent modal-link.
 const MotionBox = motion<BoxProps>(Box)
 
 const NewsSection = ({teaser}: NewsSectionProps) => {
-  const [direction, setDirection] = React.useState('center')
+  const [direction, setDirection] = React.useState('')
   const [index, setIndex] = React.useState(0)
   const [disabled, setDisabled] = React.useState(true)
-  const [isCentered, setIsCentered] = React.useState(true)
 
   const isSmall = useBreakpointValue({base: true, lg: false})
-
+  const vw = Math.max(
+    document.documentElement.clientWidth || 0,
+    window.innerWidth || 0
+  )
+  const numOfCards = Math.floor(vw / (isSmall ? 320 : vw * 0.25))
   return (
     <>
-      <Box overflow="hidden" w="100%">
-        <Box h="100vh" bg="red"></Box>
+      <Box h="100vh" bg="red"></Box>
 
+      <Box overflow="hidden" w="100%" id="news" mt="20">
         <Box textAlign="center">
           <Heading>Neuigkeiten und Informationen</Heading>
           <Box mt="3" mb="10" fontSize="20">
@@ -49,7 +52,7 @@ const NewsSection = ({teaser}: NewsSectionProps) => {
             isDisabled={index === 0 ? true : false}
             onClick={() => {
               setDirection('left')
-              setIndex(index - 4)
+              setIndex(index - numOfCards)
             }}
             icon={<ChevronLeftIcon boxSize="50px" color="agt.red" />}
           />
@@ -61,43 +64,21 @@ const NewsSection = ({teaser}: NewsSectionProps) => {
                   ? text.substring(3, text.length - 4)
                   : ''
               }
-
-              const vw = Math.max(
-                document.documentElement.clientWidth || 0,
-                window.innerWidth || 0
-              )
-              ;(page?.children?.length || 0) <
-                Math.floor(vw / (isSmall ? 300 : vw * 0.2)) ||
-              (isSmall && vw < (page?.children?.length || 0) * 350)
-                ? setIsCentered(true)
-                : setIsCentered(false)
-              ;(!isSmall &&
-                (page?.children?.length || 0) <=
-                  Math.floor(vw / (isSmall ? 300 : vw * 0.2))) ||
-              index >=
-                (page?.children?.length -
-                  Math.floor(vw / (isSmall ? 300 : vw * 0.2)) || 0) ||
-              (isSmall &&
-                page?.children?.length -
-                  Math.floor(vw / (isSmall ? 300 : vw * 0.2)) ===
-                  index)
+              ;(!isSmall && (page?.children?.length || 0) <= numOfCards) ||
+              index >= (page?.children?.length - numOfCards || 0) ||
+              (isSmall && page?.children?.length - numOfCards === index)
                 ? setDisabled(true)
                 : setDisabled(false)
 
-              console.log('centered', isCentered)
               return (
                 <Flex
                   minW="100%"
-                  justifyContent={isCentered ? 'center' : 'flex-start'}
-                  alignItems={isCentered ? 'center' : 'flex-start'}
+                  justifyContent={'center'}
+                  alignItems={'center'}
                   initial={{left: 0}}
                   py="10"
                   width="max-content">
                   {page?.children.map((child: any, i: number) => {
-                    const mlFirst = useBreakpointValue({
-                      base: {ml: '3vw'},
-                      lg: {ml: '4.5rem'}
-                    })
                     const [isOpen, setIsOpen] = React.useState(false)
                     const onClose = () => {
                       setIsOpen(false)
@@ -111,7 +92,7 @@ const NewsSection = ({teaser}: NewsSectionProps) => {
                       }
                     }, [])
 
-                    const url = '/?' + child?.page?.slug
+                    const url = '/?' + child?.page?.slug + '#news'
                     const text = cleanFieldText(
                       child?.page?.fields?.['newspage-text']?.content?.text ||
                         '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>'
@@ -127,14 +108,12 @@ const NewsSection = ({teaser}: NewsSectionProps) => {
                     return (
                       <>
                         <AnimatePresence>
-                          {index + 4 > i && i - index >= 0 && (
+                          {index + numOfCards > i && i - index >= 0 && (
                             <MotionBox
+                              _first={{ml: 0}}
                               key={i}
                               display="relative"
-                              ml={{base: '5', lg: '16'}}
-                              _first={
-                                isCentered && !isSmall ? {ml: 0} : mlFirst
-                              }
+                              ml={{base: '5', lg: '3.5vw'}}
                               boxShadow="lg"
                               borderRadius="3px"
                               onClick={() => setIsOpen(true)}
@@ -213,7 +192,7 @@ const NewsSection = ({teaser}: NewsSectionProps) => {
             disabled={disabled}
             onClick={() => {
               setDirection('right')
-              setIndex(index + 4)
+              setIndex(index + numOfCards)
             }}
           />
         </Box>
