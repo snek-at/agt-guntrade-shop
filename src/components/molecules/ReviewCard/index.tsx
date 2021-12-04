@@ -118,7 +118,7 @@ const ReviewCard = ({
       </MotionBox>
       <Modal isOpen={isOpen} onClose={() => onClose()} isCentered>
         <ModalOverlay />
-        <ModalContent borderRadius="3px" width="40vw" h="52vh" p="8">
+        <ModalContent borderRadius="3px" width="40vw" maxH="52vh" p="8">
           <Text mb="3" overflowY="auto" css={style.Modal}>
             {reviewText}
           </Text>
