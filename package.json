@@ -63,6 +63,8 @@
     "@storybook/addon-actions": "^6.3.12",
     "@storybook/addon-essentials": "^6.3.12",
     "@storybook/addon-links": "^6.3.12",
+    "@storybook/builder-webpack5": "^6.3.12",
+    "@storybook/manager-webpack5": "^6.3.12",
     "@storybook/react": "^6.3.12",
     "babel-loader": "^8.2.3",
     "cz-conventional-changelog": "^3.3.0",
@@ -72,6 +74,9 @@
     "gh-pages": "^3.2.3",
     "prettier": "2.3.2",
     "typescript": "^4.4.2"
+  },
+  "resolutions": {
+    "webpack": "5.52.0"
   },
   "browserslist": {
     "production": [

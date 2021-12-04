@@ -1,34 +1,147 @@
-import {Box, Flex, Text} from '@chakra-ui/layout'
+//#region > Imports
+import {Box, BoxProps, Flex, Text} from '@chakra-ui/layout'
+import {Avatar} from '@chakra-ui/react'
 import React from 'react'
+import {IconContext} from '@react-icons/all-files'
+import {AiFillStar} from '@react-icons/all-files/ai/AiFillStar'
+import {Modal, ModalContent, ModalOverlay} from '@chakra-ui/modal'
 
+import * as style from './style'
+import {motion} from 'framer-motion'
+//#endregion
+
+//#region > Interfaces
 export interface ReviewCardProps {
-  reviewtext: React.ReactNode
-  reviewimage: React.ReactNode
-  reviewbio: React.ReactNode
+  reviewText: string
+  reviewImage: string
+  reviewRating: string
+  reviewName: string
+  reviewId: string
+  direction: string
+}
+//#endregion
+
+//#region > Framer Motion
+const MotionBox = motion<BoxProps>(Box)
+
+const variants = {
+  enter: (direction: string) => {
+    return {
+      x: direction === 'right' ? 100 : -100,
+      opacity: 0
+    }
+  },
+  center: {
+    opacity: 1,
+    x: 0
+  }
 }
 
-const ReviewCard = ({reviewbio, reviewimage, reviewtext}: ReviewCardProps) => {
-  const [lines, setLines] = React.useState(10)
+//#endregion
+
+//#region > Functions
+const ReviewCard = ({
+  reviewRating,
+  reviewImage,
+  reviewText,
+  reviewName,
+  reviewId,
+  direction
+}: ReviewCardProps) => {
+  const [isOpen, setIsOpen] = React.useState(false)
+
+  const queryString = window.location.search.substring(1)
+  React.useEffect(() => {
+    if (reviewId === queryString) {
+      setIsOpen(true)
+    }
+  }, [])
+
+  const onOpen = () => {
+    setIsOpen(true)
+    history.pushState('AGT-Guntrade Reviews', '', `/?${reviewId}`)
+  }
+  const onClose = () => {
+    setIsOpen(false)
+    history.pushState('AGT-Guntrade-Shop', '', '/')
+  }
+
+  const createReviewStars = (rating: number) => {
+    const stars = []
+    for (let i = 0; i < 5; i++) {
+      const color = rating <= i ? '#E2E8F0' : '#ef3340'
+
+      stars.push(
+        <IconContext.Provider value={{color: color, size: '25px'}}>
+          <AiFillStar />
+        </IconContext.Provider>
+      )
+    }
+    return stars
+  }
+
+  const stars = createReviewStars(parseInt(reviewRating))
   return (
-    <Box
-      color="white"
-      bg="gray.700"
-      border="2px"
-      borderColor="orange"
-      borderRadius="10px"
-      p="10"
-      minH="380px"
-      w={{base: '300px', md: '540px'}}
-      onClick={() => (lines === 10 ? setLines(100) : setLines(10))}>
-      <Text noOfLines={{base: lines, md: 100}}>{reviewtext}</Text>
-      <Flex direction={{base: 'column', md: 'row'}}>
-        <Box mx={{base: 'auto', md: '0'}}>{reviewimage}</Box>
-        <Box px={{base: '0', md: '5'}} pt="6">
-          {reviewbio}
-        </Box>
-      </Flex>
-    </Box>
+    <>
+      <MotionBox
+        _first={{ml: 0}}
+        ml="3.5vw"
+        minH="260px"
+        w={{base: '300px', xl: '20%'}}
+        borderRadius="3px"
+        boxShadow="lg"
+        p="5"
+        onClick={() => onOpen()}
+        custom={direction}
+        initial="enter"
+        animate="center"
+        variants={variants}
+        transition={{duration: 0.5}}>
+        <Text noOfLines={5}>{reviewText}</Text>
+        <Flex
+          justifyContent="center"
+          alignItems="center"
+          mt="3"
+          pt="3"
+          borderTop="1px"
+          borderColor="gray.200">
+          <Avatar src={reviewImage} alt="review-avatar" boxSize="75px" />
+          <Box ml="3" my="auto">
+            <Flex>{stars.map(star => star)}</Flex>
+            <Text textAlign="center" fontWeight="bold" mt="1">
+              {reviewName}
+            </Text>
+          </Box>
+        </Flex>
+      </MotionBox>
+      <Modal isOpen={isOpen} onClose={() => onClose()} isCentered>
+        <ModalOverlay />
+        <ModalContent borderRadius="3px" width="40vw" h="52vh" p="8">
+          <Text mb="3" overflowY="auto" css={style.Modal}>
+            {reviewText}
+          </Text>
+          <Flex
+            justifyContent="center"
+            alignItems="center"
+            mt="3"
+            pt="3"
+            borderTop="1px"
+            borderColor="gray.200">
+            <Avatar src={reviewImage} alt="review-avatar" boxSize="75px" />
+            <Box ml="3" my="auto">
+              <Flex>{stars.map(star => star)}</Flex>
+              <Text textAlign="center" fontWeight="bold" mt="1">
+                {reviewName}
+              </Text>
+            </Box>
+          </Flex>
+        </ModalContent>
+      </Modal>
+    </>
   )
 }
+//#endregion
 
+//#region > Exports
 export default ReviewCard
+//#endregion
