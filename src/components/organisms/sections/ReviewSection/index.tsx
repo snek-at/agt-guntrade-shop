@@ -10,10 +10,10 @@ import {useWindowWidth} from '../../../../common/utils'
 
 interface ReviewType {
   id: string
-  image: string
-  name: string
+  sourceImage: string
+  source: string
   rating: string
-  text: string
+  body: string
 }
 export interface ReviewSectionProps {
   heading: React.ReactNode
@@ -52,7 +52,7 @@ const ReviewSection = ({heading, teaser, data}: ReviewSectionProps) => {
           <IconButton
             position="absolute"
             left={{base: '10px', md: '30px'}}
-            top="50%"
+            top="45%"
             zIndex="2"
             variant="ghost"
             aria-label="left"
@@ -71,10 +71,10 @@ const ReviewSection = ({heading, teaser, data}: ReviewSectionProps) => {
                     <ReviewCard
                       direction={direction}
                       reviewId={review.id}
-                      reviewImage={review.image}
-                      reviewName={review.name}
+                      reviewImage={review.sourceImage}
+                      reviewName={review.source}
                       reviewRating={review.rating}
-                      reviewText={review.text}
+                      reviewText={review.body}
                     />
                   )}
                 </AnimatePresence>
@@ -84,7 +84,7 @@ const ReviewSection = ({heading, teaser, data}: ReviewSectionProps) => {
           <IconButton
             position="absolute"
             right={{base: '10px', md: '30px'}}
-            top="50%"
+            top="45%"
             zIndex="2"
             aria-label="right"
             variant="ghost"

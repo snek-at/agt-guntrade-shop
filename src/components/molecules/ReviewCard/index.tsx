@@ -97,7 +97,9 @@ const ReviewCard = ({
         animate="center"
         variants={variants}
         transition={{duration: 0.5}}>
-        <Text noOfLines={5}>{reviewText}</Text>
+        <Text noOfLines={5} minH="120px">
+          {reviewText}
+        </Text>
         <Flex
           justifyContent="center"
           alignItems="center"
@@ -120,13 +122,7 @@ const ReviewCard = ({
           <Text mb="3" overflowY="auto" css={style.Modal}>
             {reviewText}
           </Text>
-          <Flex
-            justifyContent="center"
-            alignItems="center"
-            mt="3"
-            pt="3"
-            borderTop="1px"
-            borderColor="gray.200">
+          <Flex mt="3" pt="3" borderTop="1px" borderColor="gray.200">
             <Avatar src={reviewImage} alt="review-avatar" boxSize="75px" />
             <Box ml="3" my="auto">
               <Flex>{stars.map(star => star)}</Flex>
