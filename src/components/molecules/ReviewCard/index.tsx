@@ -119,7 +119,7 @@ const ReviewCard = ({
       <Modal isOpen={isOpen} onClose={() => onClose()} isCentered>
         <ModalOverlay />
         <ModalContent borderRadius="3px" width="40vw" maxH="52vh" p="8">
-          <Text mb="3" overflowY="auto" css={style.Modal}>
+          <Text mb="3" overflowY="auto" pr="3" css={style.Modal}>
             {reviewText}
           </Text>
           <Flex mt="3" pt="3" borderTop="1px" borderColor="gray.200">
