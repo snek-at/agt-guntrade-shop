@@ -3,7 +3,7 @@ export interface IndexPageProps {}
 import NewsSection from '../components/organisms/sections/NewsSection'
 
 const IndexPage = () => {
-  return <NewsSection teaser="This is the teaser." />
+  return <NewsSection />
 }
 //#endregion
 
