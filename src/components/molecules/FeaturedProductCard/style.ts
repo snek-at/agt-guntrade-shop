@@ -3,7 +3,6 @@ import {css} from '@emotion/react'
 export const Borderline = css`
   display: block;
   position: relative;
-  text-align: center;
   border-collapse: collapse;
   text-decoration: none;
   transition: all 150ms;

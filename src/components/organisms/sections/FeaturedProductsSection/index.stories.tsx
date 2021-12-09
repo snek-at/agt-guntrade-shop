@@ -16,7 +16,7 @@ Section.args = {
   products: [
     {
       name: 'Weapon',
-      description: 'This is a weapon.',
+      description: 'This is a weapon.;Kal.9×19',
       price: 11.33,
       reducedprice: 12,
       image:
@@ -24,7 +24,7 @@ Section.args = {
     },
     {
       name: 'Weapon',
-      description: 'This is a weapon.',
+      description: 'This is a weapon.;Kal.9×19',
       price: 11.33,
       reducedprice: 12,
       image:
@@ -32,7 +32,7 @@ Section.args = {
     },
     {
       name: 'Weapon',
-      description: 'This is a weapon.',
+      description: 'This is a weapon.;Kal.9×19',
       price: 11.33,
       reducedprice: 12,
       image:
@@ -40,7 +40,7 @@ Section.args = {
     },
     {
       name: 'Weapon',
-      description: 'This is a weapon.',
+      description: 'This is a weapon.;Kal.9×19',
       price: 11.33,
       reducedprice: 12,
       image:
@@ -48,7 +48,7 @@ Section.args = {
     },
     {
       name: 'Weapon',
-      description: 'This is a weapon.',
+      description: 'This is a weapon.;Kal.9×19',
       price: 11.33,
       reducedprice: 12,
       image:
@@ -56,7 +56,7 @@ Section.args = {
     },
     {
       name: 'Weapon',
-      description: 'This is a weapon.',
+      description: 'This is a weapon.;Kal.9×19',
       price: 11.33,
       reducedprice: 12,
       image:
@@ -64,7 +64,7 @@ Section.args = {
     },
     {
       name: 'Weapon',
-      description: 'This is a weapon.',
+      description: 'This is a weapon.;Kal.9×19',
       price: 11.33,
       reducedprice: 12,
       image:
@@ -72,7 +72,7 @@ Section.args = {
     },
     {
       name: 'Weapon',
-      description: 'This is a weapon.',
+      description: 'This is a weapon.;Kal.9×19',
       price: 11.33,
       reducedprice: 12,
       image:

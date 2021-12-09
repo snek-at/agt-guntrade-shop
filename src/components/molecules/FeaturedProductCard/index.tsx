@@ -1,6 +1,6 @@
 import {Button} from '@chakra-ui/button'
 import {Image} from '@chakra-ui/image'
-import {Box, Flex, Heading, Spacer, Text} from '@chakra-ui/layout'
+import {Badge, Box, Flex, Heading, Spacer, Text} from '@chakra-ui/layout'
 import React from 'react'
 
 import {Borderline} from './style'
@@ -32,7 +32,12 @@ const FeaturedProductCard = ({
       <Image src={image} alt={name} borderRadius="3px" mt="5" />
       <Box p="2.5">
         <Heading>{name}</Heading>
-        <Text minH="3rem">{description}</Text>
+        <Box minH="3rem">
+          <Text noOfLines={3}>{description.split(';')[0]}</Text>
+          <Badge variant="solid" bg="agt.red" borderRadius="5px">
+            {description.split(';')[1]}
+          </Badge>
+        </Box>
         <Flex mt="4">
           <Text
             mt={sale ? '2' : '0.5'}
