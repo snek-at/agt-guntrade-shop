@@ -17,6 +17,9 @@ Card.args = {
   description: 'This is a weapon.',
   price: 11.33,
   reducedprice: 12,
-  image:
+  images: [
+    'https://images.guns.com/prod/2020/11/24/5fbd75534c509cbc64befaf8cbb8b775fc70475751dc5.jpg?imwidth=600',
+    'https://images.guns.com/prod/2020/11/24/5fbd75534c509cbc64befaf8cbb8b775fc70475751dc5.jpg?imwidth=600',
     'https://images.guns.com/prod/2020/11/24/5fbd75534c509cbc64befaf8cbb8b775fc70475751dc5.jpg?imwidth=600'
+  ]
 }

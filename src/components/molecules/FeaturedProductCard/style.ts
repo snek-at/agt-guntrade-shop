@@ -1,54 +1,30 @@
 import {css} from '@emotion/react'
 
-export const Borderline = css`
+const transform = (visible: boolean) => (visible ? 'scale(1.03)' : 'none')
+const width = (visible: boolean) => (visible ? '100%' : '50%')
+const margin = (visible: boolean) => (visible ? '-50%' : '-25%')
+const borderColor = (visible: boolean) => (visible ? '#ef3340' : '#e6e6e9')
+
+export const borderline = (visible: boolean) => css`
   display: block;
   position: relative;
   border-collapse: collapse;
   text-decoration: none;
   transition: all 150ms;
-
-  &:before {
-    transition: all 250ms;
-    position: absolute;
-    content: '';
-    width: 100%;
-    height: 50%;
-    left: 50%;
-    margin-left: -50%;
-    top: 25%;
-    border-color: #e6e6e9;
-    border-style: solid;
-    border-width: 0 3px;
-    border-radius: 3px;
-  }
+  transform: ${transform(visible)};
 
   &:after {
     transition: all 250ms;
     position: absolute;
     content: '';
-    width: 50%;
+    width: ${width(visible)};
     height: 100%;
     left: 50%;
-    margin-left: -25%;
+    margin-left: ${margin(visible)};
     top: 0;
-    border-color: #e6e6e9;
+    border-color: ${borderColor(visible)};
     border-style: solid;
-    border-width: 3px 0;
+    border-width: 2px 0;
     border-radius: 3px;
-  }
-
-  &:hover {
-    transform: scale(1.03);
-    &:after {
-      width: 100%;
-      margin-left: -50%;
-      border-color: #ef3340;
-    }
-
-    &:before {
-      height: 100%;
-      top: 0%;
-      border-color: #ef3340;
-    }
   }
 `
