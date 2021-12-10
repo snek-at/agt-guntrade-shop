@@ -20,7 +20,7 @@ const variants = {
   intial: (direction: string) =>
     direction === 'left' ? {display: 'none'} : {display: 'none'},
   enter: (direction: string) =>
-    direction === 'left' ? {display: 'box', x: -130} : {display: 'box', x: 130},
+    direction === 'left' ? {display: 'box', x: -129} : {display: 'box', x: 129},
   exit: {display: 'none'}
 }
 
@@ -48,7 +48,7 @@ const FeaturedProductCard = ({
   return (
     <Flex
       position="relative"
-      w={{base: '300px', lg: '20%'}}
+      w={{base: '300px', xl: '20%'}}
       onMouseEnter={() => setVisible(true)}
       onMouseLeave={() => setVisible(false)}>
       {visible && (
@@ -59,11 +59,12 @@ const FeaturedProductCard = ({
           right={direction === 'left' ? 'none' : '0px'}
           borderWidth="2px"
           borderColor="agt.red"
-          borderLeftRadius="3px"
+          borderLeftRadius={direction === 'left' ? '3px' : '0px'}
+          borderTopRightRadius={direction === 'left' ? '0px' : '3px'}
+          borderBottomRightRadius={direction === 'left' ? '0px' : '3px'}
           top="-1.5%"
           h="103%"
-          py="3"
-          pl="3"
+          p="3"
           bg="agt.lightgray"
           position="absolute"
           zIndex="2"
@@ -72,28 +73,32 @@ const FeaturedProductCard = ({
           animate="enter"
           exit="exit"
           custom={direction}>
-          <Box bg="white" p="2" mr="2" borderRadius="3px">
-            {images.map((image, index) => {
-              if (index !== imageIndex) {
-                return (
-                  <Image
-                    onClick={() => setImageIndex(index)}
-                    w="100px"
-                    src={image}
-                    alt={name}
-                    mb="4"
-                    _last={{mb: 0}}
-                  />
-                )
-              }
-            })}
-          </Box>
+          {images.map((image, index) => {
+            if (index !== imageIndex) {
+              return (
+                <Image
+                  cursor="pointer"
+                  pointerEvents="all"
+                  onClick={() => setImageIndex(index)}
+                  w="100px"
+                  src={image}
+                  alt={name}
+                  mb="3"
+                  _last={{mb: 0}}
+                  bg="white"
+                  p="2"
+                  borderRadius="3px"
+                />
+              )
+            }
+          })}
         </MotionBox>
       )}
       <Box
         css={borderline(visible)}
         transform={visible ? 'scale(1.03)' : 'none'}
         borderX="none"
+        cursor="pointer"
         bg="agt.lightgray"
         p="3"
         borderRadius="3px"
@@ -123,7 +128,11 @@ const FeaturedProductCard = ({
               <></>
             )}
             <Spacer />
-            <Button colorScheme="agt.grayScheme">Jetzt kaufen</Button>
+          </Flex>
+          <Flex justifyContent="flex-end" alignItems="flex-end">
+            <Button colorScheme="agt.grayScheme" _hover={{bg: '#424240'}}>
+              Zum Produkt
+            </Button>
           </Flex>
         </Box>
       </Box>

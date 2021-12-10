@@ -20,7 +20,7 @@ const FeaturedProductsSection = ({products}: FeaturedProductsSectionProps) => {
               price={product.price}
               reducedprice={product.reducedprice}
               images={product.images}
-              direction={index < 1 || index === 4 ? 'rigth' : 'left'}
+              direction={index === 0 || index === 4 ? 'rigth' : 'left'}
             />
           </>
         ))}
