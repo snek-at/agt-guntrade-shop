@@ -1,4 +1,5 @@
 import {extendTheme} from '@chakra-ui/react'
+import {mode} from '@chakra-ui/theme-tools'
 
 const theme = {
   colors: {
@@ -13,6 +14,13 @@ const theme = {
         200: '#1f1f1d'
       }
     }
+  },
+  styles: {
+    global: (props: any) => ({
+      body: {
+        bg: mode('white', '#1d1f21')(props)
+      }
+    })
   }
 }
 

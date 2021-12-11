@@ -97,7 +97,7 @@ jobs:
 
       https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsid
       - name: Install and Build 🔧
-       run: |
+        run: |
           git pull
           git checkout main
           yarn install
