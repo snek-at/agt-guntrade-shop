@@ -5,7 +5,8 @@ import {
   Flex,
   Text,
   Heading,
-  useColorMode
+  useColorMode,
+  Button
 } from '@chakra-ui/react'
 
 import * as style from './style'
@@ -33,7 +34,28 @@ const AboutSection = ({
         width={'50%'}
         insetY={0}
         right={0}>
-        <style.BackgroundImage>{backgroundimage}</style.BackgroundImage>
+        <Flex
+          direction="column"
+          position="absolute"
+          right="0"
+          width="100%"
+          height="100%">
+          <Box
+            zIndex="1"
+            bgGradient="linear(to-b, white 10%, transparent)"
+            w="100%"
+            h="50px"
+          />
+          <style.BackgroundImage>{backgroundimage}</style.BackgroundImage>
+          <Box
+            position="absolute"
+            bottom="0"
+            zIndex="1"
+            bgGradient="linear(to-t, white 10%, transparent)"
+            w="100%"
+            h="50px"
+          />
+        </Flex>
         <Flex
           bgGradient="linear(to-r, white 10%, transparent)"
           w={'full'}
@@ -47,13 +69,16 @@ const AboutSection = ({
             flex={1}
             justify={{lg: 'center'}}
             py={{base: 4, md: 20, xl: 60}}>
-            <Box mb="5">
+            <Box>
               <Heading mb={5} fontSize={{base: '3xl', md: '5xl'}}>
                 {heading}
               </Heading>
               <Text fontSize={'2xl'}>{teaser}</Text>
             </Box>
-            <Box>{text}</Box>
+            <Box py="3">{text}</Box>
+            <Button colorScheme="agt.grayScheme" w="fit-content">
+              Mehr über uns
+            </Button>
           </Stack>
         </Stack>
       </Container>
