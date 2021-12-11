@@ -1,7 +1,7 @@
 import React from 'react'
 
 import HeroSection from '../components/organisms/sections/HeroSection'
-import FeaturedProductsSection from '../components/organisms/sections/FeaturedProductsSection'
+import FeaturedProductsSection from '../components/organisms/sections/FeaturedProductsSection/2'
 
 export interface IndexPageProps {}
 
