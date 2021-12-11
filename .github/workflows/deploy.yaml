@@ -97,11 +97,7 @@ jobs:
 
       https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsid
       - name: Install and Build 🔧
-<<<<<<< HEAD
-       run: |
-=======
         run: |
->>>>>>> add-newssection
           git pull
           git checkout main
           yarn install
