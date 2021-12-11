@@ -142,6 +142,7 @@ const FeaturedProductCard = ({
           <Flex justifyContent="flex-end" alignItems="flex-end">
             <Button
               postition="absolute"
+              zIndex="2"
               bottom="0"
               colorScheme="agt.grayScheme"
               _hover={{bg: '#424240'}}>
