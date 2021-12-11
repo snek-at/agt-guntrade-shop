@@ -1,11 +1,10 @@
 import React from 'react'
-import {Container, Box, Flex, Image, ImageProps, Center} from '@chakra-ui/react'
+import {Container, Box, Flex} from '@chakra-ui/react'
 
 import BulletShowcase from '../../BulletShowcase'
 import CategoryShowcase from '../../CategoryShowcase'
 import AccessorieShowcase from '../../AccessorieShowcase'
 import WeaponShowcase from '../../WeaponShowcase'
-import {motion} from 'framer-motion'
 
 import {StaticImage} from 'gatsby-plugin-image'
 
