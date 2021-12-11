@@ -63,8 +63,8 @@ const FeaturedProductCard = ({
           borderLeftRadius={direction === 'left' ? '3px' : '0px'}
           borderTopRightRadius={direction === 'left' ? '0px' : '3px'}
           borderBottomRightRadius={direction === 'left' ? '0px' : '3px'}
-          mt="-1.94999%"
-          h="102.86%"
+          mt="-2%"
+          h="103%"
           p="3"
           bg="white"
           position="absolute"
@@ -78,8 +78,10 @@ const FeaturedProductCard = ({
             if (index !== imageIndex) {
               return (
                 <Image
-                  pointerEvents="all"
+                  position="relative"
+                  zIndex="3"
                   cursor="pointer"
+                  pointerEvents="all"
                   onClick={() => setImageIndex(index)}
                   w="100px"
                   src={image}
