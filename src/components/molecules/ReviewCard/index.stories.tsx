@@ -1,4 +1,3 @@
-import {Avatar} from '@chakra-ui/avatar'
 import {Story, Meta} from '@storybook/react'
 
 import ReviewCard, {ReviewCardProps} from '.'

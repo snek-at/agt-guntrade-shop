@@ -15,10 +15,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/schett-net/agt-guntrade-shop.git"
+    "url": "git+https://github.com/snek-at/agt-guntrade-shop.git"
   },
   "bugs": {
-    "url": "https://github.com/schett-net/agt-guntrade-shop/issues"
+    "url": "https://github.com/snek-at/agt-guntrade-shop/issues"
   },
   "scripts": {
     "build": "gatsby build",
@@ -56,6 +56,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
+    "react-magnetic-di": "^2.2.6",
     "sharp": "^0.29.1"
   },
   "devDependencies": {

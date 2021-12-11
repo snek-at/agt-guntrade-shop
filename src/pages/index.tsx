@@ -1,12 +1,17 @@
+//#region > Imports
 import {Box} from '@chakra-ui/react'
 import {fields} from '@snek-at/jaen-pages'
-import {graphql, useStaticQuery} from 'gatsby'
+import {graphql} from 'gatsby'
 
+import HeroSection from '../components/organisms/sections/HeroSection'
 import ReviewSection from '../components/organisms/sections/ReviewSection'
+//#endregion
 
+//#region > Functions
 const IndexPage = ({data}) => {
   return (
     <Box>
+      <HeroSection />
       <ReviewSection
         heading={
           <fields.TextField
@@ -30,7 +35,6 @@ const IndexPage = ({data}) => {
 //#endregion
 
 //#region > Exports
-
 export const query = graphql`
   query {
     allGoogleReview {

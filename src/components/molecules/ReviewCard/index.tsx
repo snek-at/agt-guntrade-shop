@@ -5,6 +5,7 @@ import React from 'react'
 import {IconContext} from '@react-icons/all-files'
 import {AiFillStar} from '@react-icons/all-files/ai/AiFillStar'
 import {Modal, ModalContent, ModalOverlay} from '@chakra-ui/modal'
+import {Button} from '@chakra-ui/button'
 
 import * as style from './style'
 import {motion} from 'framer-motion'
@@ -97,13 +98,15 @@ const ReviewCard = ({
         animate="center"
         variants={variants}
         transition={{duration: 0.5}}>
-        <Text noOfLines={5} minH="120px">
+        <Text noOfLines={4} minH="100px">
           {reviewText}
         </Text>
+        <Flex alignItems="flex-end" justifyContent="flex-end">
+          <Button variant="ghost">Mehr lesen</Button>
+        </Flex>
         <Flex
           justifyContent="center"
           alignItems="center"
-          mt="3"
           pt="3"
           borderTop="1px"
           borderColor="gray.200">
@@ -118,7 +121,7 @@ const ReviewCard = ({
       </MotionBox>
       <Modal isOpen={isOpen} onClose={() => onClose()} isCentered>
         <ModalOverlay />
-        <ModalContent borderRadius="3px" width="40vw" maxH="52vh" p="8">
+        <ModalContent borderRadius="3px" width="40vw" maxH="60vh" p="8">
           <Text mb="3" overflowY="auto" pr="3" css={style.Modal}>
             {reviewText}
           </Text>

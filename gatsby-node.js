@@ -5,6 +5,52 @@ exports.onPreInit = () => console.log('Loading google reviews')
 
 const NODE_TYPE = 'GoogleReview'
 
+const request = async params => {
+  const response = await axios
+    .get('https://api.scaleserp.com/search', {
+      params
+    })
+    .catch(error => {
+      throw new Error(`Error fetching results from ScaleSerp API: ${error}`)
+    })
+
+  if (!response || !response.data)
+    throw new Error(`Error fetching results from ScaleSerp API:`)
+  return response
+}
+
+const createReviewNodes = (
+  createNode,
+  createNodeId,
+  createContentDigest,
+  response,
+  requestCount
+) => {
+  const reviews = response.data.place_reviews_results || []
+  reviews.forEach((review, i) => {
+    const rating = review.rating
+    const position = review.positon
+    if (rating >= 3) {
+      createNode({
+        ...review,
+        positon: position + 10 * requestCount,
+        rating: rating,
+        sourceImage: review.source_image,
+        sourceLink: review.source_link,
+        id: createNodeId(`${NODE_TYPE}-${i}`),
+        test: true,
+        parent: null,
+        children: [],
+        internal: {
+          type: NODE_TYPE,
+          content: JSON.stringify(review),
+          contentDigest: createContentDigest(review)
+        }
+      })
+    }
+  })
+}
+
 exports.sourceNodes = async ({actions, createNodeId, createContentDigest}) => {
   const {createNode} = actions
 
@@ -25,7 +71,7 @@ exports.sourceNodes = async ({actions, createNodeId, createContentDigest}) => {
     )
   }
 
-  const params = {
+  let params = {
     api_key: apiKey,
     search_type: 'place_reviews',
     place_id: placeId,
@@ -33,34 +79,8 @@ exports.sourceNodes = async ({actions, createNodeId, createContentDigest}) => {
     gl: 'at'
   }
 
-  const response = await axios
-    .get('https://api.scaleserp.com/search', {
-      params
-    })
-    .catch(error => {
-      throw new Error(`Error fetching results from ScaleSerp API: ${error}`)
-    })
-
-  if (!response || !response.data)
-    throw new Error(`Error fetching results from ScaleSerp API:`)
-
-  const reviews = response.data.place_reviews_results || []
-  reviews.forEach((review, i) => {
-    createNode({
-      ...review,
-      sourceImage: review.source_image,
-      sourceLink: review.source_link,
-      id: createNodeId(`${NODE_TYPE}-${i}`),
-      test: true,
-      parent: null,
-      children: [],
-      internal: {
-        type: NODE_TYPE,
-        content: JSON.stringify(review),
-        contentDigest: createContentDigest(review)
-      }
-    })
-  })
+  const response = await request(params)
+  createReviewNodes(createNode, createNodeId, createContentDigest, response, 0)
 }
 
 exports.createSchemaCustomization = ({actions}) => {
@@ -73,9 +93,7 @@ exports.createSchemaCustomization = ({actions}) => {
       date: String
       sourceLink: String
       sourceImage: String
-      position: Int
       source: String
-      position: Int
     }
   `
 

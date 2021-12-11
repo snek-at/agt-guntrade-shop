@@ -44,7 +44,7 @@ const ReviewSection = ({heading, teaser, data}: ReviewSectionProps) => {
       <Box overflow="hidden" w="100%" id="reviews" mt="20">
         <Box textAlign="center">
           <Heading>{heading}</Heading>
-          <Box mt="3" mb="10" fontSize="20">
+          <Box mt="3" fontSize="20">
             {teaser}
           </Box>
         </Box>
