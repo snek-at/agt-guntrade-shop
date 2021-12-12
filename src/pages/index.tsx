@@ -3,8 +3,10 @@ import {Box} from '@chakra-ui/react'
 import {fields} from '@snek-at/jaen-pages'
 import {graphql} from 'gatsby'
 
+import NewsSection from '../components/organisms/sections/NewsSection'
 import HeroSection from '../components/organisms/sections/HeroSection'
 import ReviewSection from '../components/organisms/sections/ReviewSection'
+import FeaturedProductsSection from '../components/organisms/sections/FeaturedProductsSection/2'
 //#endregion
 
 //#region > Functions
@@ -12,6 +14,99 @@ const IndexPage = ({data}) => {
   return (
     <Box>
       <HeroSection />
+      <NewsSection />
+      <FeaturedProductsSection
+        products={[
+          {
+            name: 'Weapon',
+            description: 'This is a weapon.;Kal.9×19',
+            price: 11.33,
+            reducedprice: 12,
+            images: [
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png'
+            ]
+          },
+          {
+            name: 'Weapon',
+            description: 'This is a weapon.;Kal.9×19',
+            price: 11.33,
+            reducedprice: 12,
+            images: [
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png'
+            ]
+          },
+          {
+            name: 'Weapon',
+            description: 'This is a weapon.;Kal.9×19',
+            price: 11.33,
+            reducedprice: 12,
+            images: [
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png'
+            ]
+          },
+          {
+            name: 'Weapon',
+            description: 'This is a weapon.;Kal.9×19',
+            price: 11.33,
+            reducedprice: 12,
+            images: [
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png'
+            ]
+          },
+          {
+            name: 'Weapon',
+            description: 'This is a weapon.;Kal.9×19',
+            price: 11.33,
+            reducedprice: 12,
+            images: [
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png'
+            ]
+          },
+          {
+            name: 'Weapon',
+            description: 'This is a weapon.;Kal.9×19',
+            price: 11.33,
+            reducedprice: 12,
+            images: [
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png'
+            ]
+          },
+          {
+            name: 'Weapon',
+            description: 'This is a weapon.;Kal.9×19',
+            price: 11.33,
+            reducedprice: 12,
+            images: [
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png'
+            ]
+          },
+          {
+            name: 'Weapon',
+            description: 'This is a weapon.;Kal.9×19',
+            price: 11.33,
+            reducedprice: 12,
+            images: [
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png'
+            ]
+          }
+        ]}
+      />{' '}
       <ReviewSection
         heading={
           <fields.TextField
