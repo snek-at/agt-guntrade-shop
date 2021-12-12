@@ -1,55 +1,148 @@
-import AboutSection from '../components/organisms/sections/AboutSection'
+//#region > Imports
+import {Box} from '@chakra-ui/react'
 import {fields} from '@snek-at/jaen-pages'
+import {graphql} from 'gatsby'
 
-export interface IndexPageProps {}
+import NewsSection from '../components/organisms/sections/NewsSection'
+import HeroSection from '../components/organisms/sections/HeroSection'
+import ReviewSection from '../components/organisms/sections/ReviewSection'
+import FeaturedProductsSection from '../components/organisms/sections/FeaturedProductsSection/2'
+//#endregion
 
-const IndexPage = ({}: IndexPageProps) => {
+//#region > Functions
+const IndexPage = ({data}) => {
   return (
-    <AboutSection
-      heading={
-        <fields.TextField
-          fieldName="about-heading"
-          initValue="<p>I'm a heading</p>"
-          rtf={false}
-        />
-      }
-      teaser={
-        <fields.TextField
-          fieldName="about-teaser"
-          initValue="<p>I'm a teaser</p>"
-          rtf={false}
-        />
-      }
-      text={
-        <fields.TextField
-          fieldName="about-text"
-          initValue="
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-              veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-              commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-              velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-              cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-              est laborum.
-            </p>"
-        />
-      }
-      backgroundimage={
-        <fields.ImageField
-          fieldName="about-image"
-          initValue={{
-            src: 'https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832_960_720.jpg',
-            alt: 'about-image'
-          }}
-          className="backgroundimage"
-        />
-      }
-    />
+    <Box>
+      <HeroSection />
+      <NewsSection />
+      <FeaturedProductsSection
+        products={[
+          {
+            name: 'Weapon',
+            description: 'This is a weapon.;Kal.9×19',
+            price: 11.33,
+            reducedprice: 12,
+            images: [
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png'
+            ]
+          },
+          {
+            name: 'Weapon',
+            description: 'This is a weapon.;Kal.9×19',
+            price: 11.33,
+            reducedprice: 12,
+            images: [
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png'
+            ]
+          },
+          {
+            name: 'Weapon',
+            description: 'This is a weapon.;Kal.9×19',
+            price: 11.33,
+            reducedprice: 12,
+            images: [
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png'
+            ]
+          },
+          {
+            name: 'Weapon',
+            description: 'This is a weapon.;Kal.9×19',
+            price: 11.33,
+            reducedprice: 12,
+            images: [
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png'
+            ]
+          },
+          {
+            name: 'Weapon',
+            description: 'This is a weapon.;Kal.9×19',
+            price: 11.33,
+            reducedprice: 12,
+            images: [
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png'
+            ]
+          },
+          {
+            name: 'Weapon',
+            description: 'This is a weapon.;Kal.9×19',
+            price: 11.33,
+            reducedprice: 12,
+            images: [
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png'
+            ]
+          },
+          {
+            name: 'Weapon',
+            description: 'This is a weapon.;Kal.9×19',
+            price: 11.33,
+            reducedprice: 12,
+            images: [
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png'
+            ]
+          },
+          {
+            name: 'Weapon',
+            description: 'This is a weapon.;Kal.9×19',
+            price: 11.33,
+            reducedprice: 12,
+            images: [
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png'
+            ]
+          }
+        ]}
+      />{' '}
+      <ReviewSection
+        heading={
+          <fields.TextField
+            fieldName="review-heading"
+            initValue="<p>I'm a heading.</p>"
+            rtf={false}
+          />
+        }
+        teaser={
+          <fields.TextField
+            fieldName="review-teaser"
+            initValue="<p>I'm a teaser</p>"
+            rtf={false}
+          />
+        }
+        data={data.allGoogleReview.nodes}
+      />
+    </Box>
   )
 }
 //#endregion
 
 //#region > Exports
+export const query = graphql`
+  query {
+    allGoogleReview {
+      nodes {
+        id
+        rating
+        body
+        sourceImage
+        source
+      }
+    }
+  }
+`
+
 export default IndexPage
 //#endregion
