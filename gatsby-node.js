@@ -52,6 +52,8 @@ const createReviewNodes = (
 }
 
 exports.sourceNodes = async ({actions, createNodeId, createContentDigest}) => {
+  dotenv.config()
+
   const {createNode} = actions
 
   const apiKey = process.env.APIKEY
