@@ -39,8 +39,9 @@ const AboutSection = ({
           position="absolute"
           right="0"
           width="100%"
-          height="100%">
+          h="100%">
           <Box
+            position="absolute"
             zIndex="1"
             bgGradient="linear(to-b, white 10%, transparent)"
             w="100%"

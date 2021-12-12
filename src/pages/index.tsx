@@ -147,6 +147,16 @@ const IndexPage = ({data}) => {
             rtf={false}
           />
         }
+        backgroundimage={
+          <fields.ImageField
+            fieldName="about-image"
+            initValue={{
+              src: 'https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832_960_720.jpg',
+              alt: 'about-image'
+            }}
+            className="backgroundimage"
+          />
+        }
       />
     </Box>
   )
