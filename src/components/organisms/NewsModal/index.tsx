@@ -34,7 +34,14 @@ export const NewsModal = ({
     history.pushState('AGT-Guntrade News', '', url)
   }
   return (
-    <Modal isOpen={isOpen} onClose={() => onClose()}>
+    <Modal
+      isOpen={isOpen}
+      onClose={() => {
+        onClose()
+        setShare(false)
+      }}
+      isCentered
+      scrollBehavior="inside">
       <ModalOverlay />
       <ModalContent
         borderRadius="3px"
