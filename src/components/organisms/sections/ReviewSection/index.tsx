@@ -1,10 +1,10 @@
-import {IconButton} from '@chakra-ui/button'
 import {ChevronLeftIcon, ChevronRightIcon} from '@chakra-ui/icons'
-import {Box, Flex, Heading} from '@chakra-ui/layout'
+import {Box, Circle, Flex, Heading} from '@chakra-ui/layout'
 import {useBreakpointValue} from '@chakra-ui/media-query'
 import {AnimatePresence} from 'framer-motion'
 import React from 'react'
 
+import {ReviewStyle} from './style'
 import ReviewCard from '../../../molecules/ReviewCard'
 import {useWindowWidth} from '../../../../common/utils'
 
@@ -24,7 +24,7 @@ export interface ReviewSectionProps {
 const ReviewSection = ({heading, teaser, data}: ReviewSectionProps) => {
   const [direction, setDirection] = React.useState('')
   const [index, setIndex] = React.useState(0)
-  const [disabled, setDisabled] = React.useState(true)
+  const [isInvisible, setIsInvisible] = React.useState(true)
 
   const isSmall = useBreakpointValue({base: true, xl: false})
 
@@ -35,9 +35,31 @@ const ReviewSection = ({heading, teaser, data}: ReviewSectionProps) => {
     ;(!isSmall && data.length <= numOfCards) ||
     index >= (data.length - numOfCards || 0) ||
     (isSmall && data.length - numOfCards === index)
-      ? setDisabled(true)
-      : setDisabled(false)
+      ? setIsInvisible(true)
+      : setIsInvisible(false)
   }, [index, numOfCards])
+
+  const mobile = useBreakpointValue({
+    base: {
+      drag: 'x',
+      dragConstraints: {left: 0, right: 0},
+      onDragEnd: (event, info) => {
+        if (info.offset.x > 0) {
+          if (index !== 0) {
+            setDirection('left')
+            setIndex(index - numOfCards)
+          }
+        } else {
+          if (!isInvisible) {
+            setDirection('right')
+            setIndex(index + numOfCards)
+          }
+        }
+      }
+    },
+    md: {}
+  })
+  const isMobile = useBreakpointValue({base: true, md: false})
 
   return (
     <>
@@ -48,27 +70,42 @@ const ReviewSection = ({heading, teaser, data}: ReviewSectionProps) => {
             {teaser}
           </Box>
         </Box>
-        <Box h="fit-content" position="relative">
-          <IconButton
+        <Box
+          h="fit-content"
+          position="relative"
+          css={ReviewStyle(!(index === 0), !isInvisible)}>
+          <Circle
+            className="button1"
+            size="50px"
+            centerContent
+            bg="blackAlpha.300"
+            display={isMobile && index !== 0 ? 'block' : 'none'}
             position="absolute"
             left={{base: '10px', md: '30px'}}
             top="45%"
             zIndex="2"
-            variant="ghost"
-            aria-label="left"
-            isDisabled={index === 0 ? true : false}
             onClick={() => {
               setDirection('left')
               setIndex(index - numOfCards)
-            }}
-            icon={<ChevronLeftIcon boxSize="50px" color="agt.red" />}
-          />
-          <Flex justifyContent="center" alignItems="center" py="10">
+            }}>
+            <ChevronLeftIcon
+              color="white"
+              boxSize="50px"
+              position="relative"
+              zIndex="3"
+            />
+          </Circle>
+          <Flex
+            justifyContent="center"
+            alignItems="center"
+            py="10"
+            minH="300px">
             {data.map((review, i) => {
               return (
                 <AnimatePresence custom={direction}>
                   {index + numOfCards > i && i - index >= 0 && (
                     <ReviewCard
+                      drag={mobile}
                       direction={direction}
                       reviewId={review.id}
                       reviewImage={review.sourceImage}
@@ -81,20 +118,26 @@ const ReviewSection = ({heading, teaser, data}: ReviewSectionProps) => {
               )
             })}
           </Flex>
-          <IconButton
+          <Circle
+            className="button2"
+            bg="blackAlpha.300"
+            centerContent
             position="absolute"
+            display={isMobile && !isInvisible ? 'block' : 'none'}
             right={{base: '10px', md: '30px'}}
             top="45%"
             zIndex="2"
-            aria-label="right"
-            variant="ghost"
-            icon={<ChevronRightIcon boxSize="50px" color="agt.red" />}
-            disabled={disabled}
             onClick={() => {
               setDirection('right')
               setIndex(index + numOfCards)
-            }}
-          />
+            }}>
+            <ChevronRightIcon
+              color="white"
+              boxSize="50px"
+              position="relative"
+              zIndex="3"
+            />
+          </Circle>
         </Box>
       </Box>
     </>

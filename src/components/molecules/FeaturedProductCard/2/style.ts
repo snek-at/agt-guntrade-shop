@@ -5,9 +5,9 @@ const width = (visible: boolean) => (visible ? '100%' : '50%')
 const margin = (visible: boolean) => (visible ? '-50%' : '-25%')
 const borderColor = (visible: boolean) => (visible ? '#ef3340' : 'white')
 const borderLeftRadius = (direction: string) =>
-  direction !== 'left' ? '0px' : '3px'
+  direction !== 'left' ? '0px' : '5px'
 const borderRigthRadius = (direction: string) =>
-  direction === 'left' ? '0px' : '3px'
+  direction === 'left' ? '0px' : '5px'
 
 export const borderline = (visible: boolean) => css`
   display: block;
@@ -29,7 +29,7 @@ export const borderline = (visible: boolean) => css`
     border-color: ${borderColor(visible)};
     border-style: solid;
     border-width: 2px 0;
-    border-radius: 3px;
+    border-radius: 5px;
   }
 `
 

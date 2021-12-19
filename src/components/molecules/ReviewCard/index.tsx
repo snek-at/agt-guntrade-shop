@@ -1,5 +1,5 @@
 //#region > Imports
-import {Box, BoxProps, Flex, Text} from '@chakra-ui/layout'
+import {Box, BoxProps, Flex, Link, Text} from '@chakra-ui/layout'
 import {Avatar} from '@chakra-ui/react'
 import React from 'react'
 import {IconContext} from '@react-icons/all-files'
@@ -19,6 +19,7 @@ export interface ReviewCardProps {
   reviewName: string
   reviewId: string
   direction: string
+  drag: any
 }
 //#endregion
 
@@ -47,7 +48,8 @@ const ReviewCard = ({
   reviewText,
   reviewName,
   reviewId,
-  direction
+  direction,
+  drag
 }: ReviewCardProps) => {
   const [isOpen, setIsOpen] = React.useState(false)
 
@@ -73,7 +75,7 @@ const ReviewCard = ({
       const color = rating <= i ? '#E2E8F0' : '#ef3340'
 
       stars.push(
-        <IconContext.Provider value={{color: color, size: '25px'}}>
+        <IconContext.Provider value={{color: color, size: '20px'}}>
           <AiFillStar />
         </IconContext.Provider>
       )
@@ -85,11 +87,12 @@ const ReviewCard = ({
   return (
     <>
       <MotionBox
+        {...drag}
         _first={{ml: 0}}
         ml="3.5vw"
-        minH="260px"
+        minH="250px"
         w={{base: '300px', xl: '20%'}}
-        borderRadius="3px"
+        borderRadius="5px"
         boxShadow="lg"
         p="5"
         onClick={() => onOpen()}
@@ -101,8 +104,8 @@ const ReviewCard = ({
         <Text noOfLines={4} minH="100px">
           {reviewText}
         </Text>
-        <Flex alignItems="flex-end" justifyContent="flex-end">
-          <Button variant="ghost">Mehr lesen</Button>
+        <Flex alignItems="flex-end" justifyContent="flex-end" my="2">
+          <Link>Mehr lesen</Link>
         </Flex>
         <Flex
           justifyContent="center"
@@ -110,7 +113,7 @@ const ReviewCard = ({
           pt="3"
           borderTop="1px"
           borderColor="gray.200">
-          <Avatar src={reviewImage} alt="review-avatar" boxSize="75px" />
+          <Avatar src={reviewImage} alt="review-avatar" boxSize="48px" />
           <Box ml="3" my="auto">
             <Flex>{stars.map(star => star)}</Flex>
             <Text textAlign="center" fontWeight="bold" mt="1">
@@ -121,12 +124,12 @@ const ReviewCard = ({
       </MotionBox>
       <Modal isOpen={isOpen} onClose={() => onClose()} isCentered>
         <ModalOverlay />
-        <ModalContent borderRadius="3px" width="40vw" maxH="60vh" p="8">
+        <ModalContent borderRadius="5px" width="40vw" maxH="60vh" p="8">
           <Text mb="3" overflowY="auto" pr="3" css={style.Modal}>
             {reviewText}
           </Text>
           <Flex mt="3" pt="3" borderTop="1px" borderColor="gray.200">
-            <Avatar src={reviewImage} alt="review-avatar" boxSize="75px" />
+            <Avatar src={reviewImage} alt="review-avatar" boxSize="48px" />
             <Box ml="3" my="auto">
               <Flex>{stars.map(star => star)}</Flex>
               <Text textAlign="center" fontWeight="bold" mt="1">

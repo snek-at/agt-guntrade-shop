@@ -2,6 +2,7 @@ import {Button} from '@chakra-ui/button'
 import {Box, Center, Flex, Text} from '@chakra-ui/layout'
 import CategoryTab from '../../molecules/CategoryTab'
 import React from 'react'
+import {useBreakpointValue} from '@chakra-ui/media-query'
 
 interface Tab {
   [category: string]: {
@@ -18,6 +19,11 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
   const [current, setCurrent] = React.useState('New')
   const [direction, setDirection] = React.useState('right')
 
+  const firstRadius = useBreakpointValue({
+    base: {borderTopRadius: '5px'},
+    md: {borderTopLeftRadius: '5px'}
+  })
+
   const categories = Object.keys(tabs)
 
   return (
@@ -27,26 +33,23 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
           return (
             <Box
               userSelect="none"
-              _first={{
-                base: {borderTopRadius: '3px'},
-                md: {borderTopLeftRadius: '3px'}
-              }}
-              _last={{md: {borderTopRightRadius: '3px'}}}
+              _hover={
+                current === category ? {bg: 'agt.lightgray'} : {bg: '#424240'}
+              }
+              _first={firstRadius}
+              _last={{md: {borderTopRightRadius: '5px'}}}
               cursor="pointer"
               bg={current === category ? 'white' : 'agt.gray'}
               py="3"
               px="5"
+              color={current === category ? 'black' : 'white'}
               onClick={() => {
                 setCurrent(category)
                 setDirection(
                   index > categories.indexOf(current) ? 'right' : 'left'
                 )
               }}>
-              <Text
-                fontSize="14"
-                fontWeight="bold"
-                casing="uppercase"
-                color={current === category ? 'black' : 'white'}>
+              <Text fontSize="14" fontWeight="bold" casing="uppercase">
                 {category}
               </Text>
             </Box>
@@ -61,8 +64,8 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
         minH={{base: '1010px', md: '700px', lg: '390px'}}
         pb="20"
         bg="white"
-        borderBottomRadius="3px"
-        borderTopRightRadius={{md: '3px'}}>
+        borderBottomRadius="5px"
+        borderTopRightRadius={{md: '5px'}}>
         {categories.map(category => {
           return (
             <CategoryTab
@@ -77,7 +80,7 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
       <Center position="relative" w="full" left="0" top="-6">
         <Button
           color="white"
-          borderRadius="3px"
+          borderRadius="5px"
           colorScheme="agt.grayScheme"
           variant="solid"
           size="lg"

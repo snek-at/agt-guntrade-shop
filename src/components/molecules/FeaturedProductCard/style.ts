@@ -25,6 +25,6 @@ export const borderline = (visible: boolean) => css`
     border-color: ${borderColor(visible)};
     border-style: solid;
     border-width: 2px 0;
-    border-radius: 3px;
+    border-radius: 5px;
   }
 `

@@ -10,7 +10,7 @@ const Desktop = (
   <Box
     css={BulletStyle}
     position="relative"
-    borderRadius="3px"
+    borderRadius="5px"
     bg="white"
     mr={{base: '0', lg: '6'}}
     mb="6">
@@ -121,7 +121,7 @@ const Desktop = (
     <Center position="relative" w="full" left="0" bottom="-6">
       <Button
         color="white"
-        borderRadius="3px"
+        borderRadius="5px"
         colorScheme="agt.grayScheme"
         variant="solid"
         size="lg"
@@ -137,7 +137,7 @@ const Mobile = (
     h="300px"
     css={Shine}
     w="full"
-    borderRadius="3px"
+    borderRadius="5px"
     textAlign="center"
     backgroundImage="https://i.imgur.com/9Nrxlh0.jpg?fb"
     backgroundPosition="center"

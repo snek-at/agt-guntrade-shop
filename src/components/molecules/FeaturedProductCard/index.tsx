@@ -59,9 +59,9 @@ const FeaturedProductCard = ({
           right={direction === 'left' ? 'none' : '0px'}
           borderWidth="2px"
           borderColor="agt.red"
-          borderLeftRadius={direction === 'left' ? '3px' : '0px'}
-          borderTopRightRadius={direction === 'left' ? '0px' : '3px'}
-          borderBottomRightRadius={direction === 'left' ? '0px' : '3px'}
+          borderLeftRadius={direction === 'left' ? '5px' : '0px'}
+          borderTopRightRadius={direction === 'left' ? '0px' : '5px'}
+          borderBottomRightRadius={direction === 'left' ? '0px' : '5px'}
           top="-1.5%"
           h="103%"
           p="3"
@@ -87,7 +87,7 @@ const FeaturedProductCard = ({
                   _last={{mb: 0}}
                   bg="white"
                   p="2"
-                  borderRadius="3px"
+                  borderRadius="5px"
                 />
               )
             }
@@ -101,9 +101,9 @@ const FeaturedProductCard = ({
         cursor="pointer"
         bg="agt.lightgray"
         p="3"
-        borderRadius="3px"
+        borderRadius="5px"
         color="black">
-        <Image src={images[imageIndex]} alt={name} borderRadius="3px" mt="5" />
+        <Image src={images[imageIndex]} alt={name} borderRadius="5px" mt="5" />
         <Box p="2.5">
           <Heading>{name}</Heading>
           <Box minH="3rem">

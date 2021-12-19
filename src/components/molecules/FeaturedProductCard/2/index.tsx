@@ -60,9 +60,9 @@ const FeaturedProductCard = ({
           right={direction === 'left' ? 'none' : '0px'}
           borderWidth="1px"
           borderColor="agt.lightgray"
-          borderLeftRadius={direction === 'left' ? '3px' : '0px'}
-          borderTopRightRadius={direction === 'left' ? '0px' : '3px'}
-          borderBottomRightRadius={direction === 'left' ? '0px' : '3px'}
+          borderLeftRadius={direction === 'left' ? '5px' : '0px'}
+          borderTopRightRadius={direction === 'left' ? '0px' : '5px'}
+          borderBottomRightRadius={direction === 'left' ? '0px' : '5px'}
           mt="-2%"
           h="103%"
           p="3"
@@ -78,11 +78,12 @@ const FeaturedProductCard = ({
             if (index !== imageIndex) {
               return (
                 <Image
+                  onMouseEnter={() => setImageIndex(index)}
+                  onMouseLeave={() => setImageIndex(0)}
                   position="relative"
                   zIndex="3"
                   cursor="pointer"
                   pointerEvents="all"
-                  onClick={() => setImageIndex(index)}
                   w="100px"
                   src={image}
                   alt={name}
@@ -90,7 +91,7 @@ const FeaturedProductCard = ({
                   _last={{mb: 0}}
                   p="2"
                   bg="agt.lightgray"
-                  borderRadius="3px"
+                  borderRadius="5px"
                 />
               )
             }
@@ -105,7 +106,7 @@ const FeaturedProductCard = ({
         border="1px"
         borderColor="agt.lightgray"
         p="3"
-        borderRadius="3px"
+        borderRadius="5px"
         color="black"
         borderRightWidth={
           visible ? (direction !== 'left' ? '0px' : '1px') : '1px'
@@ -113,7 +114,7 @@ const FeaturedProductCard = ({
         borderLeftWidth={
           visible ? (direction === 'left' ? '0px' : '1px') : '1px'
         }>
-        <Image src={images[imageIndex]} alt={name} borderRadius="3px" mt="5" />
+        <Image src={images[imageIndex]} alt={name} borderRadius="5px" mt="5" />
         <Box p="2.5">
           <Heading>{name}</Heading>
           <Box minH="3rem">

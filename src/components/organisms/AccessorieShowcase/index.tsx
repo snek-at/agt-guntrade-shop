@@ -13,7 +13,7 @@ const AccessorieShowcase = ({}: AccessorieShowcaseProps) => {
       bg="gray.800"
       className="shine"
       textAlign="center"
-      borderRadius="3px"
+      borderRadius="5px"
       p="10"
       mb="6"
       backgroundPosition="center"

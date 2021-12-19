@@ -1,4 +1,4 @@
-import {Button, IconButton} from '@chakra-ui/button'
+import {Button} from '@chakra-ui/button'
 import {ChevronLeftIcon, ChevronRightIcon} from '@chakra-ui/icons'
 import {Image} from '@chakra-ui/image'
 import {
@@ -32,7 +32,29 @@ const NewsSection = () => {
 
   const vw = useWindowWidth()
   const numOfCards = Math.floor(vw / (isSmall ? 320 : vw * 0.25))
-  console.log(isInvisible)
+
+  const mobile = useBreakpointValue({
+    base: {
+      drag: 'x',
+      dragConstraints: {left: 0, right: 0},
+      onDragEnd: (event, info) => {
+        if (info.offset.x > 0) {
+          if (index !== 0) {
+            setDirection('left')
+            setIndex(index - numOfCards)
+          }
+        } else {
+          if (!isInvisible) {
+            setDirection('right')
+            setIndex(index + numOfCards)
+          }
+        }
+      }
+    },
+    md: {}
+  })
+  const isMobile = useBreakpointValue({base: true, md: false})
+
   return (
     <>
       <Box
@@ -47,7 +69,7 @@ const NewsSection = () => {
           size="50px"
           centerContent
           bg="blackAlpha.300"
-          display="none"
+          display={isMobile && index !== 0 ? 'block' : 'none'}
           position="absolute"
           left={{base: '10px', md: '30px'}}
           top="50%"
@@ -120,12 +142,13 @@ const NewsSection = () => {
                         <AnimatePresence>
                           {index + numOfCards > i && i - index >= 0 && (
                             <MotionBox
+                              {...mobile}
                               _first={{ml: 0}}
                               key={i}
                               display="relative"
                               ml={{base: '5', lg: '3.5vw'}}
                               boxShadow="lg"
-                              borderRadius="3px"
+                              borderRadius="5px"
                               onClick={() => setIsOpen(true)}
                               maxW={{base: '300px', xl: '20vw'}}
                               minH={{base: '390px', xl: '400px'}}
@@ -156,7 +179,7 @@ const NewsSection = () => {
                                 objectFit="cover"
                                 alt="newspage-image"
                                 src={imageSrc}
-                                borderTopRadius="3px"
+                                borderTopRadius="5px"
                               />
                               <Box p="3">
                                 <Text
@@ -208,7 +231,7 @@ const NewsSection = () => {
           bg="blackAlpha.300"
           centerContent
           position="absolute"
-          display="none"
+          display={isMobile && !isInvisible ? 'block' : 'none'}
           right={{base: '10px', md: '30px'}}
           top="50%"
           zIndex="2"

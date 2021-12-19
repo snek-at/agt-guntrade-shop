@@ -20,8 +20,14 @@ const theme = {
     global: (props: any) => ({
       body: {
         bg: mode('white', '#1d1f21')(props)
+      },
+      ':host,:root': {
+        '--chakra-ui-focus-ring-color': '#424240'
       }
     })
+  },
+  shadows: {
+    outline: '0 0 0 3px #424240'
   }
 }
 
