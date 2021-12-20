@@ -1,16 +1,19 @@
 import {Button} from '@chakra-ui/button'
+import Icon from '@chakra-ui/icon'
 import {Image, ImageProps} from '@chakra-ui/image'
 import {
   Badge,
   Box,
   BoxProps,
+  Circle,
   Flex,
-  Heading,
   Spacer,
   Text
 } from '@chakra-ui/layout'
+import {Tooltip} from '@chakra-ui/tooltip'
 import {AnimatePresence, motion} from 'framer-motion'
 import React from 'react'
+import {FiShoppingCart} from '@react-icons/all-files/fi/FiShoppingCart'
 
 import {borderline, sideline} from './style'
 
@@ -29,7 +32,7 @@ export interface FeaturedProductCardProps {
   images: string[]
   price: number
   name: string
-  description: string
+  caliber: string
   reducedprice?: number
   direction?: string
 }
@@ -39,7 +42,7 @@ const FeaturedProductCard = ({
   price,
   reducedprice,
   name,
-  description,
+  caliber,
   direction
 }: FeaturedProductCardProps) => {
   const sale = typeof reducedprice !== 'undefined'
@@ -117,6 +120,14 @@ const FeaturedProductCard = ({
         borderLeftWidth={
           visible ? (direction === 'left' ? '0px' : '1px') : '1px'
         }>
+        <Circle
+          size="10px"
+          position="absolute"
+          top={2}
+          right={2}
+          bg="red.200"
+          zIndex="2"
+        />
         <Box minH="210px">
           <AnimatePresence>
             {(imageIndex && (
@@ -134,39 +145,56 @@ const FeaturedProductCard = ({
           </AnimatePresence>
         </Box>
         <Box p="2.5">
-          <Heading>{name}</Heading>
-          <Box minH="3rem">
-            <Text noOfLines={3}>{description.split(';')[0]}</Text>
-            <Badge variant="solid" bg="agt.red" borderRadius="5px">
-              {description.split(';')[1]}
-            </Badge>
-          </Box>
-          <Flex mt="4">
-            <Text
-              mt={sale ? '2' : '0.5'}
-              fontSize={sale ? '21' : '30'}
-              textDecoration={sale ? 'line-through' : 'none'}
-              color={sale ? 'gray.700' : 'black'}>
-              {price}€
-            </Text>
-            {sale ? (
-              <Text fontSize="30" ml="1.5">
-                {reducedprice}€
-              </Text>
-            ) : (
-              <></>
-            )}
+          <Badge borderRadius="5px" px="2" fontSize="0.8em" colorScheme="red">
+            New
+          </Badge>
+          <Flex>
+            <Box
+              fontSize="2xl"
+              fontWeight="semibold"
+              as="h4"
+              lineHeight="tight"
+              isTruncated>
+              {name}
+            </Box>
             <Spacer />
+            <Tooltip
+              label="Add to cart"
+              bg="white"
+              placement={'top'}
+              color={'gray.800'}
+              fontSize={'1.2em'}>
+              <Icon as={FiShoppingCart} h={7} w={7} />
+            </Tooltip>
           </Flex>
-          <Flex justifyContent="flex-end" alignItems="flex-end">
-            <Button
-              postition="absolute"
-              zIndex="2"
-              bottom="0"
-              colorScheme="agt.grayScheme"
-              _hover={{bg: '#424240'}}>
-              Zum Produkt
-            </Button>
+          <Flex>
+            <Badge
+              mt="4"
+              h="1.6em"
+              variant="solid"
+              bg="agt.red"
+              borderRadius="5px"
+              px="2"
+              fontSize="0.8em">
+              {caliber}
+            </Badge>
+            <Spacer />
+            <Flex>
+              <Text
+                mt={sale ? '2' : '0.5'}
+                fontSize={sale ? '21' : '30'}
+                textDecoration={sale ? 'line-through' : 'none'}
+                color={sale ? 'gray.700' : 'black'}>
+                {price}€
+              </Text>
+              {sale ? (
+                <Text fontSize="30" ml="1.5">
+                  {reducedprice}€
+                </Text>
+              ) : (
+                <></>
+              )}
+            </Flex>
           </Flex>
         </Box>
       </Box>

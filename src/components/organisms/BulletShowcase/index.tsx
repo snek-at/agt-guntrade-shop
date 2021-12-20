@@ -143,7 +143,7 @@ const Mobile = (
     backgroundPosition="center"
     backgroundSize="cover"
     mt="5">
-    <Heading color="agt.gray" mt="140px">
+    <Heading color="agt.gray" mt="140px" userSelect="none">
       Munition
     </Heading>
   </Box>

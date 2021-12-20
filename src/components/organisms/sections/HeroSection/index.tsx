@@ -61,38 +61,82 @@ const HeroSection = () => {
             tabs={{
               New: {
                 items: [
-                  'Arex Zero Alpha;Kal.9×19',
-                  'Beretta Pistole 92X Performance Production;Kal. 9x19mm',
-                  'CSA Sa61 “Skorpion”,7,65mm Browning;Kal. .32 ACP',
-                  'CZ 75 Tactical Sports Orange;Kal. 9x19mm',
-                  'Heckler&Koch SFP9 L;Kal.9×19',
-                  'CZ Shadow 2 Optic Ready;Kal.9×19'
-                ],
-                images: [
-                  'https://waffen-tuerk.at/wp-content/uploads/2019/11/links-48.jpg',
-                  'https://waffen-tuerk.at/wp-content/uploads/2021/06/20210628_143310-900x900.jpg',
-                  'https://waffen-tuerk.at/wp-content/uploads/2020/03/links-900x900.jpg',
-                  'https://waffen-tuerk.at/wp-content/uploads/2019/11/links_209-900x900.jpg',
-                  'https://waffen-tuerk.at/wp-content/uploads/2019/11/links-26-900x900.jpg',
-                  'https://waffen-tuerk.at/wp-content/uploads/2019/11/LInks-900x900.jpg'
+                  {
+                    name: 'Arex Zero Alpha;Kal.9×19',
+                    image:
+                      'https://waffen-tuerk.at/wp-content/uploads/2019/11/links-48.jpg',
+                    price: 12
+                  },
+                  {
+                    name: 'Beretta Pistole 92X Performance Production;Kal. 9x19mm',
+                    image:
+                      'https://waffen-tuerk.at/wp-content/uploads/2021/06/20210628_143310-900x900.jpg',
+                    price: 12
+                  },
+                  {
+                    name: 'CSA Sa61 “Skorpion”,7,65mm Browning;Kal. .32 ACP',
+                    image:
+                      'https://waffen-tuerk.at/wp-content/uploads/2020/03/links-900x900.jpg',
+                    price: 12
+                  },
+                  {
+                    name: 'CZ 75 Tactical Sports Orange;Kal. 9x19mm',
+                    image:
+                      'https://waffen-tuerk.at/wp-content/uploads/2019/11/links_209-900x900.jpg',
+                    price: 12
+                  },
+                  {
+                    name: 'Heckler&Koch SFP9 L;Kal.9×19',
+                    image:
+                      'https://waffen-tuerk.at/wp-content/uploads/2019/11/links-26-900x900.jpg',
+                    price: 122
+                  },
+                  {
+                    name: 'CZ Shadow 2 Optic Ready;Kal.9×19',
+                    image:
+                      'https://waffen-tuerk.at/wp-content/uploads/2019/11/LInks-900x900.jpg',
+                    price: 122
+                  }
                 ]
               },
               Handfeuerwaffen: {
                 items: [
-                  'Randfeuerzündung',
-                  'Maschinenpistole',
-                  'Revolver',
-                  'Polymer',
-                  'Mit Optik',
-                  '1911'
-                ],
-                images: [
-                  'https://i.imgur.com/mtBV9G4.jpeg',
-                  'https://i.imgur.com/bqoN3DZ.jpeg',
-                  'https://i.imgur.com/hi74u6N.jpeg',
-                  'https://i.imgur.com/qzTrZPp.jpeg',
-                  'https://i.imgur.com/gCdOwK9.jpeg',
-                  'https://i.imgur.com/CYopn8t.jpeg'
+                  {
+                    name: 'Arex Zero Alpha;Kal.9×19',
+                    image:
+                      'https://waffen-tuerk.at/wp-content/uploads/2019/11/links-48.jpg',
+                    price: 12
+                  },
+                  {
+                    name: 'Beretta Pistole 92X Performance Production;Kal. 9x19mm',
+                    image:
+                      'https://waffen-tuerk.at/wp-content/uploads/2021/06/20210628_143310-900x900.jpg',
+                    price: 12
+                  },
+                  {
+                    name: 'CSA Sa61 “Skorpion”,7,65mm Browning;Kal. .32 ACP',
+                    image:
+                      'https://waffen-tuerk.at/wp-content/uploads/2020/03/links-900x900.jpg',
+                    price: 12
+                  },
+                  {
+                    name: 'CZ 75 Tactical Sports Orange;Kal. 9x19mm',
+                    image:
+                      'https://waffen-tuerk.at/wp-content/uploads/2019/11/links_209-900x900.jpg',
+                    price: 12
+                  },
+                  {
+                    name: 'Heckler&Koch SFP9 L;Kal.9×19',
+                    image:
+                      'https://waffen-tuerk.at/wp-content/uploads/2019/11/links-26-900x900.jpg',
+                    price: 122
+                  },
+                  {
+                    name: 'CZ Shadow 2 Optic Ready;Kal.9×19',
+                    image:
+                      'https://waffen-tuerk.at/wp-content/uploads/2019/11/LInks-900x900.jpg',
+                    price: 122
+                  }
                 ]
               }
             }}

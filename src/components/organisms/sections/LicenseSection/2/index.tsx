@@ -5,6 +5,7 @@ import {
   AccordionItem,
   AccordionPanel
 } from '@chakra-ui/accordion'
+import {Button} from '@chakra-ui/button'
 import {FormControl, FormLabel} from '@chakra-ui/form-control'
 import {Input} from '@chakra-ui/input'
 import {Box, Flex, Heading} from '@chakra-ui/layout'
@@ -18,17 +19,17 @@ import {
 
 export interface LicenseSectionProps {
   heading: React.ReactNode
-  text: React.ReactNode
 }
 
-const LicenseSection = ({heading, text}: LicenseSectionProps) => {
+const LicenseSection = ({heading}: LicenseSectionProps) => {
   return (
     <Flex p="20" direction={{base: 'column', md: 'row'}}>
       <Box w={{base: '100%', md: '50%'}} pr="10">
         <Heading mb="5">{heading}</Heading>
         <Accordion defaultIndex={[0]}>
-          <AccordionItem borderColor="#D4D4D9">
+          <AccordionItem borderColor="#D4D4D9" borderTopRadius="5px">
             <AccordionButton
+              borderTopRadius="5px"
               _expanded={{
                 bg: 'agt.gray',
                 color: 'white',
@@ -41,7 +42,7 @@ const LicenseSection = ({heading, text}: LicenseSectionProps) => {
               </Box>
               <AccordionIcon />
             </AccordionButton>
-            <AccordionPanel pb={4}>
+            <AccordionPanel pb={4} borderX="1px" borderColor="#D4D4D9">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -62,7 +63,7 @@ const LicenseSection = ({heading, text}: LicenseSectionProps) => {
               </Box>
               <AccordionIcon />
             </AccordionButton>
-            <AccordionPanel pb={4}>
+            <AccordionPanel pb={4} borderX="1px" borderColor="#D4D4D9">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -83,16 +84,18 @@ const LicenseSection = ({heading, text}: LicenseSectionProps) => {
               </Box>
               <AccordionIcon />
             </AccordionButton>
-            <AccordionPanel pb={4}>
+            <AccordionPanel pb={4} borderX="1px" borderColor="#D4D4D9">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat.
             </AccordionPanel>
           </AccordionItem>
-          <AccordionItem borderColor="#D4D4D9">
+          <AccordionItem borderColor="#D4D4D9" borderBottomRadius="5px">
             <AccordionButton
+              borderBottomRadius="5px"
               _expanded={{
+                borderBottomRadius: '0px',
                 bg: 'agt.gray',
                 color: 'white',
                 _hover: {bg: '#424240'}
@@ -104,7 +107,11 @@ const LicenseSection = ({heading, text}: LicenseSectionProps) => {
               </Box>
               <AccordionIcon />
             </AccordionButton>
-            <AccordionPanel pb={4}>
+            <AccordionPanel
+              pb={4}
+              borderX="1px"
+              borderColor="#D4D4D9"
+              borderBottomRadius="5px">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -148,6 +155,9 @@ const LicenseSection = ({heading, text}: LicenseSectionProps) => {
               </NumberInput>
             </Box>
           </Flex>
+          <Button mt="5" colorScheme="agt.grayScheme">
+            Absenden
+          </Button>
         </FormControl>
       </Box>
     </Flex>

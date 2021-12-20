@@ -37,7 +37,7 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
     <Flex
       justifyContent="center"
       alignItems="center"
-      minH={{base: 'max-content', md: '450px'}}>
+      minH={{base: 'max-content', md: '460px'}}>
       <Box
         color="white"
         zIndex="1"
@@ -77,7 +77,8 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                       w="max-content"
                       border="4px"
                       borderColor="agt.red"
-                      color="agt.red">
+                      color="agt.red"
+                      userSelect="none">
                       {weapon.price} €
                     </Text>
                   </WeaponBox>
@@ -134,11 +135,14 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
           {weapons.map(weapon => {
             return (
               <Circle
+                cursor="pointer"
                 size="2"
                 mr="1"
                 bgColor={weapon === current ? 'agt.red' : 'white'}
                 onClick={() => {
-                  setCurrent(weapon)
+                  if (weapon !== current) {
+                    setCurrent(weapon)
+                  }
                 }}
               />
             )

@@ -115,10 +115,10 @@ const ReviewCard = ({
           borderColor="gray.200">
           <Avatar src={reviewImage} alt="review-avatar" boxSize="48px" />
           <Box ml="3" my="auto">
-            <Flex>{stars.map(star => star)}</Flex>
             <Text textAlign="center" fontWeight="bold" mt="1">
               {reviewName}
             </Text>
+            <Flex>{stars.map(star => star)}</Flex>
           </Box>
         </Flex>
       </MotionBox>
@@ -131,10 +131,10 @@ const ReviewCard = ({
           <Flex mt="3" pt="3" borderTop="1px" borderColor="gray.200">
             <Avatar src={reviewImage} alt="review-avatar" boxSize="48px" />
             <Box ml="3" my="auto">
-              <Flex>{stars.map(star => star)}</Flex>
               <Text textAlign="center" fontWeight="bold" mt="1">
                 {reviewName}
               </Text>
+              <Flex>{stars.map(star => star)}</Flex>
             </Box>
           </Flex>
         </ModalContent>

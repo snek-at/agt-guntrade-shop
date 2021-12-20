@@ -2,6 +2,7 @@ import {css} from '@emotion/react'
 
 export const BulletStyle = css`
   .bullet {
+    cursor: pointer;
     svg {
       margin-left: 20px;
       margin-right: 20px;

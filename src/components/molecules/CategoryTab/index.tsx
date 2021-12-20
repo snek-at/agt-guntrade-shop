@@ -1,11 +1,25 @@
-import {SimpleGrid, Badge, Box, BoxProps, Text, Image} from '@chakra-ui/react'
+import {
+  SimpleGrid,
+  Badge,
+  Box,
+  BoxProps,
+  Text,
+  Image,
+  Flex,
+  Spacer
+} from '@chakra-ui/react'
 
 import {AnimatePresence, motion} from 'framer-motion'
 import * as style from './style'
 
+export interface CategoryItemType {
+  image: string
+  name: string
+  price: number
+}
+
 export interface CategoryTabProps {
-  items: string[]
-  images: string[]
+  items: CategoryItemType[]
   direction: string
   visible: string
 }
@@ -35,7 +49,7 @@ const variants = {
   }
 }
 
-const CategoryTab = ({items, images, direction, visible}: CategoryTabProps) => {
+const CategoryTab = ({items, direction, visible}: CategoryTabProps) => {
   return (
     <AnimatePresence exitBeforeEnter custom={direction}>
       {visible === 'visible' && (
@@ -49,16 +63,13 @@ const CategoryTab = ({items, images, direction, visible}: CategoryTabProps) => {
           exit="exit"
           transition={{duration: 0.15}}>
           <SimpleGrid columns={{base: 2, md: 3, xl: 6}} css={style.Borderline}>
-            {images.map((image, index) => (
+            {items.map(item => (
               <Box
                 className="borderline"
                 onClick={() => null}
                 cursor="pointer"
                 px={{base: '1', md: '2', lg: '3'}}
                 py="5"
-                justifyContent="center"
-                alignContent="center"
-                textAlign="center"
                 borderRadius="5px"
                 border="1px"
                 borderColor="gray.200"
@@ -69,13 +80,26 @@ const CategoryTab = ({items, images, direction, visible}: CategoryTabProps) => {
                   before: {borderColor: 'agt.red'},
                   _after: {borderColor: 'agt.red'}
                 }}>
-                <Image src={image} alt={items[index]} w="fit-content" />
-                <Text w="100%" mt="5" color="black">
-                  {items[index].split(';')[0]}
+                <Image src={item.image} alt={item.name} w="fit-content" />
+                <Text
+                  w="100%"
+                  mt="5"
+                  color="black"
+                  minH="5rem"
+                  textAlign="center">
+                  {item.name.split(';')[0]}
                 </Text>
-                <Badge variant="solid" bg="agt.red" borderRadius="5px">
-                  {items[index].split(';')[1]}
-                </Badge>
+                <Flex justifyContent="center" alignItems="center">
+                  <Badge
+                    variant="solid"
+                    bg="agt.red"
+                    borderRadius="5px"
+                    h="1.1rem">
+                    {item.name.split(';')[1]}
+                  </Badge>
+                  <Spacer />
+                  <Text fontSize="20">{item.price}€</Text>
+                </Flex>
               </Box>
             ))}
           </SimpleGrid>

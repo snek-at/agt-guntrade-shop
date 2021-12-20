@@ -8,6 +8,7 @@ import HeroSection from '../components/organisms/sections/HeroSection'
 import ReviewSection from '../components/organisms/sections/ReviewSection'
 import FeaturedProductsSection from '../components/organisms/sections/FeaturedProductsSection/2'
 import AboutSection from '../components/organisms/sections/AboutSection'
+import LicenseSection from '../components/organisms/sections/LicenseSection/2'
 //#endregion
 
 //#region > Functions
@@ -20,7 +21,7 @@ const IndexPage = ({data}) => {
         products={[
           {
             name: 'Weapon',
-            description: 'This is a weapon.;Kal.9×19',
+            caliber: 'Kal.9×19',
             price: 11.33,
             reducedprice: 12,
             images: [
@@ -31,7 +32,7 @@ const IndexPage = ({data}) => {
           },
           {
             name: 'Weapon',
-            description: 'This is a weapon.;Kal.9×19',
+            caliber: 'Kal.9×19',
             price: 11.33,
             reducedprice: 12,
             images: [
@@ -42,7 +43,7 @@ const IndexPage = ({data}) => {
           },
           {
             name: 'Weapon',
-            description: 'This is a weapon.;Kal.9×19',
+            caliber: 'Kal.9×19',
             price: 11.33,
             reducedprice: 12,
             images: [
@@ -53,7 +54,7 @@ const IndexPage = ({data}) => {
           },
           {
             name: 'Weapon',
-            description: 'This is a weapon.;Kal.9×19',
+            caliber: 'Kal.9×19',
             price: 11.33,
             reducedprice: 12,
             images: [
@@ -64,7 +65,7 @@ const IndexPage = ({data}) => {
           },
           {
             name: 'Weapon',
-            description: 'This is a weapon.;Kal.9×19',
+            caliber: 'Kal.9×19',
             price: 11.33,
             reducedprice: 12,
             images: [
@@ -75,7 +76,7 @@ const IndexPage = ({data}) => {
           },
           {
             name: 'Weapon',
-            description: 'This is a weapon.;Kal.9×19',
+            caliber: 'Kal.9×19',
             price: 11.33,
             reducedprice: 12,
             images: [
@@ -86,7 +87,7 @@ const IndexPage = ({data}) => {
           },
           {
             name: 'Weapon',
-            description: 'This is a weapon.;Kal.9×19',
+            caliber: 'Kal.9×19',
             price: 11.33,
             reducedprice: 12,
             images: [
@@ -97,7 +98,7 @@ const IndexPage = ({data}) => {
           },
           {
             name: 'Weapon',
-            description: 'This is a weapon.;Kal.9×19',
+            caliber: 'Kal.9×19',
             price: 11.33,
             reducedprice: 12,
             images: [
@@ -107,7 +108,16 @@ const IndexPage = ({data}) => {
             ]
           }
         ]}
-      />{' '}
+      />
+      <LicenseSection
+        heading={
+          <fields.TextField
+            fieldName="license-heading"
+            initValue="<p>I'm a heading</p>"
+            rtf={false}
+          />
+        }
+      />
       <ReviewSection
         heading={
           <fields.TextField

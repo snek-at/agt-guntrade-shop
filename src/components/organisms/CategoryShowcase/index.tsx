@@ -1,13 +1,12 @@
 import {Button} from '@chakra-ui/button'
 import {Box, Center, Flex, Text} from '@chakra-ui/layout'
-import CategoryTab from '../../molecules/CategoryTab'
+import CategoryTab, {CategoryItemType} from '../../molecules/CategoryTab'
 import React from 'react'
 import {useBreakpointValue} from '@chakra-ui/media-query'
 
 interface Tab {
   [category: string]: {
-    images: string[]
-    items: string[]
+    items: CategoryItemType[]
   }
 }
 
@@ -71,7 +70,6 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
             <CategoryTab
               visible={current === category ? 'visible' : 'hidden'}
               items={tabs[category].items}
-              images={tabs[category].images}
               direction={direction}
             />
           )
