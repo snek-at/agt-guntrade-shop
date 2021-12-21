@@ -1,4 +1,3 @@
-import {Button} from '@chakra-ui/button'
 import Icon from '@chakra-ui/icon'
 import {Image, ImageProps} from '@chakra-ui/image'
 import {
@@ -10,7 +9,6 @@ import {
   Spacer,
   Text
 } from '@chakra-ui/layout'
-import {Tooltip} from '@chakra-ui/tooltip'
 import {AnimatePresence, motion} from 'framer-motion'
 import React from 'react'
 import {FiShoppingCart} from '@react-icons/all-files/fi/FiShoppingCart'
@@ -35,6 +33,7 @@ export interface FeaturedProductCardProps {
   caliber: string
   reducedprice?: number
   direction?: string
+  isNew: boolean
 }
 
 const FeaturedProductCard = ({
@@ -43,7 +42,8 @@ const FeaturedProductCard = ({
   reducedprice,
   name,
   caliber,
-  direction
+  direction,
+  isNew
 }: FeaturedProductCardProps) => {
   const sale = typeof reducedprice !== 'undefined'
   const [imageIndex, setImageIndex] = React.useState(0)
@@ -120,14 +120,16 @@ const FeaturedProductCard = ({
         borderLeftWidth={
           visible ? (direction === 'left' ? '0px' : '1px') : '1px'
         }>
-        <Circle
-          size="10px"
-          position="absolute"
-          top={2}
-          right={2}
-          bg="red.200"
-          zIndex="2"
-        />
+        {isNew && (
+          <Circle
+            size="10px"
+            position="absolute"
+            top={2}
+            right={2}
+            bg="red.200"
+            zIndex="2"
+          />
+        )}
         <Box minH="210px">
           <AnimatePresence>
             {(imageIndex && (
@@ -145,9 +147,11 @@ const FeaturedProductCard = ({
           </AnimatePresence>
         </Box>
         <Box p="2.5">
-          <Badge borderRadius="5px" px="2" fontSize="0.8em" colorScheme="red">
-            New
-          </Badge>
+          {isNew && (
+            <Badge borderRadius="5px" px="2" fontSize="0.8em" colorScheme="red">
+              New
+            </Badge>
+          )}
           <Flex>
             <Box
               fontSize="2xl"
@@ -158,14 +162,15 @@ const FeaturedProductCard = ({
               {name}
             </Box>
             <Spacer />
-            <Tooltip
-              label="Add to cart"
-              bg="white"
-              placement={'top'}
-              color={'gray.800'}
-              fontSize={'1.2em'}>
-              <Icon as={FiShoppingCart} h={7} w={7} />
-            </Tooltip>
+
+            <Icon
+              as={FiShoppingCart}
+              h={7}
+              w={7}
+              _hover={{color: 'agt.red'}}
+              zIndex="1"
+              position="relative"
+            />
           </Flex>
           <Flex>
             <Badge

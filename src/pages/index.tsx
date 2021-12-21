@@ -8,7 +8,7 @@ import HeroSection from '../components/organisms/sections/HeroSection'
 import ReviewSection from '../components/organisms/sections/ReviewSection'
 import FeaturedProductsSection from '../components/organisms/sections/FeaturedProductsSection/2'
 import AboutSection from '../components/organisms/sections/AboutSection'
-import LicenseSection from '../components/organisms/sections/LicenseSection/2'
+import FAQSection from '../components/organisms/sections/FAQSection/2'
 //#endregion
 
 //#region > Functions
@@ -20,6 +20,7 @@ const IndexPage = ({data}) => {
       <FeaturedProductsSection
         products={[
           {
+            isNew: true,
             name: 'Weapon',
             caliber: 'Kal.9×19',
             price: 11.33,
@@ -31,6 +32,7 @@ const IndexPage = ({data}) => {
             ]
           },
           {
+            isNew: true,
             name: 'Weapon',
             caliber: 'Kal.9×19',
             price: 11.33,
@@ -42,6 +44,7 @@ const IndexPage = ({data}) => {
             ]
           },
           {
+            isNew: true,
             name: 'Weapon',
             caliber: 'Kal.9×19',
             price: 11.33,
@@ -53,6 +56,7 @@ const IndexPage = ({data}) => {
             ]
           },
           {
+            isNew: true,
             name: 'Weapon',
             caliber: 'Kal.9×19',
             price: 11.33,
@@ -64,6 +68,7 @@ const IndexPage = ({data}) => {
             ]
           },
           {
+            isNew: true,
             name: 'Weapon',
             caliber: 'Kal.9×19',
             price: 11.33,
@@ -75,6 +80,7 @@ const IndexPage = ({data}) => {
             ]
           },
           {
+            isNew: true,
             name: 'Weapon',
             caliber: 'Kal.9×19',
             price: 11.33,
@@ -86,6 +92,7 @@ const IndexPage = ({data}) => {
             ]
           },
           {
+            isNew: true,
             name: 'Weapon',
             caliber: 'Kal.9×19',
             price: 11.33,
@@ -97,6 +104,7 @@ const IndexPage = ({data}) => {
             ]
           },
           {
+            isNew: true,
             name: 'Weapon',
             caliber: 'Kal.9×19',
             price: 11.33,
@@ -109,7 +117,7 @@ const IndexPage = ({data}) => {
           }
         ]}
       />
-      <LicenseSection
+      <FAQSection
         heading={
           <fields.TextField
             fieldName="license-heading"

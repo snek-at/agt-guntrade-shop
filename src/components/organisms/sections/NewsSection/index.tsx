@@ -19,6 +19,7 @@ import {NewsStyle} from './style'
 import NewsModal from '../../NewsModal'
 import {useWindowWidth} from '../../../../common/utils'
 import {useColorModeValue} from '@chakra-ui/color-mode'
+import {Divider} from '@chakra-ui/react'
 
 const MotionBox = motion<BoxProps>(Box)
 
@@ -33,26 +34,23 @@ const NewsSection = () => {
   const vw = useWindowWidth()
   const numOfCards = Math.floor(vw / (isSmall ? 320 : vw * 0.25))
 
-  const mobile = useBreakpointValue({
-    base: {
-      drag: 'x',
-      dragConstraints: {left: 0, right: 0},
-      onDragEnd: (event, info) => {
-        if (info.offset.x > 0) {
-          if (index !== 0) {
-            setDirection('left')
-            setIndex(index - numOfCards)
-          }
-        } else {
-          if (!isInvisible) {
-            setDirection('right')
-            setIndex(index + numOfCards)
-          }
+  const drag = {
+    drag: 'x',
+    dragConstraints: {left: 0, right: 0},
+    onDragEnd: (event, info) => {
+      if (info.offset.x > 0) {
+        if (index !== 0) {
+          setDirection('left')
+          setIndex(index - numOfCards)
+        }
+      } else {
+        if (!isInvisible) {
+          setDirection('right')
+          setIndex(index + numOfCards)
         }
       }
-    },
-    md: {}
-  })
+    }
+  }
   const isMobile = useBreakpointValue({base: true, md: false})
 
   return (
@@ -65,7 +63,9 @@ const NewsSection = () => {
         position="relative"
         css={NewsStyle(!(index === 0), !isInvisible)}>
         <Circle
+          cursor="pointer"
           className="button1"
+          _hover={{bg: 'blackAlpha.400'}}
           size="50px"
           centerContent
           bg="blackAlpha.300"
@@ -79,6 +79,7 @@ const NewsSection = () => {
             setIndex(index - numOfCards)
           }}>
           <ChevronLeftIcon
+            className="arrow"
             color="white"
             boxSize="50px"
             position="relative"
@@ -142,7 +143,7 @@ const NewsSection = () => {
                         <AnimatePresence>
                           {index + numOfCards > i && i - index >= 0 && (
                             <MotionBox
-                              {...mobile}
+                              {...drag}
                               _first={{ml: 0}}
                               key={i}
                               display="relative"
@@ -193,7 +194,8 @@ const NewsSection = () => {
                                 <Heading fontSize="24" mb="2" mt="1">
                                   {heading}
                                 </Heading>
-                                <Text noOfLines={3} color="gray">
+                                <Divider />
+                                <Text mt="2" noOfLines={3} color="gray">
                                   {text}
                                 </Text>
                                 <Flex mt="3" mb="2">
@@ -227,7 +229,9 @@ const NewsSection = () => {
           }}
         />
         <Circle
+          cursor="pointer"
           className="button2"
+          _hover={{bg: 'blackAlpha.400'}}
           bg="blackAlpha.300"
           centerContent
           position="absolute"
@@ -241,6 +245,7 @@ const NewsSection = () => {
           }}>
           {' '}
           <ChevronRightIcon
+            className="arrow"
             color="white"
             boxSize="50px"
             position="relative"

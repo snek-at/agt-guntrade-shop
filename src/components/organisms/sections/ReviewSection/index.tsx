@@ -39,26 +39,23 @@ const ReviewSection = ({heading, teaser, data}: ReviewSectionProps) => {
       : setIsInvisible(false)
   }, [index, numOfCards])
 
-  const mobile = useBreakpointValue({
-    base: {
-      drag: 'x',
-      dragConstraints: {left: 0, right: 0},
-      onDragEnd: (event, info) => {
-        if (info.offset.x > 0) {
-          if (index !== 0) {
-            setDirection('left')
-            setIndex(index - numOfCards)
-          }
-        } else {
-          if (!isInvisible) {
-            setDirection('right')
-            setIndex(index + numOfCards)
-          }
+  const drag = {
+    drag: 'x',
+    dragConstraints: {left: 0, right: 0},
+    onDragEnd: (event, info) => {
+      if (info.offset.x > 0) {
+        if (index !== 0) {
+          setDirection('left')
+          setIndex(index - numOfCards)
+        }
+      } else {
+        if (!isInvisible) {
+          setDirection('right')
+          setIndex(index + numOfCards)
         }
       }
-    },
-    md: {}
-  })
+    }
+  }
   const isMobile = useBreakpointValue({base: true, md: false})
 
   return (
@@ -75,7 +72,9 @@ const ReviewSection = ({heading, teaser, data}: ReviewSectionProps) => {
           position="relative"
           css={ReviewStyle(!(index === 0), !isInvisible)}>
           <Circle
+            cursor="pointer"
             className="button1"
+            _hover={{bg: 'blackAlpha.400'}}
             size="50px"
             centerContent
             bg="blackAlpha.300"
@@ -105,7 +104,7 @@ const ReviewSection = ({heading, teaser, data}: ReviewSectionProps) => {
                 <AnimatePresence custom={direction}>
                   {index + numOfCards > i && i - index >= 0 && (
                     <ReviewCard
-                      drag={mobile}
+                      drag={drag}
                       direction={direction}
                       reviewId={review.id}
                       reviewImage={review.sourceImage}
@@ -120,7 +119,9 @@ const ReviewSection = ({heading, teaser, data}: ReviewSectionProps) => {
           </Flex>
           <Circle
             className="button2"
+            cursor="pointer"
             bg="blackAlpha.300"
+            _hover={{bg: 'blackAlpha.400'}}
             centerContent
             position="absolute"
             display={isMobile && !isInvisible ? 'block' : 'none'}

@@ -14,7 +14,7 @@ const Template: Story<FeaturedProductCardProps> = args => (
 export const Card3 = Template.bind({})
 Card3.args = {
   name: 'Weapon',
-  description: 'This is a weapon.',
+  caliber: '9mm',
   price: 11.33,
   reducedprice: 12,
   images: [

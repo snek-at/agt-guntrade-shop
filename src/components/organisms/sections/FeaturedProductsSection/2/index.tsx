@@ -13,6 +13,7 @@ const FeaturedProductsSection = ({products}: FeaturedProductsSectionProps) => {
       <Wrap justify="center" spacing="5">
         {products.map((product, index) => (
           <FeaturedProductCard
+            isNew={product.isNew}
             name={product.name}
             caliber={product.caliber}
             price={product.price}

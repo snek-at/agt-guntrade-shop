@@ -1,5 +1,5 @@
 //#region > Imports
-import {Box, BoxProps, Flex, Link, Text} from '@chakra-ui/layout'
+import {Box, BoxProps, Flex, Link, Text, Spacer} from '@chakra-ui/layout'
 import {Avatar} from '@chakra-ui/react'
 import React from 'react'
 import {IconContext} from '@react-icons/all-files'
@@ -90,7 +90,7 @@ const ReviewCard = ({
         {...drag}
         _first={{ml: 0}}
         ml="3.5vw"
-        minH="250px"
+        minH="200px"
         w={{base: '300px', xl: '20%'}}
         borderRadius="5px"
         boxShadow="lg"
@@ -101,25 +101,21 @@ const ReviewCard = ({
         animate="center"
         variants={variants}
         transition={{duration: 0.5}}>
-        <Text noOfLines={4} minH="100px">
+        <Text noOfLines={4} minH="100px" mb="1">
           {reviewText}
         </Text>
-        <Flex alignItems="flex-end" justifyContent="flex-end" my="2">
-          <Link>Mehr lesen</Link>
-        </Flex>
-        <Flex
-          justifyContent="center"
-          alignItems="center"
-          pt="3"
-          borderTop="1px"
-          borderColor="gray.200">
+        <Flex pt="3" borderTop="1px" borderColor="gray.200">
           <Avatar src={reviewImage} alt="review-avatar" boxSize="48px" />
-          <Box ml="3" my="auto">
-            <Text textAlign="center" fontWeight="bold" mt="1">
+          <Box ml="3" my="auto" w="80%">
+            <Text fontWeight="bold" mt="1" isTruncated maxW="85%">
               {reviewName}
             </Text>
             <Flex>{stars.map(star => star)}</Flex>
           </Box>
+          <Spacer />
+          <Button mt="1" colorScheme="agt.grayScheme">
+            Mehr lesen
+          </Button>
         </Flex>
       </MotionBox>
       <Modal isOpen={isOpen} onClose={() => onClose()} isCentered>

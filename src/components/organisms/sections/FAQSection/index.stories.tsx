@@ -3,7 +3,7 @@ import {Story, Meta} from '@storybook/react'
 import LicenseSection, {LicenseSectionProps} from '.'
 
 export default {
-  title: 'Stories/IndexPage/LicenseSection',
+  title: 'Stories/IndexPage/FAQSection',
   component: LicenseSection
 } as Meta
 

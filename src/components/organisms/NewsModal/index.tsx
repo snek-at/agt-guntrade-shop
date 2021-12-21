@@ -18,6 +18,7 @@ export interface NewsModalProps {
   imageSrc: string
   url: string
   onClose: Function
+  tag: string
 }
 
 export const NewsModal = ({
@@ -26,7 +27,8 @@ export const NewsModal = ({
   text,
   imageSrc,
   url,
-  onClose
+  onClose,
+  tag
 }: NewsModalProps) => {
   const [share, setShare] = React.useState(false)
   const toast = useToast()
@@ -46,7 +48,7 @@ export const NewsModal = ({
       <ModalContent
         borderRadius="5px"
         minH="60vh"
-        maxW={{base: '90vw', md: '80vw', xl: '75vw'}}>
+        maxW={{base: '90vw', md: '64vw', xl: '60vw'}}>
         <Flex direction={{base: 'column', md: 'row'}}>
           <Box
             w={{base: '100%', md: '60%'}}
@@ -68,6 +70,16 @@ export const NewsModal = ({
             w={{base: 'auto', md: '40%'}}
             h={{base: 'auto', md: '60vh'}}
             position="relative">
+            <Text
+              position="absolute"
+              top="5"
+              right="5"
+              fontSize="14"
+              fontWeight="bold"
+              casing="uppercase"
+              color="teal">
+              NewsTag
+            </Text>
             <Heading mb="3">{heading}</Heading>
             <Text
               css={style.ScrollBar}
