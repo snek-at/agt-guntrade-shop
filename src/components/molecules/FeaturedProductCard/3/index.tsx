@@ -83,6 +83,7 @@ const FeaturedProductCard = ({
             if (index !== 0) {
               return (
                 <Image
+                  fallback={<Box />}
                   _hover={{filter: 'brightness(80%)'}}
                   onMouseEnter={() => setImageIndex(index)}
                   onMouseLeave={() => setImageIndex(0)}
@@ -140,9 +141,16 @@ const FeaturedProductCard = ({
                 alt={name}
                 borderRadius="5px"
                 mt="5"
+                fallback={<Box />}
               />
             )) || (
-              <Image src={images[0]} alt={name} borderRadius="5px" mt="5" />
+              <Image
+                src={images[0]}
+                alt={name}
+                borderRadius="5px"
+                mt="5"
+                fallback={<Box />}
+              />
             )}
           </AnimatePresence>
         </Box>

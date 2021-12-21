@@ -58,6 +58,7 @@ export const NewsModal = ({
             justifyContent="center"
             alignItems="center">
             <Image
+              fallback={<Box />}
               my="auto"
               alt="newsmodal-image"
               src={imageSrc}

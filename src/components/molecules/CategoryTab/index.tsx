@@ -83,7 +83,12 @@ const CategoryTab = ({items, direction, visible}: CategoryTabProps) => {
                   before: {borderColor: 'agt.red'},
                   _after: {borderColor: 'agt.red'}
                 }}>
-                <Image src={item.image} alt={item.name} w="fit-content" />
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  w="fit-content"
+                  fallback={<Box />}
+                />
                 {item.isNew && (
                   <Circle
                     size="10px"
