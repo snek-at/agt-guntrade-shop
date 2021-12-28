@@ -6,7 +6,7 @@ import {graphql} from 'gatsby'
 import NewsSection from '../components/organisms/sections/NewsSection'
 import HeroSection from '../components/organisms/sections/HeroSection'
 import ReviewSection from '../components/organisms/sections/ReviewSection'
-import FeaturedProductsSection from '../components/organisms/sections/FeaturedProductsSection/2'
+import ProductsSection from '../components/organisms/sections/ProductsSection/2'
 import AboutSection from '../components/organisms/sections/AboutSection'
 import FAQSection from '../components/organisms/sections/FAQSection/2'
 //#endregion
@@ -17,7 +17,7 @@ const IndexPage = ({data}) => {
     <Box>
       <HeroSection />
       <NewsSection />
-      <FeaturedProductsSection
+      <ProductsSection
         products={[
           {
             isNew: true,

@@ -25,7 +25,7 @@ const variants = {
   exit: {display: 'none'}
 }
 
-export interface FeaturedProductCardProps {
+export interface ProductCardProps {
   images: string[]
   price: number
   name: string
@@ -34,14 +34,14 @@ export interface FeaturedProductCardProps {
   direction?: string
 }
 
-const FeaturedProductCard = ({
+const ProductCard = ({
   images,
   price,
   reducedprice,
   name,
   description,
   direction
-}: FeaturedProductCardProps) => {
+}: ProductCardProps) => {
   const sale = typeof reducedprice !== 'undefined'
   const [imageIndex, setImageIndex] = React.useState(0)
   const [visible, setVisible] = React.useState(false)
@@ -182,4 +182,4 @@ const FeaturedProductCard = ({
   )
 }
 
-export default FeaturedProductCard
+export default ProductCard

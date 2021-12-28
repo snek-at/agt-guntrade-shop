@@ -1,21 +1,20 @@
 import {Story, Meta} from '@storybook/react'
 
-import ProductsSection, {ProductsSectionProps} from '.'
+import ShopPage, {ShopPageProps} from '.'
 
 export default {
-  title: 'Stories/IndexPage/ProductsSection',
-  component: ProductsSection
+  title: 'Stories/ShopPage',
+  component: ShopPage
 } as Meta
 
-const Template: Story<ProductsSectionProps> = args => (
-  <ProductsSection {...args} />
-)
+const Template: Story<ShopPageProps> = args => <ShopPage {...args} />
 
-export const Section2 = Template.bind({})
-Section2.args = {
-  products: [
+export const Page = Template.bind({})
+Page.args = {
+  breadcrumb: 'weapon/toy/shop',
+  name: 'shop',
+  items: [
     {
-      isNew: true,
       name: 'Weapon',
       caliber: 'Kal.9×19',
       price: 11.33,
@@ -27,7 +26,6 @@ Section2.args = {
       ]
     },
     {
-      isNew: true,
       name: 'Weapon',
       caliber: 'Kal.9×19',
       price: 11.33,
@@ -39,7 +37,6 @@ Section2.args = {
       ]
     },
     {
-      isNew: true,
       name: 'Weapon',
       caliber: 'Kal.9×19',
       price: 11.33,
@@ -51,7 +48,6 @@ Section2.args = {
       ]
     },
     {
-      isNew: true,
       name: 'Weapon',
       caliber: 'Kal.9×19',
       price: 11.33,
@@ -63,7 +59,6 @@ Section2.args = {
       ]
     },
     {
-      isNew: true,
       name: 'Weapon',
       caliber: 'Kal.9×19',
       price: 11.33,
@@ -75,7 +70,6 @@ Section2.args = {
       ]
     },
     {
-      isNew: true,
       name: 'Weapon',
       caliber: 'Kal.9×19',
       price: 11.33,
@@ -87,7 +81,6 @@ Section2.args = {
       ]
     },
     {
-      isNew: true,
       name: 'Weapon',
       caliber: 'Kal.9×19',
       price: 11.33,
@@ -99,7 +92,6 @@ Section2.args = {
       ]
     },
     {
-      isNew: true,
       name: 'Weapon',
       caliber: 'Kal.9×19',
       price: 11.33,

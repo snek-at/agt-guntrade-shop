@@ -1,20 +1,18 @@
 import {Box, Wrap} from '@chakra-ui/layout'
-import FeaturedProductCard, {
-  FeaturedProductCardProps
-} from '../../../molecules/FeaturedProductCard'
+import ProductCard, {ProductCardProps} from '../../../molecules/ProductCard'
 
-export interface FeaturedProductsSectionProps {
-  products: FeaturedProductCardProps[]
+export interface ProductsSectionProps {
+  products: ProductCardProps[]
 }
 
-const FeaturedProductsSection = ({products}: FeaturedProductsSectionProps) => {
+const ProductsSection = ({products}: ProductsSectionProps) => {
   return (
     <Box mt="20">
       <Wrap justify="center" spacing="5">
         {products.map((product, index) => (
           <>
             {console.log(index)}
-            <FeaturedProductCard
+            <ProductCard
               name={product.name}
               description={product.description}
               price={product.price}
@@ -29,4 +27,4 @@ const FeaturedProductsSection = ({products}: FeaturedProductsSectionProps) => {
   )
 }
 
-export default FeaturedProductsSection
+export default ProductsSection

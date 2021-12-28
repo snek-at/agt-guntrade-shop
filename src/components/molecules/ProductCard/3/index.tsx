@@ -26,17 +26,20 @@ const variants = {
   exit: {display: 'none'}
 }
 
-export interface FeaturedProductCardProps {
+export interface ProductCardProps {
   images: string[]
   price: number
   name: string
   caliber: string
+  width?: any
+  isNew?: boolean
   reducedprice?: number
   direction?: string
-  isNew: boolean
+  filters?: string[]
 }
 
-const FeaturedProductCard = ({
+const ProductCard = ({
+  width,
   images,
   price,
   reducedprice,
@@ -44,7 +47,7 @@ const FeaturedProductCard = ({
   caliber,
   direction,
   isNew
-}: FeaturedProductCardProps) => {
+}: ProductCardProps) => {
   const sale = typeof reducedprice !== 'undefined'
   const [imageIndex, setImageIndex] = React.useState(0)
   const [visible, setVisible] = React.useState(false)
@@ -52,7 +55,8 @@ const FeaturedProductCard = ({
   return (
     <Flex
       position="relative"
-      w={{base: '300px', xl: '20%'}}
+      w={width}
+      maxW="340px"
       onMouseEnter={() => setVisible(true)}
       onMouseLeave={() => setVisible(false)}>
       {visible && (
@@ -215,4 +219,4 @@ const FeaturedProductCard = ({
   )
 }
 
-export default FeaturedProductCard
+export default ProductCard
