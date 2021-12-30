@@ -16,65 +16,79 @@ Page.args = {
     image:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
     breadcrumb: 'weapon',
+    bannerImage:
+      'https://thumbs.static-thomann.de/thumb//convert/pics/images/category/fx/cat_ta_alt1.jpg',
     subcategories: [
       {
-        name: 'Toy',
+        name: 'Arex Zero Alpha',
         image:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+          'https://waffen-tuerk.at/wp-content/uploads/2019/11/links-48.jpg',
         breadcrumb: 'weapon/toy'
       },
       {
-        name: 'Spear',
+        name: 'Beretta Pistole 92X',
         image:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+          'https://waffen-tuerk.at/wp-content/uploads/2021/06/20210628_143310-900x900.jpg',
         breadcrumb: 'weapon/toy'
       },
       {
-        name: 'Sword',
+        name: 'CSA Sa61 “Skorpion”,7,65mm',
         image:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+          'https://waffen-tuerk.at/wp-content/uploads/2020/03/links-900x900.jpg',
         breadcrumb: 'weapon/toy'
       },
       {
-        name: 'Gun',
+        name: 'CZ 75 Tactical Sports Orange',
         image:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+          'https://waffen-tuerk.at/wp-content/uploads/2019/11/links_209-900x900.jpg',
         breadcrumb: 'weapon/toy'
       },
       {
-        name: 'Mace',
+        name: 'Arex Zero Alpha',
         image:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+          'https://waffen-tuerk.at/wp-content/uploads/2019/11/links-48.jpg',
         breadcrumb: 'weapon/toy'
       },
       {
-        name: 'Stick',
+        name: 'Beretta Pistole 92X',
         image:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+          'https://waffen-tuerk.at/wp-content/uploads/2021/06/20210628_143310-900x900.jpg',
         breadcrumb: 'weapon/toy'
       },
       {
-        name: 'Brassknuckle',
+        name: 'CSA Sa61 “Skorpion”,7,65mm',
         image:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+          'https://waffen-tuerk.at/wp-content/uploads/2020/03/links-900x900.jpg',
         breadcrumb: 'weapon/toy'
       },
       {
-        name: 'Knife',
+        name: 'CZ 75 Tactical Sports Orange',
         image:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+          'https://waffen-tuerk.at/wp-content/uploads/2019/11/links_209-900x900.jpg',
         breadcrumb: 'weapon/toy'
       },
       {
-        name: 'Spork',
+        name: 'Arex Zero Alpha',
         image:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+          'https://waffen-tuerk.at/wp-content/uploads/2019/11/links-48.jpg',
         breadcrumb: 'weapon/toy'
       },
       {
-        name: 'Dildo',
+        name: 'Beretta Pistole 92X',
         image:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
+          'https://waffen-tuerk.at/wp-content/uploads/2021/06/20210628_143310-900x900.jpg',
+        breadcrumb: 'weapon/toy'
+      },
+      {
+        name: 'CSA Sa61 “Skorpion”,7,65mm',
+        image:
+          'https://waffen-tuerk.at/wp-content/uploads/2020/03/links-900x900.jpg',
+        breadcrumb: 'weapon/toy'
+      },
+      {
+        name: 'CZ 75 Tactical Sports Orange',
+        image:
+          'https://waffen-tuerk.at/wp-content/uploads/2019/11/links_209-900x900.jpg',
         breadcrumb: 'weapon/toy'
       }
     ]
