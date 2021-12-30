@@ -102,7 +102,7 @@ const CategoryPage = ({category}: CategoryPageProps) => {
               {category.subcategories?.map(subcategory => (
                 <Box
                   p="5"
-                  maxW="250px"
+                  maxW="232px"
                   _hover={{color: 'agt.red'}}
                   border="1px"
                   borderColor="agt.lightgray"
