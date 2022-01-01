@@ -116,7 +116,7 @@ Page.args = {
       name: 'Weapon',
       caliber: 'Kal.9×19',
       price: 11.33,
-      reducedprice: 12,
+      reducedprice: 11,
       images: [
         'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
         'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
@@ -128,6 +128,34 @@ Page.args = {
     }
   ],
   filters: {
-    brands: ['Glock', 'SigSauer', 'Auer']
+    brands: ['Glock', 'SigSauer', 'Auer'],
+    caliber: ['1', '2', '3', '4', '5'],
+    filters: [
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+      '1',
+      '2',
+      '3',
+      '4',
+      '5'
+    ]
   }
 }
