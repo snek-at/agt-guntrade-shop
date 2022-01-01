@@ -46,7 +46,7 @@ const CategoryPage = ({category}: CategoryPageProps) => {
             />
           }
         />
-        <Box w="80%" mx="auto" position="relative" zIndex="1" pt="7">
+        <Box w="80%" mx="auto" position="relative" zIndex="1" pt="3">
           <Breadcrumb
             pt="1"
             borderRadius="5px"
@@ -61,7 +61,7 @@ const CategoryPage = ({category}: CategoryPageProps) => {
               <BreadcrumbLink>
                 <Icon
                   as={RiHomeLine}
-                  boxSize="1.5rem"
+                  boxSize="1.25rem"
                   mb="1.5"
                   _hover={{color: 'agt.red'}}
                   transition="0.3s"
@@ -71,19 +71,20 @@ const CategoryPage = ({category}: CategoryPageProps) => {
             {category.breadcrumb.split('/').map(crumb => (
               <BreadcrumbItem>
                 <BreadcrumbLink
-                  fontSize="1.5rem"
+                  fontSize="1.25rem"
                   to=""
                   _hover={{color: 'agt.red'}}
-                  transition="0.3s">
+                  transition="0.3s"
+                  fontWeight="100">
                   {crumb}
                 </BreadcrumbLink>
               </BreadcrumbItem>
             ))}
           </Breadcrumb>
-          <Heading mt="7" fontSize="3rem" color="white">
+          <Heading mt="8" fontSize="3.25rem" color="white">
             {category.name}
           </Heading>
-          <Flex mt="5" color="white">
+          <Flex mt="10" color="white" fontWeight="light" casing="uppercase">
             <Link fontSize="1.5rem" mr="3" to="">
               Link1
             </Link>
@@ -102,13 +103,11 @@ const CategoryPage = ({category}: CategoryPageProps) => {
               {category.subcategories?.map(subcategory => (
                 <Box
                   p="5"
-                  maxW="232px"
+                  maxW="285px"
                   _hover={{color: 'agt.red'}}
-                  border="1px"
-                  borderColor="agt.lightgray"
                   borderRadius="5px">
                   <Image
-                    w="200px"
+                    w="250px"
                     src={subcategory.image}
                     alt={subcategory.name}
                   />
