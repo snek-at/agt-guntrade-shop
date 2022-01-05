@@ -1,13 +1,21 @@
-import {Image} from '@chakra-ui/image'
-import {Box, Flex, Heading, Text, Wrap, Link} from '@chakra-ui/layout'
-import {Breadcrumb, BreadcrumbItem, BreadcrumbLink} from '@chakra-ui/breadcrumb'
-import Icon from '@chakra-ui/icon'
-import {RiHomeLine} from '@react-icons/all-files/ri/RiHomeLine'
-import {ChevronRightIcon} from '@chakra-ui/icons'
+import {
+  Divider,
+  useBreakpointValue,
+  HStack,
+  Image,
+  Box,
+  Flex,
+  Heading,
+  Text,
+  Wrap,
+  Link,
+  Button
+} from '@chakra-ui/react'
+
 import React from 'react'
 
-import {SeperatorStyle} from './style'
 import {ShopPageProps} from '../ShopPage'
+import Breadcrumb from '../../components/molecules/Breadcrumb'
 
 export interface CategoryType {
   name: string
@@ -23,6 +31,28 @@ export interface CategoryPageProps {
 }
 
 const CategoryPage = ({category}: CategoryPageProps) => {
+  const links = useBreakpointValue({
+    base: (
+      <HStack spacing="5" mt="7">
+        <Button colorScheme="agt.grayScheme">HIGHLIGHTS</Button>
+        <Button colorScheme="agt.grayScheme">MARKEN</Button>
+        <Button colorScheme="agt.grayScheme">DEALS</Button>
+      </HStack>
+    ),
+    md: (
+      <Flex mt="7" color="white" fontWeight="light" casing="uppercase">
+        <Link fontSize="1.5rem" mr="3" to="">
+          HIGHLIGHTS
+        </Link>
+        <Link fontSize="1.5rem" mr="3" to="">
+          MARKEN
+        </Link>
+        <Link fontSize="1.5rem" mr="3" to="">
+          DEALS
+        </Link>
+      </Flex>
+    )
+  })
   return (
     <>
       <Box bg="black" h="120px" color="white">
@@ -30,6 +60,7 @@ const CategoryPage = ({category}: CategoryPageProps) => {
       </Box>
       <Box position="relative">
         <Image
+          objectFit="cover"
           alignSelf="center"
           position="absolute"
           top="0"
@@ -46,79 +77,57 @@ const CategoryPage = ({category}: CategoryPageProps) => {
             />
           }
         />
-        <Box w="80%" mx="auto" position="relative" zIndex="1" pt="3">
-          <Breadcrumb
-            pt="1"
-            borderRadius="5px"
-            color="white"
-            px="2"
-            w="fit-content"
-            bg="agt.gray"
-            justifyContent="center"
-            alignItems="center"
-            separator={<ChevronRightIcon boxSize="2rem" className="icon" />}>
-            <BreadcrumbItem position="relative" css={SeperatorStyle}>
-              <BreadcrumbLink>
-                <Icon
-                  as={RiHomeLine}
-                  boxSize="1.25rem"
-                  mb="1.5"
-                  _hover={{color: 'agt.red'}}
-                  transition="0.3s"
-                />
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            {category.breadcrumb.split('/').map(crumb => (
-              <BreadcrumbItem>
-                <BreadcrumbLink
-                  fontSize="1.25rem"
-                  to=""
-                  _hover={{color: 'agt.red'}}
-                  transition="0.3s"
-                  fontWeight="100">
-                  {crumb}
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-            ))}
-          </Breadcrumb>
-          <Heading mt="8" fontSize="3.25rem" color="white">
+        <Box
+          p="5"
+          w={{base: '100%', md: '80%'}}
+          mx="auto"
+          position="relative"
+          zIndex="1">
+          <Breadcrumb breadcrumb={category.breadcrumb} />
+          <Heading mt="6" fontSize="3.25rem" color="white">
             {category.name}
           </Heading>
-          <Flex mt="10" color="white" fontWeight="light" casing="uppercase">
-            <Link fontSize="1.5rem" mr="3" to="">
-              Link1
-            </Link>
-            <Link fontSize="1.5rem" mr="3" to="">
-              Link2
-            </Link>
-            <Link fontSize="1.5rem" mr="3" to="">
-              Link3
-            </Link>
-            <Link fontSize="1.5rem" to="">
-              Link4
-            </Link>
-          </Flex>
-          <Box position="relative">
-            <Wrap justify="center" spacing="5" position="absolute" mt="14">
-              {category.subcategories?.map(subcategory => (
-                <Box
-                  p="5"
-                  maxW="285px"
-                  _hover={{color: 'agt.red'}}
-                  borderRadius="5px">
-                  <Image
-                    w="250px"
-                    src={subcategory.image}
-                    alt={subcategory.name}
-                  />
-                  <Text textAlign="center" mt="5" fontSize="20">
-                    {subcategory.name}
-                  </Text>
-                </Box>
-              ))}
-            </Wrap>
-          </Box>
+          {links}
         </Box>
+        <Wrap
+          ml="10%"
+          maxW={{base: '100%', md: '80%'}}
+          justify="center"
+          spacing={{base: '0', md: '5'}}
+          position="absolute"
+          mt="14">
+          {category.subcategories?.map(subcategory => (
+            <>
+              <Flex
+                direction={{base: 'row', md: 'column'}}
+                py={{base: '0', md: '5'}}
+                px="5"
+                minW="285px"
+                maxW="285px"
+                _hover={{color: 'agt.red'}}
+                borderRadius="5px"
+                justifyContent="flex-start"
+                alignItems="flex-start">
+                <Image
+                  my={{base: '5', md: '0'}}
+                  w={{base: '100px', md: '250px'}}
+                  src={subcategory.image}
+                  alt={subcategory.name}
+                />
+                <Text
+                  mt={{base: 0, md: 5}}
+                  alignSelf="center"
+                  w="100%"
+                  textAlign="center"
+                  fontSize={{base: '17', md: '20'}}
+                  ml={{base: '5', md: '0'}}>
+                  {subcategory.name}
+                </Text>
+              </Flex>
+              <Divider display={{base: 'static', md: 'none'}} w="80%" />
+            </>
+          ))}
+        </Wrap>
       </Box>
     </>
   )
