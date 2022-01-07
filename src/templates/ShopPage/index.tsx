@@ -1,18 +1,19 @@
-import {Image} from '@chakra-ui/image'
-import {Box, Heading, Flex, Wrap, Text, VStack, Stack} from '@chakra-ui/layout'
-import {Breadcrumb, BreadcrumbItem, BreadcrumbLink} from '@chakra-ui/breadcrumb'
-import Icon from '@chakra-ui/icon'
-import {RiHomeLine} from '@react-icons/all-files/ri/RiHomeLine'
-import {ChevronRightIcon} from '@chakra-ui/icons'
+import {Box, Heading, Flex, Wrap, Text, Stack} from '@chakra-ui/layout'
 import React from 'react'
 
 import ProductCard, {
   ProductCardProps
 } from '../../components/molecules/ProductCard/3'
 import {CategoryType} from '../CategoryPage'
-import {SeperatorStyle} from './style'
 import {Checkbox} from '@chakra-ui/checkbox'
-import {NumberInput, NumberInputField} from '@chakra-ui/number-input'
+import Breadcrumb from '../../components/molecules/Breadcrumb'
+import {
+  Button,
+  RangeSlider,
+  RangeSliderFilledTrack,
+  RangeSliderThumb,
+  RangeSliderTrack
+} from '@chakra-ui/react'
 
 interface FilterCategoryType {
   [category: string]: string
@@ -33,38 +34,56 @@ export interface ShopPageProps extends CategoryType {
 
 const ShopPage = ({items, breadcrumb, name, filters}: ShopPageProps) => {
   const [categories, setCategories] = React.useState<string[]>([])
-  const [priceFilter, setPriceFilter] = React.useState<number>(0)
+  const [maxPriceFilter, setMaxPriceFilter] = React.useState<number>(0)
+  const [minPriceFilter, setMinPriceFilter] = React.useState<number>(0)
   const [maximum, setMaximum] = React.useState<number>(0)
 
-  React.useEffect(() => {
+  React.useMemo(() => {
+    let max = 0
     for (const item of items) {
       if (item.price > maximum) {
-        setMaximum(item.price)
+        max = item.price
       } else if (
         typeof item.reducedprice !== 'undefined' &&
-        maximum < item.reducedprice
+        item.reducedprice > maximum
       ) {
-        setMaximum(item.reducedprice)
+        max = item.reducedprice
       }
     }
-    if (priceFilter === 0) {
-      setPriceFilter(maximum)
-    }
-  })
+    setMaximum(max)
+    setMaxPriceFilter(max)
+  }, [items])
 
   const checkFilters = (item: StoreCardProps) => {
+    let price
+    let category
+    if (categories.length === 0) {
+      category = true
+    }
+    if (maxPriceFilter === maximum && minPriceFilter === 0) {
+      price = true
+    }
+
+    if (
+      (item.price <= maxPriceFilter ||
+        (typeof item.reducedprice !== 'undefined' &&
+          item.reducedprice <= maxPriceFilter)) &&
+      (item.price >= minPriceFilter ||
+        (typeof item.reducedprice !== 'undefined' &&
+          item.reducedprice <= minPriceFilter))
+    ) {
+      price = true
+    }
+
     for (const key of Object.keys(item.categories)) {
       if (categories.includes(item.categories[key])) {
-        if (
-          item.price <= priceFilter ||
-          (typeof item.reducedprice !== 'undefined' &&
-            item.reducedprice <= priceFilter)
-        ) {
-          return true
-        }
+        category = true
+        break
       }
     }
-    return false
+    console.log('price: ', price, 'category: ', category)
+
+    return category && price
   }
 
   return (
@@ -73,39 +92,7 @@ const ShopPage = ({items, breadcrumb, name, filters}: ShopPageProps) => {
         Navbar
       </Box>
       <Box w="80%" mx="auto" position="relative" zIndex="1" pt="5">
-        <Breadcrumb
-          pt="1"
-          borderRadius="5px"
-          color="white"
-          px="2"
-          w="fit-content"
-          bg="agt.gray"
-          justifyContent="center"
-          alignItems="center"
-          separator={<ChevronRightIcon boxSize="2rem" className="icon" />}>
-          <BreadcrumbItem position="relative" css={SeperatorStyle}>
-            <BreadcrumbLink>
-              <Icon
-                as={RiHomeLine}
-                boxSize="1.5rem"
-                mb="1.5"
-                _hover={{color: 'agt.red'}}
-                transition="0.3s"
-              />
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          {breadcrumb.split('/').map(crumb => (
-            <BreadcrumbItem>
-              <BreadcrumbLink
-                fontSize="1.5rem"
-                to=""
-                _hover={{color: 'agt.red'}}
-                transition="0.3s">
-                {crumb}
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-          ))}
-        </Breadcrumb>
+        <Breadcrumb breadcrumb={breadcrumb} />
         <Heading mt="5">{name}</Heading>
       </Box>
       <Flex w="80%" ml="10%" mt="10">
@@ -132,14 +119,29 @@ const ShopPage = ({items, breadcrumb, name, filters}: ShopPageProps) => {
               </Stack>
             </>
           ))}
-          <Text fontWeight="bold">Pricefilter</Text>
-          <NumberInput
-            defaultValue={0}
+          <Text fontWeight="bold">maxPriceFilter</Text>
+          <RangeSlider
             min={0}
             max={maximum}
-            onChange={valueString => setPriceFilter(parseFloat(valueString))}>
-            <NumberInputField />
-          </NumberInput>
+            defaultValue={[0, maximum]}
+            onChangeEnd={value => {
+              setMinPriceFilter(value[0])
+              setMaxPriceFilter(value[1])
+            }}>
+            <RangeSliderTrack>
+              <RangeSliderFilledTrack />
+            </RangeSliderTrack>
+            <RangeSliderThumb boxSize={6} index={0} />
+            <RangeSliderThumb boxSize={6} index={1} />
+          </RangeSlider>
+          <Button
+            colorScheme="agt.grayScheme"
+            onClick={() => {
+              setMaxPriceFilter(maximum)
+              setCategories([])
+            }}>
+            Filter zurücksetzen
+          </Button>
         </Box>
         <Wrap ml="10" spacing="10" maxW="75%" minW="75%">
           {items.map(
