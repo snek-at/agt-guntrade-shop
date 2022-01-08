@@ -15,11 +15,11 @@ import {
   RangeSliderTrack
 } from '@chakra-ui/react'
 
-interface FilterCategoryType {
+export interface FilterCategoryType {
   [category: string]: string
 }
 
-interface StoreCardProps extends ProductCardProps {
+export interface StoreCardProps extends ProductCardProps {
   categories: FilterCategoryType
 }
 
@@ -59,12 +59,18 @@ const ShopPage = ({items, breadcrumb, name, filters}: ShopPageProps) => {
     let category
     if (categories.length === 0) {
       category = true
-    }
-    if (maxPriceFilter === maximum && minPriceFilter === 0) {
-      price = true
+    } else {
+      for (const key of Object.keys(item.categories)) {
+        if (categories.includes(item.categories[key])) {
+          category = true
+          break
+        }
+      }
     }
 
-    if (
+    if (maxPriceFilter === maximum && minPriceFilter === 0) {
+      price = true
+    } else if (
       (item.price <= maxPriceFilter ||
         (typeof item.reducedprice !== 'undefined' &&
           item.reducedprice <= maxPriceFilter)) &&
@@ -74,14 +80,6 @@ const ShopPage = ({items, breadcrumb, name, filters}: ShopPageProps) => {
     ) {
       price = true
     }
-
-    for (const key of Object.keys(item.categories)) {
-      if (categories.includes(item.categories[key])) {
-        category = true
-        break
-      }
-    }
-    console.log('price: ', price, 'category: ', category)
 
     return category && price
   }
@@ -123,7 +121,7 @@ const ShopPage = ({items, breadcrumb, name, filters}: ShopPageProps) => {
           <RangeSlider
             min={0}
             max={maximum}
-            defaultValue={[0, maximum]}
+            defaultValue={[0, maxPriceFilter]}
             onChangeEnd={value => {
               setMinPriceFilter(value[0])
               setMaxPriceFilter(value[1])
@@ -134,9 +132,16 @@ const ShopPage = ({items, breadcrumb, name, filters}: ShopPageProps) => {
             <RangeSliderThumb boxSize={6} index={0} />
             <RangeSliderThumb boxSize={6} index={1} />
           </RangeSlider>
+          <Flex alignItems="center" justifyContent="center" fontSize="20">
+            <Text>{minPriceFilter}</Text>
+            <Text mx="3">-</Text>
+            <Text>{maxPriceFilter}</Text>
+          </Flex>
           <Button
+            mt="5"
             colorScheme="agt.grayScheme"
             onClick={() => {
+              setMinPriceFilter(0)
               setMaxPriceFilter(maximum)
               setCategories([])
             }}>
