@@ -131,7 +131,7 @@ const ProductCard = ({
             position="absolute"
             top={2}
             right={2}
-            bg="red.200"
+            bg="blue.200"
             zIndex="2"
           />
         )}
@@ -160,7 +160,11 @@ const ProductCard = ({
         </Box>
         <Box p="2.5">
           {isNew && (
-            <Badge borderRadius="5px" px="2" fontSize="0.8em" colorScheme="red">
+            <Badge
+              borderRadius="5px"
+              px="2"
+              fontSize="0.8em"
+              colorScheme="blue">
               New
             </Badge>
           )}
@@ -179,7 +183,7 @@ const ProductCard = ({
               as={FiShoppingCart}
               h={7}
               w={7}
-              _hover={{color: 'agt.red'}}
+              _hover={{color: 'agt.blue'}}
               zIndex="1"
               position="relative"
             />
@@ -189,7 +193,7 @@ const ProductCard = ({
               mt="4"
               h="1.6em"
               variant="solid"
-              bg="agt.red"
+              bg="agt.blue"
               borderRadius="5px"
               px="2"
               fontSize="0.8em">

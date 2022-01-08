@@ -15,6 +15,7 @@ interface BreadcrumbPops {
 
 const Export = ({breadcrumb}: BreadcrumbPops) => (
   <Breadcrumb
+    css={SeperatorStyle}
     pt="1"
     borderRadius="5px"
     color="white"
@@ -24,13 +25,13 @@ const Export = ({breadcrumb}: BreadcrumbPops) => (
     justifyContent="center"
     alignItems="center"
     separator={<ChevronRightIcon boxSize="2rem" className="icon" />}>
-    <BreadcrumbItem position="relative" css={SeperatorStyle}>
+    <BreadcrumbItem position="relative">
       <BreadcrumbLink>
         <Icon
           as={RiHomeLine}
           boxSize="1.25rem"
           mb="1.5"
-          _hover={{color: 'agt.red'}}
+          _hover={{color: 'agt.blue'}}
           transition="0.3s"
         />
       </BreadcrumbLink>
@@ -38,9 +39,10 @@ const Export = ({breadcrumb}: BreadcrumbPops) => (
     {breadcrumb.split('/').map(crumb => (
       <BreadcrumbItem>
         <BreadcrumbLink
+          mb="0.5rem"
           fontSize="1.25rem"
           to=""
-          _hover={{color: 'agt.red'}}
+          _hover={{color: 'agt.blue'}}
           transition="0.3s"
           fontWeight="100">
           {crumb}

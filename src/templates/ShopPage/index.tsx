@@ -9,11 +9,17 @@ import {Checkbox} from '@chakra-ui/checkbox'
 import Breadcrumb from '../../components/molecules/Breadcrumb'
 import {
   Button,
+  Icon,
   RangeSlider,
   RangeSliderFilledTrack,
   RangeSliderThumb,
-  RangeSliderTrack
+  RangeSliderTrack,
+  Divider,
+  Spacer
 } from '@chakra-ui/react'
+
+import {BsFilterLeft} from '@react-icons/all-files/bs/BsFilterLeft'
+import {RiOrderPlayFill} from '@react-icons/all-files/ri/RiOrderPlayFill'
 
 export interface FilterCategoryType {
   [category: string]: string
@@ -37,6 +43,7 @@ const ShopPage = ({items, breadcrumb, name, filters}: ShopPageProps) => {
   const [maxPriceFilter, setMaxPriceFilter] = React.useState<number>(0)
   const [minPriceFilter, setMinPriceFilter] = React.useState<number>(0)
   const [maximum, setMaximum] = React.useState<number>(0)
+  const [order, setOrder] = React.useState<string>('Beliebtheit')
 
   React.useMemo(() => {
     let max = 0
@@ -91,9 +98,26 @@ const ShopPage = ({items, breadcrumb, name, filters}: ShopPageProps) => {
       </Box>
       <Box w="80%" mx="auto" position="relative" zIndex="1" pt="5">
         <Breadcrumb breadcrumb={breadcrumb} />
-        <Heading mt="5">{name}</Heading>
+        <Flex>
+          <Heading mt="5">{name}</Heading>
+          <Text ml="3" mt="6" color="gray" fontWeight="bold" fontSize={26}>
+            {items.length}
+          </Text>
+        </Flex>
+        <Flex mt="3">
+          <Flex>
+            <Icon as={BsFilterLeft} boxSize="2rem" />
+            <Text fontSize="1.25rem">Filter</Text>
+          </Flex>
+          <Spacer />
+          <Flex>
+            <Text fontSize="1.25rem">{order}</Text>
+            <Icon as={RiOrderPlayFill} boxSize="1.5rem" mt="1" ml="2" />
+          </Flex>
+        </Flex>
+        <Divider mt="1" />
       </Box>
-      <Flex w="80%" ml="10%" mt="10">
+      <Flex w="80%" ml="10%" mt="5">
         <Box minW="25%" position="sticky" bottom="0px" h="fit-content">
           {Object.keys(filters).map(category => (
             <>

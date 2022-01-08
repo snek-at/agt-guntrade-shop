@@ -104,7 +104,7 @@ const CategoryPage = ({category}: CategoryPageProps) => {
                 px="5"
                 minW="285px"
                 maxW="285px"
-                _hover={{color: 'agt.red'}}
+                _hover={{color: 'agt.blue'}}
                 borderRadius="5px"
                 justifyContent="flex-start"
                 alignItems="flex-start">

@@ -3,7 +3,7 @@ import {css} from '@emotion/react'
 const transform = (visible: boolean) => (visible ? 'scale(1.03)' : 'none')
 const width = (visible: boolean) => (visible ? '100%' : '50%')
 const margin = (visible: boolean) => (visible ? '-50%' : '-25%')
-const borderColor = (visible: boolean) => (visible ? '#ef3340' : 'white')
+const borderColor = (visible: boolean) => (visible ? '#eb1933' : 'white')
 const borderLeftRadius = (direction: string) =>
   direction !== 'left' ? '0px' : '5px'
 const borderRigthRadius = (direction: string) =>

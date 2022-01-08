@@ -80,8 +80,8 @@ const CategoryTab = ({items, direction, visible}: CategoryTabProps) => {
                 mt="3"
                 _first={{lg: {mr: 4, ml: '20px'}}}
                 _hover={{
-                  before: {borderColor: 'agt.red'},
-                  _after: {borderColor: 'agt.red'}
+                  before: {borderColor: 'agt.blue'},
+                  _after: {borderColor: 'agt.blue'}
                 }}>
                 <Image
                   src={item.image}
@@ -95,7 +95,7 @@ const CategoryTab = ({items, direction, visible}: CategoryTabProps) => {
                     position="absolute"
                     top={2}
                     right={2}
-                    bg="red.200"
+                    bg="blue.200"
                     zIndex="2"
                   />
                 )}
@@ -109,7 +109,7 @@ const CategoryTab = ({items, direction, visible}: CategoryTabProps) => {
                 </Text>
                 <Badge
                   variant="solid"
-                  bg="agt.red"
+                  bg="agt.blue"
                   borderRadius="5px"
                   h="1.1rem">
                   {item.name.split(';')[1]}

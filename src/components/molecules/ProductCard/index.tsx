@@ -58,7 +58,7 @@ const ProductCard = ({
           borderLeft={direction === 'left' ? 'solid' : 'none'}
           right={direction === 'left' ? 'none' : '0px'}
           borderWidth="2px"
-          borderColor="agt.red"
+          borderColor="agt.blue"
           borderLeftRadius={direction === 'left' ? '5px' : '0px'}
           borderTopRightRadius={direction === 'left' ? '0px' : '5px'}
           borderBottomRightRadius={direction === 'left' ? '0px' : '5px'}
@@ -108,7 +108,7 @@ const ProductCard = ({
           <Heading>{name}</Heading>
           <Box minH="3rem">
             <Text noOfLines={3}>{description.split(';')[0]}</Text>
-            <Badge variant="solid" bg="agt.red" borderRadius="5px">
+            <Badge variant="solid" bg="agt.blue" borderRadius="5px">
               {description.split(';')[1]}
             </Badge>
           </Box>

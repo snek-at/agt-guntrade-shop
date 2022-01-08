@@ -72,7 +72,7 @@ const ReviewCard = ({
   const createReviewStars = (rating: number) => {
     const stars = []
     for (let i = 0; i < 5; i++) {
-      const color = rating <= i ? '#E2E8F0' : '#ef3340'
+      const color = rating <= i ? '#E2E8F0' : '#2151a1'
 
       stars.push(
         <IconContext.Provider value={{color: color, size: '20px'}}>
