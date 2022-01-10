@@ -18,7 +18,7 @@ Page.args = {
       name: 'Weapon',
       caliber: 'Kal.9×19',
       price: 11.33,
-      reducedprice: 12,
+      reducedprice: 10,
       images: [
         'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
         'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
@@ -32,7 +32,7 @@ Page.args = {
       name: 'Weapon',
       caliber: 'Kal.9×19',
       price: 11.33,
-      reducedprice: 12,
+      reducedprice: 10,
       images: [
         'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
         'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
@@ -46,7 +46,7 @@ Page.args = {
       name: 'Weapon',
       caliber: 'Kal.9×19',
       price: 11.33,
-      reducedprice: 12,
+      reducedprice: 10,
       images: [
         'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
         'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
@@ -60,7 +60,7 @@ Page.args = {
       name: 'Weapon',
       caliber: 'Kal.9×19',
       price: 11.33,
-      reducedprice: 12,
+      reducedprice: 10,
       images: [
         'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',
         'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Glock_17_MOD_45154998_%28Transparent%29.png/640px-Glock_17_MOD_45154998_%28Transparent%29.png',

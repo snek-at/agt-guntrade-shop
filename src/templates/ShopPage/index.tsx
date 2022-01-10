@@ -91,6 +91,8 @@ const ShopPage = ({items, breadcrumb, name, filters}: ShopPageProps) => {
     return category && price
   }
 
+  let priceFilter: number[] = [minPriceFilter, maxPriceFilter]
+
   return (
     <>
       <Box bg="black" h="120px" color="white">
@@ -145,8 +147,8 @@ const ShopPage = ({items, breadcrumb, name, filters}: ShopPageProps) => {
           <RangeSlider
             min={0}
             max={maximum}
-            defaultValue={[0, maxPriceFilter]}
-            onChangeEnd={value => {
+            value={priceFilter}
+            onChange={value => {
               setMinPriceFilter(value[0])
               setMaxPriceFilter(value[1])
             }}>
@@ -168,25 +170,30 @@ const ShopPage = ({items, breadcrumb, name, filters}: ShopPageProps) => {
               setMinPriceFilter(0)
               setMaxPriceFilter(maximum)
               setCategories([])
+              priceFilter = [0, maximum]
             }}>
             Filter zurücksetzen
           </Button>
         </Box>
         <Wrap ml="10" spacing="10" maxW="75%" minW="75%">
-          {items.map(
-            item =>
-              checkFilters(item) && (
-                <ProductCard
-                  width={{base: '300px', xl: '25%'}}
-                  images={item.images}
-                  name={item.name}
-                  price={item.price}
-                  caliber={item.caliber}
-                  reducedprice={item.reducedprice}
-                  direction="left"
-                />
-              )
-          )}
+          {items.map(item => {
+            const isVisible = checkFilters(item)
+            return React.useMemo(
+              () =>
+                isVisible && (
+                  <ProductCard
+                    width={{base: '300px', xl: '25%'}}
+                    images={item.images}
+                    name={item.name}
+                    price={item.price}
+                    caliber={item.caliber}
+                    reducedprice={item.reducedprice}
+                    direction="left"
+                  />
+                ),
+              [isVisible]
+            )
+          })}
         </Wrap>
       </Flex>
     </>

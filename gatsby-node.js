@@ -19,25 +19,27 @@ const request = async params => {
   return response
 }
 
+let requestCount = 0
+
 const createReviewNodes = (
   createNode,
   createNodeId,
   createContentDigest,
-  response,
-  requestCount
+  response
 ) => {
   const reviews = response.data.place_reviews_results || []
+  requestCount = requestCount + 1
   reviews.forEach((review, i) => {
     const rating = review.rating
-    const position = review.positon
+    const position = review.position + 10 * requestCount
     if (rating >= 3) {
       createNode({
         ...review,
-        positon: position + 10 * requestCount,
+        positon: position,
         rating: rating,
         sourceImage: review.source_image,
         sourceLink: review.source_link,
-        id: createNodeId(`${NODE_TYPE}-${i}`),
+        id: createNodeId(`${NODE_TYPE}-${position}`),
         test: true,
         parent: null,
         children: [],
@@ -74,13 +76,25 @@ exports.sourceNodes = async ({actions, createNodeId, createContentDigest}) => {
   let params = {
     api_key: apiKey,
     search_type: 'place_reviews',
-    place_id: placeId,
-    hl: 'de',
-    gl: 'at'
+    data_id: placeId,
+    hl: 'de'
   }
 
   const response = await request(params)
-  createReviewNodes(createNode, createNodeId, createContentDigest, response, 0)
+  createReviewNodes(createNode, createNodeId, createContentDigest, response)
+
+  params = {
+    ...params,
+    next_page_token: response.data.pagination.next_page_token
+  }
+
+  const secondResponse = await request(params)
+  createReviewNodes(
+    createNode,
+    createNodeId,
+    createContentDigest,
+    secondResponse
+  )
 }
 
 exports.createSchemaCustomization = ({actions}) => {
