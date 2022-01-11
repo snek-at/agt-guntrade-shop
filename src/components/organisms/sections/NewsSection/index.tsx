@@ -28,11 +28,12 @@ const NewsSection = () => {
   const [isInvisible, setIsInvisible] = React.useState(true)
   const [index, setIndex] = React.useState(0)
 
+  const simpleGridValue = useBreakpointValue({base: 2, md: 3, xl: 3}) || 1
   const isSmall = useBreakpointValue({base: true, xl: false})
   const buttonColor = useColorModeValue('agt.grayScheme', 'gray')
 
   const vw = useWindowWidth()
-  const numOfCards = Math.floor(vw / (isSmall ? 320 : vw * 0.25))
+  const numOfCards = Math.floor(vw / (vw / simpleGridValue))
 
   const drag = {
     drag: 'x',
@@ -243,7 +244,6 @@ const NewsSection = () => {
             setDirection('right')
             setIndex(index + numOfCards)
           }}>
-          {' '}
           <ChevronRightIcon
             className="arrow"
             color="white"

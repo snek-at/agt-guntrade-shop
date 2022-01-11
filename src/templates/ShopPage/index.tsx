@@ -15,7 +15,12 @@ import {
   RangeSliderThumb,
   RangeSliderTrack,
   Divider,
-  Spacer
+  Spacer,
+  IconButton,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverBody
 } from '@chakra-ui/react'
 
 import {BsFilterLeft} from '@react-icons/all-files/bs/BsFilterLeft'
@@ -43,7 +48,42 @@ const ShopPage = ({items, breadcrumb, name, filters}: ShopPageProps) => {
   const [maxPriceFilter, setMaxPriceFilter] = React.useState<number>(0)
   const [minPriceFilter, setMinPriceFilter] = React.useState<number>(0)
   const [maximum, setMaximum] = React.useState<number>(0)
-  const [order, setOrder] = React.useState<string>('Beliebtheit')
+  const [order, setOrder] = React.useState<string>('price')
+
+  const dynamicSort = (property: string) => {
+    var sortOrder = 1
+    if (property[0] === '-') {
+      sortOrder = -1
+      property = property.substring(1)
+    }
+    if (property === 'price') {
+      return function (a: any, b: any) {
+        let properties = ['price', 'price']
+        if (typeof a?.reducedprice !== 'undefined') {
+          properties[0] = 'reducedprice'
+        }
+        if (typeof b?.reducedprice !== 'undefined') {
+          properties[1] = 'reducedprice'
+        }
+        var result =
+          a[properties[0]] < b[properties[1]]
+            ? -1
+            : a[properties[0]] > b[properties[1]]
+            ? 1
+            : 0
+        return result * sortOrder
+      }
+    }
+    return function (a: any, b: any) {
+      var result =
+        a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0
+      return result * sortOrder
+    }
+  }
+
+  const sortItems = () => {
+    items = items.sort(dynamicSort(order))
+  }
 
   React.useMemo(() => {
     let max = 0
@@ -114,7 +154,41 @@ const ShopPage = ({items, breadcrumb, name, filters}: ShopPageProps) => {
           <Spacer />
           <Flex>
             <Text fontSize="1.25rem">{order}</Text>
-            <Icon as={RiOrderPlayFill} boxSize="1.5rem" mt="1" ml="2" />
+            <Popover trigger="hover">
+              <PopoverTrigger>
+                <IconButton
+                  aria-label="sort"
+                  icon={<RiOrderPlayFill />}
+                  boxSize="1.5rem"
+                  mt="1"
+                  ml="2"
+                />
+              </PopoverTrigger>
+              <PopoverContent w="fit-content" boxShadow="lg" px="0" pb="0">
+                <PopoverBody p="0" pt="8">
+                  <Text
+                    p="2"
+                    w="100%"
+                    onClick={() => {
+                      setOrder('-price')
+                      sortItems()
+                    }}
+                    _hover={{bg: 'agt.lightgray'}}>
+                    Günstigste
+                  </Text>
+                  <Text
+                    p="2"
+                    w="100%"
+                    onClick={() => {
+                      setOrder('price')
+                      sortItems()
+                    }}
+                    _hover={{bg: 'agt.lightgray'}}>
+                    Teuerste
+                  </Text>
+                </PopoverBody>
+              </PopoverContent>
+            </Popover>
           </Flex>
         </Flex>
         <Divider mt="1" />
@@ -191,7 +265,7 @@ const ShopPage = ({items, breadcrumb, name, filters}: ShopPageProps) => {
                     direction="left"
                   />
                 ),
-              [isVisible]
+              [isVisible, items, order]
             )
           })}
         </Wrap>

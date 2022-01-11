@@ -27,6 +27,7 @@ const ReviewSection = ({heading, teaser, data}: ReviewSectionProps) => {
   const [isInvisible, setIsInvisible] = React.useState(true)
 
   const isSmall = useBreakpointValue({base: true, xl: false})
+  const isMobile = useBreakpointValue({base: true, md: false})
 
   const vw = useWindowWidth()
   const numOfCards = Math.floor(vw / (isSmall ? 320 : vw * 0.25))
@@ -56,7 +57,6 @@ const ReviewSection = ({heading, teaser, data}: ReviewSectionProps) => {
       }
     }
   }
-  const isMobile = useBreakpointValue({base: true, md: false})
 
   return (
     <>
