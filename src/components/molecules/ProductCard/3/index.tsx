@@ -1,5 +1,4 @@
 import Icon from '@chakra-ui/icon'
-import {Image, ImageProps} from '@chakra-ui/image'
 import {
   Badge,
   Box,
@@ -88,7 +87,13 @@ const ProductCard = ({
             return gatsbyimages.map((gatsbyimage, index) => {
               if (index !== 0) {
                 return (
-                  <GatsbyImage image={gatsbyimage.gatsbyImageData} alt={name} />
+                  <GatsbyImage
+                    image={gatsbyimage.gatsbyImageData}
+                    alt={name}
+                    className="sideImageStyle"
+                    onMouseEnter={() => setImageIndex(index)}
+                    onMouseLeave={() => setImageIndex(0)}
+                  />
                 )
               }
             })
@@ -123,19 +128,25 @@ const ProductCard = ({
           />
         )}
         <Box minH="210px">
+          {console.log(images[0][imageIndex])}
           <AnimatePresence>
-            {(imageIndex && (
-              <FadingImage
-                initial={{opacity: 0}}
-                animate={{opacity: 1}}
-                image={images[imageIndex][0].gatsbyImageData}
-                alt={name}
-              />
-            )) || (
+            {(imageIndex &&
+              images[0].length > 1 &&
+              images[0].map((gatsbyimage, index) => {
+                return (
+                  imageIndex === index && (
+                    <FadingImage
+                      initial={{opacity: 0}}
+                      animate={{opacity: 1}}
+                      image={gatsbyimage[index].gatsbyImageData}
+                      alt={name}
+                    />
+                  )
+                )
+              })) || (
               <GatsbyImage image={images[0][0].gatsbyImageData} alt={name} />
             )}
           </AnimatePresence>
-          {console.log(images[0][0].gatsbyImageData)}
         </Box>
         <Box p="2.5">
           {isNew && (
