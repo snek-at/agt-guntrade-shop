@@ -193,6 +193,28 @@ export const query = graphql`
         source
       }
     }
+    allShopifyProduct {
+      edges {
+        node {
+          createdAt
+          description
+          images {
+            gatsbyImageData
+          }
+          priceRangeV2 {
+            maxVariantPrice {
+              amount
+            }
+            minVariantPrice {
+              amount
+            }
+          }
+          tags
+          vendor
+          title
+        }
+      }
+    }
   }
 `
 

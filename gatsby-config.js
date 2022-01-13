@@ -1,6 +1,8 @@
 const {resolve} = require('path')
+const dotenv = require('dotenv')
 
 const siteMetadata = require('./site-metadata')
+dotenv.config()
 
 module.exports = {
   siteMetadata,
@@ -36,6 +38,13 @@ module.exports = {
           webpOptions: {},
           avifOptions: {}
         }
+      }
+    },
+    {
+      resolve: 'gatsby-source-shopify',
+      options: {
+        password: process.env.SHOPIFY_SHOP_PASSWORD,
+        storeUrl: process.env.GATSBY_SHOPIFY_STORE_URL
       }
     },
     `gatsby-transformer-sharp`
