@@ -14,9 +14,10 @@ import React from 'react'
 import {FiShoppingCart} from '@react-icons/all-files/fi/FiShoppingCart'
 
 import {borderline, sideline} from './style'
+import {GatsbyImage, GatsbyImageProps} from 'gatsby-plugin-image'
 
 const MotionBox = motion<BoxProps>(Box)
-const FadingImage = motion<ImageProps>(Image)
+const FadingImage = motion<GatsbyImageProps>(GatsbyImage)
 
 const variants = {
   intial: (direction: string) =>
@@ -27,7 +28,7 @@ const variants = {
 }
 
 export interface ProductCardProps {
-  images: string[]
+  images: any[]
   price: number
   name: string
   caliber: string
@@ -83,28 +84,14 @@ const ProductCard = ({
           animate="enter"
           exit="exit"
           custom={direction}>
-          {images.map((image, index) => {
-            if (index !== 0) {
-              return (
-                <Image
-                  fallback={<Box />}
-                  _hover={{filter: 'brightness(80%)'}}
-                  onMouseEnter={() => setImageIndex(index)}
-                  onMouseLeave={() => setImageIndex(0)}
-                  position="relative"
-                  zIndex="3"
-                  pointerEvents="all"
-                  w="100px"
-                  src={image}
-                  alt={name}
-                  mb="3"
-                  _last={{mb: 0}}
-                  p="2"
-                  bg="agt.lightgray"
-                  borderRadius="5px"
-                />
-              )
-            }
+          {images.map(gatsbyimages => {
+            return gatsbyimages.map((gatsbyimage, index) => {
+              if (index !== 0) {
+                return (
+                  <GatsbyImage image={gatsbyimage.gatsbyImageData} alt={name} />
+                )
+              }
+            })
           })}
         </MotionBox>
       )}
@@ -141,22 +128,14 @@ const ProductCard = ({
               <FadingImage
                 initial={{opacity: 0}}
                 animate={{opacity: 1}}
-                src={images[imageIndex]}
+                image={images[imageIndex][0].gatsbyImageData}
                 alt={name}
-                borderRadius="5px"
-                mt="5"
-                fallback={<Box />}
               />
             )) || (
-              <Image
-                src={images[0]}
-                alt={name}
-                borderRadius="5px"
-                mt="5"
-                fallback={<Box />}
-              />
+              <GatsbyImage image={images[0][0].gatsbyImageData} alt={name} />
             )}
           </AnimatePresence>
+          {console.log(images[0][0].gatsbyImageData)}
         </Box>
         <Box p="2.5">
           {isNew && (
