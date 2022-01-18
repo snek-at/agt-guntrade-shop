@@ -3,7 +3,7 @@ import {css} from '@emotion/react'
 const transform = (visible: boolean) => (visible ? 'scale(1.03)' : 'none')
 const width = (visible: boolean) => (visible ? '100%' : '50%')
 const margin = (visible: boolean) => (visible ? '-50%' : '-25%')
-const borderColor = (visible: boolean) => (visible ? '#eb1933' : 'white')
+const borderColor = (visible: boolean) => (visible ? '#ef3340' : 'white')
 const borderLeftRadius = (direction: string) =>
   direction !== 'left' ? '0px' : '5px'
 const borderRigthRadius = (direction: string) =>
@@ -39,6 +39,21 @@ export const sideline = (visible: boolean, direction: string) => css`
   text-decoration: none;
   transition: all 150ms;
   transform: ${transform(visible)};
+
+  .sideImageStyle {
+    display: block;
+    width: 100px;
+    position: relative;
+    z-index: 3;
+    pointer-events: all;
+    margin-bottom: 3;
+    padding: 2;
+    border-radius: 5px;
+  }
+
+  .sideImageStyle:hover {
+    filter: 'brightness(80%)';
+  }
 
   &:after {
     transition: all 250ms;

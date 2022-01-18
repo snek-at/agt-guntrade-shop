@@ -19,7 +19,7 @@ const ProductsSection = ({products}: ProductsSectionProps) => {
             caliber={product.caliber}
             price={product.price}
             reducedprice={product.reducedprice}
-            images={product.images}
+            images={product.images[0]}
             direction={index === 0 || index === 4 ? 'rigth' : 'left'}
           />
         ))}

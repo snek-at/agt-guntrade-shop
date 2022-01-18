@@ -19,8 +19,7 @@ const MotionBox = motion<BoxProps>(Box)
 const FadingImage = motion<GatsbyImageProps>(GatsbyImage)
 
 const variants = {
-  intial: (direction: string) =>
-    direction === 'left' ? {display: 'none'} : {display: 'none'},
+  intial: {display: 'none'},
   enter: (direction: string) =>
     direction === 'left' ? {display: 'box', x: -128} : {display: 'box', x: 128},
   exit: {display: 'none'}
@@ -57,7 +56,7 @@ const ProductCard = ({
       position="relative"
       w={width}
       maxW="340px"
-      onMouseEnter={() => setVisible(true)}
+      onMouseOver={() => setVisible(true)}
       onMouseLeave={() => setVisible(false)}>
       {visible && (
         <MotionBox
@@ -80,23 +79,21 @@ const ProductCard = ({
           zIndex="2"
           variants={variants}
           initial="initial"
-          animate="enter"
+          whileHover="enter"
           exit="exit"
           custom={direction}>
-          {images.map(gatsbyimages => {
-            return gatsbyimages.map((gatsbyimage, index) => {
-              if (index !== 0) {
-                return (
-                  <GatsbyImage
-                    image={gatsbyimage.gatsbyImageData}
-                    alt={name}
-                    className="sideImageStyle"
-                    onMouseEnter={() => setImageIndex(index)}
-                    onMouseLeave={() => setImageIndex(0)}
-                  />
-                )
-              }
-            })
+          {images.map((gatsbyimage, index) => {
+            if (index !== 0) {
+              return (
+                <GatsbyImage
+                  className="sideImageStyle"
+                  image={gatsbyimage.gatsbyImageData}
+                  alt={name}
+                  onMouseOver={() => setImageIndex(index)}
+                  onMouseLeave={() => setImageIndex(0)}
+                />
+              )
+            }
           })}
         </MotionBox>
       )}
@@ -128,23 +125,23 @@ const ProductCard = ({
           />
         )}
         <Box minH="210px">
-          {console.log(images[0][imageIndex])}
           <AnimatePresence>
             {(imageIndex &&
-              images[0].length > 1 &&
-              images[0].map((gatsbyimage, index) => {
+              images.length > 1 &&
+              images.map((gatsbyimage, index) => {
+                console.log(gatsbyimage.gatsbyImageData)
                 return (
                   imageIndex === index && (
-                    <FadingImage
-                      initial={{opacity: 0}}
-                      animate={{opacity: 1}}
-                      image={gatsbyimage[index].gatsbyImageData}
-                      alt={name}
-                    />
+                    <MotionBox initial={{opacity: 0}} animate={{opacity: 1}}>
+                      <GatsbyImage
+                        image={gatsbyimage.gatsbyImageData}
+                        alt={name}
+                      />
+                    </MotionBox>
                   )
                 )
               })) || (
-              <GatsbyImage image={images[0][0].gatsbyImageData} alt={name} />
+              <GatsbyImage image={images[0].gatsbyImageData} alt={name} />
             )}
           </AnimatePresence>
         </Box>

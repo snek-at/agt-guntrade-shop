@@ -3,7 +3,6 @@ import {
   Container,
   Stack,
   Text,
-  Image,
   Flex,
   VStack,
   Button,
@@ -15,13 +14,16 @@ import {
   ListItem
 } from '@chakra-ui/react'
 import {MdLocalShipping} from '@react-icons/all-files/md/MdLocalShipping'
+import {GatsbyImage} from 'gatsby-plugin-image'
+import React from 'react'
 
 import {StoreCardProps} from '../ShopPage'
+import {ImageStyles} from './style'
 
 export interface ProductPageProps extends StoreCardProps {
   description: string
   subheading: string
-  features: string[]
+  tags: string[]
 }
 
 const ProductPage = ({
@@ -29,27 +31,49 @@ const ProductPage = ({
   images,
   reducedprice,
   price,
-  categories,
-  features,
+  tags,
   description,
   subheading
 }: ProductPageProps) => {
+  const [imageIndex, setImageIndex] = React.useState<number>(0)
+
   return (
     <Container maxW={'7xl'}>
       <SimpleGrid
         columns={{base: 1, lg: 2}}
         spacing={{base: 8, md: 10}}
         py={{base: 18, md: 24}}>
-        <Flex>
-          <Image
-            rounded={'md'}
-            alt={'product image'}
-            src={images[0]}
-            fit={'cover'}
-            align={'center'}
-            w={'100%'}
-            h={{base: '100%', sm: '400px', lg: '500px'}}
-          />
+        <Flex direction="column" css={ImageStyles()}>
+          {images.map(
+            (image, index) =>
+              imageIndex === index && (
+                <GatsbyImage
+                  className="mainImage"
+                  alt={name}
+                  image={image.gatsbyImageData}
+                />
+              )
+          )}
+          <Flex alignSelf={'center'}>
+            {images.map(
+              (image, index) =>
+                imageIndex !== index && (
+                  <Box
+                    py="2"
+                    px="2"
+                    bg="agt.lightgray"
+                    _first={{borderLeftRadius: '5px', pl: '5'}}
+                    _last={{borderRightRadius: '5px', pr: '5'}}>
+                    <GatsbyImage
+                      className="sideImage"
+                      alt={name}
+                      image={image.gatsbyImageData}
+                      onClick={() => setImageIndex(index)}
+                    />
+                  </Box>
+                )
+            )}
+          </Flex>
         </Flex>
         <Stack spacing={{base: 6, md: 10}}>
           <Box as={'header'}>
@@ -59,12 +83,30 @@ const ProductPage = ({
               fontSize={{base: '2xl', sm: '4xl', lg: '5xl'}}>
               {name}
             </Heading>
-            <Text
-              color={useColorModeValue('gray.900', 'gray.400')}
-              fontWeight={300}
-              fontSize={'2xl'}>
-              € {typeof reducedprice !== 'undefined' ? reducedprice : price}
-            </Text>
+            <Flex>
+              {reducedprice && (
+                <Text
+                  color={useColorModeValue('gray.900', 'gray.400')}
+                  fontWeight={300}
+                  fontSize={'2xl'}>
+                  € {reducedprice}
+                </Text>
+              )}
+              <Text
+                ml="3"
+                color={
+                  typeof reducedprice !== 'undefined'
+                    ? 'gray'
+                    : useColorModeValue('gray.900', 'gray.400')
+                }
+                fontWeight={300}
+                fontSize={'2xl'}
+                textDecoration={
+                  typeof reducedprice !== 'undefined' ? 'line-through' : ''
+                }>
+                € {price}
+              </Text>
+            </Flex>
           </Box>
 
           <Stack
@@ -82,7 +124,7 @@ const ProductPage = ({
                 fontWeight={'300'}>
                 {subheading}
               </Text>
-              <Text fontSize={'lg'}>{description}</Text>
+              <Box dangerouslySetInnerHTML={{__html: description}} />
             </VStack>
             <Box>
               <Text
@@ -91,42 +133,21 @@ const ProductPage = ({
                 fontWeight={'500'}
                 textTransform={'uppercase'}
                 mb={'4'}>
-                Features
+                Tags
               </Text>
 
               <SimpleGrid columns={{base: 1, md: 2}} spacing={10}>
                 <List spacing={2}>
-                  {features.slice(0, features.length / 2).map(feature => (
-                    <ListItem>{feature}</ListItem>
+                  {tags.slice(0, Math.floor(tags.length / 2)).map(tag => (
+                    <ListItem>{tag}</ListItem>
                   ))}
                 </List>
                 <List spacing={2}>
-                  {features.slice(features.length / 2).map(feature => (
-                    <ListItem>{feature}</ListItem>
+                  {tags.slice(Math.floor(tags.length / 2)).map(tag => (
+                    <ListItem>{tag}</ListItem>
                   ))}
                 </List>
               </SimpleGrid>
-            </Box>
-            <Box>
-              <Text
-                fontSize={{base: '16px', lg: '18px'}}
-                color={useColorModeValue('yellow.500', 'yellow.300')}
-                fontWeight={'500'}
-                textTransform={'uppercase'}
-                mb={'4'}>
-                Product Details
-              </Text>
-
-              <List spacing={2}>
-                {Object.keys(categories).map(category => (
-                  <ListItem>
-                    <Text as={'span'} fontWeight={'bold'} casing="capitalize">
-                      {category}:
-                    </Text>{' '}
-                    {categories[category]}
-                  </ListItem>
-                ))}
-              </List>
             </Box>
           </Stack>
 
