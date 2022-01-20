@@ -29,16 +29,14 @@ export interface StoreCardProps extends ProductCardProps {
   categories: FilterCategoryType
 }
 
-interface FilterType {
-  [category: string]: string[]
-}
-
 export interface ShopPageProps extends CategoryType {
   items: StoreCardProps[]
-  filters: FilterType
+  tags: string[]
+  breadcrumb: string
+  name: string
 }
 
-const ShopPage = ({items, breadcrumb, name, filters}: ShopPageProps) => {
+const ShopPage = ({items, breadcrumb, name, tags}: ShopPageProps) => {
   const [categories, setCategories] = React.useState<string[]>([])
   const [maxPriceFilter, setMaxPriceFilter] = React.useState<number>(0)
   const [minPriceFilter, setMinPriceFilter] = React.useState<number>(0)
@@ -121,28 +119,23 @@ const ShopPage = ({items, breadcrumb, name, filters}: ShopPageProps) => {
       </Box>
       <Flex w="80%" ml="10%" mt="5">
         <Box minW="25%" position="sticky" bottom="0px" h="fit-content">
-          {Object.keys(filters).map(category => (
-            <>
-              <Text fontWeight="bold">{category}</Text>
-              <Stack direction="column" spacing="0" ml="2">
-                {filters[category].map(filter => (
-                  <Checkbox
-                    onChange={() => {
-                      if (!categories.includes(filter)) {
-                        setCategories(categories.concat(filter))
-                      } else {
-                        setCategories(
-                          categories.filter(category => category !== filter)
-                        )
-                      }
-                    }}
-                    cursor="pointer">
-                    {filter}
-                  </Checkbox>
-                ))}
-              </Stack>
-            </>
-          ))}
+          <Stack direction="column" spacing="0" ml="2">
+            {tags.map(filter => (
+              <Checkbox
+                onChange={() => {
+                  if (!categories.includes(filter)) {
+                    setCategories(categories.concat(filter))
+                  } else {
+                    setCategories(
+                      categories.filter(category => category !== filter)
+                    )
+                  }
+                }}
+                cursor="pointer">
+                {filter}
+              </Checkbox>
+            ))}
+          </Stack>
           <Text fontWeight="bold">maxPriceFilter</Text>
           <RangeSlider
             min={0}

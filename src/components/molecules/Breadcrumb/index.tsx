@@ -36,7 +36,7 @@ const Export = ({breadcrumb}: BreadcrumbPops) => (
         />
       </BreadcrumbLink>
     </BreadcrumbItem>
-    {breadcrumb.split('/').map(crumb => (
+    {breadcrumb.split('-').map(crumb => (
       <BreadcrumbItem>
         <BreadcrumbLink
           mb="0.5rem"
