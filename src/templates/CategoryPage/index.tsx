@@ -14,10 +14,12 @@ import {
 
 import React from 'react'
 
-import {ShopPageProps} from '../ShopPage'
 import Breadcrumb from '../../components/molecules/Breadcrumb'
 import GatsbyLink from 'gatsby-link'
-import {GatsbyImage} from 'gatsby-plugin-image'
+import {GatsbyImage, StaticImage} from 'gatsby-plugin-image'
+import {navigate} from 'gatsby'
+
+import {BannerImage, CardImage} from './style'
 
 export interface CategoryType {
   title: string
@@ -26,7 +28,6 @@ export interface CategoryType {
   image?: any
   bannerImage?: string
   collectionType: string
-  products?: ShopPageProps
 }
 
 export interface CategoryPageProps {
@@ -59,29 +60,26 @@ const CategoryPage = ({pageContext}: CategoryPageProps) => {
       </Flex>
     )
   })
+  const cardMargin = useBreakpointValue({base: '1.25rem', md: '0'})
+  const cardWidth = useBreakpointValue({base: '100px', md: '250px'})
+
+  if (subcategories.length === 1) {
+    navigate(
+      window.location.pathname.endsWith('/')
+        ? window.location.pathname + 'shop/'
+        : window.location.pathname + '/shop/'
+    )
+  }
   return (
     <>
       <Box bg="black" h="120px" color="white">
         Navbar
       </Box>
       <Box position="relative">
-        <Image
-          objectFit="cover"
-          alignSelf="center"
-          position="absolute"
-          top="0"
-          minW="100%"
-          h="232px"
-          src={category.bannerImage}
-          fallback={
-            <Box
-              w="100%"
-              h="232px"
-              bg="agt.lightgray"
-              position="absolute"
-              top="0"
-            />
-          }
+        <StaticImage
+          css={BannerImage}
+          src="../../components/organisms/sections/HeroSection/slide_2_11.jpg"
+          alt="banner-image"
         />
         <Box
           p="5"
@@ -106,25 +104,28 @@ const CategoryPage = ({pageContext}: CategoryPageProps) => {
           mt="14">
           {subcategories.map((subcategory: any) => {
             let handle = subcategory.node.handle
+
             if (!isNaN(handle.split('-').at(-1))) {
               handle = handle.replace(handle.split('-').at(-1), '')
             }
 
             let slug
+            const all =
+              handle === category.handle || handle === category.handle + '-'
 
-            if (splitHandle[0][0] !== 'a') {
+            if (all) {
+              slug = window.location.pathname.endsWith('/')
+                ? window.location.pathname + 'shop/'
+                : window.location.pathname + '/shop/'
+            } else if (splitHandle[0][0] !== 'a') {
               slug = '/' + handle.split('-').at(-2) + window.location.pathname
             } else {
               slug =
                 window.location.pathname +
-                (window.location.pathname.charAt(
-                  window.location.pathname.length - 1
-                ) !== '/'
-                  ? '/'
-                  : '') +
-                handle.split('-').at(-1) +
-                '/'
+                (window.location.pathname.endsWith('/') ? '' : '/') +
+                handle.split('-').at(-1)
             }
+
             return (
               <GatsbyLink to={slug}>
                 <Flex
@@ -137,7 +138,11 @@ const CategoryPage = ({pageContext}: CategoryPageProps) => {
                   borderRadius="5px"
                   justifyContent="flex-start"
                   alignItems="flex-start">
-                  <GatsbyImage image={category.image} alt={category.handle} />
+                  <GatsbyImage
+                    image={category.image}
+                    alt={category.handle}
+                    css={CardImage(cardMargin, cardWidth)}
+                  />
                   <Text
                     mt={{base: 0, md: 5}}
                     alignSelf="center"
@@ -145,7 +150,9 @@ const CategoryPage = ({pageContext}: CategoryPageProps) => {
                     textAlign="center"
                     fontSize={{base: '17', md: '20'}}
                     ml={{base: '5', md: '0'}}>
-                    {subcategory.node.title.split(' ').at(-1)}
+                    {all
+                      ? 'Alle anzeigen'
+                      : subcategory.node.title.split(' ').at(-1)}
                   </Text>
                 </Flex>
                 <Divider display={{base: 'static', md: 'none'}} w="80%" />
@@ -157,10 +164,5 @@ const CategoryPage = ({pageContext}: CategoryPageProps) => {
     </>
   )
 }
-/*<Image
-                    my={{base: '5', md: '0'}}
-                    w={{base: '100px', md: '250px'}}
-                    src={subcategory.node.image}
-                    alt={subcategory.node.title}
-                  />*/
+
 export default CategoryPage

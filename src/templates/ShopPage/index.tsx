@@ -1,12 +1,6 @@
 import {Box, Heading, Flex, Wrap, Text, Stack} from '@chakra-ui/layout'
 import React from 'react'
-
-import ProductCard, {
-  ProductCardProps
-} from '../../components/molecules/ProductCard/3'
-import {CategoryType} from '../CategoryPage'
 import {Checkbox} from '@chakra-ui/checkbox'
-import Breadcrumb from '../../components/molecules/Breadcrumb'
 import {
   Button,
   Icon,
@@ -15,81 +9,78 @@ import {
   RangeSliderThumb,
   RangeSliderTrack,
   Divider,
-  Spacer
+  Spacer,
+  useBreakpointValue
 } from '@chakra-ui/react'
-
+import GatsbyLink from 'gatsby-link'
 import {BsFilterLeft} from '@react-icons/all-files/bs/BsFilterLeft'
 import {RiOrderPlayFill} from '@react-icons/all-files/ri/RiOrderPlayFill'
+import {css} from '@emotion/react'
 
-export interface FilterCategoryType {
-  [category: string]: string
+import ProductCard from '../../components/molecules/ProductCard/3'
+import SkeletonCard from '../../components/molecules/SkeletonCard'
+import Breadcrumb from '../../components/molecules/Breadcrumb'
+import {
+  SearchProvider,
+  getValuesFromQuery,
+  useProductSearch
+} from '../../common/requests/storefront'
+
+interface ShopPageProps {
+  pageContext: any
 }
 
-export interface StoreCardProps extends ProductCardProps {
-  categories: FilterCategoryType
-}
+const DEFAULT_PRODUCTS_PER_PAGE = 20
 
-export interface ShopPageProps extends CategoryType {
-  items: StoreCardProps[]
-  tags: string[]
-  breadcrumb: string
-  name: string
-}
-
-const ShopPage = ({items, breadcrumb, name, tags}: ShopPageProps) => {
-  const [categories, setCategories] = React.useState<string[]>([])
+const ShopPage = ({pageContext}: ShopPageProps) => {
+  const queryParams = getValuesFromQuery(location.search)
+  const initialFilters = React.useMemo(() => queryParams, [])
+  const [sortKey, setSortKey] = React.useState(queryParams.sortKey)
   const [maxPriceFilter, setMaxPriceFilter] = React.useState<number>(0)
   const [minPriceFilter, setMinPriceFilter] = React.useState<number>(0)
   const [maximum, setMaximum] = React.useState<number>(0)
   const [order, setOrder] = React.useState<string>('Beliebtheit')
+  const [filters, setFilters] = React.useState(queryParams)
+
+  console.log(filters)
+  const gatsbyLinkWidth = useBreakpointValue({base: '300px', xl: '25%'})
 
   React.useMemo(() => {
     let max = 0
-    for (const item of items) {
-      if (item.price > maximum) {
-        max = item.price
-      } else if (
-        typeof item.reducedprice !== 'undefined' &&
-        item.reducedprice > maximum
+    for (const product of pageContext.products) {
+      if (parseInt(product.priceRangeV2.maxVariantPrice.amount) > max) {
+        max = parseInt(product.priceRangeV2.maxVariantPrice.amount)
+      }
+      if (
+        typeof product.priceRangeV2.minVariantPrice.amount !== 'undefined' &&
+        parseInt(product.priceRangeV2.minVariantPrice.amount) > max
       ) {
-        max = item.reducedprice
+        max = parseInt(product.priceRangeV2.minVariantPrice.amount)
       }
     }
     setMaximum(max)
     setMaxPriceFilter(max)
-  }, [items])
-
-  const checkFilters = (item: StoreCardProps) => {
-    let price
-    let category
-    if (categories.length === 0) {
-      category = true
-    } else {
-      for (const key of Object.keys(item.categories)) {
-        if (categories.includes(item.categories[key])) {
-          category = true
-          break
-        }
-      }
-    }
-
-    if (maxPriceFilter === maximum && minPriceFilter === 0) {
-      price = true
-    } else if (
-      (item.price <= maxPriceFilter ||
-        (typeof item.reducedprice !== 'undefined' &&
-          item.reducedprice <= maxPriceFilter)) &&
-      (item.price >= minPriceFilter ||
-        (typeof item.reducedprice !== 'undefined' &&
-          item.reducedprice <= minPriceFilter))
-    ) {
-      price = true
-    }
-
-    return category && price
-  }
+  }, [pageContext.products])
 
   let priceFilter: number[] = [minPriceFilter, maxPriceFilter]
+
+  //shopify stuff
+  const {products, isFetching, hasNextPage, fetchNextPage} = useProductSearch(
+    filters,
+    {
+      allTags: pageContext.allTags
+    },
+    sortKey,
+    false,
+    DEFAULT_PRODUCTS_PER_PAGE,
+    pageContext.products,
+    initialFilters
+  )
+
+  const skeletons = []
+  for (let i = 0; i < 21; i++) {
+    skeletons.push(<SkeletonCard />)
+  }
 
   return (
     <>
@@ -97,11 +88,15 @@ const ShopPage = ({items, breadcrumb, name, tags}: ShopPageProps) => {
         Navbar
       </Box>
       <Box w="80%" mx="auto" position="relative" zIndex="1" pt="5">
-        <Breadcrumb breadcrumb={breadcrumb} />
+        <Breadcrumb
+          breadcrumb={pageContext.handle.slice(
+            pageContext.handle.indexOf('-') + 1
+          )}
+        />
         <Flex>
-          <Heading mt="5">{name}</Heading>
+          <Heading mt="5">{pageContext.title}</Heading>
           <Text ml="3" mt="6" color="gray" fontWeight="bold" fontSize={26}>
-            {items.length}
+            {pageContext.products.length}
           </Text>
         </Flex>
         <Flex mt="3">
@@ -119,23 +114,35 @@ const ShopPage = ({items, breadcrumb, name, tags}: ShopPageProps) => {
       </Box>
       <Flex w="80%" ml="10%" mt="5">
         <Box minW="25%" position="sticky" bottom="0px" h="fit-content">
-          <Stack direction="column" spacing="0" ml="2">
-            {tags.map(filter => (
-              <Checkbox
-                onChange={() => {
-                  if (!categories.includes(filter)) {
-                    setCategories(categories.concat(filter))
-                  } else {
-                    setCategories(
-                      categories.filter(category => category !== filter)
-                    )
-                  }
-                }}
-                cursor="pointer">
-                {filter}
-              </Checkbox>
-            ))}
-          </Stack>
+          {Object.keys(pageContext.tags).map(key => (
+            <>
+              <Text>{key}</Text>
+              <Stack direction="column" spacing="0" ml="2">
+                {pageContext.tags[key].map((tag: string) => (
+                  <Checkbox
+                    isChecked={filters.tags.includes(key + ':' + tag)}
+                    onChange={() => {
+                      if (!filters.tags.includes(key + ':' + tag)) {
+                        setFilters({
+                          ...filters,
+                          tags: filters.tags.concat(key + ':' + tag)
+                        })
+                      } else {
+                        setFilters({
+                          ...filters,
+                          tags: filters.tags.filter(
+                            category => category !== key + ':' + tag
+                          )
+                        })
+                      }
+                    }}
+                    cursor="pointer">
+                    {tag}
+                  </Checkbox>
+                ))}
+              </Stack>
+            </>
+          ))}
           <Text fontWeight="bold">maxPriceFilter</Text>
           <RangeSlider
             min={0}
@@ -160,37 +167,57 @@ const ShopPage = ({items, breadcrumb, name, tags}: ShopPageProps) => {
             mt="5"
             colorScheme="agt.grayScheme"
             onClick={() => {
-              setMinPriceFilter(0)
-              setMaxPriceFilter(maximum)
-              setCategories([])
+              setFilters({
+                maxPrice: maximum,
+                minPrice: 0,
+                term: '',
+                sortKey: sortKey,
+                tags: []
+              })
               priceFilter = [0, maximum]
             }}>
             Filter zurücksetzen
           </Button>
         </Box>
         <Wrap ml="10" spacing="10" maxW="75%" minW="75%">
-          {items.map(item => {
-            const isVisible = checkFilters(item)
-            return React.useMemo(
-              () =>
-                isVisible && (
-                  <ProductCard
-                    width={{base: '300px', xl: '25%'}}
-                    images={item.images}
-                    name={item.name}
-                    price={item.price}
-                    caliber={item.caliber}
-                    reducedprice={item.reducedprice}
-                    direction="left"
-                  />
-                ),
-              [isVisible]
-            )
-          })}
+          {!isFetching
+            ? products.map((product: any) => {
+                return (
+                  <GatsbyLink
+                    css={css`
+                      width: ${gatsbyLinkWidth};
+                    `}
+                    to={
+                      window.location.pathname +
+                      window.location.pathname.endsWith('/')
+                        ? product.id + '/'
+                        : '/' + product.id + '/'
+                    }>
+                    <ProductCard
+                      width={{base: '300px', xl: '100%'}}
+                      name={product.title}
+                      price={product?.priceRangeV2?.maxVariantPrice?.amount}
+                      caliber={product.tags.filter((tag: string) =>
+                        tag.startsWith('Kaliber:')
+                      )}
+                      reducedprice={product.discount}
+                      direction="left"
+                      images={product.images}
+                    />
+                  </GatsbyLink>
+                )
+              })
+            : skeletons.map(skeleton => skeleton)}
         </Wrap>
       </Flex>
     </>
   )
 }
 
-export default ShopPage
+const ShopPageTemplate = (props: any) => (
+  <SearchProvider>
+    <ShopPage {...props} />
+  </SearchProvider>
+)
+
+export default ShopPageTemplate

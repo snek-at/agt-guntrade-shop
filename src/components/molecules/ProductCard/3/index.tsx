@@ -51,6 +51,11 @@ const ProductCard = ({
   const [imageIndex, setImageIndex] = React.useState(0)
   const [visible, setVisible] = React.useState(false)
 
+  console.log(caliber)
+  if (typeof caliber[0] === 'string') {
+    caliber = caliber[0].split('_')[1]
+  }
+
   return (
     <Flex
       position="relative"
