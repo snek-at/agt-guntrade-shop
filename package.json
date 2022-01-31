@@ -56,13 +56,13 @@
     "gatsby-source-filesystem": "^3.13.0",
     "gatsby-source-shopify": "^6.5.1",
     "gatsby-transformer-sharp": "^3.13.0",
-    "ngrok": "^4.3.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
     "react-magnetic-di": "^2.2.6",
-    "sharp": "^0.29.1"
+    "sharp": "^0.29.1",
+    "urql": "^2.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",

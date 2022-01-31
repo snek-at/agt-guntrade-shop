@@ -1,6 +1,6 @@
 const {fetchReviews} = require('./src/common/requests/reviews')
 const dotenv = require('dotenv')
-const {createCategoryPages} = require('./src/common/page-generator')
+const {createPages} = require('./src/common/page-generator')
 
 exports.sourceNodes = async ({actions, createNodeId, createContentDigest}) => {
   dotenv.config()
@@ -11,7 +11,7 @@ exports.sourceNodes = async ({actions, createNodeId, createContentDigest}) => {
 }
 
 exports.createPages = async function ({actions, graphql}) {
-  await createCategoryPages(actions, graphql)
+  await createPages(actions, graphql)
 }
 
 exports.createSchemaCustomization = ({actions}) => {

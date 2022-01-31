@@ -1,6 +1,9 @@
-export const createCategoryPages = async (actions, graphql) => {
+export const createPages = async (actions, graphql) => {
   const {data} = await graphql(`
     query {
+      meta: allShopifyProduct {
+        tags: distinct(field: tags)
+      }
       allShopifyCollection {
         edges {
           node {
@@ -8,6 +11,29 @@ export const createCategoryPages = async (actions, graphql) => {
             handle
             image {
               gatsbyImageData
+            }
+            products {
+              id
+              descriptionHtml
+              title
+              tags
+              status
+              totalInventory
+              publishedAt
+              priceRangeV2 {
+                maxVariantPrice {
+                  amount
+                }
+                minVariantPrice {
+                  amount
+                }
+              }
+              images {
+                gatsbyImageData
+              }
+              featuredImage {
+                gatsbyImageData
+              }
             }
           }
         }
@@ -49,7 +75,7 @@ export const createCategoryPages = async (actions, graphql) => {
         ) + '-'
     }
 
-    const slug =
+    let slug =
       '/' +
       splitHandle
         .toString()
@@ -68,23 +94,111 @@ export const createCategoryPages = async (actions, graphql) => {
               ? edge.node.image.gatsbyImageData
               : undefined
         },
-        subcategories: data.allShopifyCollection.edges.filter(edge => {
-          return edge.node.handle.startsWith(collectionType)
-        })
+        subcategories: data.allShopifyCollection.edges
+          .filter(edge2 => {
+            return (
+              edge2.node.handle.startsWith(collectionType) ||
+              edge.node.handle === edge2.node.handle
+            )
+          })
+          .sort((a, b) =>
+            a.node.handle.slice(a.node.handle.indexOf('-') + 1) <
+            b.node.handle.slice(a.node.handle.indexOf('-') + 1)
+              ? 1
+              : -1
+          )
       }
+    })
+
+    let tags = {}
+    edge.node.products.map(product => {
+      product.tags.map(tag => {
+        const splitTag = tag.split(':')
+        if (typeof tags[splitTag[0]] === 'undefined') {
+          tags[splitTag[0]] = [splitTag[1]]
+        } else {
+          tags[splitTag[0]].push(splitTag[1])
+        }
+      })
+    })
+
+    const relatedCategories = data.allShopifyCollection.edges.filter(edge2 => {
+      if (splitHandle[0].length === 2 && splitHandle[0][0] === 'b') {
+        return (
+          edge2.node.handle.includes(
+            splitHandle.slice(1, -1).toString().replaceAll(',', '-')
+          ) &&
+          edge2.node.handle !== edge.node.handle &&
+          edge2.node.handle.split('-').length === splitHandle.length
+        )
+      } else if (splitHandle[0].length > 1) {
+        return (
+          edge2.node.handle.endsWith(
+            splitHandle.slice(2).toString().replaceAll(',', '-')
+          ) && edge2.node.handle !== edge.node.handle
+        )
+      }
+    })
+
+    const unfilteredRelatedProducts = [].concat.apply(
+      [],
+      relatedCategories.map(category => category.node.products)
+    )
+    const filteredRelatedProducts = []
+
+    if (unfilteredRelatedProducts.length > 0) {
+      const titles = []
+      let runs = 0
+      for (let i = 0; i < 12; i++) {
+        const potentialProduct =
+          unfilteredRelatedProducts[
+            Math.floor(Math.random() * unfilteredRelatedProducts.length)
+          ]
+        if (titles.includes(potentialProduct.title)) {
+          i = i - 1
+        } else {
+          potentialProduct.slug =
+            edge.node.handle
+              .slice(edge.node.handle.indexOf('-') + 1)
+              .replaceAll('-', '/') +
+            '/shop/' +
+            potentialProduct.id
+          titles.push(potentialProduct.title)
+          filteredRelatedProducts.push(potentialProduct)
+        }
+        if (
+          titles.length === unfilteredRelatedProducts.length ||
+          runs > 10000
+        ) {
+          break
+        }
+        runs++
+      }
+    }
+
+    slug = slug + '/shop/'
+    actions.createPage({
+      path: slug,
+      component: require.resolve('../templates/ShopPage/index.tsx'),
+      context: {
+        title: edge.node.title.slice(edge.node.title.indexOf(' ') + 1),
+        handle: splitHandle.toString().replaceAll(',', '-') + '-shop',
+        products: edge.node.products.sort((a, b) =>
+          a.title > b.title ? 1 : -1
+        ),
+        tags: tags,
+        allTags: data.meta.tags
+      }
+    })
+    edge.node.products.forEach(product => {
+      actions.createPage({
+        path: slug + product.id + '/',
+        component: require.resolve('../templates/ProductPage/index.tsx'),
+        context: {
+          product: product,
+          relatedProducts: filteredRelatedProducts
+        }
+      })
     })
   })
 }
-
-/* 
-            products {
-              title
-              tags
-              status
-              totalInventory
-              publishedAt
-              images {
-                gatsbyImageData
-              }
-            }
-*/
