@@ -1,3 +1,29 @@
+const createAllProductsShopPage = (data, actions) => {
+  let tags = {}
+  data.meta.tags.map(tag => {
+    const splitTag = tag.split(':')
+    if (typeof tags[splitTag[0]] === 'undefined') {
+      tags[splitTag[0]] = [splitTag[1]]
+    } else if (!tags[splitTag[0]].includes(splitTag[1])) {
+      tags[splitTag[0]].push(splitTag[1])
+    }
+  })
+
+  actions.createPage({
+    path: '/shop/',
+    component: require.resolve('../templates/ShopPage/index.tsx'),
+    context: {
+      title: 'Alle Produkte',
+      handle: 'shop',
+      products: data.allShopifyProduct.edges.sort((a, b) =>
+        a.title > b.title ? 1 : -1
+      ),
+      tags: tags,
+      allTags: data.meta.tags
+    }
+  })
+}
+
 export const createPages = async (actions, graphql) => {
   const {data} = await graphql(`
     query {
@@ -38,8 +64,38 @@ export const createPages = async (actions, graphql) => {
           }
         }
       }
+      allShopifyProduct {
+        edges {
+          node {
+            id
+            descriptionHtml
+            title
+            tags
+            status
+            totalInventory
+            publishedAt
+            priceRangeV2 {
+              maxVariantPrice {
+                amount
+              }
+              minVariantPrice {
+                amount
+              }
+            }
+            images {
+              gatsbyImageData
+            }
+            featuredImage {
+              gatsbyImageData
+            }
+          }
+        }
+      }
     }
   `)
+
+  createAllProductsShopPage(data, actions)
+
   data.allShopifyCollection.edges.forEach(edge => {
     let splitHandle = edge.node.handle.split('-')
     let collectionType
@@ -116,7 +172,7 @@ export const createPages = async (actions, graphql) => {
         const splitTag = tag.split(':')
         if (typeof tags[splitTag[0]] === 'undefined') {
           tags[splitTag[0]] = [splitTag[1]]
-        } else {
+        } else if (!tags[splitTag[0]].includes(splitTag[1])) {
           tags[splitTag[0]].push(splitTag[1])
         }
       })

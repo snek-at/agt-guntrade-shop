@@ -18,7 +18,6 @@ import {RiOrderPlayFill} from '@react-icons/all-files/ri/RiOrderPlayFill'
 import {css} from '@emotion/react'
 
 import ProductCard from '../../components/molecules/ProductCard/3'
-import SkeletonCard from '../../components/molecules/SkeletonCard'
 import Breadcrumb from '../../components/molecules/Breadcrumb'
 import {
   SearchProvider,
@@ -76,11 +75,6 @@ const ShopPage = ({pageContext}: ShopPageProps) => {
     pageContext.products,
     initialFilters
   )
-
-  const skeletons = []
-  for (let i = 0; i < 21; i++) {
-    skeletons.push(<SkeletonCard />)
-  }
 
   return (
     <>
@@ -180,34 +174,33 @@ const ShopPage = ({pageContext}: ShopPageProps) => {
           </Button>
         </Box>
         <Wrap ml="10" spacing="10" maxW="75%" minW="75%">
-          {!isFetching
-            ? products.map((product: any) => {
-                return (
-                  <GatsbyLink
-                    css={css`
-                      width: ${gatsbyLinkWidth};
-                    `}
-                    to={
-                      window.location.pathname +
-                      window.location.pathname.endsWith('/')
-                        ? product.id + '/'
-                        : '/' + product.id + '/'
-                    }>
-                    <ProductCard
-                      width={{base: '300px', xl: '100%'}}
-                      name={product.title}
-                      price={product?.priceRangeV2?.maxVariantPrice?.amount}
-                      caliber={product.tags.filter((tag: string) =>
-                        tag.startsWith('Kaliber:')
-                      )}
-                      reducedprice={product.discount}
-                      direction="left"
-                      images={product.images}
-                    />
-                  </GatsbyLink>
-                )
-              })
-            : skeletons.map(skeleton => skeleton)}
+          {products.map((product: any) => {
+            return (
+              <GatsbyLink
+                css={css`
+                  width: ${gatsbyLinkWidth};
+                `}
+                to={
+                  window.location.pathname +
+                  window.location.pathname.endsWith('/')
+                    ? product.id + '/'
+                    : '/' + product.id + '/'
+                }>
+                <ProductCard
+                  isFetching={isFetching}
+                  width={{base: '300px', xl: '100%'}}
+                  name={product.title}
+                  price={product?.priceRangeV2?.maxVariantPrice?.amount}
+                  caliber={product.tags.filter((tag: string) =>
+                    tag.startsWith('Kaliber:')
+                  )}
+                  reducedprice={product.discount}
+                  direction="left"
+                  images={product.images}
+                />
+              </GatsbyLink>
+            )
+          })}
         </Wrap>
       </Flex>
     </>

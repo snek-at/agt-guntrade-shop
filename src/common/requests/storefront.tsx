@@ -30,7 +30,7 @@ query ($query: String!, $sortKey: ProductSortKeys, $first: Int, $last: Int, $aft
             }
           }
           id
-          images{
+          images(first: 4){
             edges {
               node {
                 originalSrc
@@ -101,10 +101,10 @@ export const getValuesFromQuery = (query: string | any) => {
 }
 
 export const urqlClient = createClient({
-  url: `https://daniels-testhop.myshopify.com/api/2021-01/graphql.json`,
+  url: `https://danielstest-shop.myshopify.com/api/2022-01/graphql.json`,
   fetchOptions: {
     headers: {
-      'X-Shopify-Storefront-Access-Token': '26fb20c56a3a42b4738b7e0a588f8d04'
+      'X-Shopify-Storefront-Access-Token': '4bddc6a9d55a36999e044a51d3c2dcf1'
     }
   }
 })
