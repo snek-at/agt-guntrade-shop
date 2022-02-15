@@ -16,6 +16,7 @@ import GatsbyLink from 'gatsby-link'
 import {BsFilterLeft} from '@react-icons/all-files/bs/BsFilterLeft'
 import {RiOrderPlayFill} from '@react-icons/all-files/ri/RiOrderPlayFill'
 import {css} from '@emotion/react'
+import slugify from 'slugify'
 
 import ProductCard from '../../components/molecules/ProductCard/3'
 import Breadcrumb from '../../components/molecules/Breadcrumb'
@@ -183,8 +184,10 @@ const ShopPage = ({pageContext}: ShopPageProps) => {
                 to={
                   window.location.pathname +
                   window.location.pathname.endsWith('/')
-                    ? product.id + '/'
-                    : '/' + product.id + '/'
+                    ? slugify(product.title, {remove: /[*+~.()'"!:@]/g}) + '/'
+                    : '/' +
+                      slugify(product.title, {remove: /[*+~.()'"!:@]/g}) +
+                      '/'
                 }>
                 <ProductCard
                   isFetching={isFetching}

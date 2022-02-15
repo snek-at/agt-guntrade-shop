@@ -5,7 +5,6 @@
   "homepage": "https://agt-guntrade-shop.snek-at.snek.at/",
   "author": "Florian Kleber",
   "license": "EUPL-1.2",
-  "main": "lib/index.js",
   "files": [
     "lib",
     "LICENSES"
@@ -62,6 +61,7 @@
     "react-helmet": "^6.1.0",
     "react-magnetic-di": "^2.2.6",
     "sharp": "^0.29.1",
+    "slugify": "^1.6.5",
     "urql": "^2.0.6"
   },
   "devDependencies": {
