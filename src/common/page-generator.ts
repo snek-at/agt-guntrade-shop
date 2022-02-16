@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import slugify from 'slugify'
 
 // splitAndType splits the handle and checks for the collectiontype (A, AB, ABC...)
