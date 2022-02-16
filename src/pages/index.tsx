@@ -1,6 +1,5 @@
 //#region > Imports
 import {Box} from '@chakra-ui/react'
-import {fields} from '@snek-at/jaen-pages'
 import {graphql} from 'gatsby'
 
 import NewsSection from '../components/organisms/sections/NewsSection'
@@ -10,6 +9,7 @@ import FeaturedProductsSection from '../components/organisms/sections/FeaturedPr
 import AboutSection from '../components/organisms/sections/AboutSection'
 import FAQSection from '../components/organisms/sections/FAQSection/2'
 import slugify from 'slugify'
+import {Image} from '@chakra-ui/image'
 //#endregion
 
 //#region > Functions
@@ -27,61 +27,32 @@ const IndexPage = ({data}) => {
       <HeroSection />
       <NewsSection />
       <FeaturedProductsSection products={products} />
-      <FAQSection
-        heading={
-          <fields.TextField
-            fieldName="license-heading"
-            initValue="<p>I'm a heading</p>"
-            rtf={false}
-          />
-        }
-      />
+      <FAQSection heading={<p>I'm a heading</p>} />
       <ReviewSection
-        heading={
-          <fields.TextField
-            fieldName="review-heading"
-            initValue="<p>I'm a heading.</p>"
-            rtf={false}
-          />
-        }
-        teaser={
-          <fields.TextField
-            fieldName="review-teaser"
-            initValue="<p>I'm a teaser</p>"
-            rtf={false}
-          />
-        }
+        heading={<p>I'm a heading.</p>}
+        teaser={<p>I'm a teaser</p>}
         data={data.allGoogleReview.nodes}
       />
       <AboutSection
-        heading={
-          <fields.TextField
-            fieldName="about-heading"
-            initValue="<p>I'm a heading</p>"
-            rtf={false}
-          />
-        }
-        teaser={
-          <fields.TextField
-            fieldName="about-teaser"
-            initValue="<p>I'm a teaser</p>"
-            rtf={false}
-          />
-        }
+        heading={<p>I'm a heading</p>}
+        teaser={<p>I'm a teaser</p>}
         text={
-          <fields.TextField
-            fieldName="about-text"
-            initValue="<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>"
-            rtf={false}
-          />
+          <p>
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+            et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+            Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+            sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
+            accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+            no sea takimata sanctus est Lorem ipsum dolor sit amet.
+          </p>
         }
         backgroundimage={
-          <fields.ImageField
-            fieldName="about-image"
-            initValue={{
-              src: 'https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832_960_720.jpg',
-              alt: 'about-image'
-            }}
+          <Image
+            src="https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832_960_720.jpg"
+            alt="alt"
             className="backgroundimage"
           />
         }

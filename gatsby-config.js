@@ -1,19 +1,12 @@
 const {resolve} = require('path')
 const dotenv = require('dotenv')
 
-const siteMetadata = require('./site-metadata')
 dotenv.config()
 
 module.exports = {
-  siteMetadata,
+  jsxRuntime: 'automatic',
+  siteMetadata: {},
   plugins: [
-    '@snek-at/jaen',
-    {
-      resolve: '@snek-at/jaen-pages',
-      options: {
-        templates: {NewsPage: resolve('src/templates/NewsPage/index.tsx')}
-      }
-    },
     {
       resolve: '@chakra-ui/gatsby-plugin',
       options: {

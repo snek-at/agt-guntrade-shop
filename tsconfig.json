@@ -48,5 +48,5 @@
     "src/components/pages/ApartmentPage/index.tsx",
     "src/components/pages/HousePage/index.jsx",
     "wrap-with-provider.js"
-  ]
+, "src/@chakra-ui/theme.js"  ]
 }
