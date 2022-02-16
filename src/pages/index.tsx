@@ -17,7 +17,8 @@ const IndexPage = ({data}) => {
   const products = data.allShopifyProduct.edges.map((product: any) => {
     return {
       ...product.node,
-      slug: '/shop/' + slugify(product.node.title, {remove: /[*+~.()'"!:@]/g})
+      slug:
+        'shop/' + slugify(product.node.title, {remove: /[*+~.()'"!:@]/g}) + '/'
     }
   })
 
