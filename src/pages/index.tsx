@@ -10,10 +10,17 @@ import AboutSection from '../components/organisms/sections/AboutSection'
 import FAQSection from '../components/organisms/sections/FAQSection/2'
 import slugify from 'slugify'
 import {Image} from '@chakra-ui/image'
+
+import {PageProps} from 'gatsby'
 //#endregion
 
 //#region > Functions
-const IndexPage = ({data}) => {
+const IndexPage = ({
+  data
+}: PageProps<{
+  allShopifyProduct: {edges: Array<any>}
+  allGoogleReview: {nodes: Array<any>}
+}>) => {
   const products = data.allShopifyProduct.edges.map((product: any) => {
     return {
       ...product.node,
