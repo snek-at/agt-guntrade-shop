@@ -9,19 +9,17 @@ import ReviewSection from '../components/organisms/sections/ReviewSection'
 import FeaturedProductsSection from '../components/organisms/sections/FeaturedProductsSection/2'
 import AboutSection from '../components/organisms/sections/AboutSection'
 import FAQSection from '../components/organisms/sections/FAQSection/2'
+import slugify from 'slugify'
 //#endregion
 
 //#region > Functions
 const IndexPage = ({data}) => {
-  console.log(data.allShopifyProduct.edges[1].node)
-  const products = data.allShopifyProduct.edges.map((product: any) => ({
-    isNew: true,
-    name: 'Weapon',
-    caliber: 'Kal.9×19',
-    price: 11.33,
-    reducedprice: 12,
-    images: [product.node.images]
-  }))
+  const products = data.allShopifyProduct.edges.map((product: any) => {
+    return {
+      ...product.node,
+      slug: '/shop/' + slugify(product.node.title, {remove: /[*+~.()'"!:@]/g})
+    }
+  })
 
   return (
     <Box>
@@ -121,7 +119,6 @@ export const query = graphql`
             }
           }
           tags
-          vendor
           title
         }
       }

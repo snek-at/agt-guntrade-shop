@@ -22,6 +22,7 @@ const ProductsSection = ({products}: ProductsSectionProps) => {
               width: ${linkWidth};
             `}>
             <ProductCard
+              isFetching={false}
               width={{base: '300px', xl: '100%'}}
               //            isNew={product.isNew}
               name={product.title}
