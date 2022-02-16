@@ -2,6 +2,8 @@
 
 import slugify from 'slugify'
 
+import fs from 'fs'
+
 // splitAndType splits the handle and checks for the collectiontype (A, AB, ABC...)
 const splitAndType = handle => {
   const splitHandle = handle.split('-')
@@ -116,6 +118,13 @@ const createAllProductsShopPage = (data, actions) => {
     }
     collections[edge.node.id] = handles
   })
+
+  fs.writeFileSync(
+    './products.json',
+    JSON.stringify(
+      products.sort((a, b) => (a.title > b.title ? 1 : -1)).slice(0, 6)
+    )
+  )
 
   actions.createPage({
     path: '/shop/',

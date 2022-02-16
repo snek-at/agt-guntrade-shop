@@ -25,12 +25,22 @@ import {
   getValuesFromQuery,
   useProductSearch
 } from '../../common/requests/storefront'
-
-interface ShopPageProps {
-  pageContext: any
-}
+import {PageProps} from 'gatsby'
 
 const DEFAULT_PRODUCTS_PER_PAGE = 20
+
+type ShopPageProps = PageProps<
+  {},
+  {
+    title: string
+    products: Array<any>
+    allTags: Array<string>
+    handle: string
+    tags: {
+      [key: string]: any
+    }
+  }
+>
 
 const ShopPage = ({pageContext}: ShopPageProps) => {
   const queryParams = getValuesFromQuery(location.search)
@@ -210,7 +220,7 @@ const ShopPage = ({pageContext}: ShopPageProps) => {
   )
 }
 
-const ShopPageTemplate = (props: any) => (
+const ShopPageTemplate = (props: ShopPageProps) => (
   <SearchProvider>
     <ShopPage {...props} />
   </SearchProvider>

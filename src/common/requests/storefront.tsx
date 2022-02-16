@@ -142,7 +142,7 @@ export const useProductSearch = (
   sortKey,
   pause = false,
   count = 20,
-  initialData = [],
+  initialData: Array<any> = [],
   initialFilters
 ) => {
   const [query, setQuery] = React.useState(createQuery(filters))
