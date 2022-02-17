@@ -77,7 +77,7 @@ const CategoryPage = ({pageContext}: CategoryPageProps) => {
       </Box>
       <Box position="relative">
         <StaticImage
-          css={BannerImage}
+          css={BannerImage()}
           src="../../components/organisms/sections/HeroSection/slide_2_11.jpg"
           alt="banner-image"
         />
@@ -125,7 +125,7 @@ const CategoryPage = ({pageContext}: CategoryPageProps) => {
                 (window.location.pathname.endsWith('/') ? '' : '/') +
                 handle.split('-').at(-1)
             }
-
+            console.log(subcategory)
             return (
               <GatsbyLink to={slug}>
                 <Flex
@@ -139,8 +139,8 @@ const CategoryPage = ({pageContext}: CategoryPageProps) => {
                   justifyContent="flex-start"
                   alignItems="flex-start">
                   <GatsbyImage
-                    image={category.image}
-                    alt={category.handle}
+                    image={subcategory.node.image.gatsbyImageData}
+                    alt={subcategory.node.handle}
                     css={CardImage(cardMargin, cardWidth)}
                   />
                   <Text

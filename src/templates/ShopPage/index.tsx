@@ -216,7 +216,6 @@ const ShopPage = ({pageContext}: ShopPageProps) => {
                 }
               })
             }
-            console.log('images', images)
             return (
               <GatsbyLink
                 css={css`
