@@ -30,6 +30,7 @@ query ($query: String!, $sortKey: ProductSortKeys, $first: Int, $last: Int, $aft
             }
           }
           id
+          tags
           images(first: 4){
             edges {
               node {

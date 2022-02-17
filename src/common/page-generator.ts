@@ -119,13 +119,6 @@ const createAllProductsShopPage = (data, actions) => {
     collections[edge.node.id] = handles
   })
 
-  fs.writeFileSync(
-    './products.json',
-    JSON.stringify(
-      products.sort((a, b) => (a.title > b.title ? 1 : -1)).slice(0, 6)
-    )
-  )
-
   actions.createPage({
     path: '/shop/',
     component: require.resolve('../templates/ShopPage/index.tsx'),
@@ -136,7 +129,8 @@ const createAllProductsShopPage = (data, actions) => {
         .sort((a, b) => (a.title > b.title ? 1 : -1))
         .slice(0, 21),
       tags: tags,
-      allTags: data.meta.tags
+      allTags: data.meta.tags,
+      amountOfProducts: products.length
     }
   })
 
@@ -226,7 +220,8 @@ const createCollectionShopAndProductPages = (data, actions) => {
           .sort((a, b) => (a.title > b.title ? 1 : -1))
           .slice(0, 21),
         tags: tags,
-        allTags: data.meta.tags
+        allTags: data.meta.tags,
+        amountOfProducts: edge.node.products.length
       }
     })
 

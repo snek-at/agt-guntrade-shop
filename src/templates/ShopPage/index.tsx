@@ -26,8 +26,9 @@ import {
   useProductSearch
 } from '../../common/requests/storefront'
 import {PageProps} from 'gatsby'
+import {getShopifyImage} from 'gatsby-source-shopify'
 
-const DEFAULT_PRODUCTS_PER_PAGE = 20
+const DEFAULT_PRODUCTS_PER_PAGE = 21
 
 type ShopPageProps = PageProps<
   {},
@@ -39,13 +40,14 @@ type ShopPageProps = PageProps<
     tags: {
       [key: string]: any
     }
+    amountOfProducts: number
   }
 >
 
 const ShopPage = ({pageContext}: ShopPageProps) => {
   const queryParams = getValuesFromQuery(location.search)
   const initialFilters = React.useMemo(() => queryParams, [])
-  const [sortKey, setSortKey] = React.useState(queryParams.sortKey)
+  const [sortKey, setSortKey] = React.useState(queryParams.sortKey || 'TITLE')
   const [maxPriceFilter, setMaxPriceFilter] = React.useState<number>(0)
   const [minPriceFilter, setMinPriceFilter] = React.useState<number>(0)
   const [maximum, setMaximum] = React.useState<number>(0)
@@ -75,7 +77,7 @@ const ShopPage = ({pageContext}: ShopPageProps) => {
   let priceFilter: number[] = [minPriceFilter, maxPriceFilter]
 
   //shopify stuff
-  const {products, isFetching, hasNextPage, fetchNextPage} = useProductSearch(
+  let {products, isFetching, hasNextPage, fetchNextPage} = useProductSearch(
     filters,
     {
       allTags: pageContext.allTags
@@ -86,6 +88,15 @@ const ShopPage = ({pageContext}: ShopPageProps) => {
     pageContext.products,
     initialFilters
   )
+
+  products = products.map((product: any) => {
+    console.log(product)
+    return product.node
+  })
+  if (typeof products[0] === 'undefined') {
+    products = pageContext.products
+  }
+  const amountOfProducts = products.length
 
   return (
     <>
@@ -101,7 +112,7 @@ const ShopPage = ({pageContext}: ShopPageProps) => {
         <Flex>
           <Heading mt="5">{pageContext.title}</Heading>
           <Text ml="3" mt="6" color="gray" fontWeight="bold" fontSize={26}>
-            {pageContext.products.length}
+            {amountOfProducts}
           </Text>
         </Flex>
         <Flex mt="3">
@@ -186,6 +197,26 @@ const ShopPage = ({pageContext}: ShopPageProps) => {
         </Box>
         <Wrap ml="10" spacing="10" maxW="75%" minW="75%">
           {products.map((product: any) => {
+            let images: Array<any>
+            if (typeof product.images.edges === 'undefined') {
+              images = product.images
+            } else {
+              images = product.images.edges.map((image: any) => {
+                try {
+                  return {
+                    gatsbyImageData: getShopifyImage({
+                      image: image.node,
+                      layout: 'constrained',
+                      width: 450,
+                      height: 450
+                    })
+                  }
+                } catch (e) {
+                  console.error(e)
+                }
+              })
+            }
+            console.log('images', images)
             return (
               <GatsbyLink
                 css={css`
@@ -209,7 +240,7 @@ const ShopPage = ({pageContext}: ShopPageProps) => {
                   )}
                   reducedprice={product.discount}
                   direction="left"
-                  images={product.images}
+                  images={images}
                 />
               </GatsbyLink>
             )
