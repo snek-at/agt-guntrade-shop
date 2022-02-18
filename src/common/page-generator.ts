@@ -82,7 +82,7 @@ const getFilteredProducts = (unfilteredRelatedProducts, handle) => {
       } else {
         potentialProduct.slug =
           handle.slice(handle.indexOf('-') + 1).replaceAll('-', '/') +
-          '/shop/' +
+          '/products/' +
           slugify(potentialProduct.title, {remove: /[*+~.()'"!:@]/g})
         titles.push(potentialProduct.title)
         filteredRelatedProducts.push(potentialProduct)
@@ -120,11 +120,11 @@ const createAllProductsShopPage = (data, actions) => {
   })
 
   actions.createPage({
-    path: '/shop/',
+    path: '/products/',
     component: require.resolve('../templates/ShopPage/index.tsx'),
     context: {
       title: 'Alle Produkte',
-      handle: 'shop',
+      handle: 'produkte',
       products: products
         .sort((a, b) => (a.title > b.title ? 1 : -1))
         .slice(0, 21),
@@ -148,7 +148,8 @@ const createAllProductsShopPage = (data, actions) => {
     )
 
     actions.createPage({
-      path: '/shop/' + slugify(product.title, {remove: /[*+~.()'"!:@]/g}) + '/',
+      path:
+        '/products/' + slugify(product.title, {remove: /[*+~.()'"!:@]/g}) + '/',
       component: require.resolve('../templates/ProductPage/index.tsx'),
       context: {
         product: product,
@@ -209,13 +210,13 @@ const createCollectionShopAndProductPages = (data, actions) => {
       })
     })
 
-    slug = slug + '/shop/'
+    slug = slug + '/products/'
     actions.createPage({
       path: slug,
       component: require.resolve('../templates/ShopPage/index.tsx'),
       context: {
         title: edge.node.title.slice(edge.node.title.indexOf(' ') + 1),
-        handle: splitHandle.toString().replaceAll(',', '-') + '-shop',
+        handle: splitHandle.toString().replaceAll(',', '-') + '-products',
         products: edge.node.products
           .sort((a, b) => (a.title > b.title ? 1 : -1))
           .slice(0, 21),

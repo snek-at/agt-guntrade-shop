@@ -25,7 +25,9 @@ const IndexPage = ({
     return {
       ...product.node,
       slug:
-        'shop/' + slugify(product.node.title, {remove: /[*+~.()'"!:@]/g}) + '/'
+        'products/' +
+        slugify(product.node.title, {remove: /[*+~.()'"!:@]/g}) +
+        '/'
     }
   })
 
