@@ -38,11 +38,12 @@ import {
   Wrap,
   WrapItem
 } from '@chakra-ui/react'
-import {useProductSearch} from 'src/common/requests/storefront'
+import {useProductSearch} from '../../common/requests/storefront'
 
 import {FaEuroSign, FaFilter, FaHome, FaSort} from 'react-icons/fa'
 import React from 'react'
 import {Breadcrumbs, ShopLayout} from '../ShopLayout'
+import {gridPadBoxes} from '../../common/utils'
 
 // tag builder => input tag output type:content
 
@@ -209,9 +210,11 @@ const ProductGrid = (props: {
   items: Array<any>
   onItemClick: (item: any) => void
 }) => {
+  const emptyBoxes = gridPadBoxes(props.items)
+
   // css grid
   return (
-    <SimpleGrid spacing={4} minChildWidth="250px">
+    <SimpleGrid spacing={4} minChildWidth="200px">
       {props.items.map((item, key) => (
         <Box key={key} onClick={() => props.onItemClick(item)} bg="gray.200">
           <AspectRatio ratio={1}>
@@ -219,6 +222,7 @@ const ProductGrid = (props: {
           </AspectRatio>
         </Box>
       ))}
+      {emptyBoxes}
     </SimpleGrid>
   )
 }
