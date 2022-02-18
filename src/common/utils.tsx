@@ -1,6 +1,7 @@
 import {injectable} from 'react-magnetic-di'
 import {Image} from '@chakra-ui/image'
 import React from 'react'
+import {Box} from '@chakra-ui/react'
 
 const breakpoints = ['0em', '30em', '48em', '62em', '80em', '96em']
 
@@ -37,4 +38,21 @@ export const useWindowWidth = () => {
   }, [])
 
   return windowWidth
+}
+/**
+ * Create a array of empty boxes to fill the grid
+ * if there are less items than the grid size (6-total).
+ *
+ * @param items
+ * @returns
+ */
+export function gridPadBoxes(items: any[]) {
+  const numItems = items.length
+
+  const pad = 6 - numItems
+
+  if (pad > 0) {
+    return Array(pad).fill(<Box />)
+  }
+  return []
 }
