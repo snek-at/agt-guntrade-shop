@@ -57,7 +57,13 @@ export const Header = (props: {
     <>
       <Breadcrumbs />
       <Heading size="2xl">{props.title}</Heading>
-      <Box my="2" position={'sticky'} top="0" alignSelf={'flex-start'}>
+      <Box
+        my="2"
+        position={'sticky'}
+        top="0"
+        alignSelf={'flex-start'}
+        zIndex="1"
+        bg={useColorModeValue('white', 'agt.gray')}>
         <Flex>
           {props.isMobile ? (
             <Button
@@ -173,7 +179,7 @@ const Filter = (props: FilterProps) => {
           <Box pb="2">
             <Text fontWeight={'bold'}>{tagType}</Text>
             <Stack>
-              {Object.entries(values).map(([tagName, key]) => {
+              {values.map((tagName, key) => {
                 const fullTag = `${tagType}:${tagName}`
                 const isChecked = activeTags.includes(fullTag)
 
@@ -249,7 +255,7 @@ export const ShopCatalogLayout = (props: {
               </DrawerContent>
             </Drawer>
           ) : (
-            <Box w="30%" position={'sticky'} top="5" alignSelf={'flex-start'}>
+            <Box w="30%" position={'sticky'} top="12" alignSelf={'flex-start'}>
               <Filter {...props.filter} />
             </Box>
           )}
