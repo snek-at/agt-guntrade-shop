@@ -1,14 +1,14 @@
 import {Story, Meta} from '@storybook/react'
-import {ShopPageLayout} from '../../layout/ShopLayout'
+import {ShopCatalogLayout} from '../../layout/ShopCatalogLayout'
 import {products} from '../pages/_data/products'
 
 export default {
-  title: 'Layouts/ShopPageLayout',
-  component: ShopPageLayout
+  title: 'Layouts/ShopCatalogLayout',
+  component: ShopCatalogLayout
 } as Meta
 
 export const Page = () => (
-  <ShopPageLayout
+  <ShopCatalogLayout
     header={{
       title: 'Vectan Schwarzpulverpresslinge',
       sortOptions: ['Alphabetisch', 'Preis aufsteigend', 'Preis absteigend'],
