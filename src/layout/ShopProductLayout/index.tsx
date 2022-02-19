@@ -212,9 +212,7 @@ export const ShopProductLayout = (props: {
         </Box>
         <ProductSliderLayout
           title="Unsere Empfehlungen"
-          slider={{
-            products: props.featuredProducts
-          }}
+          products={props.featuredProducts}
         />
         <Box h="500">foo</Box>
       </VStack>

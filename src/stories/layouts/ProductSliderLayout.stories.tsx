@@ -9,10 +9,5 @@ export default {
 } as Meta
 
 export const Page = () => (
-  <ProductSliderLayout
-    title="Unsere Empfehlungen"
-    slider={{
-      products
-    }}
-  />
+  <ProductSliderLayout title="Unsere Empfehlungen" products={products} />
 )
