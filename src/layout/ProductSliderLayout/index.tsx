@@ -8,6 +8,7 @@ import {
   Icon,
   IconButton,
   IconButtonProps,
+  SimpleGrid,
   Spacer,
   useBreakpointValue,
   VStack
@@ -92,11 +93,11 @@ const ProductSlider = (props: {products: Array<any>}) => {
   return (
     <Box pos="relative" overflow="hidden">
       <Box px="24">
-        <HStack display="inline-flex" justify={'center'}>
+        <SimpleGrid row={1} columns={perPage} spacing={2}>
           {items.map((item, index) => (
             <>{shouldDisplay(index) && generateProductCard(item)}</>
           ))}
-        </HStack>
+        </SimpleGrid>
 
         {curPage > 0 && <NavigationButton direction="left" />}
         {curPage < pageCount - 1 && <NavigationButton direction="right" />}
