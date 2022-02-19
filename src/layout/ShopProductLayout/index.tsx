@@ -20,6 +20,7 @@ import {Breadcrumbs, ShopLayout} from '../ShopLayout'
 
 import {MdMessage} from 'react-icons/md'
 import {FaHeart, FaShare} from 'react-icons/fa'
+import {GatsbyImage, IGatsbyImageData} from 'gatsby-plugin-image'
 
 const Header = (props: {title: string}) => {
   return (
@@ -32,16 +33,52 @@ const Header = (props: {title: string}) => {
   )
 }
 
-const ImageSlider = () => {
+type SliderImage = {
+  alt: string
+  gatsbyImageData: IGatsbyImageData
+}
+
+const ImageThumbnailWrapItem = (props: {
+  image: SliderImage
+  active: boolean
+  onClick: () => void
+}) => {
+  const {alt, gatsbyImageData} = props.image
+  return (
+    <WrapItem
+      boxSize={{base: '16', md: '20'}}
+      onClick={props.onClick}
+      cursor="pointer"
+      boxShadow={props.active ? 'inset 0px 4px 0px 0px #eb1933' : 'none'}
+      p={2}
+      mr={2}
+      mb={2}
+      _hover={{
+        bg: useColorModeValue('gray.300', 'gray.800')
+      }}
+      transition="ease-out">
+      <GatsbyImage image={gatsbyImageData} alt={alt} />
+    </WrapItem>
+  )
+}
+
+const ImageSlider = (props: {
+  featuredImage: SliderImage
+  images: Array<SliderImage>
+  productMoreDetail?: React.ComponentProps<typeof ProductMoreDetail>
+}) => {
+  // null is featured image
+  const [currentImage, setCurrentImage] = React.useState<SliderImage>(
+    props.featuredImage
+  )
+
   return (
     <Box my="4" w={{base: '100%', md: '70%'}}>
       <AspectRatio ratio={16 / 9}>
         <Box>
-          <Image
-            src="https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-900x900-transformed_225x225_crop_center.png.webp?v=1644520721 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-900x900-transformed_450x450_crop_center.png.webp?v=1644520721 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-900x900-transformed_900x900_crop_center.png.webp?v=1644520721 900w"
-            alt="bg"
-            objectFit="contain"
-            width={'50%'}
+          <GatsbyImage
+            image={currentImage.gatsbyImageData}
+            alt={currentImage.alt}
           />
         </Box>
       </AspectRatio>
@@ -49,27 +86,34 @@ const ImageSlider = () => {
         bg={useColorModeValue('gray.200', 'gray.700')}
         spacing={0}
         justify="center">
-        {Array.from({length: 10}).map((_, i) => (
-          <WrapItem
-            boxSize={{base: '16', md: '20'}}
-            boxShadow={i === 0 && 'inset 0px 4px 0px 0px #eb1933'}>
-            <Image
-              src="https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-900x900-transformed_225x225_crop_center.png.webp?v=1644520721"
-              alt="bg"
-              objectFit="contain"
-            />
-          </WrapItem>
+        <ImageThumbnailWrapItem
+          image={props.featuredImage}
+          active={currentImage === props.featuredImage}
+          onClick={() => setCurrentImage(props.featuredImage)}
+        />
+
+        {props.images.map((image, index) => (
+          <ImageThumbnailWrapItem
+            key={index}
+            image={image}
+            active={currentImage === image}
+            onClick={() => setCurrentImage(image)}
+          />
         ))}
       </Wrap>
 
       <Box display={{base: 'none', md: 'block'}}>
-        <ProductMoreDetail />
+        <ProductMoreDetail {...props.productMoreDetail!} />
       </Box>
     </Box>
   )
 }
 
-const ProductDetail = () => {
+const ProductDetail = (props: {
+  title: string
+  price: string
+  status: string
+}) => {
   return (
     <Box
       w={{base: '100%', md: '30%'}}
@@ -79,13 +123,13 @@ const ProductDetail = () => {
       alignSelf={'flex-start'}>
       <VStack align={'left'} spacing="4">
         <Heading size="3xl" fontWeight={'semibold'}>
-          12,99 €
+          {`${props.price}€`}
         </Heading>
         <Text size="xs" fontWeight={'thin'}>
           inkl. MwSt.
         </Text>
         <Text color={useColorModeValue('green.500', 'green.300')}>
-          Sofort lieferbar
+          {props.status}
         </Text>
         <Button
           fontSize={'2xl'}
@@ -122,93 +166,45 @@ const ProductDetail = () => {
   )
 }
 
-const ProductMoreDetail = () => {
+function replaceHexColorsInHTML(
+  html: string,
+  coloraHex: string,
+  colorbHex: string
+) {
+  return html.replaceAll(coloraHex, colorbHex)
+}
+
+const ProductMoreDetail = (props: {description: string}) => {
+  const color = useColorModeValue('#000000', '#ffffff')
+
+  const html = replaceHexColorsInHTML(props.description, '#000000', color)
+
   return (
     <Box py="8">
-      Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsum Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsum Lorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum Lorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsum Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsum Lorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum Lorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsum Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-      ipsumLorem ipsumLorem ipsumLorem ipsum
+      <Box dangerouslySetInnerHTML={{__html: html}} />
     </Box>
   )
 }
 
 export const ShopProductLayout = (props: {
   header: React.ComponentProps<typeof Header>
+  imageSlider: React.ComponentProps<typeof ImageSlider>
+  productDetail: React.ComponentProps<typeof ProductDetail>
+  productMoreDetail: React.ComponentProps<typeof ProductMoreDetail>
 }) => {
   return (
     <ShopLayout>
       <Header {...props.header} />
       <Box>
         <Flex direction={{base: 'column', md: 'row'}}>
-          <ImageSlider />
-          <ProductDetail />
+          <ImageSlider
+            {...props.imageSlider}
+            productMoreDetail={props.productMoreDetail}
+          />
+          <ProductDetail {...props.productDetail} />
         </Flex>
         <Box display={{base: 'block', md: 'none'}}>
-          <ProductMoreDetail />
+          <ProductMoreDetail {...props.productMoreDetail} />
         </Box>
       </Box>
     </ShopLayout>

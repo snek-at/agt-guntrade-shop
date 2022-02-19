@@ -44,6 +44,7 @@ import {FaEuroSign, FaFilter, FaHome, FaSort} from 'react-icons/fa'
 import React from 'react'
 import {Breadcrumbs, ShopLayout} from '../ShopLayout'
 import {gridPadBoxes} from '../../common/utils'
+import {ProductCardLayout} from '../ProductCardLayout'
 
 // tag builder => input tag output type:content
 
@@ -215,13 +216,28 @@ const ProductGrid = (props: {
   // css grid
   return (
     <SimpleGrid spacing={4} minChildWidth="200px">
-      {props.items.map((item, key) => (
-        <Box key={key} onClick={() => props.onItemClick(item)} bg="gray.200">
-          <AspectRatio ratio={1}>
-            <></>
-          </AspectRatio>
-        </Box>
-      ))}
+      {props.items.map((item, key) => {
+        const tagsWithoutCategory = item.tags
+          .filter((tag: any) => !tag.startsWith('Kategorie:'))
+          .map((tag: any) => tag.split(':')[1])
+          .join(', ')
+
+        return (
+          <Box key={key} onClick={() => props.onItemClick(item)}>
+            <ProductCardLayout
+              createdAt={item.createdAt}
+              id={item.id}
+              tags={[]}
+              image={item.featuredImage}
+              name={item.title}
+              categoriesString={tagsWithoutCategory}
+              price={item.priceRangeV2.maxVariantPrice.amount}
+              discountPrice="2000"
+              onClick={id => alert(id)}
+            />
+          </Box>
+        )
+      })}
       {emptyBoxes}
     </SimpleGrid>
   )
