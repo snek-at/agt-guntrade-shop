@@ -189,6 +189,7 @@ export function ProductCardLayout(props: ProductCardProps) {
 
   return (
     <VStack
+      boxSize={'full'}
       onClick={() => onClick(id)}
       cursor="pointer"
       textAlign={{
@@ -204,5 +205,26 @@ export function ProductCardLayout(props: ProductCardProps) {
         <Price price={price} discountPrice={discountPrice} />
       </Box>
     </VStack>
+  )
+}
+
+export function generateProductCard(item: any) {
+  const tagsWithoutCategory = item.tags
+    .filter((tag: any) => !tag.startsWith('Kategorie:'))
+    .map((tag: any) => tag.split(':')[1])
+    .join(', ')
+
+  return (
+    <ProductCardLayout
+      createdAt={item.createdAt}
+      id={item.id}
+      tags={[]}
+      image={item.featuredImage}
+      name={item.title}
+      categoriesString={tagsWithoutCategory}
+      price={item.priceRangeV2.maxVariantPrice.amount}
+      discountPrice="2000"
+      onClick={id => alert(id)}
+    />
   )
 }

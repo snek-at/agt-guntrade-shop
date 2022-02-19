@@ -46,13 +46,15 @@ export const useWindowWidth = () => {
  * @param items
  * @returns
  */
-export function gridPadBoxes(items: any[]) {
-  const numItems = items.length
+export function gridPadBoxes(
+  items: any[],
+  gridSize: number = 6,
+  filler: JSX.Element = <Box />
+) {
+  const toFill = gridSize - (items.length % gridSize || gridSize)
 
-  const pad = 6 - numItems
-
-  if (pad > 0) {
-    return Array(pad).fill(<Box />)
+  if (toFill > 0) {
+    return Array(toFill).fill(filler)
   }
   return []
 }

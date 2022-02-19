@@ -44,7 +44,7 @@ import {FaEuroSign, FaFilter, FaHome, FaSort} from 'react-icons/fa'
 import React from 'react'
 import {Breadcrumbs, ShopLayout} from '../ShopLayout'
 import {gridPadBoxes} from '../../common/utils'
-import {ProductCardLayout} from '../ProductCardLayout'
+import {generateProductCard, ProductCardLayout} from '../ProductCardLayout'
 
 // tag builder => input tag output type:content
 
@@ -224,17 +224,7 @@ const ProductGrid = (props: {
 
         return (
           <Box key={key} onClick={() => props.onItemClick(item)}>
-            <ProductCardLayout
-              createdAt={item.createdAt}
-              id={item.id}
-              tags={[]}
-              image={item.featuredImage}
-              name={item.title}
-              categoriesString={tagsWithoutCategory}
-              price={item.priceRangeV2.maxVariantPrice.amount}
-              discountPrice="2000"
-              onClick={id => alert(id)}
-            />
+            {generateProductCard(item)}
           </Box>
         )
       })}
