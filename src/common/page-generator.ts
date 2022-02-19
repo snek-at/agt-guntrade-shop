@@ -21,7 +21,7 @@ const splitAndType = handle => {
       String.fromCharCode(
         splitHandle[0].charCodeAt(splitHandle[0].length - 1) + 1
       )
-    for (let i = 1; i < splitHandle[0].length; i++) {
+    for (let i = 1; i < splitHandle[0].length + 1; i++) {
       collectionType = collectionType + '-' + splitHandle[i]
     }
     collectionType = collectionType + '-'
@@ -125,9 +125,7 @@ const createAllProductsShopPage = (data, actions) => {
     context: {
       title: 'Alle Produkte',
       handle: 'produkte',
-      products: products
-        .sort((a, b) => (a.title > b.title ? 1 : -1))
-        .slice(0, 21),
+      products: products,
       tags: tags,
       allTags: data.meta.tags,
       amountOfProducts: products.length
@@ -169,13 +167,13 @@ const createCollectionShopAndProductPages = (data, actions) => {
         .toString()
         .substring(edge.node.handle.indexOf('-') + 1)
         .replaceAll(',', '/')
-
+    console.log(edge.node.title.slice(edge.node.title.indexOf(' ') + 1))
     actions.createPage({
       path: slug,
       component: require.resolve(`../templates/CategoryPage/index.tsx`),
       context: {
         category: {
-          title: edge.node.title.slice(edge.node.title.indexOf(' ')),
+          title: edge.node.title.slice(edge.node.title.indexOf(' ') + 1),
           handle: splitHandle.toString().replaceAll(',', '-'),
           image:
             edge.node.image !== null
@@ -265,12 +263,12 @@ export const createPages = async (actions, graphql) => {
             }
             products {
               id
+              createdAt
               descriptionHtml
               title
               tags
               status
               totalInventory
-              publishedAt
               priceRangeV2 {
                 maxVariantPrice {
                   amount
@@ -289,7 +287,7 @@ export const createPages = async (actions, graphql) => {
           }
         }
       }
-      allShopifyProduct {
+      allShopifyProduct(sort: {fields: title, order: ASC}, limit: 21) {
         edges {
           node {
             id
@@ -301,7 +299,7 @@ export const createPages = async (actions, graphql) => {
             tags
             status
             totalInventory
-            publishedAt
+            createdAt
             priceRangeV2 {
               maxVariantPrice {
                 amount
