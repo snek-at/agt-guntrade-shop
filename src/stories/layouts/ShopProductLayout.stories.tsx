@@ -22,6 +22,7 @@ export const Product0 = () => (
     productMoreDetail={{
       description: products[0].descriptionHtml
     }}
+    featuredProducts={products.slice(1, 7)}
   />
 )
 
@@ -40,5 +41,6 @@ export const Product1 = () => (
     productMoreDetail={{
       description: products[1].descriptionHtml
     }}
+    featuredProducts={products.slice(0, 6)}
   />
 )

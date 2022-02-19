@@ -21,6 +21,7 @@ import {Breadcrumbs, ShopLayout} from '../ShopLayout'
 import {MdMessage} from 'react-icons/md'
 import {FaHeart, FaShare} from 'react-icons/fa'
 import {GatsbyImage, IGatsbyImageData} from 'gatsby-plugin-image'
+import {ProductSliderLayout} from '../ProductSliderLayout'
 
 const Header = (props: {title: string}) => {
   return (
@@ -191,22 +192,32 @@ export const ShopProductLayout = (props: {
   imageSlider: React.ComponentProps<typeof ImageSlider>
   productDetail: React.ComponentProps<typeof ProductDetail>
   productMoreDetail: React.ComponentProps<typeof ProductMoreDetail>
+  featuredProducts: Array<any>
 }) => {
   return (
     <ShopLayout>
       <Header {...props.header} />
-      <Box>
-        <Flex direction={{base: 'column', md: 'row'}}>
-          <ImageSlider
-            {...props.imageSlider}
-            productMoreDetail={props.productMoreDetail}
-          />
-          <ProductDetail {...props.productDetail} />
-        </Flex>
-        <Box display={{base: 'block', md: 'none'}}>
-          <ProductMoreDetail {...props.productMoreDetail} />
+      <VStack spacing={12}>
+        <Box>
+          <Flex direction={{base: 'column', md: 'row'}}>
+            <ImageSlider
+              {...props.imageSlider}
+              productMoreDetail={props.productMoreDetail}
+            />
+            <ProductDetail {...props.productDetail} />
+          </Flex>
+          <Box display={{base: 'block', md: 'none'}}>
+            <ProductMoreDetail {...props.productMoreDetail} />
+          </Box>
         </Box>
-      </Box>
+        <ProductSliderLayout
+          title="Unsere Empfehlungen"
+          slider={{
+            products: props.featuredProducts
+          }}
+        />
+        <Box h="500">foo</Box>
+      </VStack>
     </ShopLayout>
   )
 }

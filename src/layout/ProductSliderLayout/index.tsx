@@ -28,8 +28,8 @@ const ProductSlider = (props: {products: Array<any>}) => {
 
   const perPage = useBreakpointValue({
     base: 1,
-    md: 4,
-    lg: 5
+    md: 3,
+    lg: 4
   }) as number
 
   const pageCount = Math.ceil(items.length / perPage)
