@@ -8,20 +8,14 @@ import {
   Circle,
   Flex
 } from '@chakra-ui/react'
+import {css} from '@emotion/react'
 
 import {AnimatePresence, motion} from 'framer-motion'
+import {GatsbyImage} from 'gatsby-plugin-image'
 import * as style from './style'
 
-export interface CategoryItemType {
-  image: string
-  name: string
-  price: number
-  reducedPrice?: number
-  isNew: boolean
-}
-
 export interface CategoryTabProps {
-  items: CategoryItemType[]
+  items: Array<any>
   direction: string
   visible: string
 }
@@ -52,6 +46,7 @@ const variants = {
 }
 
 const CategoryTab = ({items, direction, visible}: CategoryTabProps) => {
+  console.log(items)
   return (
     <AnimatePresence exitBeforeEnter custom={direction}>
       {visible === 'visible' && (
@@ -83,13 +78,14 @@ const CategoryTab = ({items, direction, visible}: CategoryTabProps) => {
                   before: {borderColor: 'agt.blue'},
                   _after: {borderColor: 'agt.blue'}
                 }}>
-                <Image
-                  src={item.image}
-                  alt={item.name}
-                  w="fit-content"
-                  fallback={<Box />}
+                <GatsbyImage
+                  image={item.node.images[0].gatsbyImageData}
+                  alt={item.node.title}
+                  css={css`
+                    width: fit-content;
+                  `}
                 />
-                {item.isNew && (
+                {item?.isNew && (
                   <Circle
                     size="10px"
                     position="absolute"
@@ -105,14 +101,18 @@ const CategoryTab = ({items, direction, visible}: CategoryTabProps) => {
                   color="black"
                   minH="5rem"
                   textAlign="center">
-                  {item.name.split(';')[0]}
+                  {item.node.title}
                 </Text>
                 <Badge
                   variant="solid"
                   bg="agt.blue"
                   borderRadius="5px"
                   h="1.1rem">
-                  {item.name.split(';')[1]}
+                  {
+                    item.node.tags
+                      .filter((tag: string) => tag.startsWith('Kaliber:'))[0]
+                      .split(':')[1]
+                  }
                 </Badge>
                 <Flex alignItems="flex-end" justifyContent="flex-end">
                   <Text
@@ -125,7 +125,7 @@ const CategoryTab = ({items, direction, visible}: CategoryTabProps) => {
                         ? 'line-through'
                         : 'none'
                     }>
-                    {item.price}€
+                    {item.node.priceRangeV2.maxVariantPrice.amount}€
                   </Text>
                   {typeof item.reducedPrice !== 'undefined' && (
                     <Text fontSize="20">{item.reducedPrice}€</Text>

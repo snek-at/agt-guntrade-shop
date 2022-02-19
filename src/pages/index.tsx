@@ -20,6 +20,7 @@ const IndexPage = ({
 }: PageProps<{
   allShopifyProduct: {edges: Array<any>}
   allGoogleReview: {nodes: Array<any>}
+  newShopifyProduct: {edges: Array<any>}
 }>) => {
   const products = data.allShopifyProduct.edges.map((product: any) => {
     return {
@@ -33,7 +34,7 @@ const IndexPage = ({
 
   return (
     <Box>
-      <HeroSection />
+      <HeroSection categoryProducts={{New: data.newShopifyProduct.edges}} />
       <NewsSection />
       <FeaturedProductsSection products={products} />
       <FAQSection heading={<p>I'm a heading</p>} />
@@ -83,7 +84,31 @@ export const query = graphql`
         source
       }
     }
-    allShopifyProduct {
+    allShopifyProduct(limit: 20) {
+      edges {
+        node {
+          createdAt
+          description
+          images {
+            gatsbyImageData
+          }
+          priceRangeV2 {
+            maxVariantPrice {
+              amount
+            }
+            minVariantPrice {
+              amount
+            }
+          }
+          tags
+          title
+        }
+      }
+    }
+    newShopifyProduct: allShopifyProduct(
+      limit: 6
+      sort: {fields: createdAt, order: DESC}
+    ) {
       edges {
         node {
           createdAt
