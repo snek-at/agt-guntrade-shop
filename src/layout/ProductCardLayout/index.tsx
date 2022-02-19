@@ -172,20 +172,25 @@ export function ProductCardLayout(props: ProductCardProps) {
     categoriesString,
     price,
     discountPrice,
-    tags,
     createdAt,
     onClick
   } = props
 
-  if (new Date(createdAt).getTime() > Date.now() - 7 * 24 * 60 * 60 * 1000) {
-    tags.push({name: 'Neu', color: '#00ff00'})
+  const getDefaultTags = (tags: typeof props.tags = []) => {
+    if (new Date(createdAt).getTime() > Date.now() - 7 * 24 * 60 * 60 * 1000) {
+      tags.push({name: 'Neu', color: '#00ff00'})
+    }
+
+    if (discountPrice) {
+      const percent = (1 - parseFloat(discountPrice) / parseFloat(price)) * -100
+
+      tags.push({name: `${percent.toFixed(0)}%`, color: '#ff0000'})
+    }
+
+    return tags
   }
 
-  if (discountPrice) {
-    const percent = (1 - parseFloat(discountPrice) / parseFloat(price)) * -100
-
-    tags.push({name: `${percent.toFixed(0)}%`, color: '#ff0000'})
-  }
+  const [tags, _] = React.useState(getDefaultTags())
 
   return (
     <VStack
