@@ -11,7 +11,9 @@ import {
   VStack,
   Icon,
   Divider,
-  Center
+  Center,
+  WrapItem,
+  Wrap
 } from '@chakra-ui/react'
 import React from 'react'
 import {Breadcrumbs, ShopLayout} from '../ShopLayout'
@@ -43,32 +45,23 @@ const ImageSlider = () => {
           />
         </Box>
       </AspectRatio>
-      <Box h="16" bg={useColorModeValue('gray.200', 'gray.700')}>
-        <Flex alignItems={'center'} justifyContent="center">
-          {/*  */}
-          <Box boxSize={'16'} boxShadow="inset 0px 4px 0px 0px #eb1933">
+      <Wrap
+        bg={useColorModeValue('gray.200', 'gray.700')}
+        spacing={0}
+        justify="center">
+        {Array.from({length: 10}).map((_, i) => (
+          <WrapItem
+            boxSize={{base: '16', md: '20'}}
+            boxShadow={i === 0 && 'inset 0px 4px 0px 0px #eb1933'}>
             <Image
               src="https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-900x900-transformed_225x225_crop_center.png.webp?v=1644520721"
               alt="bg"
               objectFit="contain"
             />
-          </Box>
-          <Box boxSize={'16'}>
-            <Image
-              src="https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-900x900-transformed_225x225_crop_center.png.webp?v=1644520721"
-              alt="bg"
-              objectFit="contain"
-            />
-          </Box>
-          <Box boxSize={'16'}>
-            <Image
-              src="https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-900x900-transformed_225x225_crop_center.png.webp?v=1644520721"
-              alt="bg"
-              objectFit="contain"
-            />
-          </Box>
-        </Flex>
-      </Box>
+          </WrapItem>
+        ))}
+      </Wrap>
+
       <Box display={{base: 'none', md: 'block'}}>
         <ProductMoreDetail />
       </Box>
@@ -80,6 +73,7 @@ const ProductDetail = () => {
   return (
     <Box
       w={{base: '100%', md: '30%'}}
+      pl={{base: 0, md: 4}}
       position={'sticky'}
       top="15"
       alignSelf={'flex-start'}>

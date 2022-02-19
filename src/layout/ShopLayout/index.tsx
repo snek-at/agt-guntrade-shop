@@ -34,7 +34,7 @@ export const Breadcrumbs = () => {
 
 export const ShopLayout: React.FC = ({children}) => {
   return (
-    <Box mx="16">
+    <Box mx={{base: 4, md: 16}}>
       <Box>{children}</Box>
     </Box>
   )
