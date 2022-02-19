@@ -67,6 +67,542 @@ export const products = [
     }
   },
   {
+    id: 'ccdbb362-7a38-5cae-ae05-c9d909fd0025',
+    collections: [
+      {handle: 'b-selbstladegewehre'},
+      {handle: 'ab-waffen-selbstladegewehre'},
+      {handle: 'a-waffen'}
+    ],
+    descriptionHtml:
+      '<p data-mce-fragment="1"><span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Der AC Alfa Selbstladekarabiner Modell: LLC (Limex Luger Carbine) in 9x19mm wurde soeben als Kategorie B Waffe eingestuft und somit zum Verkauf in Österreich auf Waffenbesitzkarte oder Waffenpass freigegeben.</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Eine absolute Qualitäts-Neuheit auf den noch nie da gewesenen österreichischen Waffenmarkt.</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Top Semi Auto Waffe für:</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Sportschützen</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* IPSC- Schießsport und vielen anderen Disziplinen.</span></p>\n<p data-mce-fragment="1"><span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Ident.Nr. SK-PC: 00204658201444-46450087500544565842-201145654698428</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Waffenart: Selbstladecarabine Kat.B</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Fabrikat/Modell: AC Alfa Selbstladekarabiner Modell: LLC (Limex Luger Carbine) Semi Auto</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Kaliber: 9x19mm</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Magazinkapazität: 10 Schuss Magazin </span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Gültiger Beschuss: Ja</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Zubehör: * siehe Foto</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Selbstladekarabiner für alle Glock Magazine in 9x19mm</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* 32 Schuss AC Unity Magazine 9×19</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Metall Back Up Sights</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Compensator</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* gefräster Upper</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Kunststoff Dust Cover</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Kompensator Kunststoff Lower &amp; MLOK Handschutz</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Beidseitiger Bedienhebel</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* M4-Style Schubschaft</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Tragetasche</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Gesamtlänge : 680mm</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Lauflänge: 260mm; 2,6kg mit leerem Magazin</span></p>\n<p data-mce-fragment="1"><span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Zustand: Fabrikneu</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Versandkosten/Abholung: Auf Anfrage / Abholung nur nach vorheriger Terminabsprache</span></p>',
+    title: 'AC Alfa Selbstladekarabiner Modell: LLC (Limex Luger Carbine)',
+    tags: ['Kaliber:9x19mm', 'Kategorie:Selbstladegewehre', 'Kategorie:Waffen'],
+    status: 'ACTIVE',
+    totalInventory: 77,
+    publishedAt: '2022-02-10T19:11:56Z',
+    priceRangeV2: {
+      maxVariantPrice: {amount: '0.0'},
+      minVariantPrice: {amount: '0.0'}
+    },
+    images: [
+      {
+        gatsbyImageData: {
+          images: {
+            sources: [
+              {
+                srcSet:
+                  'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png.webp?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png.webp?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png.webp?v=1644520317 900w',
+                sizes: '(min-width: 900px) 900px, 100vw',
+                type: 'image/webp'
+              }
+            ],
+            fallback: {
+              src: 'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317',
+              srcSet:
+                'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317 900w',
+              sizes: '(min-width: 900px) 900px, 100vw'
+            }
+          },
+          layout: 'constrained',
+          width: 900,
+          height: 900
+        }
+      }
+    ],
+    featuredImage: {
+      gatsbyImageData: {
+        images: {
+          sources: [
+            {
+              srcSet:
+                'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png.webp?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png.webp?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png.webp?v=1644520317 900w',
+              sizes: '(min-width: 900px) 900px, 100vw',
+              type: 'image/webp'
+            }
+          ],
+          fallback: {
+            src: 'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317',
+            srcSet:
+              'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317 900w',
+            sizes: '(min-width: 900px) 900px, 100vw'
+          }
+        },
+        layout: 'constrained',
+        width: 900,
+        height: 900
+      }
+    }
+  },
+  {
+    id: 'ccdbb362-7a38-5cae-ae05-c9d909fd0025',
+    collections: [
+      {handle: 'b-selbstladegewehre'},
+      {handle: 'ab-waffen-selbstladegewehre'},
+      {handle: 'a-waffen'}
+    ],
+    descriptionHtml:
+      '<p data-mce-fragment="1"><span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Der AC Alfa Selbstladekarabiner Modell: LLC (Limex Luger Carbine) in 9x19mm wurde soeben als Kategorie B Waffe eingestuft und somit zum Verkauf in Österreich auf Waffenbesitzkarte oder Waffenpass freigegeben.</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Eine absolute Qualitäts-Neuheit auf den noch nie da gewesenen österreichischen Waffenmarkt.</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Top Semi Auto Waffe für:</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Sportschützen</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* IPSC- Schießsport und vielen anderen Disziplinen.</span></p>\n<p data-mce-fragment="1"><span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Ident.Nr. SK-PC: 00204658201444-46450087500544565842-201145654698428</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Waffenart: Selbstladecarabine Kat.B</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Fabrikat/Modell: AC Alfa Selbstladekarabiner Modell: LLC (Limex Luger Carbine) Semi Auto</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Kaliber: 9x19mm</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Magazinkapazität: 10 Schuss Magazin </span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Gültiger Beschuss: Ja</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Zubehör: * siehe Foto</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Selbstladekarabiner für alle Glock Magazine in 9x19mm</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* 32 Schuss AC Unity Magazine 9×19</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Metall Back Up Sights</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Compensator</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* gefräster Upper</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Kunststoff Dust Cover</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Kompensator Kunststoff Lower &amp; MLOK Handschutz</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Beidseitiger Bedienhebel</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* M4-Style Schubschaft</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Tragetasche</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Gesamtlänge : 680mm</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Lauflänge: 260mm; 2,6kg mit leerem Magazin</span></p>\n<p data-mce-fragment="1"><span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Zustand: Fabrikneu</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Versandkosten/Abholung: Auf Anfrage / Abholung nur nach vorheriger Terminabsprache</span></p>',
+    title: 'AC Alfa Selbstladekarabiner Modell: LLC (Limex Luger Carbine)',
+    tags: ['Kaliber:9x19mm', 'Kategorie:Selbstladegewehre', 'Kategorie:Waffen'],
+    status: 'ACTIVE',
+    totalInventory: 77,
+    publishedAt: '2022-02-10T19:11:56Z',
+    priceRangeV2: {
+      maxVariantPrice: {amount: '0.0'},
+      minVariantPrice: {amount: '0.0'}
+    },
+    images: [
+      {
+        gatsbyImageData: {
+          images: {
+            sources: [
+              {
+                srcSet:
+                  'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png.webp?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png.webp?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png.webp?v=1644520317 900w',
+                sizes: '(min-width: 900px) 900px, 100vw',
+                type: 'image/webp'
+              }
+            ],
+            fallback: {
+              src: 'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317',
+              srcSet:
+                'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317 900w',
+              sizes: '(min-width: 900px) 900px, 100vw'
+            }
+          },
+          layout: 'constrained',
+          width: 900,
+          height: 900
+        }
+      }
+    ],
+    featuredImage: {
+      gatsbyImageData: {
+        images: {
+          sources: [
+            {
+              srcSet:
+                'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png.webp?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png.webp?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png.webp?v=1644520317 900w',
+              sizes: '(min-width: 900px) 900px, 100vw',
+              type: 'image/webp'
+            }
+          ],
+          fallback: {
+            src: 'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317',
+            srcSet:
+              'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317 900w',
+            sizes: '(min-width: 900px) 900px, 100vw'
+          }
+        },
+        layout: 'constrained',
+        width: 900,
+        height: 900
+      }
+    }
+  },
+  {
+    id: 'ccdbb362-7a38-5cae-ae05-c9d909fd0025',
+    collections: [
+      {handle: 'b-selbstladegewehre'},
+      {handle: 'ab-waffen-selbstladegewehre'},
+      {handle: 'a-waffen'}
+    ],
+    descriptionHtml:
+      '<p data-mce-fragment="1"><span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Der AC Alfa Selbstladekarabiner Modell: LLC (Limex Luger Carbine) in 9x19mm wurde soeben als Kategorie B Waffe eingestuft und somit zum Verkauf in Österreich auf Waffenbesitzkarte oder Waffenpass freigegeben.</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Eine absolute Qualitäts-Neuheit auf den noch nie da gewesenen österreichischen Waffenmarkt.</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Top Semi Auto Waffe für:</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Sportschützen</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* IPSC- Schießsport und vielen anderen Disziplinen.</span></p>\n<p data-mce-fragment="1"><span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Ident.Nr. SK-PC: 00204658201444-46450087500544565842-201145654698428</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Waffenart: Selbstladecarabine Kat.B</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Fabrikat/Modell: AC Alfa Selbstladekarabiner Modell: LLC (Limex Luger Carbine) Semi Auto</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Kaliber: 9x19mm</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Magazinkapazität: 10 Schuss Magazin </span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Gültiger Beschuss: Ja</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Zubehör: * siehe Foto</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Selbstladekarabiner für alle Glock Magazine in 9x19mm</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* 32 Schuss AC Unity Magazine 9×19</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Metall Back Up Sights</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Compensator</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* gefräster Upper</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Kunststoff Dust Cover</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Kompensator Kunststoff Lower &amp; MLOK Handschutz</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Beidseitiger Bedienhebel</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* M4-Style Schubschaft</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Tragetasche</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Gesamtlänge : 680mm</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Lauflänge: 260mm; 2,6kg mit leerem Magazin</span></p>\n<p data-mce-fragment="1"><span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Zustand: Fabrikneu</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Versandkosten/Abholung: Auf Anfrage / Abholung nur nach vorheriger Terminabsprache</span></p>',
+    title: 'AC Alfa Selbstladekarabiner Modell: LLC (Limex Luger Carbine)',
+    tags: ['Kaliber:9x19mm', 'Kategorie:Selbstladegewehre', 'Kategorie:Waffen'],
+    status: 'ACTIVE',
+    totalInventory: 77,
+    publishedAt: '2022-02-10T19:11:56Z',
+    priceRangeV2: {
+      maxVariantPrice: {amount: '0.0'},
+      minVariantPrice: {amount: '0.0'}
+    },
+    images: [
+      {
+        gatsbyImageData: {
+          images: {
+            sources: [
+              {
+                srcSet:
+                  'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png.webp?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png.webp?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png.webp?v=1644520317 900w',
+                sizes: '(min-width: 900px) 900px, 100vw',
+                type: 'image/webp'
+              }
+            ],
+            fallback: {
+              src: 'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317',
+              srcSet:
+                'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317 900w',
+              sizes: '(min-width: 900px) 900px, 100vw'
+            }
+          },
+          layout: 'constrained',
+          width: 900,
+          height: 900
+        }
+      }
+    ],
+    featuredImage: {
+      gatsbyImageData: {
+        images: {
+          sources: [
+            {
+              srcSet:
+                'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png.webp?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png.webp?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png.webp?v=1644520317 900w',
+              sizes: '(min-width: 900px) 900px, 100vw',
+              type: 'image/webp'
+            }
+          ],
+          fallback: {
+            src: 'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317',
+            srcSet:
+              'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317 900w',
+            sizes: '(min-width: 900px) 900px, 100vw'
+          }
+        },
+        layout: 'constrained',
+        width: 900,
+        height: 900
+      }
+    }
+  },
+  {
+    id: 'ccdbb362-7a38-5cae-ae05-c9d909fd0025',
+    collections: [
+      {handle: 'b-selbstladegewehre'},
+      {handle: 'ab-waffen-selbstladegewehre'},
+      {handle: 'a-waffen'}
+    ],
+    descriptionHtml:
+      '<p data-mce-fragment="1"><span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Der AC Alfa Selbstladekarabiner Modell: LLC (Limex Luger Carbine) in 9x19mm wurde soeben als Kategorie B Waffe eingestuft und somit zum Verkauf in Österreich auf Waffenbesitzkarte oder Waffenpass freigegeben.</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Eine absolute Qualitäts-Neuheit auf den noch nie da gewesenen österreichischen Waffenmarkt.</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Top Semi Auto Waffe für:</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Sportschützen</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* IPSC- Schießsport und vielen anderen Disziplinen.</span></p>\n<p data-mce-fragment="1"><span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Ident.Nr. SK-PC: 00204658201444-46450087500544565842-201145654698428</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Waffenart: Selbstladecarabine Kat.B</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Fabrikat/Modell: AC Alfa Selbstladekarabiner Modell: LLC (Limex Luger Carbine) Semi Auto</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Kaliber: 9x19mm</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Magazinkapazität: 10 Schuss Magazin </span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Gültiger Beschuss: Ja</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Zubehör: * siehe Foto</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Selbstladekarabiner für alle Glock Magazine in 9x19mm</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* 32 Schuss AC Unity Magazine 9×19</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Metall Back Up Sights</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Compensator</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* gefräster Upper</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Kunststoff Dust Cover</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Kompensator Kunststoff Lower &amp; MLOK Handschutz</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Beidseitiger Bedienhebel</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* M4-Style Schubschaft</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Tragetasche</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Gesamtlänge : 680mm</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Lauflänge: 260mm; 2,6kg mit leerem Magazin</span></p>\n<p data-mce-fragment="1"><span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Zustand: Fabrikneu</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Versandkosten/Abholung: Auf Anfrage / Abholung nur nach vorheriger Terminabsprache</span></p>',
+    title: 'AC Alfa Selbstladekarabiner Modell: LLC (Limex Luger Carbine)',
+    tags: ['Kaliber:9x19mm', 'Kategorie:Selbstladegewehre', 'Kategorie:Waffen'],
+    status: 'ACTIVE',
+    totalInventory: 77,
+    publishedAt: '2022-02-10T19:11:56Z',
+    priceRangeV2: {
+      maxVariantPrice: {amount: '0.0'},
+      minVariantPrice: {amount: '0.0'}
+    },
+    images: [
+      {
+        gatsbyImageData: {
+          images: {
+            sources: [
+              {
+                srcSet:
+                  'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png.webp?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png.webp?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png.webp?v=1644520317 900w',
+                sizes: '(min-width: 900px) 900px, 100vw',
+                type: 'image/webp'
+              }
+            ],
+            fallback: {
+              src: 'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317',
+              srcSet:
+                'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317 900w',
+              sizes: '(min-width: 900px) 900px, 100vw'
+            }
+          },
+          layout: 'constrained',
+          width: 900,
+          height: 900
+        }
+      }
+    ],
+    featuredImage: {
+      gatsbyImageData: {
+        images: {
+          sources: [
+            {
+              srcSet:
+                'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png.webp?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png.webp?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png.webp?v=1644520317 900w',
+              sizes: '(min-width: 900px) 900px, 100vw',
+              type: 'image/webp'
+            }
+          ],
+          fallback: {
+            src: 'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317',
+            srcSet:
+              'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317 900w',
+            sizes: '(min-width: 900px) 900px, 100vw'
+          }
+        },
+        layout: 'constrained',
+        width: 900,
+        height: 900
+      }
+    }
+  },
+  {
+    id: 'ccdbb362-7a38-5cae-ae05-c9d909fd0025',
+    collections: [
+      {handle: 'b-selbstladegewehre'},
+      {handle: 'ab-waffen-selbstladegewehre'},
+      {handle: 'a-waffen'}
+    ],
+    descriptionHtml:
+      '<p data-mce-fragment="1"><span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Der AC Alfa Selbstladekarabiner Modell: LLC (Limex Luger Carbine) in 9x19mm wurde soeben als Kategorie B Waffe eingestuft und somit zum Verkauf in Österreich auf Waffenbesitzkarte oder Waffenpass freigegeben.</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Eine absolute Qualitäts-Neuheit auf den noch nie da gewesenen österreichischen Waffenmarkt.</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Top Semi Auto Waffe für:</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Sportschützen</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* IPSC- Schießsport und vielen anderen Disziplinen.</span></p>\n<p data-mce-fragment="1"><span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Ident.Nr. SK-PC: 00204658201444-46450087500544565842-201145654698428</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Waffenart: Selbstladecarabine Kat.B</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Fabrikat/Modell: AC Alfa Selbstladekarabiner Modell: LLC (Limex Luger Carbine) Semi Auto</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Kaliber: 9x19mm</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Magazinkapazität: 10 Schuss Magazin </span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Gültiger Beschuss: Ja</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Zubehör: * siehe Foto</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Selbstladekarabiner für alle Glock Magazine in 9x19mm</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* 32 Schuss AC Unity Magazine 9×19</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Metall Back Up Sights</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Compensator</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* gefräster Upper</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Kunststoff Dust Cover</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Kompensator Kunststoff Lower &amp; MLOK Handschutz</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Beidseitiger Bedienhebel</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* M4-Style Schubschaft</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Tragetasche</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Gesamtlänge : 680mm</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Lauflänge: 260mm; 2,6kg mit leerem Magazin</span></p>\n<p data-mce-fragment="1"><span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Zustand: Fabrikneu</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Versandkosten/Abholung: Auf Anfrage / Abholung nur nach vorheriger Terminabsprache</span></p>',
+    title: 'AC Alfa Selbstladekarabiner Modell: LLC (Limex Luger Carbine)',
+    tags: ['Kaliber:9x19mm', 'Kategorie:Selbstladegewehre', 'Kategorie:Waffen'],
+    status: 'ACTIVE',
+    totalInventory: 77,
+    publishedAt: '2022-02-10T19:11:56Z',
+    priceRangeV2: {
+      maxVariantPrice: {amount: '0.0'},
+      minVariantPrice: {amount: '0.0'}
+    },
+    images: [
+      {
+        gatsbyImageData: {
+          images: {
+            sources: [
+              {
+                srcSet:
+                  'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png.webp?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png.webp?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png.webp?v=1644520317 900w',
+                sizes: '(min-width: 900px) 900px, 100vw',
+                type: 'image/webp'
+              }
+            ],
+            fallback: {
+              src: 'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317',
+              srcSet:
+                'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317 900w',
+              sizes: '(min-width: 900px) 900px, 100vw'
+            }
+          },
+          layout: 'constrained',
+          width: 900,
+          height: 900
+        }
+      }
+    ],
+    featuredImage: {
+      gatsbyImageData: {
+        images: {
+          sources: [
+            {
+              srcSet:
+                'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png.webp?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png.webp?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png.webp?v=1644520317 900w',
+              sizes: '(min-width: 900px) 900px, 100vw',
+              type: 'image/webp'
+            }
+          ],
+          fallback: {
+            src: 'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317',
+            srcSet:
+              'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317 900w',
+            sizes: '(min-width: 900px) 900px, 100vw'
+          }
+        },
+        layout: 'constrained',
+        width: 900,
+        height: 900
+      }
+    }
+  },
+  {
+    id: 'ccdbb362-7a38-5cae-ae05-c9d909fd0025',
+    collections: [
+      {handle: 'b-selbstladegewehre'},
+      {handle: 'ab-waffen-selbstladegewehre'},
+      {handle: 'a-waffen'}
+    ],
+    descriptionHtml:
+      '<p data-mce-fragment="1"><span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Der AC Alfa Selbstladekarabiner Modell: LLC (Limex Luger Carbine) in 9x19mm wurde soeben als Kategorie B Waffe eingestuft und somit zum Verkauf in Österreich auf Waffenbesitzkarte oder Waffenpass freigegeben.</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Eine absolute Qualitäts-Neuheit auf den noch nie da gewesenen österreichischen Waffenmarkt.</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Top Semi Auto Waffe für:</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Sportschützen</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* IPSC- Schießsport und vielen anderen Disziplinen.</span></p>\n<p data-mce-fragment="1"><span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Ident.Nr. SK-PC: 00204658201444-46450087500544565842-201145654698428</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Waffenart: Selbstladecarabine Kat.B</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Fabrikat/Modell: AC Alfa Selbstladekarabiner Modell: LLC (Limex Luger Carbine) Semi Auto</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Kaliber: 9x19mm</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Magazinkapazität: 10 Schuss Magazin </span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Gültiger Beschuss: Ja</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Zubehör: * siehe Foto</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Selbstladekarabiner für alle Glock Magazine in 9x19mm</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* 32 Schuss AC Unity Magazine 9×19</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Metall Back Up Sights</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Compensator</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* gefräster Upper</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Kunststoff Dust Cover</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Kompensator Kunststoff Lower &amp; MLOK Handschutz</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Beidseitiger Bedienhebel</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* M4-Style Schubschaft</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Tragetasche</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Gesamtlänge : 680mm</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Lauflänge: 260mm; 2,6kg mit leerem Magazin</span></p>\n<p data-mce-fragment="1"><span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Zustand: Fabrikneu</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Versandkosten/Abholung: Auf Anfrage / Abholung nur nach vorheriger Terminabsprache</span></p>',
+    title: 'AC Alfa Selbstladekarabiner Modell: LLC (Limex Luger Carbine)',
+    tags: ['Kaliber:9x19mm', 'Kategorie:Selbstladegewehre', 'Kategorie:Waffen'],
+    status: 'ACTIVE',
+    totalInventory: 77,
+    publishedAt: '2022-02-10T19:11:56Z',
+    priceRangeV2: {
+      maxVariantPrice: {amount: '0.0'},
+      minVariantPrice: {amount: '0.0'}
+    },
+    images: [
+      {
+        gatsbyImageData: {
+          images: {
+            sources: [
+              {
+                srcSet:
+                  'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png.webp?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png.webp?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png.webp?v=1644520317 900w',
+                sizes: '(min-width: 900px) 900px, 100vw',
+                type: 'image/webp'
+              }
+            ],
+            fallback: {
+              src: 'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317',
+              srcSet:
+                'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317 900w',
+              sizes: '(min-width: 900px) 900px, 100vw'
+            }
+          },
+          layout: 'constrained',
+          width: 900,
+          height: 900
+        }
+      }
+    ],
+    featuredImage: {
+      gatsbyImageData: {
+        images: {
+          sources: [
+            {
+              srcSet:
+                'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png.webp?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png.webp?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png.webp?v=1644520317 900w',
+              sizes: '(min-width: 900px) 900px, 100vw',
+              type: 'image/webp'
+            }
+          ],
+          fallback: {
+            src: 'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317',
+            srcSet:
+              'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317 900w',
+            sizes: '(min-width: 900px) 900px, 100vw'
+          }
+        },
+        layout: 'constrained',
+        width: 900,
+        height: 900
+      }
+    }
+  },
+  {
+    id: 'ccdbb362-7a38-5cae-ae05-c9d909fd0025',
+    collections: [
+      {handle: 'b-selbstladegewehre'},
+      {handle: 'ab-waffen-selbstladegewehre'},
+      {handle: 'a-waffen'}
+    ],
+    descriptionHtml:
+      '<p data-mce-fragment="1"><span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Der AC Alfa Selbstladekarabiner Modell: LLC (Limex Luger Carbine) in 9x19mm wurde soeben als Kategorie B Waffe eingestuft und somit zum Verkauf in Österreich auf Waffenbesitzkarte oder Waffenpass freigegeben.</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Eine absolute Qualitäts-Neuheit auf den noch nie da gewesenen österreichischen Waffenmarkt.</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Top Semi Auto Waffe für:</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Sportschützen</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* IPSC- Schießsport und vielen anderen Disziplinen.</span></p>\n<p data-mce-fragment="1"><span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Ident.Nr. SK-PC: 00204658201444-46450087500544565842-201145654698428</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Waffenart: Selbstladecarabine Kat.B</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Fabrikat/Modell: AC Alfa Selbstladekarabiner Modell: LLC (Limex Luger Carbine) Semi Auto</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Kaliber: 9x19mm</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Magazinkapazität: 10 Schuss Magazin </span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Gültiger Beschuss: Ja</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Zubehör: * siehe Foto</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Selbstladekarabiner für alle Glock Magazine in 9x19mm</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* 32 Schuss AC Unity Magazine 9×19</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Metall Back Up Sights</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Compensator</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* gefräster Upper</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Kunststoff Dust Cover</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Kompensator Kunststoff Lower &amp; MLOK Handschutz</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Beidseitiger Bedienhebel</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* M4-Style Schubschaft</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Tragetasche</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Gesamtlänge : 680mm</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Lauflänge: 260mm; 2,6kg mit leerem Magazin</span></p>\n<p data-mce-fragment="1"><span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Zustand: Fabrikneu</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Versandkosten/Abholung: Auf Anfrage / Abholung nur nach vorheriger Terminabsprache</span></p>',
+    title: 'AC Alfa Selbstladekarabiner Modell: LLC (Limex Luger Carbine)',
+    tags: ['Kaliber:9x19mm', 'Kategorie:Selbstladegewehre', 'Kategorie:Waffen'],
+    status: 'ACTIVE',
+    totalInventory: 77,
+    publishedAt: '2022-02-10T19:11:56Z',
+    priceRangeV2: {
+      maxVariantPrice: {amount: '0.0'},
+      minVariantPrice: {amount: '0.0'}
+    },
+    images: [
+      {
+        gatsbyImageData: {
+          images: {
+            sources: [
+              {
+                srcSet:
+                  'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png.webp?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png.webp?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png.webp?v=1644520317 900w',
+                sizes: '(min-width: 900px) 900px, 100vw',
+                type: 'image/webp'
+              }
+            ],
+            fallback: {
+              src: 'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317',
+              srcSet:
+                'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317 900w',
+              sizes: '(min-width: 900px) 900px, 100vw'
+            }
+          },
+          layout: 'constrained',
+          width: 900,
+          height: 900
+        }
+      }
+    ],
+    featuredImage: {
+      gatsbyImageData: {
+        images: {
+          sources: [
+            {
+              srcSet:
+                'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png.webp?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png.webp?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png.webp?v=1644520317 900w',
+              sizes: '(min-width: 900px) 900px, 100vw',
+              type: 'image/webp'
+            }
+          ],
+          fallback: {
+            src: 'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317',
+            srcSet:
+              'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317 900w',
+            sizes: '(min-width: 900px) 900px, 100vw'
+          }
+        },
+        layout: 'constrained',
+        width: 900,
+        height: 900
+      }
+    }
+  },
+  {
+    id: 'ccdbb362-7a38-5cae-ae05-c9d909fd0025',
+    collections: [
+      {handle: 'b-selbstladegewehre'},
+      {handle: 'ab-waffen-selbstladegewehre'},
+      {handle: 'a-waffen'}
+    ],
+    descriptionHtml:
+      '<p data-mce-fragment="1"><span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Der AC Alfa Selbstladekarabiner Modell: LLC (Limex Luger Carbine) in 9x19mm wurde soeben als Kategorie B Waffe eingestuft und somit zum Verkauf in Österreich auf Waffenbesitzkarte oder Waffenpass freigegeben.</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Eine absolute Qualitäts-Neuheit auf den noch nie da gewesenen österreichischen Waffenmarkt.</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Top Semi Auto Waffe für:</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Sportschützen</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* IPSC- Schießsport und vielen anderen Disziplinen.</span></p>\n<p data-mce-fragment="1"><span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Ident.Nr. SK-PC: 00204658201444-46450087500544565842-201145654698428</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Waffenart: Selbstladecarabine Kat.B</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Fabrikat/Modell: AC Alfa Selbstladekarabiner Modell: LLC (Limex Luger Carbine) Semi Auto</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Kaliber: 9x19mm</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Magazinkapazität: 10 Schuss Magazin </span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Gültiger Beschuss: Ja</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Zubehör: * siehe Foto</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Selbstladekarabiner für alle Glock Magazine in 9x19mm</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* 32 Schuss AC Unity Magazine 9×19</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Metall Back Up Sights</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Compensator</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* gefräster Upper</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Kunststoff Dust Cover</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Kompensator Kunststoff Lower &amp; MLOK Handschutz</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Beidseitiger Bedienhebel</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* M4-Style Schubschaft</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Tragetasche</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Gesamtlänge : 680mm</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">* Lauflänge: 260mm; 2,6kg mit leerem Magazin</span></p>\n<p data-mce-fragment="1"><span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Zustand: Fabrikneu</span><br data-mce-fragment="1"> <span style="color: #000000;" data-mce-fragment="1" data-mce-style="color: #000000;">Versandkosten/Abholung: Auf Anfrage / Abholung nur nach vorheriger Terminabsprache</span></p>',
+    title: 'AC Alfa Selbstladekarabiner Modell: LLC (Limex Luger Carbine)',
+    tags: ['Kaliber:9x19mm', 'Kategorie:Selbstladegewehre', 'Kategorie:Waffen'],
+    status: 'ACTIVE',
+    totalInventory: 77,
+    publishedAt: '2022-02-10T19:11:56Z',
+    priceRangeV2: {
+      maxVariantPrice: {amount: '0.0'},
+      minVariantPrice: {amount: '0.0'}
+    },
+    images: [
+      {
+        gatsbyImageData: {
+          images: {
+            sources: [
+              {
+                srcSet:
+                  'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png.webp?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png.webp?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png.webp?v=1644520317 900w',
+                sizes: '(min-width: 900px) 900px, 100vw',
+                type: 'image/webp'
+              }
+            ],
+            fallback: {
+              src: 'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317',
+              srcSet:
+                'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317 900w',
+              sizes: '(min-width: 900px) 900px, 100vw'
+            }
+          },
+          layout: 'constrained',
+          width: 900,
+          height: 900
+        }
+      }
+    ],
+    featuredImage: {
+      gatsbyImageData: {
+        images: {
+          sources: [
+            {
+              srcSet:
+                'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png.webp?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png.webp?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png.webp?v=1644520317 900w',
+              sizes: '(min-width: 900px) 900px, 100vw',
+              type: 'image/webp'
+            }
+          ],
+          fallback: {
+            src: 'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317',
+            srcSet:
+              'https://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_225x225_crop_center.png?v=1644520317 225w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_450x450_crop_center.png?v=1644520317 450w,\nhttps://cdn.shopify.com/s/files/1/0628/0462/3584/products/links-97-900x900-transformed_900x900_crop_center.png?v=1644520317 900w',
+            sizes: '(min-width: 900px) 900px, 100vw'
+          }
+        },
+        layout: 'constrained',
+        width: 900,
+        height: 900
+      }
+    }
+  },
+  {
     id: '4e7c090c-7f40-5c61-8fd6-fff84867b6b2',
     collections: [
       {handle: 'b-pistolen'},

@@ -16,7 +16,12 @@ import React from 'react'
 
 import Breadcrumb from '../../components/molecules/Breadcrumb'
 import GatsbyLink from 'gatsby-link'
-import {GatsbyImage, StaticImage} from 'gatsby-plugin-image'
+import {
+  GatsbyImage,
+  GatsbyImageProps,
+  IGatsbyImageData,
+  StaticImage
+} from 'gatsby-plugin-image'
 import {navigate} from 'gatsby'
 
 import {BannerImage, CardImage} from './style'
@@ -24,17 +29,24 @@ import {BannerImage, CardImage} from './style'
 export interface CategoryType {
   title: string
   handle: string
-  slug: string
-  image?: any
-  bannerImage?: string
-  collectionType: string
 }
 
 export interface CategoryPageProps {
-  pageContext: {category: CategoryType; subcategories: any[]}
+  pageContext: {
+    category: CategoryType
+    subcategories: Array<{
+      node: {
+        handle: string
+        title: string
+        image: {
+          gatsbyImageData: IGatsbyImageData
+        }
+      }
+    }>
+  }
 }
 
-const CategoryPage = ({pageContext}: CategoryPageProps) => {
+export const CategoryPage = ({pageContext}: CategoryPageProps) => {
   const category = pageContext.category
   const splitHandle = category.handle.split('-')
   const subcategories = pageContext.subcategories
@@ -150,9 +162,7 @@ const CategoryPage = ({pageContext}: CategoryPageProps) => {
                     textAlign="center"
                     fontSize={{base: '17', md: '20'}}
                     ml={{base: '5', md: '0'}}>
-                    {all
-                      ? 'Alle anzeigen'
-                      : subcategory.node.title.split(' ').at(-1)}
+                    {all ? 'Alle anzeigen' : subcategory.node.title}
                   </Text>
                 </Flex>
                 <Divider display={{base: 'static', md: 'none'}} w="80%" />

@@ -28,6 +28,7 @@ import {
 import {PageProps} from 'gatsby'
 import {getShopifyImage} from 'gatsby-source-shopify'
 
+
 const DEFAULT_PRODUCTS_PER_PAGE = 21
 
 type ShopPageProps = PageProps<
