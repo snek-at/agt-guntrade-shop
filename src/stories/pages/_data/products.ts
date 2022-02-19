@@ -12,7 +12,7 @@ export const products = [
     tags: ['Kaliber:9x19mm', 'Kategorie:Selbstladegewehre', 'Kategorie:Waffen'],
     status: 'ACTIVE',
     totalInventory: 77,
-    publishedAt: '2022-02-10T19:11:56Z',
+    createdAt: '2022-02-10T19:11:56Z',
     priceRangeV2: {
       maxVariantPrice: {amount: '0.0'},
       minVariantPrice: {amount: '0.0'}
@@ -79,7 +79,7 @@ export const products = [
     tags: ['Kaliber:9x19mm', 'Kategorie:Selbstladegewehre', 'Kategorie:Waffen'],
     status: 'ACTIVE',
     totalInventory: 77,
-    publishedAt: '2022-02-10T19:11:56Z',
+    createdAt: '2022-02-10T19:11:56Z',
     priceRangeV2: {
       maxVariantPrice: {amount: '0.0'},
       minVariantPrice: {amount: '0.0'}
@@ -146,7 +146,7 @@ export const products = [
     tags: ['Kaliber:9x19mm', 'Kategorie:Selbstladegewehre', 'Kategorie:Waffen'],
     status: 'ACTIVE',
     totalInventory: 77,
-    publishedAt: '2022-02-10T19:11:56Z',
+    createdAt: '2022-02-10T19:11:56Z',
     priceRangeV2: {
       maxVariantPrice: {amount: '0.0'},
       minVariantPrice: {amount: '0.0'}
@@ -213,7 +213,7 @@ export const products = [
     tags: ['Kaliber:9x19mm', 'Kategorie:Selbstladegewehre', 'Kategorie:Waffen'],
     status: 'ACTIVE',
     totalInventory: 77,
-    publishedAt: '2022-02-10T19:11:56Z',
+    createdAt: '2022-02-10T19:11:56Z',
     priceRangeV2: {
       maxVariantPrice: {amount: '0.0'},
       minVariantPrice: {amount: '0.0'}
@@ -280,7 +280,7 @@ export const products = [
     tags: ['Kaliber:9x19mm', 'Kategorie:Selbstladegewehre', 'Kategorie:Waffen'],
     status: 'ACTIVE',
     totalInventory: 77,
-    publishedAt: '2022-02-10T19:11:56Z',
+    createdAt: '2022-02-10T19:11:56Z',
     priceRangeV2: {
       maxVariantPrice: {amount: '0.0'},
       minVariantPrice: {amount: '0.0'}
@@ -347,7 +347,7 @@ export const products = [
     tags: ['Kaliber:9x19mm', 'Kategorie:Selbstladegewehre', 'Kategorie:Waffen'],
     status: 'ACTIVE',
     totalInventory: 77,
-    publishedAt: '2022-02-10T19:11:56Z',
+    createdAt: '2022-02-10T19:11:56Z',
     priceRangeV2: {
       maxVariantPrice: {amount: '0.0'},
       minVariantPrice: {amount: '0.0'}
@@ -414,7 +414,7 @@ export const products = [
     tags: ['Kaliber:9x19mm', 'Kategorie:Selbstladegewehre', 'Kategorie:Waffen'],
     status: 'ACTIVE',
     totalInventory: 77,
-    publishedAt: '2022-02-10T19:11:56Z',
+    createdAt: '2022-02-10T19:11:56Z',
     priceRangeV2: {
       maxVariantPrice: {amount: '0.0'},
       minVariantPrice: {amount: '0.0'}
@@ -481,7 +481,7 @@ export const products = [
     tags: ['Kaliber:9x19mm', 'Kategorie:Selbstladegewehre', 'Kategorie:Waffen'],
     status: 'ACTIVE',
     totalInventory: 77,
-    publishedAt: '2022-02-10T19:11:56Z',
+    createdAt: '2022-02-10T19:11:56Z',
     priceRangeV2: {
       maxVariantPrice: {amount: '0.0'},
       minVariantPrice: {amount: '0.0'}
@@ -548,7 +548,7 @@ export const products = [
     tags: ['Kaliber:9x19mm', 'Kategorie:Selbstladegewehre', 'Kategorie:Waffen'],
     status: 'ACTIVE',
     totalInventory: 77,
-    publishedAt: '2022-02-10T19:11:56Z',
+    createdAt: '2022-02-10T19:11:56Z',
     priceRangeV2: {
       maxVariantPrice: {amount: '0.0'},
       minVariantPrice: {amount: '0.0'}
@@ -615,7 +615,7 @@ export const products = [
     tags: ['Kaliber:9x19mm', 'Kategorie:Pistolen', 'Kategorie:Waffen'],
     status: 'ACTIVE',
     totalInventory: 121,
-    publishedAt: '2022-02-10T18:58:14Z',
+    createdAt: '2022-02-10T18:58:14Z',
     priceRangeV2: {
       maxVariantPrice: {amount: '990.0'},
       minVariantPrice: {amount: '990.0'}
@@ -728,7 +728,7 @@ export const products = [
     tags: ['Kaliber:12/76', 'Kategorie:Schrotflinten', 'Kategorie:Waffen'],
     status: 'ACTIVE',
     totalInventory: 23,
-    publishedAt: '2022-02-10T19:30:57Z',
+    createdAt: '2022-02-10T19:30:57Z',
     priceRangeV2: {
       maxVariantPrice: {amount: '690.0'},
       minVariantPrice: {amount: '690.0'}
@@ -795,7 +795,7 @@ export const products = [
     tags: ['Kaliber:12/76', 'Kategorie:Schrotflinten', 'Kategorie:Waffen'],
     status: 'ACTIVE',
     totalInventory: 12,
-    publishedAt: '2022-02-10T19:23:39Z',
+    createdAt: '2022-02-10T19:23:39Z',
     priceRangeV2: {
       maxVariantPrice: {amount: '199.0'},
       minVariantPrice: {amount: '199.0'}
@@ -862,7 +862,7 @@ export const products = [
     tags: ['Kaliber:12/76', 'Kategorie:Schrotflinten', 'Kategorie:Waffen'],
     status: 'ACTIVE',
     totalInventory: 22,
-    publishedAt: '2022-02-10T19:26:37Z',
+    createdAt: '2022-02-10T19:26:37Z',
     priceRangeV2: {
       maxVariantPrice: {amount: '275.0'},
       minVariantPrice: {amount: '275.0'}
@@ -929,7 +929,7 @@ export const products = [
     tags: ['Kaliber:9x19mm', 'Kategorie:Pistolen', 'Kategorie:Waffen'],
     status: 'ACTIVE',
     totalInventory: 10,
-    publishedAt: '2022-02-10T19:17:59Z',
+    createdAt: '2022-02-10T19:17:59Z',
     priceRangeV2: {
       maxVariantPrice: {amount: '1575.0'},
       minVariantPrice: {amount: '1575.0'}
