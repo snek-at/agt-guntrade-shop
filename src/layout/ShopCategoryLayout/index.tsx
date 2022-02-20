@@ -26,7 +26,7 @@ export type CategoryItem = {
   }
 }
 
-const Header = () => {
+const Header = (props: {path: string}) => {
   // banner image
   return (
     <Box position={'relative'} color="white">
@@ -42,7 +42,7 @@ const Header = () => {
         />
       </style.Banner>
       <Box position={'absolute'} top="5" left="5" mx="8">
-        <Breadcrumbs />
+        <Breadcrumbs path={props.path} />
         <Heading size="2xl" my="8">
           Laufrohlinge
         </Heading>
@@ -111,12 +111,13 @@ const CategoryGrid = (props: {
 }
 
 export const ShopCategoryLayout = (props: {
+  path: string
   category: React.ComponentProps<typeof CategoryGrid>
   productGrid: React.ComponentProps<typeof ProductGrid>
 }) => {
   return (
     <Box>
-      <Header />
+      <Header path={props.path} />
       <ShopLayout>
         <VStack spacing={16} align="left">
           <CategoryGrid {...props.category} />

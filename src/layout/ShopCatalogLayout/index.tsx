@@ -51,6 +51,7 @@ import {ProductGrid} from '../ProductGridLayout'
 
 export const Header = (props: {
   title: string
+  path: string
   sortOptions: Array<string>
   onSortChange: (option: string) => void
   isMobile?: boolean
@@ -58,7 +59,7 @@ export const Header = (props: {
 }) => {
   return (
     <>
-      <Breadcrumbs />
+      <Breadcrumbs path={props.path} />
       <Heading size="2xl">{props.title}</Heading>
       <Box
         my="2"

@@ -9,25 +9,44 @@ import {
 } from '@chakra-ui/react'
 import {FaHome} from 'react-icons/fa'
 
-export const Breadcrumbs = () => {
+import {RouteComponentProps} from '@reach/router'
+import {Link} from 'gatsby'
+
+export const Breadcrumbs = (props: {path: string}) => {
+  const pathParts = props.path.split('/').filter(Boolean)
+  const pathLength = pathParts.length
+
+  const breadcrumbs = pathParts.map((item, index) => {
+    const isLast = index === pathLength - 1
+
+    return (
+      <BreadcrumbItem key={item}>
+        {isLast ? (
+          <Text>{item}</Text>
+        ) : (
+          <BreadcrumbLink>
+            <Link to={`/${pathParts.slice(0, index + 1).join('/')}`}>
+              {item}
+            </Link>
+          </BreadcrumbLink>
+        )}
+      </BreadcrumbItem>
+    )
+  })
+
   return (
     <Breadcrumb
       spacing="8px"
       separator={<ChevronRightIcon color="gray.500" />}
       my={4}>
       <BreadcrumbItem>
-        <BreadcrumbLink href="#">
-          <Icon as={FaHome} />
+        <BreadcrumbLink>
+          <Link to="/">
+            <Icon as={FaHome} />
+          </Link>
         </BreadcrumbLink>
       </BreadcrumbItem>
-
-      <BreadcrumbItem>
-        <BreadcrumbLink href="#">Wiederladen</BreadcrumbLink>
-      </BreadcrumbItem>
-
-      <BreadcrumbItem isCurrentPage>
-        <Text>"title"</Text>
-      </BreadcrumbItem>
+      {breadcrumbs}
     </Breadcrumb>
   )
 }

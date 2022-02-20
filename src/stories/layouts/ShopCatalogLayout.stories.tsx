@@ -7,9 +7,12 @@ export default {
   component: ShopCatalogLayout
 } as Meta
 
+const path = '/langwaffen/neuelangwaffen/products'
+
 export const Page = () => (
   <ShopCatalogLayout
     header={{
+      path,
       title: 'Vectan Schwarzpulverpresslinge',
       sortOptions: ['Alphabetisch', 'Preis aufsteigend', 'Preis absteigend'],
       onSortChange: () => {}
