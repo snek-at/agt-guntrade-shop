@@ -212,7 +212,7 @@ export const ShopCatalogLayout = (props: {
   filter: React.ComponentProps<typeof Filter>
   products: React.ComponentProps<typeof ProductGrid>
   header: React.ComponentProps<typeof Header>
-  onProductSearch?: typeof useProductSearch
+  onLoadMore: () => boolean // return true if more products are available
 }) => {
   const mobile = useDisclosure()
   const [isDesktop] = useMediaQuery('(min-width: 1268px)')
@@ -223,8 +223,10 @@ export const ShopCatalogLayout = (props: {
 
   const fetchMore = React.useCallback(() => {
     if (!loading) {
-      setLoading(true)
       // fetch more products
+      if (props.onLoadMore()) {
+        setLoading(true)
+      }
     }
   }, [])
 

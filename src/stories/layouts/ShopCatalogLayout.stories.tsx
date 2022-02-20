@@ -23,5 +23,8 @@ export const Page = () => (
       activeTags: ['Widerladen:Kurzwaffe'],
       onActiveTagsChange: allTags => alert(JSON.stringify(allTags))
     }}
+    onLoadMore={() => {
+      return false
+    }}
   />
 )
