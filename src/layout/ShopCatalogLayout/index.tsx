@@ -46,6 +46,8 @@ import React from 'react'
 import {Breadcrumbs, ShopLayout} from '../ShopLayout'
 import {ProductCardLayout} from '../ProductCardLayout'
 import {ProductGrid} from '../ProductGridLayout'
+import {BsBox} from 'react-icons/bs'
+import {BaseLayout} from '../BaseLayout'
 
 // tag builder => input tag output type:content
 
@@ -67,7 +69,7 @@ export const Header = (props: {
         top="0"
         alignSelf={'flex-start'}
         zIndex="1"
-        bg={useColorModeValue('white', 'agt.gray')}>
+        bg={useColorModeValue('white', 'gray.700')}>
         <Flex>
           {props.isMobile ? (
             <Button
@@ -252,42 +254,48 @@ export const ShopCatalogLayout = (props: {
   }, [])
 
   return (
-    <ShopLayout>
-      <Header
-        {...props.header}
-        isMobile={!isDesktop}
-        onMobileFilterClick={mobile.onToggle}
-      />
-      <Flex>
-        <>
-          {!isDesktop ? (
-            <Drawer
-              isOpen={mobile.isOpen}
-              onClose={mobile.onClose}
-              placement="left"
-              blockScrollOnMount={false}>
-              <DrawerContent p="4">
-                <Heading as="h3" mb="4">
-                  Filter
-                </Heading>
+    <BaseLayout>
+      <ShopLayout>
+        <Header
+          {...props.header}
+          isMobile={!isDesktop}
+          onMobileFilterClick={mobile.onToggle}
+        />
+        <Flex>
+          <>
+            {!isDesktop ? (
+              <Drawer
+                isOpen={mobile.isOpen}
+                onClose={mobile.onClose}
+                placement="left"
+                blockScrollOnMount={false}>
+                <DrawerContent p="4">
+                  <Heading as="h3" mb="4">
+                    Filter
+                  </Heading>
+                  <Filter {...props.filter} />
+                </DrawerContent>
+              </Drawer>
+            ) : (
+              <Box
+                w="30%"
+                position={'sticky'}
+                top="12"
+                alignSelf={'flex-start'}>
                 <Filter {...props.filter} />
-              </DrawerContent>
-            </Drawer>
-          ) : (
-            <Box w="30%" position={'sticky'} top="12" alignSelf={'flex-start'}>
-              <Filter {...props.filter} />
-            </Box>
-          )}
-        </>
+              </Box>
+            )}
+          </>
 
-        <Box w="100%" ref={gridRef}>
-          <ProductGrid {...props.products} />
-          <Center w="100%">{loading && <Spinner />}</Center>
+          <Box w="100%" ref={gridRef}>
+            <ProductGrid {...props.products} />
+            <Center w="100%">{loading && <Spinner />}</Center>
+          </Box>
+        </Flex>
+        <Box h="5000px">
+          <Text>{'Total'}</Text>
         </Box>
-      </Flex>
-      <Box h="5000px">
-        <Text>{'Total'}</Text>
-      </Box>
-    </ShopLayout>
+      </ShopLayout>
+    </BaseLayout>
   )
 }

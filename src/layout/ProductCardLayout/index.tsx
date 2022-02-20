@@ -48,7 +48,7 @@ function ImageControls(props: {
       d="flex"
       alignItems="center"
       justifyContent="center"
-      bg={useColorModeValue('gray.200', 'gray.800')}
+      bg={useColorModeValue('gray.200', 'gray.700')}
       borderRadius="sm"
       w="100%"
       h="100%">
@@ -87,7 +87,7 @@ function ImageBoxWithTags(props: {
     <Box
       borderRadius="md"
       boxShadow="lg"
-      bg={useColorModeValue('gray.200', 'gray.700')}
+      bg={useColorModeValue('gray.200', 'gray.600')}
       overflow="hidden"
       position="relative"
       _hover={{boxShadow: 'lg'}}

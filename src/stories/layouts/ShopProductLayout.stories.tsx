@@ -30,7 +30,7 @@ export const Product0 = () => (
 
 export const Product1 = () => (
   <ShopProductLayout
-    header={{title: products[1].title, path}}
+    header={{title: products[1].title, path: `${path}/${products[1].title}`}}
     imageSlider={{
       featuredImage: products[1].featuredImage as any,
       images: products[1].images as any

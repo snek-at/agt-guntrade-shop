@@ -5,12 +5,14 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   Icon,
-  Text
+  Text,
+  useColorModeValue
 } from '@chakra-ui/react'
 import {FaHome} from 'react-icons/fa'
 
 import {RouteComponentProps} from '@reach/router'
 import {Link} from 'gatsby'
+import NavTop from '../../components/organisms/NavTop'
 
 export const Breadcrumbs = (props: {path: string}) => {
   const pathParts = props.path.split('/').filter(Boolean)
@@ -53,8 +55,16 @@ export const Breadcrumbs = (props: {path: string}) => {
 
 export const ShopLayout: React.FC = ({children}) => {
   return (
-    <Box mx={{base: 4, md: 16}}>
-      <Box>{children}</Box>
-    </Box>
+    <>
+      <Box
+        mx={{base: 4, md: 16}}
+        mt={{base: 4, md: 8}}
+        bg={useColorModeValue('white', 'gray.700')}
+        borderWidth="1px"
+        borderRadius="lg"
+        px={4}>
+        <Box>{children}</Box>
+      </Box>
+    </>
   )
 }

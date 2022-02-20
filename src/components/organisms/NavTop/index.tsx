@@ -51,9 +51,7 @@ const NavTop = ({links}: NavTopProps) => {
       <Box
         bg={['agt.gray', 'agt.gray', 'agt.gray', 'agt.gray']}
         color={['white', 'white', 'primary.700', 'primary.700']}
-        position={'sticky'}
-        top={0}
-        zIndex={999}
+        w="full"
         px={{base: '4', md: '8'}}>
         <Flex
           py={8}
@@ -177,7 +175,11 @@ const NavTop = ({links}: NavTopProps) => {
           </Box>
         ) : null}
       </Box>
-      <Box as="nav" role="navigation" display={{base: 'none', md: 'flex'}}>
+      <Box
+        as="nav"
+        bg={useColorModeValue('white', 'gray.700')}
+        role="navigation"
+        display={{base: 'none', md: 'flex'}}>
         <Flex
           h={12}
           alignItems={'center'}

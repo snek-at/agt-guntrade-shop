@@ -23,15 +23,16 @@ import {FaHeart, FaShare} from 'react-icons/fa'
 import {GatsbyImage, IGatsbyImageData} from 'gatsby-plugin-image'
 import {ProductSliderLayout} from '../ProductSliderLayout'
 import {BrandSliderLayout} from '../BrandSliderLayout'
+import {BaseLayout} from '../BaseLayout'
 
 const Header = (props: {title: string; path: string}) => {
   return (
-    <Box>
+    <VStack align="left">
       <Breadcrumbs path={props.path} />
       <Heading size="xl" fontWeight={'semibold'}>
         {props.title}
       </Heading>
-    </Box>
+    </VStack>
   )
 }
 
@@ -196,28 +197,30 @@ export const ShopProductLayout = (props: {
   featuredProducts: Array<any>
 }) => {
   return (
-    <ShopLayout>
-      <Header {...props.header} />
-      <VStack spacing={12}>
-        <Box>
-          <Flex direction={{base: 'column', md: 'row'}}>
-            <ImageSlider
-              {...props.imageSlider}
-              productMoreDetail={props.productMoreDetail}
-            />
-            <ProductDetail {...props.productDetail} />
-          </Flex>
-          <Box display={{base: 'block', md: 'none'}}>
-            <ProductMoreDetail {...props.productMoreDetail} />
+    <BaseLayout>
+      <ShopLayout>
+        <Header {...props.header} />
+        <VStack spacing={12}>
+          <Box>
+            <Flex direction={{base: 'column', md: 'row'}}>
+              <ImageSlider
+                {...props.imageSlider}
+                productMoreDetail={props.productMoreDetail}
+              />
+              <ProductDetail {...props.productDetail} />
+            </Flex>
+            <Box display={{base: 'block', md: 'none'}}>
+              <ProductMoreDetail {...props.productMoreDetail} />
+            </Box>
           </Box>
-        </Box>
-        <ProductSliderLayout
-          title="Unsere Empfehlungen"
-          products={props.featuredProducts}
-        />
-        <BrandSliderLayout title="Unsere Vertretungen" />
-        <Box h="500">foo</Box>
-      </VStack>
-    </ShopLayout>
+          <ProductSliderLayout
+            title="Unsere Empfehlungen"
+            products={props.featuredProducts}
+          />
+          <BrandSliderLayout title="Unsere Vertretungen" />
+          <Box h="500">foo</Box>
+        </VStack>
+      </ShopLayout>
+    </BaseLayout>
   )
 }

@@ -16,6 +16,7 @@ import {GCImage, gridPadBoxes} from '../../common/utils'
 import * as style from './style'
 import React from 'react'
 import {ProductGrid} from '../ProductGridLayout'
+import {BaseLayout} from '../BaseLayout'
 
 export type CategoryItem = {
   title: string
@@ -116,14 +117,15 @@ export const ShopCategoryLayout = (props: {
   productGrid: React.ComponentProps<typeof ProductGrid>
 }) => {
   return (
-    <Box>
+    <BaseLayout>
       <Header path={props.path} />
+
       <ShopLayout>
         <VStack spacing={16} align="left">
           <CategoryGrid {...props.category} />
           <ProductGrid {...props.productGrid} minChildWidth={200} />
         </VStack>
       </ShopLayout>
-    </Box>
+    </BaseLayout>
   )
 }
