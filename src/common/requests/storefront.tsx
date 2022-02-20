@@ -21,17 +21,19 @@ query ($query: String!, $sortKey: ProductSortKeys, $first: Int, $last: Int, $aft
         node {
           title
           handle
-          priceRangeV2: priceRange {
-            minVariantPrice {
+          price: priceRange {
+            maxVariantPrice {
               amount
             }
-            maxVariantPrice {
+          }
+          compareAtPrice: compareAtPriceRange{
+            maxVarinatPrice{
               amount
             }
           }
           id
           tags
-          images(first: 4){
+          images(first: 10){
             edges {
               node {
                 originalSrc
