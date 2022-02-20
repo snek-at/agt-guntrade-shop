@@ -217,8 +217,7 @@ export const ShopProductLayout = (props: {
             title="Unsere Empfehlungen"
             products={props.featuredProducts}
           />
-          <BrandSliderLayout title="Unsere Vertretungen" />
-          <Box h="500">foo</Box>
+          <Box h="14"></Box>
         </VStack>
       </ShopLayout>
     </BaseLayout>

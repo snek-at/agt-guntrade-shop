@@ -58,11 +58,12 @@ export const ShopLayout: React.FC = ({children}) => {
     <>
       <Box
         mx={{base: 4, md: 16}}
-        mt={{base: 4, md: 8}}
+        my={{base: 4, md: 8}}
         bg={useColorModeValue('white', 'gray.700')}
         borderWidth="1px"
         borderRadius="lg"
-        px={4}>
+        px={4}
+        >
         <Box>{children}</Box>
       </Box>
     </>

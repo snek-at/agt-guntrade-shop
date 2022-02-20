@@ -292,9 +292,6 @@ export const ShopCatalogLayout = (props: {
             <Center w="100%">{loading && <Spinner />}</Center>
           </Box>
         </Flex>
-        <Box h="5000px">
-          <Text>{'Total'}</Text>
-        </Box>
       </ShopLayout>
     </BaseLayout>
   )
