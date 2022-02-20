@@ -1,16 +1,16 @@
 import {
   CreateSchemaCustomizationArgs,
   NodePluginSchema,
-  GatsbyGraphQLObjectType,
-} from "../../gatsby"
+  GatsbyGraphQLObjectType
+} from 'gatsby'
 
 function addFields(
   def: GatsbyGraphQLObjectType,
-  fields: GatsbyGraphQLObjectType["config"]["fields"]
+  fields: GatsbyGraphQLObjectType['config']['fields']
 ): void {
   def.config.fields = {
     ...(def.config.fields || {}),
-    ...fields,
+    ...fields
   }
 }
 
@@ -18,10 +18,10 @@ function defineImageNode(
   name: string,
   schema: NodePluginSchema,
   pluginOptions: ShopifyPluginOptions,
-  fields: GatsbyGraphQLObjectType["config"]["fields"] = {}
+  fields: GatsbyGraphQLObjectType['config']['fields'] = {}
 ): GatsbyGraphQLObjectType {
   const imageDef = schema.buildObjectType({
-    name,
+    name
   })
 
   if (pluginOptions.downloadImages) {
@@ -29,9 +29,9 @@ function defineImageNode(
       localFile: {
         type: `File`,
         extensions: {
-          link: {},
-        },
-      },
+          link: {}
+        }
+      }
     }
   }
 
@@ -42,14 +42,14 @@ function defineImageNode(
     id: `String`,
     originalSrc: `String!`,
     transformedSrc: `String!`,
-    width: `Int`,
+    width: `Int`
   })
 
   return imageDef
 }
 
 export function createSchemaCustomization(
-  { actions, schema }: CreateSchemaCustomizationArgs,
+  {actions, schema}: CreateSchemaCustomizationArgs,
   pluginOptions: ShopifyPluginOptions
 ): void {
   const includeCollections =
@@ -63,7 +63,7 @@ export function createSchemaCustomization(
   const name = (name: string): string =>
     `${pluginOptions.typePrefix || ``}${name}`
 
-  const sharedMetafieldFields: GatsbyGraphQLObjectType["config"]["fields"] = {
+  const sharedMetafieldFields: GatsbyGraphQLObjectType['config']['fields'] = {
     createdAt: `Date!`,
     description: `String`,
     id: `ID!`,
@@ -75,8 +75,8 @@ export function createSchemaCustomization(
     type: `String!`,
     valueType: {
       type: `String!`,
-      deprecationReason: `Shopify has deprecated this field`,
-    },
+      deprecationReason: `Shopify has deprecated this field`
+    }
   }
 
   const metafieldInterface = schema.buildInterfaceType({
@@ -84,7 +84,7 @@ export function createSchemaCustomization(
     fields: sharedMetafieldFields,
     // @ts-ignore TODO: Once Gatsby Core updates its graphql-compose package to a version that has the right
     // types to support interfaces implementing other interfaces, remove the ts-ignore
-    interfaces: [`Node`],
+    interfaces: [`Node`]
   })
 
   const metafieldOwnerTypes = [`Product`, `ProductVariant`]
@@ -103,12 +103,12 @@ export function createSchemaCustomization(
           extensions: {
             link: {
               from: `${parentKey}Id`,
-              by: `id`,
-            },
-          },
-        },
+              by: `id`
+            }
+          }
+        }
       },
-      interfaces: [`Node`, name(`ShopifyMetafieldInterface`)],
+      interfaces: [`Node`, name(`ShopifyMetafieldInterface`)]
     })
   })
 
@@ -116,37 +116,37 @@ export function createSchemaCustomization(
     name: name(`ShopifyProduct`),
     fields: {
       tags: {
-        type: `[String]`,
+        type: `[String]`
       },
       variants: {
         type: `[${name(`ShopifyProductVariant`)}]`,
         extensions: {
           link: {
             from: `id`,
-            by: `productId`,
-          },
-        },
+            by: `productId`
+          }
+        }
       },
       metafields: {
         type: `[${name(`ShopifyProductMetafield`)}]`,
         extensions: {
           link: {
             from: `id`,
-            by: `productId`,
-          },
-        },
+            by: `productId`
+          }
+        }
       },
       images: {
         type: `[${name(`ShopifyProductImage`)}]`,
         extensions: {
           link: {
             from: `id`,
-            by: `productId`,
-          },
-        },
-      },
+            by: `productId`
+          }
+        }
+      }
     },
-    interfaces: [`Node`],
+    interfaces: [`Node`]
   })
 
   const productImageDef = defineImageNode(
@@ -159,10 +159,10 @@ export function createSchemaCustomization(
         extensions: {
           link: {
             from: `productId`,
-            by: `id`,
-          },
-        },
-      },
+            by: `id`
+          }
+        }
+      }
     }
   )
 
@@ -175,10 +175,10 @@ export function createSchemaCustomization(
         extensions: {
           link: {
             from: `id`,
-            by: `productIds`,
-          },
-        },
-      },
+            by: `productIds`
+          }
+        }
+      }
     })
   }
 
@@ -193,24 +193,24 @@ export function createSchemaCustomization(
           extensions: {
             link: {
               from: `productId`,
-              by: `id`,
-            },
-          },
+              by: `id`
+            }
+          }
         },
         metafields: {
           type: `[${name(`ShopifyProductVariantMetafield`)}]`,
           extensions: {
             link: {
               from: `id`,
-              by: `productVariantId`,
-            },
-          },
-        },
+              by: `productVariantId`
+            }
+          }
+        }
       },
-      interfaces: [`Node`],
+      interfaces: [`Node`]
     }),
     metafieldInterface,
-    ...metafieldTypes,
+    ...metafieldTypes
   ]
 
   if (includeCollections) {
@@ -223,21 +223,21 @@ export function createSchemaCustomization(
             extensions: {
               link: {
                 from: `productIds`,
-                by: `id`,
-              },
-            },
+                by: `id`
+              }
+            }
           },
           metafields: {
             type: `[${name(`ShopifyCollectionMetafield`)}]`,
             extensions: {
               link: {
                 from: `id`,
-                by: `collectionId`,
-              },
-            },
-          },
+                by: `collectionId`
+              }
+            }
+          }
         },
-        interfaces: [`Node`],
+        interfaces: [`Node`]
       })
     )
   }
@@ -252,12 +252,12 @@ export function createSchemaCustomization(
             extensions: {
               link: {
                 from: `id`,
-                by: `orderId`,
-              },
-            },
-          },
+                by: `orderId`
+              }
+            }
+          }
         },
-        interfaces: [`Node`],
+        interfaces: [`Node`]
       }),
       schema.buildObjectType({
         name: name(`ShopifyLineItem`),
@@ -267,21 +267,21 @@ export function createSchemaCustomization(
             extensions: {
               link: {
                 from: `productId`,
-                by: `id`,
-              },
-            },
+                by: `id`
+              }
+            }
           },
           order: {
             type: name(`ShopifyOrder!`),
             extensions: {
               link: {
                 from: `orderId`,
-                by: `id`,
-              },
-            },
-          },
+                by: `id`
+              }
+            }
+          }
         },
-        interfaces: [`Node`],
+        interfaces: [`Node`]
       })
     )
   }
@@ -296,12 +296,12 @@ export function createSchemaCustomization(
             extensions: {
               link: {
                 from: `location.id`,
-                by: `id`,
-              },
-            },
-          },
+                by: `id`
+              }
+            }
+          }
         },
-        interfaces: [`Node`],
+        interfaces: [`Node`]
       })
     )
   }
@@ -310,7 +310,7 @@ export function createSchemaCustomization(
     ...[
       `ShopifyProductFeaturedImage`,
       `ShopifyProductFeaturedMediaPreviewImage`,
-      `ShopifyProductVariantImage`,
+      `ShopifyProductVariantImage`
     ].map(typeName => defineImageNode(name(typeName), schema, pluginOptions))
   )
 

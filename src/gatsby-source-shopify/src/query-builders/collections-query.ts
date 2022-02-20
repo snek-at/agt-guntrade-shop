@@ -29,7 +29,6 @@ export class CollectionsQuery extends BulkQuery {
               metafields {
                 edges {
                   node {
-                    price.grosshandelsprice
                     createdAt
                     description
                     id
