@@ -1,4 +1,4 @@
-import { BulkQuery } from "./bulk-query"
+import {BulkQuery} from './bulk-query'
 
 export class ProductsQuery extends BulkQuery {
   query(date?: Date): string {
@@ -24,6 +24,16 @@ export class ProductsQuery extends BulkQuery {
               id
               storefrontId
               createdAt
+              contextualPricing (context: {country: AT}){
+                maxVariantPricing{
+                  price{
+                    amount
+                  }
+                  compareAtPrice{
+                    amount
+                  }
+                }
+              }
               description
               descriptionHtml
               featuredImage {

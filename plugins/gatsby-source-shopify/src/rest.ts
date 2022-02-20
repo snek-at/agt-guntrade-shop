@@ -1,7 +1,7 @@
-import fetch, { Response } from "node-fetch"
+import fetch, {Response} from 'node-fetch'
 
 const getBaseUrl = (options: ShopifyPluginOptions): string =>
-  `https://${options.storeUrl}/admin/api/2021-01`
+  `https://${options.storeUrl}/admin/api/2022-01`
 
 export function makeShopifyFetch(
   options: ShopifyPluginOptions
@@ -12,8 +12,8 @@ export function makeShopifyFetch(
     path: string,
     fetchOptions = {
       headers: {
-        "X-Shopify-Access-Token": options.password,
-      },
+        'X-Shopify-Access-Token': options.password
+      }
     },
     retries = 3
   ): Promise<Response> {

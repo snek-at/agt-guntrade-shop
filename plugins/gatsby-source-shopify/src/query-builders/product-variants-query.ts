@@ -1,4 +1,4 @@
-import { BulkQuery } from "./bulk-query"
+import {BulkQuery} from './bulk-query'
 
 export class ProductVariantsQuery extends BulkQuery {
   query(date?: Date): string {
@@ -32,6 +32,14 @@ export class ProductVariantsQuery extends BulkQuery {
                     barcode
                     compareAtPrice
                     createdAt
+                    contextualPricing (context: {country: AT}){
+                      compareAtPrice{
+                        amount
+                      }
+                      price{
+                        amount
+                      }
+                    }
                     displayName
                     id
                     image {

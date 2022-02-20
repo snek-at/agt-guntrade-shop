@@ -1,8 +1,8 @@
-import fetch from "node-fetch"
-import { HttpError } from "./errors"
+import fetch from 'node-fetch'
+import {HttpError} from './errors'
 
 const adminUrl = (options: ShopifyPluginOptions): string =>
-  `https://@${options.storeUrl}/admin/api/2021-07/graphql.json`
+  `https://@${options.storeUrl}/admin/api/2022-01/graphql.json`
 
 const MAX_BACKOFF_MILLISECONDS = 60000
 
@@ -21,13 +21,13 @@ export function createClient(options: ShopifyPluginOptions): IGraphQLClient {
     const response = await fetch(url, {
       method: `POST`,
       headers: {
-        "Content-Type": `application/json`,
-        "X-Shopify-Access-Token": options.password,
+        'Content-Type': `application/json`,
+        'X-Shopify-Access-Token': options.password
       },
       body: JSON.stringify({
         query,
-        variables,
-      }),
+        variables
+      })
     })
 
     if (!response.ok) {
@@ -44,5 +44,5 @@ export function createClient(options: ShopifyPluginOptions): IGraphQLClient {
     return json.data as T
   }
 
-  return { request: graphqlFetch }
+  return {request: graphqlFetch}
 }
