@@ -21,7 +21,7 @@ const theme = {
     }
   },
   styles: {
-    global: (props: any) => ({
+    global: props => ({
       body: {
         bg: mode('white', '#1d1f21')(props)
       },
