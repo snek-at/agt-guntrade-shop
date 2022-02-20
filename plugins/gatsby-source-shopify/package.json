@@ -7,6 +7,7 @@
     "build": "tsc --outDir .",
     "prepare": "cross-env NODE_ENV=production npm run build"
   },
+  
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",

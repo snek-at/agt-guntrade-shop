@@ -26,7 +26,7 @@ import {
   useProductSearch
 } from '../../common/requests/storefront'
 import {PageProps} from 'gatsby'
-import {getShopifyImage} from 'gatsby-source-shopify'
+import {getShopifyImage} from '../../../plugins/gatsby-source-shopify'
 
 const DEFAULT_PRODUCTS_PER_PAGE = 21
 
