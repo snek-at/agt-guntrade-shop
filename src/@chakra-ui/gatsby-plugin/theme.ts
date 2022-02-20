@@ -8,9 +8,9 @@ const theme = {
   colors: {
     agt: {
       orange: '#ff6000',
+      red: '#ef3340',
       blue: '#2151a1',
       gray: '#1f1f1d',
-      red: '#eb1933',
       lightgray: '#E6E6E9',
       grayScheme: {
         300: '#424240',
@@ -21,7 +21,7 @@ const theme = {
     }
   },
   styles: {
-    global: props => ({
+    global: (props: any) => ({
       body: {
         bg: mode('white', '#1d1f21')(props)
       },
