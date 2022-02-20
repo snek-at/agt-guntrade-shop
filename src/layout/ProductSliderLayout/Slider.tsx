@@ -4,13 +4,17 @@ import {
   IconButton,
   IconButtonProps,
   SimpleGrid,
+  SimpleGridProps,
   useBreakpointValue
 } from '@chakra-ui/react'
 import React from 'react'
 import {generateProductCard} from '../ProductCardLayout'
 import {FaChevronCircleLeft, FaChevronCircleRight} from 'react-icons/fa'
 
-export const Slider = (props: {items: Array<JSX.Element>}) => {
+export const Slider = (props: {
+  items: Array<JSX.Element>
+  minChildWidth?: SimpleGridProps['minChildWidth']
+}) => {
   const items = props.items
 
   const perPage = useBreakpointValue({
@@ -80,7 +84,11 @@ export const Slider = (props: {items: Array<JSX.Element>}) => {
   return (
     <Box pos="relative" overflow="hidden">
       <Box px="24">
-        <SimpleGrid row={1} columns={perPage} spacing={2}>
+        <SimpleGrid
+          row={1}
+          columns={perPage}
+          spacing={2}
+          minChildWidth={props.minChildWidth}>
           {items.map((item, index) => (
             <>{shouldDisplay(index) && item}</>
           ))}

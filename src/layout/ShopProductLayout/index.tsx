@@ -22,6 +22,7 @@ import {MdMessage} from 'react-icons/md'
 import {FaHeart, FaShare} from 'react-icons/fa'
 import {GatsbyImage, IGatsbyImageData} from 'gatsby-plugin-image'
 import {ProductSliderLayout} from '../ProductSliderLayout'
+import {BrandSliderLayout} from '../BrandSliderLayout'
 
 const Header = (props: {title: string}) => {
   return (
@@ -214,6 +215,7 @@ export const ShopProductLayout = (props: {
           title="Unsere Empfehlungen"
           products={props.featuredProducts}
         />
+        <BrandSliderLayout title="Unsere Vertretungen" />
         <Box h="500">foo</Box>
       </VStack>
     </ShopLayout>

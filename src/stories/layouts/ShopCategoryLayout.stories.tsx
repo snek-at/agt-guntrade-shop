@@ -1,5 +1,6 @@
 import {Story, Meta} from '@storybook/react'
 import {ShopCategoryLayout} from '../../layout/ShopCategoryLayout'
+import {products} from '../pages/_data/products'
 
 export default {
   title: 'Layouts/ShopCategoryLayout',
@@ -179,6 +180,11 @@ export const Page = () => (
           }
         }
       ],
+      onItemClick: item => alert(item.handle)
+    }}
+    productGrid={{
+      title: 'Top Produkte',
+      items: products.slice(0, 8),
       onItemClick: item => alert(item.handle)
     }}
   />

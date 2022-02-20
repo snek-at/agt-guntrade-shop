@@ -21,7 +21,6 @@ import {
   RangeSliderThumb,
   RangeSliderTrack,
   Select,
-  SimpleGrid,
   Slider,
   SliderFilledTrack,
   SliderMark,
@@ -43,8 +42,8 @@ import {useProductSearch} from '../../common/requests/storefront'
 import {FaEuroSign, FaFilter, FaHome, FaSort} from 'react-icons/fa'
 import React from 'react'
 import {Breadcrumbs, ShopLayout} from '../ShopLayout'
-import {gridPadBoxes} from '../../common/utils'
-import {generateProductCard, ProductCardLayout} from '../ProductCardLayout'
+import {ProductCardLayout} from '../ProductCardLayout'
+import { ProductGrid } from '../ProductGridLayout'
 
 // tag builder => input tag output type:content
 
@@ -204,32 +203,6 @@ const Filter = (props: FilterProps) => {
         onPriceChange={e => alert(JSON.stringify(e))}
       />
     </VStack>
-  )
-}
-
-const ProductGrid = (props: {
-  items: Array<any>
-  onItemClick: (item: any) => void
-}) => {
-  const emptyBoxes = gridPadBoxes(props.items)
-
-  // css grid
-  return (
-    <SimpleGrid spacing={4} minChildWidth="200px">
-      {props.items.map((item, key) => {
-        const tagsWithoutCategory = item.tags
-          .filter((tag: any) => !tag.startsWith('Kategorie:'))
-          .map((tag: any) => tag.split(':')[1])
-          .join(', ')
-
-        return (
-          <Box key={key} onClick={() => props.onItemClick(item)}>
-            {generateProductCard(item)}
-          </Box>
-        )
-      })}
-      {emptyBoxes}
-    </SimpleGrid>
   )
 }
 
