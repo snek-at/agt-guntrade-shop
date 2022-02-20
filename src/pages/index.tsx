@@ -1,5 +1,4 @@
 //#region > Imports
-import {Box} from '@chakra-ui/react'
 import {graphql} from 'gatsby'
 
 import NewsSection from '../components/organisms/sections/NewsSection'
@@ -8,11 +7,11 @@ import ReviewSection from '../components/organisms/sections/ReviewSection'
 import FeaturedProductsSection from '../components/organisms/sections/FeaturedProductsSection/2'
 import AboutSection from '../components/organisms/sections/AboutSection'
 import FAQSection from '../components/organisms/sections/FAQSection/2'
-import NavTop from '../components/organisms/NavTop'
 import slugify from 'slugify'
 import {Image} from '@chakra-ui/image'
 
 import {PageProps} from 'gatsby'
+import {BaseLayout} from '../layout/BaseLayout'
 //#endregion
 
 //#region > Functions
@@ -34,8 +33,7 @@ const IndexPage = ({
   })
 
   return (
-    <Box>
-      <NavTop />
+    <BaseLayout>
       <HeroSection categoryProducts={{New: data.newShopifyProduct.edges}} />
       <NewsSection />
       <FeaturedProductsSection products={products} />
@@ -69,7 +67,7 @@ const IndexPage = ({
           />
         }
       />
-    </Box>
+    </BaseLayout>
   )
 }
 //#endregion
