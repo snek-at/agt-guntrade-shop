@@ -27,7 +27,7 @@ export type CategoryItem = {
   }
 }
 
-const Header = (props: {path: string}) => {
+const Header = (props: {path: string; title: string}) => {
   // banner image
   return (
     <Box position={'relative'} color="white">
@@ -45,7 +45,7 @@ const Header = (props: {path: string}) => {
       <Box position={'absolute'} top="5" left="5" mx="8">
         <Breadcrumbs path={props.path} />
         <Heading size="2xl" my="8">
-          Laufrohlinge
+          {props.title}
         </Heading>
         <HStack
           spacing={'10'}
@@ -61,6 +61,7 @@ const Header = (props: {path: string}) => {
 }
 
 const CategoryGrid = (props: {
+  title: string
   items: Array<CategoryItem>
   onItemClick: (item: CategoryItem) => void
 }) => {
@@ -112,13 +113,14 @@ const CategoryGrid = (props: {
 }
 
 export const ShopCategoryLayout = (props: {
+  title: string
   path: string
   category: React.ComponentProps<typeof CategoryGrid>
   productGrid: React.ComponentProps<typeof ProductGrid>
 }) => {
   return (
     <BaseLayout>
-      <Header path={props.path} />
+      <Header path={props.path} title={props.title} />
 
       <ShopLayout>
         <VStack spacing={16} align="left">

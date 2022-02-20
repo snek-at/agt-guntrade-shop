@@ -124,7 +124,7 @@ const createAllProductsShopPage = (data, actions) => {
     context: {
       title: 'Alle Produkte',
       handle: 'produkte',
-      products: products,
+      products: products.slice(0, 21),
       tags: tags,
       allTags: data.meta.tags,
       amountOfProducts: products.length
@@ -166,32 +166,47 @@ const createCollectionShopAndProductPages = (data, actions) => {
         .toString()
         .substring(edge.node.handle.indexOf('-') + 1)
         .replaceAll(',', '/')
-    console.log(edge.node.title.slice(edge.node.title.indexOf(' ') + 1))
+
+    const subcategories = data.allShopifyCollection.edges
+      .filter(edge2 => {
+        return (
+          edge2.node.handle.startsWith(collectionType) ||
+          edge.node.handle === edge2.node.handle
+        )
+      })
+      .sort((a, b) =>
+        a.node.handle.slice(a.node.handle.indexOf('-') + 1) <
+        b.node.handle.slice(a.node.handle.indexOf('-') + 1)
+          ? 1
+          : -1
+      )
+
     actions.createPage({
       path: slug,
-      component: require.resolve(`../templates/CategoryPage/index.tsx`),
+      component: require.resolve(`../templatePages/CategoryPage/index.tsx`),
       context: {
         category: {
-          title: edge.node.title.slice(edge.node.title.indexOf(' ') + 1),
-          handle: splitHandle.toString().replaceAll(',', '-'),
-          image:
-            edge.node.image !== null
-              ? edge.node.image.gatsbyImageData
-              : undefined
+          title: edge.node.title.split(' ').at(-1),
+          items: subcategories.map(subcategory => ({
+            title:
+              subcategory.node.title === edge.node.title
+                ? 'Alle Produkte'
+                : subcategory.node.title.split(' ').at(-1),
+            handle: !isNaN(subcategory.node.handle.split('-').at(-1))
+              ? subcategory.node.handle.slice(
+                  subcategory.node.handle.indexOf('-') + 1
+                )
+              : subcategory.node.handle,
+            totalProducts: subcategory.node.products
+              ? subcategory.node.products.length
+              : 0,
+            image: subcategory.node.image ? subcategory.node.image : undefined
+          }))
         },
-        subcategories: data.allShopifyCollection.edges
-          .filter(edge2 => {
-            return (
-              edge2.node.handle.startsWith(collectionType) ||
-              edge.node.handle === edge2.node.handle
-            )
-          })
-          .sort((a, b) =>
-            a.node.handle.slice(a.node.handle.indexOf('-') + 1) <
-            b.node.handle.slice(a.node.handle.indexOf('-') + 1)
-              ? 1
-              : -1
-          )
+        productGrid: {
+          title: 'Hello my dudes',
+          items: edge.node.products.slice(0, 8)
+        }
       }
     })
 
@@ -286,7 +301,7 @@ export const createPages = async (actions, graphql) => {
           }
         }
       }
-      allShopifyProduct(sort: {fields: title, order: ASC}, limit: 21) {
+      allShopifyProduct(sort: {fields: title, order: ASC}) {
         edges {
           node {
             id
