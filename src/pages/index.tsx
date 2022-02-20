@@ -8,6 +8,7 @@ import ReviewSection from '../components/organisms/sections/ReviewSection'
 import FeaturedProductsSection from '../components/organisms/sections/FeaturedProductsSection/2'
 import AboutSection from '../components/organisms/sections/AboutSection'
 import FAQSection from '../components/organisms/sections/FAQSection/2'
+import NavTop from '../components/organisms/NavTop'
 import slugify from 'slugify'
 import {Image} from '@chakra-ui/image'
 
@@ -34,6 +35,7 @@ const IndexPage = ({
 
   return (
     <Box>
+      <NavTop />
       <HeroSection categoryProducts={{New: data.newShopifyProduct.edges}} />
       <NewsSection />
       <FeaturedProductsSection products={products} />
