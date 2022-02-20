@@ -50,6 +50,7 @@ const NewsSection = () => {
       }
     }
   }
+
   const isMobile = useBreakpointValue({base: true, md: false})
 
   return (

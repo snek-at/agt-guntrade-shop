@@ -137,7 +137,6 @@ export const CategoryPage = ({pageContext}: CategoryPageProps) => {
                 (window.location.pathname.endsWith('/') ? '' : '/') +
                 handle.split('-').at(-1)
             }
-            console.log(subcategory)
             return (
               <GatsbyLink to={slug}>
                 <Flex

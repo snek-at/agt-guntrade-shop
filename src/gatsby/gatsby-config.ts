@@ -36,7 +36,7 @@ GatsbyConfig.plugins = [
     }
   },
   {
-    resolve: 'gatsby-source-shopify',
+    resolve: require.resolve('../gatsby-source-shopify'),
     options: {
       password: process.env.SHOPIFY_SHOP_PASSWORD,
       storeUrl: process.env.SHOP,

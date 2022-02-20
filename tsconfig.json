@@ -47,6 +47,8 @@
     "src/components/molecules/index.ts",
     "src/components/pages/ApartmentPage/index.tsx",
     "src/components/pages/HousePage/index.jsx",
-    "wrap-with-provider.js"
-, "src/@chakra-ui/theme.js"  ]
+    "wrap-with-provider.js",
+    "src/@chakra-ui/theme.js",
+    "src/gatsby-source-shopify/index.js"
+  ]
 }

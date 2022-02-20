@@ -2,8 +2,6 @@
 
 import slugify from 'slugify'
 
-import fs from 'fs'
-
 // splitAndType splits the handle and checks for the collectiontype (A, AB, ABC...)
 const splitAndType = handle => {
   const splitHandle = handle.split('-')
@@ -15,7 +13,7 @@ const splitAndType = handle => {
 
   const len = splitHandle.length
 
-  if (splitHandle[0].length > 1 && splitHandle[0][0] === 'a') {
+  if (len > 1 && splitHandle[0][0] === 'a') {
     collectionType =
       splitHandle[0] +
       String.fromCharCode(
@@ -42,6 +40,7 @@ const splitAndType = handle => {
 
   return [splitHandle, collectionType]
 }
+
 const getUnfilteredRelatedProducts = (data, handle, splitHandle) => {
   const relatedCategories = data.allShopifyCollection.edges.filter(edge2 => {
     if (splitHandle[0].length === 2 && splitHandle[0][0] === 'b') {

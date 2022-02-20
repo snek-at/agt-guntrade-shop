@@ -28,7 +28,6 @@ import {
 import {PageProps} from 'gatsby'
 import {getShopifyImage} from 'gatsby-source-shopify'
 
-
 const DEFAULT_PRODUCTS_PER_PAGE = 21
 
 type ShopPageProps = PageProps<
@@ -187,7 +186,7 @@ const ShopPage = ({pageContext}: ShopPageProps) => {
               setFilters({
                 maxPrice: maximum,
                 minPrice: 0,
-                term: '',
+                term: 'Scorpion',
                 sortKey: sortKey,
                 tags: []
               })
