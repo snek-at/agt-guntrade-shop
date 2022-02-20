@@ -24,10 +24,10 @@ import {GatsbyImage, IGatsbyImageData} from 'gatsby-plugin-image'
 import {ProductSliderLayout} from '../ProductSliderLayout'
 import {BrandSliderLayout} from '../BrandSliderLayout'
 
-const Header = (props: {title: string}) => {
+const Header = (props: {title: string; path: string}) => {
   return (
     <Box>
-      <Breadcrumbs />
+      <Breadcrumbs path={props.path} />
       <Heading size="xl" fontWeight={'semibold'}>
         {props.title}
       </Heading>

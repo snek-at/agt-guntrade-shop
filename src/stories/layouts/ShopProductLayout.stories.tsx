@@ -7,9 +7,11 @@ export default {
   component: ShopProductLayout
 } as Meta
 
+const path = '/langwaffen/neuelangwaffen/products/'
+
 export const Product0 = () => (
   <ShopProductLayout
-    header={{title: products[0].title}}
+    header={{title: products[0].title, path: `${path}/${products[0].title}`}}
     imageSlider={{
       featuredImage: products[0].featuredImage as any,
       images: products[0].images as any
@@ -28,7 +30,7 @@ export const Product0 = () => (
 
 export const Product1 = () => (
   <ShopProductLayout
-    header={{title: products[1].title}}
+    header={{title: products[1].title, path}}
     imageSlider={{
       featuredImage: products[1].featuredImage as any,
       images: products[1].images as any

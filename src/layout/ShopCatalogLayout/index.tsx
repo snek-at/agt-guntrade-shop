@@ -6,6 +6,7 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   Button,
+  Center,
   Checkbox,
   Divider,
   Drawer,
@@ -27,6 +28,7 @@ import {
   SliderThumb,
   SliderTrack,
   Spacer,
+  Spinner,
   Stack,
   Text,
   useBreakpointValue,
@@ -43,12 +45,13 @@ import {FaEuroSign, FaFilter, FaHome, FaSort} from 'react-icons/fa'
 import React from 'react'
 import {Breadcrumbs, ShopLayout} from '../ShopLayout'
 import {ProductCardLayout} from '../ProductCardLayout'
-import { ProductGrid } from '../ProductGridLayout'
+import {ProductGrid} from '../ProductGridLayout'
 
 // tag builder => input tag output type:content
 
 export const Header = (props: {
   title: string
+  path: string
   sortOptions: Array<string>
   onSortChange: (option: string) => void
   isMobile?: boolean
@@ -56,7 +59,7 @@ export const Header = (props: {
 }) => {
   return (
     <>
-      <Breadcrumbs />
+      <Breadcrumbs path={props.path} />
       <Heading size="2xl">{props.title}</Heading>
       <Box
         my="2"
@@ -210,10 +213,43 @@ export const ShopCatalogLayout = (props: {
   filter: React.ComponentProps<typeof Filter>
   products: React.ComponentProps<typeof ProductGrid>
   header: React.ComponentProps<typeof Header>
-  onProductSearch?: typeof useProductSearch
+  onLoadMore: () => boolean // return true if more products are available
 }) => {
   const mobile = useDisclosure()
   const [isDesktop] = useMediaQuery('(min-width: 1268px)')
+
+  const gridRef = React.useRef<HTMLDivElement>(null)
+
+  const [loading, setLoading] = React.useState(false)
+
+  const fetchMore = React.useCallback(() => {
+    if (!loading) {
+      // fetch more products
+      if (props.onLoadMore()) {
+        setLoading(true)
+      }
+    }
+  }, [])
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      if (gridRef.current) {
+        const yOfDivEnd = gridRef.current.getBoundingClientRect().bottom
+
+        const currentScroll = window.pageYOffset + window.innerHeight
+
+        if (yOfDivEnd < currentScroll) {
+          fetchMore()
+        }
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
 
   return (
     <ShopLayout>
@@ -244,8 +280,9 @@ export const ShopCatalogLayout = (props: {
           )}
         </>
 
-        <Box w="100%">
+        <Box w="100%" ref={gridRef}>
           <ProductGrid {...props.products} />
+          <Center w="100%">{loading && <Spinner />}</Center>
         </Box>
       </Flex>
       <Box h="5000px">

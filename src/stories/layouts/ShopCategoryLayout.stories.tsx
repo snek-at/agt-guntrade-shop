@@ -7,8 +7,11 @@ export default {
   component: ShopCategoryLayout
 } as Meta
 
+const path = '/langwaffen/neuelangwaffen/products'
+
 export const Page = () => (
   <ShopCategoryLayout
+    path={path}
     category={{
       items: [
         {
