@@ -26,10 +26,10 @@ export const Breadcrumbs = (props: {path: string}) => {
         {isLast ? (
           <Text>{item}</Text>
         ) : (
-          <BreadcrumbLink>
-            <Link to={`/${pathParts.slice(0, index + 1).join('/')}`}>
-              {item}
-            </Link>
+          <BreadcrumbLink
+            as={Link}
+            to={`/${pathParts.slice(0, index + 1).join('/')}`}>
+            {item}
           </BreadcrumbLink>
         )}
       </BreadcrumbItem>
@@ -42,10 +42,8 @@ export const Breadcrumbs = (props: {path: string}) => {
       separator={<ChevronRightIcon color="gray.500" />}
       my={4}>
       <BreadcrumbItem>
-        <BreadcrumbLink>
-          <Link to="/">
-            <Icon as={FaHome} />
-          </Link>
+        <BreadcrumbLink as={Link} to="/">
+          <Icon as={FaHome} />
         </BreadcrumbLink>
       </BreadcrumbItem>
       {breadcrumbs}
@@ -62,8 +60,7 @@ export const ShopLayout: React.FC = ({children}) => {
         bg={useColorModeValue('white', 'gray.700')}
         borderWidth="1px"
         borderRadius="lg"
-        px={4}
-        >
+        px={4}>
         <Box>{children}</Box>
       </Box>
     </>
