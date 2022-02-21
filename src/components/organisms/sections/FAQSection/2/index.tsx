@@ -20,6 +20,7 @@ export interface FAQSectionProps {
 const FAQSection = ({heading}: FAQSectionProps) => {
   return (
     <Flex
+      id="faq"
       p="20"
       direction={{base: 'column', md: 'row'}}
       bg="agt.gray"
@@ -36,9 +37,9 @@ const FAQSection = ({heading}: FAQSectionProps) => {
               <AccordionButton
                 borderTopRadius="5px"
                 _expanded={{
-                  bg: 'agt.blue',
+                  bg: 'agt.red',
                   color: 'white',
-                  _hover: {bg: 'agt.red'}
+                  _hover: {bg: '#BD0F1B'}
                 }}
                 bg="agt.lightgray"
                 _hover={{bg: '#D4D4D9'}}>
@@ -57,9 +58,9 @@ const FAQSection = ({heading}: FAQSectionProps) => {
             <AccordionItem borderColor="#D4D4D9">
               <AccordionButton
                 _expanded={{
-                  bg: 'agt.blue',
+                  bg: 'agt.red',
                   color: 'white',
-                  _hover: {bg: 'agt.red'}
+                  _hover: {bg: '#BD0F1B'}
                 }}
                 bg="agt.lightgray"
                 _hover={{bg: '#D4D4D9'}}>
@@ -78,9 +79,9 @@ const FAQSection = ({heading}: FAQSectionProps) => {
             <AccordionItem borderColor="#D4D4D9">
               <AccordionButton
                 _expanded={{
-                  bg: 'agt.blue',
+                  bg: 'agt.red',
                   color: 'white',
-                  _hover: {bg: 'agt.red'}
+                  _hover: {bg: '#BD0F1B'}
                 }}
                 bg="agt.lightgray"
                 _hover={{bg: '#D4D4D9'}}>
@@ -101,9 +102,9 @@ const FAQSection = ({heading}: FAQSectionProps) => {
                 borderBottomRadius="5px"
                 _expanded={{
                   borderBottomRadius: '0px',
-                  bg: 'agt.blue',
+                  bg: 'agt.red',
                   color: 'white',
-                  _hover: {bg: 'agt.red'}
+                  _hover: {bg: '#BD0F1B'}
                 }}
                 bg="agt.lightgray"
                 _hover={{bg: '#D4D4D9'}}>

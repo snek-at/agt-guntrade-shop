@@ -27,6 +27,7 @@ const AboutSection = ({
   return (
     <Box position={'relative'}>
       <Flex
+        id="about"
         flex={1}
         zIndex={0}
         display={{base: 'none', lg: 'flex'}}

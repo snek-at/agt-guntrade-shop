@@ -72,7 +72,7 @@ const ReviewCard = ({
   const createReviewStars = (rating: number) => {
     const stars = []
     for (let i = 0; i < 5; i++) {
-      const color = rating <= i ? '#E2E8F0' : '#2151a1'
+      const color = rating <= i ? '#E2E8F0' : '#ef3340'
 
       stars.push(
         <IconContext.Provider value={{color: color, size: '20px'}}>
@@ -88,10 +88,12 @@ const ReviewCard = ({
     <>
       <MotionBox
         {...drag}
-        _first={{ml: 0}}
-        ml="3.5vw"
-        minH="200px"
-        w={{base: '300px', xl: '20%'}}
+        bg="white"
+        // minH="200px"
+        w={{
+          base: 'calc(33% - var(--chakra-wrap-spacing))',
+          xl: 'calc(25% - var(--chakra-wrap-spacing))'
+        }}
         borderRadius="5px"
         boxShadow="lg"
         p="5"

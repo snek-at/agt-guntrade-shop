@@ -119,7 +119,7 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                       bg="agt.blue"
                       _hover={{bg: 'white', color: 'black'}}
                       variant="solid">
-                      LEARN MORE
+                      Mehr davon
                     </Button>
                   </DescriptionBox>
                 )
