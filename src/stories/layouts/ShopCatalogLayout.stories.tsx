@@ -24,7 +24,12 @@ export const Page = () => (
     filter={{
       allTags: ['Widerladen:Kurzwaffe', 'widerladen:Langwaffe'],
       activeTags: ['Widerladen:Kurzwaffe'],
-      onActiveTagsChange: allTags => alert(JSON.stringify(allTags))
+      onActiveTagsChange: allTags => alert(JSON.stringify(allTags)),
+      priceFilter: {
+        minPrice: 50,
+        maxPrice: 100,
+        onPriceChange: (min, max) => alert(`${min} - ${max}`)
+      }
     }}
     onLoadMore={() => {
       return false

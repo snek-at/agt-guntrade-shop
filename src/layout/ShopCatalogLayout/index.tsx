@@ -117,6 +117,12 @@ const PriceRangeFilter = (props: {
 }) => {
   const [value, setValue] = React.useState([props.minPrice, props.maxPrice])
 
+  const handlePriceChange = (value: [number, number]) => {
+    setValue(value)
+
+    props.onPriceChange(value[0], value[1])
+  }
+
   return (
     <Box>
       <Text fontWeight={'bold'}>
@@ -128,7 +134,7 @@ const PriceRangeFilter = (props: {
           min={props.minPrice}
           max={props.maxPrice}
           value={value}
-          onChange={v => setValue(v)}>
+          onChange={handlePriceChange}>
           <RangeSliderTrack>
             <RangeSliderFilledTrack />
           </RangeSliderTrack>
@@ -144,6 +150,7 @@ interface FilterProps {
   allTags: Array<string> // ["category:test",...]
   activeTags: Array<string>
   onActiveTagsChange: (tags: FilterProps['activeTags']) => void
+  priceFilter: React.ComponentProps<typeof PriceRangeFilter>
 }
 
 const Filter = (props: FilterProps) => {
@@ -202,11 +209,7 @@ const Filter = (props: FilterProps) => {
           </Box>
         ))}
       </>
-      <PriceRangeFilter
-        minPrice={0}
-        maxPrice={100}
-        onPriceChange={e => alert(JSON.stringify(e))}
-      />
+      <PriceRangeFilter {...props.priceFilter} />
     </VStack>
   )
 }
