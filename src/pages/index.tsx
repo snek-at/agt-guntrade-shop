@@ -1,6 +1,6 @@
 //#region > Imports
 import {graphql} from 'gatsby'
-
+import ScrollSpy from '../components/molecules/ScrollSpy'
 import NewsSection from '../components/organisms/sections/NewsSection'
 import HeroSection from '../components/organisms/sections/HeroSection'
 import ReviewSection from '../components/organisms/sections/ReviewSection'
@@ -34,6 +34,7 @@ const IndexPage = ({
 
   return (
     <BaseLayout>
+      <ScrollSpy />
       <HeroSection categoryProducts={{New: data.newShopifyProduct.edges}} />
       <NewsSection />
       <FeaturedProductsSection products={products} />
