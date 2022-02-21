@@ -8,14 +8,20 @@ import {
   Circle,
   Flex
 } from '@chakra-ui/react'
-import {css} from '@emotion/react'
 
 import {AnimatePresence, motion} from 'framer-motion'
-import {GatsbyImage} from 'gatsby-plugin-image'
 import * as style from './style'
 
+export interface CategoryItemType {
+  image: string
+  name: string
+  price: number
+  reducedPrice?: number
+  isNew: boolean
+}
+
 export interface CategoryTabProps {
-  items: Array<any>
+  items: CategoryItemType[]
   direction: string
   visible: string
 }
@@ -46,7 +52,6 @@ const variants = {
 }
 
 const CategoryTab = ({items, direction, visible}: CategoryTabProps) => {
-  console.log(items)
   return (
     <AnimatePresence exitBeforeEnter custom={direction}>
       {visible === 'visible' && (
@@ -59,7 +64,10 @@ const CategoryTab = ({items, direction, visible}: CategoryTabProps) => {
           animate="center"
           exit="exit"
           transition={{duration: 0.15}}>
-          <SimpleGrid columns={{base: 2, md: 3, xl: 6}} css={style.Borderline}>
+          <SimpleGrid
+            columns={{base: 2, md: 3, xl: 6}}
+            spacing="5"
+            css={style.Borderline}>
             {items.map(item => (
               <Box
                 className="borderline"
@@ -71,27 +79,24 @@ const CategoryTab = ({items, direction, visible}: CategoryTabProps) => {
                 borderRadius="5px"
                 border="1px"
                 borderColor="gray.200"
-                mx={{base: '5px', lg: '4'}}
                 mt="3"
-                _first={{lg: {mr: 4, ml: '20px'}}}
                 _hover={{
-                  before: {borderColor: 'agt.blue'},
-                  _after: {borderColor: 'agt.blue'}
+                  before: {borderColor: 'agt.red'},
+                  _after: {borderColor: 'agt.red'}
                 }}>
-                <GatsbyImage
-                  image={item.node.images[0].gatsbyImageData}
-                  alt={item.node.title}
-                  css={css`
-                    width: fit-content;
-                  `}
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  w="fit-content"
+                  fallback={<Box />}
                 />
-                {item?.isNew && (
+                {item.isNew && (
                   <Circle
                     size="10px"
                     position="absolute"
                     top={2}
                     right={2}
-                    bg="blue.200"
+                    bg="red.200"
                     zIndex="2"
                   />
                 )}
@@ -101,18 +106,14 @@ const CategoryTab = ({items, direction, visible}: CategoryTabProps) => {
                   color="black"
                   minH="5rem"
                   textAlign="center">
-                  {item.node.title}
+                  {item.name.split(';')[0]}
                 </Text>
                 <Badge
                   variant="solid"
                   bg="agt.blue"
                   borderRadius="5px"
                   h="1.1rem">
-                  {
-                    item.node.tags
-                      .filter((tag: string) => tag.startsWith('Kaliber:'))[0]
-                      .split(':')[1]
-                  }
+                  {item.name.split(';')[1]}
                 </Badge>
                 <Flex alignItems="flex-end" justifyContent="flex-end">
                   <Text
@@ -125,7 +126,7 @@ const CategoryTab = ({items, direction, visible}: CategoryTabProps) => {
                         ? 'line-through'
                         : 'none'
                     }>
-                    {item.node.priceRangeV2.maxVariantPrice.amount}€
+                    {item.price}€
                   </Text>
                   {typeof item.reducedPrice !== 'undefined' && (
                     <Text fontSize="20">{item.reducedPrice}€</Text>
