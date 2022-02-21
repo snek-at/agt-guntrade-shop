@@ -1,10 +1,11 @@
 import React from 'react'
 import Footer from '../../components/organisms/Footer'
 import NavTop from '../../components/organisms/NavTop'
-
+import ScrollToTopButton from '../../components/molecules/buttons/ScrollToTopButton'
 export const BaseLayout: React.FC = ({children}) => {
   return (
     <>
+      <ScrollToTopButton onScrollToTopClick={() => null} />
       <NavTop
         links={[
           'Waffen',
