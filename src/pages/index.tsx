@@ -36,14 +36,12 @@ const IndexPage = ({
     <BaseLayout>
       <ScrollSpy />
       <HeroSection categoryProducts={{New: data.newShopifyProduct.edges}} />
-      <NewsSection />
       <FeaturedProductsSection products={products} />
-      <FAQSection heading={<p>I'm a heading</p>} />
       <ReviewSection
         heading={<p>I'm a heading.</p>}
-        teaser={<p>I'm a teaser</p>}
         data={data.allGoogleReview.nodes}
       />
+      <NewsSection heading={<p>I'm a news.</p>} />
       <AboutSection
         heading={<p>I'm a heading</p>}
         teaser={<p>I'm a teaser</p>}
@@ -68,6 +66,7 @@ const IndexPage = ({
           />
         }
       />
+      <FAQSection heading={<p>I'm a heading</p>} />
     </BaseLayout>
   )
 }
