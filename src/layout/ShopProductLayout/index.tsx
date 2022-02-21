@@ -150,7 +150,7 @@ const ProductDetail = (props: {
             <Text fontWeight={'semibold'}>
               <Center>
                 <Icon as={FaHeart} mr="2" />
-                Wishlist
+                Merken
               </Center>
             </Text>
           </Box>
