@@ -144,13 +144,33 @@ const createAllProductsShopPage = (data, actions) => {
       ''
     )
 
+    const slugifiedTitle = slugify(product.title, {remove: /[*+~.()'"!:@]/g})
+
     actions.createPage({
-      path:
-        '/products/' + slugify(product.title, {remove: /[*+~.()'"!:@]/g}) + '/',
-      component: require.resolve('../templates/ProductPage/index.tsx'),
+      path: '/products/' + slugifiedTitle + '/',
+      component: require.resolve('../templatePages/ProductPage/index.tsx'),
       context: {
-        product: product,
-        relatedProducts: filteredRelatedProducts
+        header: {title: product.title},
+        imageSlider: {
+          featuredImage: {
+            alt: slugifiedTitle,
+            gatsbyImageData: product.featuredImage.gatsbyImageData
+          },
+          images: product.images
+            .filter(image => image.shopifyId !== product.featuredImage.id)
+            .map(image => ({
+              alt: slugifiedTitle,
+              gatsbyImageData: image.gatsbyImageData
+            }))
+        },
+        productDetail: {
+          price: product.priceRangeV2.maxVariantPrice.amount,
+          status: 'I dunno'
+        },
+        productMoreDetail: {
+          description: product.descriptionHtml
+        },
+        featuredProducts: filteredRelatedProducts
       }
     })
   })
@@ -249,12 +269,33 @@ const createCollectionShopAndProductPages = (data, actions) => {
         edge.node.handle
       )
 
+      const slugifiedTitle = slugify(product.title, {remove: /[*+~.()'"!:@]/g})
+
       actions.createPage({
-        path: slug + slugify(product.title, {remove: /[*+~.()'"!:@]/g}) + '/',
-        component: require.resolve('../templates/ProductPage/index.tsx'),
+        path: slug + slugifiedTitle + '/',
+        component: require.resolve('../templatePages/ProductPage/index.tsx'),
         context: {
-          product: product,
-          relatedProducts: filteredRelatedProducts
+          header: {title: product.title},
+          imageSlider: {
+            featuredImage: {
+              alt: slugifiedTitle,
+              gatsbyImageData: product.featuredImage.gatsbyImageData
+            },
+            images: product.images
+              .filter(image => image.shopifyId !== product.featuredImage.id)
+              .map(image => ({
+                alt: slugifiedTitle,
+                gatsbyImageData: image.gatsbyImageData
+              }))
+          },
+          productDetail: {
+            price: product.priceRangeV2.maxVariantPrice.amount,
+            status: 'I dunno'
+          },
+          productMoreDetail: {
+            description: product.descriptionHtml
+          },
+          featuredProducts: filteredRelatedProducts
         }
       })
     })
@@ -292,9 +333,11 @@ export const createPages = async (actions, graphql) => {
                 }
               }
               images {
+                shopifyId
                 gatsbyImageData
               }
               featuredImage {
+                id
                 gatsbyImageData
               }
             }
@@ -318,14 +361,13 @@ export const createPages = async (actions, graphql) => {
               maxVariantPrice {
                 amount
               }
-              minVariantPrice {
-                amount
-              }
             }
             images {
+              shopifyId
               gatsbyImageData
             }
             featuredImage {
+              id
               gatsbyImageData
             }
           }
