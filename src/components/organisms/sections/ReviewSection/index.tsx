@@ -1,12 +1,15 @@
 import {ChevronLeftIcon, ChevronRightIcon} from '@chakra-ui/icons'
-import {Box, Circle, Flex, Heading} from '@chakra-ui/layout'
+import {Box, SimpleGrid, Circle, Container, Heading} from '@chakra-ui/layout'
 import {useBreakpointValue} from '@chakra-ui/media-query'
 import {AnimatePresence} from 'framer-motion'
+import {useColorModeValue} from '@chakra-ui/color-mode'
 import React from 'react'
 
 import {ReviewStyle} from './style'
 import ReviewCard from '../../../molecules/ReviewCard'
 import {useWindowWidth} from '../../../../common/utils'
+
+import {Bullet} from '../../../../common/assets'
 
 interface ReviewType {
   id: string
@@ -17,19 +20,20 @@ interface ReviewType {
 }
 export interface ReviewSectionProps {
   heading: React.ReactNode
-  teaser: React.ReactNode
   data: ReviewType[]
 }
 
-const ReviewSection = ({heading, teaser, data}: ReviewSectionProps) => {
+const ReviewSection = ({heading, data}: ReviewSectionProps) => {
   const [direction, setDirection] = React.useState('')
   const [index, setIndex] = React.useState(0)
   const [isInvisible, setIsInvisible] = React.useState(true)
 
+  const simpleGridValue = useBreakpointValue({base: 2, md: 3, xl: 4}) || 1
   const isSmall = useBreakpointValue({base: true, xl: false})
+  const buttonColor = useColorModeValue('agt.grayScheme', 'gray')
 
   const vw = useWindowWidth()
-  const numOfCards = Math.floor(vw / (isSmall ? 320 : vw * 0.25))
+  const numOfCards = Math.floor(vw / (vw / simpleGridValue))
 
   React.useEffect(() => {
     ;(!isSmall && data.length <= numOfCards) ||
@@ -60,12 +64,16 @@ const ReviewSection = ({heading, teaser, data}: ReviewSectionProps) => {
 
   return (
     <>
-      <Box overflow="hidden" w="100%" id="reviews" mt="20">
-        <Box textAlign="center">
-          <Heading>{heading}</Heading>
-          <Box mt="3" fontSize="20">
-            {teaser}
-          </Box>
+      <Box
+        as="section"
+        id="reviews"
+        overflow="hidden"
+        w="full"
+        mt="20"
+        bg={['agt.gray', 'agt.gray', 'agt.gray', 'agt.gray']}>
+        <Box textAlign="center" mt="10">
+          <Heading color="white">{heading}</Heading>
+          <Bullet color="agt.red" w="unset" fontSize="xl" mt="5" />
         </Box>
         <Box
           h="fit-content"
@@ -80,7 +88,7 @@ const ReviewSection = ({heading, teaser, data}: ReviewSectionProps) => {
             bg="blackAlpha.300"
             display={isMobile && index !== 0 ? 'block' : 'none'}
             position="absolute"
-            left={{base: '10px', md: '30px'}}
+            left={{base: '10px', md: '30px', xl: '10%'}}
             top="45%"
             zIndex="2"
             onClick={() => {
@@ -94,29 +102,32 @@ const ReviewSection = ({heading, teaser, data}: ReviewSectionProps) => {
               zIndex="3"
             />
           </Circle>
-          <Flex
-            justifyContent="center"
+          <Container
+            d="flex"
+            maxW="8xl"
+            py="6"
             alignItems="center"
-            py="10"
             minH="300px">
-            {data.map((review, i) => {
-              return (
-                <AnimatePresence custom={direction}>
-                  {index + numOfCards > i && i - index >= 0 && (
-                    <ReviewCard
-                      drag={drag}
-                      direction={direction}
-                      reviewId={review.id}
-                      reviewImage={review.sourceImage}
-                      reviewName={review.source}
-                      reviewRating={review.rating}
-                      reviewText={review.body}
-                    />
-                  )}
-                </AnimatePresence>
-              )
-            })}
-          </Flex>
+            <SimpleGrid columns={simpleGridValue} spacing="5">
+              {data.map((review, i) => {
+                return (
+                  <AnimatePresence custom={direction}>
+                    {index + numOfCards > i && i - index >= 0 && (
+                      <ReviewCard
+                        drag={drag}
+                        direction={direction}
+                        reviewId={review.id}
+                        reviewImage={review.sourceImage}
+                        reviewName={review.source}
+                        reviewRating={review.rating}
+                        reviewText={review.body}
+                      />
+                    )}
+                  </AnimatePresence>
+                )
+              })}
+            </SimpleGrid>
+          </Container>
           <Circle
             className="button2"
             cursor="pointer"
@@ -125,7 +136,7 @@ const ReviewSection = ({heading, teaser, data}: ReviewSectionProps) => {
             centerContent
             position="absolute"
             display={isMobile && !isInvisible ? 'block' : 'none'}
-            right={{base: '10px', md: '30px'}}
+            right={{base: '10px', md: '30px', xl: '10%'}}
             top="45%"
             zIndex="2"
             onClick={() => {
