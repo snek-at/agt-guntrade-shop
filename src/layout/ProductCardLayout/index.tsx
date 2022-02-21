@@ -161,20 +161,11 @@ export interface ProductCardProps {
   discountPrice?: string
   tags: Array<{name: string; color: string}>
   createdAt: string
-  onClick: (id: string) => void
 }
 
 export function ProductCardLayout(props: ProductCardProps) {
-  const {
-    id,
-    image,
-    name,
-    categoriesString,
-    price,
-    discountPrice,
-    createdAt,
-    onClick
-  } = props
+  const {id, image, name, categoriesString, price, discountPrice, createdAt} =
+    props
 
   const getDefaultTags = (tags: typeof props.tags = []) => {
     if (new Date(createdAt).getTime() > Date.now() - 7 * 24 * 60 * 60 * 1000) {
@@ -195,7 +186,6 @@ export function ProductCardLayout(props: ProductCardProps) {
   return (
     <VStack
       boxSize={'full'}
-      onClick={() => onClick(id)}
       cursor="pointer"
       textAlign={{
         base: 'center',
@@ -229,7 +219,6 @@ export function generateProductCard(item: any) {
       categoriesString={tagsWithoutCategory}
       price={item.priceRangeV2.maxVariantPrice.amount}
       discountPrice="2000"
-      onClick={id => alert(id)}
     />
   )
 }
