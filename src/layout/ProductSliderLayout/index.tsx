@@ -21,9 +21,15 @@ const MotionBox = motion<BoxProps>(Box)
 export const ProductSliderLayout = (props: {
   title: string
   products: Array<any>
+  onProductClick: (product: any) => void
 }) => {
   const productsForSlider = React.useMemo(
-    () => props.products.map(product => generateProductCard(product)),
+    () =>
+      props.products.map(product => (
+        <Box onClick={() => props.onProductClick(product)}>
+          {generateProductCard(product)}
+        </Box>
+      )),
     [props.products]
   )
 

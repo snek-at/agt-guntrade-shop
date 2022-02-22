@@ -1,16 +1,15 @@
 import {navigate, PageProps} from 'gatsby'
 import {useWishlist} from '../services/wishlist'
 import {WishListLayout} from '../layout/WishListLayout'
-import slugify from 'slugify'
 
-const WishlistPage = ({location}: PageProps) => {
+const WishlistPage = ({}: PageProps) => {
   const {wishlist, updateQuantity, removeFromWishlist} = useWishlist()
 
   const handleProductOpen = (productId: string) => {
-    const title = wishlist.find(item => item.id === productId)?.title
+    const product = wishlist.find(item => item.id === productId)
 
-    if (title) {
-      navigate(`/products/${slugify(title)}`)
+    if (product) {
+      navigate(`/products/${product.handle}`)
     }
   }
 

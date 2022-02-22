@@ -203,7 +203,10 @@ export const ShopProductLayout = (props: {
   imageSlider: React.ComponentProps<typeof ImageSlider>
   productDetail: React.ComponentProps<typeof ProductDetail>
   productMoreDetail: React.ComponentProps<typeof ProductMoreDetail>
-  featuredProducts: Array<any>
+  featuredProducts: {
+    products: Array<any>
+    onProductClick: (item: any) => void
+  }
 }) => {
   return (
     <BaseLayout>
@@ -224,7 +227,7 @@ export const ShopProductLayout = (props: {
           </Box>
           <ProductSliderLayout
             title="Unsere Empfehlungen"
-            products={props.featuredProducts}
+            {...props.featuredProducts}
           />
           <Box h="14"></Box>
         </VStack>

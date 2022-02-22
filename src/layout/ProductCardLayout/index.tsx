@@ -218,7 +218,7 @@ export function generateProductCard(item: any) {
       name={item.title}
       categoriesString={tagsWithoutCategory}
       price={item.priceRangeV2.maxVariantPrice.amount}
-      discountPrice="2000"
+      discountPrice={'2000'}
     />
   )
 }

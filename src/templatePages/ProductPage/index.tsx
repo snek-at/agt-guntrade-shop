@@ -1,4 +1,4 @@
-import {PageProps} from 'gatsby'
+import {navigate, PageProps} from 'gatsby'
 import {IGatsbyImageData} from 'gatsby-plugin-image'
 import {WishlistService, useWishlist} from '../../services/wishlist'
 import {ShopProductLayout} from '../../layout/ShopProductLayout'
@@ -6,6 +6,7 @@ import {ShopProductLayout} from '../../layout/ShopProductLayout'
 type ProductPageProps = PageProps<
   {},
   {
+    handle: string
     header: {title: string}
     imageSlider: {
       featuredImage: {
@@ -47,6 +48,7 @@ const ProductPage = ({pageContext, location}: ProductPageProps) => {
 
       addToWishlist({
         id,
+        handle: pageContext.handle,
         title: pageContext.header.title,
         price: pageContext.productDetail.price,
         image: pageContext.imageSlider.featuredImage,
@@ -58,9 +60,16 @@ const ProductPage = ({pageContext, location}: ProductPageProps) => {
     }
   }
 
+  const handleFeaturedProductClick = (product: any) => {
+    navigate(`/products/${product.handle}/`)
+  }
+
   return (
     <ShopProductLayout
-      featuredProducts={pageContext.featuredProducts}
+      featuredProducts={{
+        products: pageContext.featuredProducts,
+        onProductClick: handleFeaturedProductClick
+      }}
       header={{title: pageContext.header.title, path: location.pathname}}
       imageSlider={pageContext.imageSlider}
       productDetail={{

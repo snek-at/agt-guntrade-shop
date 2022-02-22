@@ -1,7 +1,5 @@
 // @ts-nocheck
 
-import slugify from 'slugify'
-
 // splitAndType splits the handle and checks for the collectiontype (A, AB, ABC...)
 const splitAndType = handle => {
   const splitHandle = handle.split('-')
@@ -68,30 +66,21 @@ const getUnfilteredRelatedProducts = (data, handle, splitHandle) => {
 
 const getFilteredProducts = (unfilteredRelatedProducts, handle) => {
   const filteredRelatedProducts = []
-  if (unfilteredRelatedProducts.length > 0) {
-    const titles = []
-    let runs = 0
-    for (let i = 0; i < 12; i++) {
-      const potentialProduct =
-        unfilteredRelatedProducts[
-          Math.floor(Math.random() * unfilteredRelatedProducts.length)
-        ]
-      if (titles.includes(potentialProduct.title)) {
-        i = i - 1
-      } else {
-        potentialProduct.slug =
-          handle.slice(handle.indexOf('-') + 1).replaceAll('-', '/') +
-          '/products/' +
-          slugify(potentialProduct.title, {remove: /[*+~.()'"!:@]/g})
-        titles.push(potentialProduct.title)
-        filteredRelatedProducts.push(potentialProduct)
-      }
-      if (titles.length === unfilteredRelatedProducts.length || runs > 10000) {
-        break
-      }
-      runs++
-    }
+
+  const iterationLimit =
+    unfilteredRelatedProducts.length > 12
+      ? 12
+      : unfilteredRelatedProducts.length
+
+  for (let i = 0; i < iterationLimit; i++) {
+    const randomIndex = Math.floor(
+      Math.random() * unfilteredRelatedProducts.length
+    )
+
+    filteredRelatedProducts.push(unfilteredRelatedProducts[randomIndex])
+    unfilteredRelatedProducts.splice(randomIndex, 1)
   }
+
   return filteredRelatedProducts
 }
 
@@ -153,22 +142,23 @@ const createAllProductsShopPage = (data, actions) => {
       ''
     )
 
-    const slugifiedTitle = slugify(product.title, {remove: /[*+~.()'"!:@]/g})
+    console.log(product.handle)
 
     actions.createPage({
-      path: '/products/' + slugifiedTitle + '/',
+      path: `/products/${product.handle}/`,
       component: require.resolve('../templatePages/ProductPage/index.tsx'),
       context: {
         header: {title: product.title},
+        handle: product.handle,
         imageSlider: {
           featuredImage: {
-            alt: slugifiedTitle,
+            alt: product.featuredImage.alt || product.title,
             gatsbyImageData: product.featuredImage.gatsbyImageData
           },
           images: product.images
             .filter(image => image.shopifyId !== product.featuredImage.id)
             .map(image => ({
-              alt: slugifiedTitle,
+              alt: image.alt || product.title,
               gatsbyImageData: image.gatsbyImageData
             }))
         },
@@ -216,17 +206,17 @@ const createCollectionShopAndProductPages = (data, actions) => {
       component: require.resolve(`../templatePages/CategoryPage/index.tsx`),
       context: {
         category: {
+          handle: edge.node.handle,
           title: edge.node.title.split(' ').at(-1),
           items: subcategories.map(subcategory => ({
             title:
               subcategory.node.title === edge.node.title
                 ? 'Alle Produkte'
                 : subcategory.node.title.split(' ').at(-1),
-            handle: !isNaN(subcategory.node.handle.split('-').at(-1))
-              ? subcategory.node.handle.slice(
-                  subcategory.node.handle.indexOf('-') + 1
-                )
-              : subcategory.node.handle,
+            handle:
+              subcategory.node.handle === edge.node.handle
+                ? 'alle-produkte'
+                : subcategory.node.handle,
             totalProducts: subcategory.node.products
               ? subcategory.node.products.length
               : 0,
@@ -282,22 +272,21 @@ const createCollectionShopAndProductPages = (data, actions) => {
         edge.node.handle
       )
 
-      const slugifiedTitle = slugify(product.title, {remove: /[*+~.()'"!:@]/g})
-
       actions.createPage({
-        path: slug + slugifiedTitle + '/',
+        path: `${slug}${product.handle}/`,
         component: require.resolve('../templatePages/ProductPage/index.tsx'),
         context: {
+          handle: product.handle,
           header: {title: product.title},
           imageSlider: {
             featuredImage: {
-              alt: slugifiedTitle,
+              alt: product.featuredImage.alt || product.title,
               gatsbyImageData: product.featuredImage.gatsbyImageData
             },
             images: product.images
               .filter(image => image.shopifyId !== product.featuredImage.id)
               .map(image => ({
-                alt: slugifiedTitle,
+                alt: image.alt || product.title,
                 gatsbyImageData: image.gatsbyImageData
               }))
           },
@@ -332,6 +321,7 @@ export const createPages = async (actions, graphql) => {
             }
             products {
               id
+              handle
               createdAt
               descriptionHtml
               title
@@ -362,6 +352,7 @@ export const createPages = async (actions, graphql) => {
         edges {
           node {
             id
+            handle
             collections {
               handle
             }

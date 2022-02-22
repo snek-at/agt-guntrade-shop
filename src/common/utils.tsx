@@ -3,7 +3,6 @@ import {Image} from '@chakra-ui/image'
 import React from 'react'
 import {Box} from '@chakra-ui/react'
 import {PageProps} from 'gatsby'
-import slugify from 'slugify'
 
 const breakpoints = ['0em', '30em', '48em', '62em', '80em', '96em']
 

@@ -3,6 +3,7 @@ import React from 'react'
 
 export interface WishlistProduct {
   id: string
+  handle: string
   title: string
   price: string
   categoriesString: string
