@@ -34,6 +34,15 @@ GatsbyNode.createSchemaCustomization = ({actions}) => {
       sourceImage: String
       source: String
     }
+
+    type ShopifyPrice {
+      amount: String
+    }
+
+    type ShopifyProductContextualPricingMaxVariantPricing {
+      compareAtPrice: ShopifyPrice
+      price: ShopifyPrice
+    }
   `
 
   createTypes(typeDefs)

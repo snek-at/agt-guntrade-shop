@@ -120,7 +120,8 @@ const createAllProductsShopPage = (data, actions) => {
           tags: [],
           maxPrice: Math.max(
             ...products.map(
-              product => product.priceRangeV2.maxVariantPrice.amount
+              product =>
+                product.contextualPricing.maxVariantPricing.price.amount
             )
           )
         },
@@ -164,7 +165,7 @@ const createAllProductsShopPage = (data, actions) => {
         },
         productDetail: {
           id: product.id,
-          price: product.priceRangeV2.maxVariantPrice.amount,
+          price: product.contextualPricing.maxVariantPricing.price.amount,
           tags: product.tags
         },
         productMoreDetail: {
@@ -252,7 +253,8 @@ const createCollectionShopAndProductPages = (data, actions) => {
             tags: activeTags,
             maxPrice: Math.max(
               ...edge.node.products.map(
-                product => product.priceRangeV2.maxVariantPrice.amount
+                product =>
+                  product.contextualPricing.maxVariantPricing.price.amount
               )
             )
           },
@@ -292,7 +294,7 @@ const createCollectionShopAndProductPages = (data, actions) => {
           },
           productDetail: {
             id: product.id,
-            price: product.priceRangeV2.maxVariantPrice.amount,
+            price: product.contextualPricing.maxVariantPricing.price.amount,
             tags: product.tags
           },
           productMoreDetail: {
@@ -328,12 +330,14 @@ export const createPages = async (actions, graphql) => {
               tags
               status
               totalInventory
-              priceRangeV2 {
-                maxVariantPrice {
-                  amount
-                }
-                minVariantPrice {
-                  amount
+              contextualPricing {
+                maxVariantPricing {
+                  price {
+                    amount
+                  }
+                  compareAtPrice {
+                    amount
+                  }
                 }
               }
               images {
@@ -362,9 +366,14 @@ export const createPages = async (actions, graphql) => {
             status
             totalInventory
             createdAt
-            priceRangeV2 {
-              maxVariantPrice {
-                amount
+            contextualPricing {
+              maxVariantPricing {
+                price {
+                  amount
+                }
+                compareAtPrice {
+                  amount
+                }
               }
             }
             images {

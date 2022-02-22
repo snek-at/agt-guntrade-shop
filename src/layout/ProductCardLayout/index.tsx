@@ -116,9 +116,9 @@ function ImageBoxWithTags(props: {
 }
 
 function Price(props: {price: string; discountPrice?: string}) {
-  const price = `${props.price} €`
+  const price = `${parseFloat(props.price).toFixed(2)} €`
   if (props.discountPrice) {
-    const discountPrice = `${props.discountPrice} €`
+    const discountPrice = `${parseFloat(props.discountPrice).toFixed(2)} €`
     // strike through price and put discount price on the right side
     return (
       <Flex
@@ -217,8 +217,10 @@ export function generateProductCard(item: any) {
       image={item.featuredImage}
       name={item.title}
       categoriesString={tagsWithoutCategory}
-      price={item.priceRangeV2.maxVariantPrice.amount}
-      discountPrice={'2000'}
+      price={item.contextualPricing.maxVariantPricing.price.amount}
+      discountPrice={
+        item.contextualPricing.maxVariantPricing.compareAtPrice?.amount
+      }
     />
   )
 }
