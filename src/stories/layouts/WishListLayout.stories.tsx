@@ -31,6 +31,7 @@ export const Filled = () => (
     onQuantityChange={() => {}}
     onRequestNow={() => {}}
     onContinueShopping={() => {}}
+    onProductOpen={() => {}}
   />
 )
 
@@ -41,5 +42,6 @@ export const Empty = () => (
     onQuantityChange={() => {}}
     onRequestNow={() => {}}
     onContinueShopping={() => {}}
+    onProductOpen={() => {}}
   />
 )

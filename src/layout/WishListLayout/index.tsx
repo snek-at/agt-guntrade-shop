@@ -124,6 +124,7 @@ export const WishListLayout = (props: {
   onQuantityChange: (id: string, quantity: number) => void
   onRequestNow: () => void
   onContinueShopping: () => void
+  onProductOpen: (id: string) => void
 }) => {
   const itemLength = props.items.length
 
@@ -158,6 +159,7 @@ export const WishListLayout = (props: {
                       onQuantityChange={(quantity: number) =>
                         props.onQuantityChange(item.id, quantity)
                       }
+                      onOpenProduct={() => props.onProductOpen(item.id)}
                     />
                   ))}
                 </VStack>
@@ -230,13 +232,16 @@ const WishListItem = (props: {
   quantity: number
   onQuantityChange: (value: number) => void
   onRemove: () => void
+  onOpenProduct: () => void
 }) => {
   const imageWithText = (
-    <ImageWithText
-      title={props.title}
-      image={props.image}
-      categoriesString={props.categoriesString}
-    />
+    <Box cursor={'pointer'} onClick={props.onOpenProduct}>
+      <ImageWithText
+        title={props.title}
+        image={props.image}
+        categoriesString={props.categoriesString}
+      />
+    </Box>
   )
 
   const stepper = (

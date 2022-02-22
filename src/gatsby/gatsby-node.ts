@@ -15,7 +15,7 @@ GatsbyNode.sourceNodes = async ({
 
   const {createNode} = actions
 
-  await fetchReviews(createNode, createNodeId, createContentDigest)
+  //await fetchReviews(createNode, createNodeId, createContentDigest)
 }
 
 GatsbyNode.createPages = async function ({actions, graphql}) {
