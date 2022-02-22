@@ -51,6 +51,7 @@ const ContinueShoppingText = (props: {onClick: () => void}) => (
 )
 
 const SummaryBox = (props: {
+  totalPrice: number
   onRequestNow: () => void
   onContinueShopping: () => void
 }) => {
@@ -72,7 +73,7 @@ const SummaryBox = (props: {
         <HStack justifyContent={'space-between'}>
           <Text fontSize={'xl'}>Total</Text>
           <Text ml={2} fontSize={'2xl'} fontWeight="extrabold">
-            0,00 €
+            {props.totalPrice} €
           </Text>
         </HStack>
         <Button
@@ -128,8 +129,14 @@ export const WishListLayout = (props: {
 }) => {
   const itemLength = props.items.length
 
+  const totalPrice = props.items.reduce(
+    (acc, item) => acc + parseInt(item.price) * item.quantity,
+    0
+  )
+
   const summaryBox = (
     <SummaryBox
+      totalPrice={totalPrice}
       onRequestNow={props.onRequestNow}
       onContinueShopping={props.onContinueShopping}
     />
