@@ -244,15 +244,19 @@ const WishListItem = (props: {
 
   return (
     <>
-      <Flex
+      <HStack
         w="100%"
         p={2}
-        justifyContent="space-between"
         display={{
           base: 'none',
           md: 'flex'
+        }}
+        spacing={{
+          base: 4,
+          md: 8,
+          lg: 12
         }}>
-        {imageWithText}
+        <Flex flex="1">{imageWithText}</Flex>
         <Flex my={'auto'}>{stepper}</Flex>
 
         <Flex my={'auto'}>{price}</Flex>
@@ -260,7 +264,7 @@ const WishListItem = (props: {
         <Flex my="auto">
           <CloseButton onClick={props.onRemove} />
         </Flex>
-      </Flex>
+      </HStack>
       <Flex
         w="100%"
         p="2"

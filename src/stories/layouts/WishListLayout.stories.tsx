@@ -17,6 +17,14 @@ export const Filled = () => (
         categoriesString: 'Test',
         quantity: 1,
         image: products[0].images[0] as any
+      },
+      {
+        id: '2',
+        title: 'Test  1 1 1 1 1',
+        price: '1.00',
+        categoriesString: 'Test123',
+        quantity: 21,
+        image: products[7].images[0] as any
       }
     ]}
     onRemove={() => {}}
