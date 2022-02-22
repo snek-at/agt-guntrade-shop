@@ -120,14 +120,23 @@ const createAllProductsShopPage = (data, actions) => {
 
   actions.createPage({
     path: '/products/',
-    component: require.resolve('../templates/ShopPage/index.tsx'),
+    component: require.resolve('../templatePages/ShopPage/index.tsx'),
     context: {
-      title: 'Alle Produkte',
-      handle: 'produkte',
-      products: products.slice(0, 21),
-      tags: tags,
-      allTags: data.meta.tags,
-      amountOfProducts: products.length
+      header: {title: 'Alle Produkte'},
+      products: {items: products.slice(0, 21)},
+      filter: {
+        allTags: data.meta.tags,
+        activeTags: [],
+        initialFilters: {
+          tags: [],
+          maxPrice: Math.max(
+            ...products.map(
+              product => product.priceRangeV2.maxVariantPrice.amount
+            )
+          )
+        },
+        hasNextPage: products.length > 21
+      }
     }
   })
 
@@ -230,31 +239,32 @@ const createCollectionShopAndProductPages = (data, actions) => {
       }
     })
 
-    let tags = {}
-    edge.node.products.map(product => {
-      product.tags.map(tag => {
-        const splitTag = tag.split(':')
-        if (typeof tags[splitTag[0]] === 'undefined') {
-          tags[splitTag[0]] = [splitTag[1]]
-        } else if (!tags[splitTag[0]].includes(splitTag[1])) {
-          tags[splitTag[0]].push(splitTag[1])
-        }
-      })
-    })
-
     slug = slug + '/products/'
     actions.createPage({
       path: slug,
-      component: require.resolve('../templates/ShopPage/index.tsx'),
+      component: require.resolve('../templatePages/ShopPage/index.tsx'),
       context: {
-        title: edge.node.title.slice(edge.node.title.indexOf(' ') + 1),
-        handle: splitHandle.toString().replaceAll(',', '-') + '-products',
-        products: edge.node.products
-          .sort((a, b) => (a.title > b.title ? 1 : -1))
-          .slice(0, 21),
-        tags: tags,
-        allTags: data.meta.tags,
-        amountOfProducts: edge.node.products.length
+        header: {title: edge.node.title.split(' ').at(-1)},
+        products: {
+          items: edge.node.products
+            .sort((a, b) => (a.title > b.title ? 1 : -1))
+            .slice(0, 21)
+        },
+        filter: {
+          allTags: data.meta.tags,
+          activeTags: data.meta.tags.filter(tag =>
+            tag.endsWith(edge.node.title.split(' ').at(-1))
+          ),
+          initialFilters: {
+            tags: [],
+            maxPrice: Math.max(
+              ...edge.node.products.map(
+                product => product.priceRangeV2.maxVariantPrice.amount
+              )
+            )
+          },
+          hasNextPage: edge.node.products.length > 21
+        }
       }
     })
 
