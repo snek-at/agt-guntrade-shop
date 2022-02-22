@@ -239,6 +239,10 @@ const createCollectionShopAndProductPages = (data, actions) => {
       }
     })
 
+    const activeTags = data.meta.tags.filter(tag =>
+      tag.endsWith(edge.node.title.split(' ').at(-1))
+    )
+
     slug = slug + '/products/'
     actions.createPage({
       path: slug,
@@ -252,11 +256,9 @@ const createCollectionShopAndProductPages = (data, actions) => {
         },
         filter: {
           allTags: data.meta.tags,
-          activeTags: data.meta.tags.filter(tag =>
-            tag.endsWith(edge.node.title.split(' ').at(-1))
-          ),
+          activeTags: activeTags,
           initialFilters: {
-            tags: [],
+            tags: activeTags,
             maxPrice: Math.max(
               ...edge.node.products.map(
                 product => product.priceRangeV2.maxVariantPrice.amount
