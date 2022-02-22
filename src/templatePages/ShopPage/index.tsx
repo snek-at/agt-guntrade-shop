@@ -1,4 +1,4 @@
-import {PageProps} from 'gatsby'
+import {navigate, PageProps} from 'gatsby'
 import React from 'react'
 import {isEqual} from 'lodash'
 
@@ -7,6 +7,7 @@ import {
   useProductSearch
 } from '../../common/requests/storefront'
 import {ShopCatalogLayout} from '../../layout/ShopCatalogLayout'
+import slugify from 'slugify'
 
 type ShopPageProps = PageProps<
   {},
@@ -26,7 +27,6 @@ type ShopPageProps = PageProps<
     }
     products: {
       items: Array<any>
-      onItemClick: (item: any) => void
     }
   }
 >
@@ -121,7 +121,14 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
       }}
       products={{
         items: displayedProducts,
-        onItemClick: pageContext.products.onItemClick
+        onItemClick: (item: any) => {
+          const to =
+            location.pathname +
+            (location.pathname.endsWith('/') ? '' : '/') +
+            slugify(item.title, {remove: /[*+~.()'"!:@]/g}) +
+            '/'
+          navigate(to)
+        }
       }}
       onLoadMore={() => {
         console.log('funkt')
