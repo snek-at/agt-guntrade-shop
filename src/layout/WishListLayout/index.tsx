@@ -201,7 +201,10 @@ const ImageWithText = (props: {
   }
 }) => (
   <Flex>
-    <Box boxSize="100" bg={useColorModeValue('gray.200', 'gray.600')}>
+    <Box
+      minW="100"
+      boxSize="100"
+      bg={useColorModeValue('gray.200', 'gray.600')}>
       <GatsbyImage alt={props.image.alt} image={props.image.gatsbyImageData} />
     </Box>
 
