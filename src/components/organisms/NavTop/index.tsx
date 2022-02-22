@@ -24,9 +24,13 @@ import {HamburgerIcon, CloseIcon, AddIcon, SearchIcon} from '@chakra-ui/icons'
 import {FiShoppingCart} from '@react-icons/all-files/fi/FiShoppingCart'
 import {Logo} from '../../../common/assets'
 import * as style from './style'
+import {AiTwotoneHeart} from 'react-icons/ai'
+import {FaHeart} from 'react-icons/fa'
 
 export interface NavTopProps {
   links: string[]
+  onLogoClick: () => void
+  onWishlistClick: () => void
 }
 
 const NavLink = ({children}: {children: ReactNode}) => (
@@ -43,7 +47,7 @@ const NavLink = ({children}: {children: ReactNode}) => (
   </Link>
 )
 
-const NavTop = ({links}: NavTopProps) => {
+const NavTop = ({links, onLogoClick, onWishlistClick}: NavTopProps) => {
   const {isOpen, onOpen, onClose} = useDisclosure()
 
   return (
@@ -68,10 +72,12 @@ const NavTop = ({links}: NavTopProps) => {
             bg={['agt.gray', 'agt.gray', 'agt.gray', 'agt.gray']}
           />
           <HStack
+            cursor={'pointer'}
             spacing={{base: '10', md: '20'}}
             alignItems={'center'}
             maxW="2xl"
-            css={style.Logo}>
+            css={style.Logo}
+            onClick={onLogoClick}>
             <Logo />
           </HStack>
           <Button
@@ -79,7 +85,6 @@ const NavTop = ({links}: NavTopProps) => {
             flex="1"
             type="button"
             mx="6"
-            href={'#'}
             lineHeight="1.2"
             w="100%"
             bg={useColorModeValue('white', 'gray.700')}
@@ -149,11 +154,11 @@ const NavTop = ({links}: NavTopProps) => {
               _hover={{
                 bg: ['primary.100', 'primary.100', 'primary.600', 'primary.600']
               }}
-              leftIcon={<FiShoppingCart />}>
-              Einkaufswagn
+              leftIcon={<FaHeart />}
+              onClick={onWishlistClick}>
+              Wunschliste
             </Button>
             <IconButton
-              center
               justifyContent={'center'}
               size={'md'}
               icon={<FiShoppingCart />}

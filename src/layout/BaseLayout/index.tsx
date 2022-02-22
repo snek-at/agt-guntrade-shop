@@ -3,7 +3,16 @@ import Footer from '../../components/organisms/Footer'
 import NavTop from '../../components/organisms/NavTop'
 import SideButton from '../../components/molecules/buttons/SideButtons'
 import ScrollToTopButton from '../../components/molecules/buttons/ScrollToTopButton'
+import {navigate} from 'gatsby'
 export const BaseLayout: React.FC = ({children}) => {
+  const handleLogoClick = () => {
+    navigate('/')
+  }
+
+  const handleWishlistClick = () => {
+    navigate('/wishlist')
+  }
+
   return (
     <>
       <ScrollToTopButton onScrollToTopClick={() => null} />
@@ -13,6 +22,8 @@ export const BaseLayout: React.FC = ({children}) => {
         onSideButton3Click={() => null}
       />
       <NavTop
+        onLogoClick={handleLogoClick}
+        onWishlistClick={handleWishlistClick}
         links={[
           'Waffen',
           'Munition',
