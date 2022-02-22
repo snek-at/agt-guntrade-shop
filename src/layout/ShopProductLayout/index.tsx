@@ -113,9 +113,12 @@ const ImageSlider = (props: {
 }
 
 const ProductDetail = (props: {
+  id: string
   title: string
   price: string
   status: string
+  isOnWishList?: boolean
+  onWishlistAdd: (id: string) => void
 }) => {
   return (
     <Box
@@ -146,8 +149,14 @@ const ProductDetail = (props: {
         </Button>
         <Divider />
         <Flex alignItems={'center'} justifyContent="center" fontSize={'xl'}>
-          <Box mx="auto">
-            <Text fontWeight={'semibold'}>
+          <Box mx="auto" onClick={() => props.onWishlistAdd(props.id)}>
+            <Text
+              fontWeight={'semibold'}
+              color={props.isOnWishList ? 'red.500' : undefined}
+              _hover={{
+                color: props.isOnWishList ? 'red.400' : 'red.300'
+              }}
+              cursor="pointer">
               <Center>
                 <Icon as={FaHeart} mr="2" />
                 Merken

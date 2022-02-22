@@ -17,9 +17,11 @@ export const Product0 = () => (
       images: products[0].images as any
     }}
     productDetail={{
+      id: products[0].id,
       title: products[0].title,
       price: products[0].priceRangeV2.maxVariantPrice.amount,
-      status: 'Sofort lieferbar'
+      status: 'Sofort lieferbar',
+      onWishlistAdd: id => console.log('add to wishlist')
     }}
     productMoreDetail={{
       description: products[0].descriptionHtml
@@ -36,9 +38,11 @@ export const Product1 = () => (
       images: products[1].images as any
     }}
     productDetail={{
+      id: products[1].id,
       title: products[1].title,
       price: products[1].priceRangeV2.maxVariantPrice.amount,
-      status: 'Sofort lieferbar'
+      status: 'Sofort lieferbar',
+      onWishlistAdd: () => alert('Wishlist added')
     }}
     productMoreDetail={{
       description: products[1].descriptionHtml

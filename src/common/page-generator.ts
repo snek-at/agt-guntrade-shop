@@ -173,8 +173,9 @@ const createAllProductsShopPage = (data, actions) => {
             }))
         },
         productDetail: {
+          id: product.id,
           price: product.priceRangeV2.maxVariantPrice.amount,
-          status: 'I dunno'
+          tags: product.tags
         },
         productMoreDetail: {
           description: product.descriptionHtml
@@ -301,8 +302,9 @@ const createCollectionShopAndProductPages = (data, actions) => {
               }))
           },
           productDetail: {
+            id: product.id,
             price: product.priceRangeV2.maxVariantPrice.amount,
-            status: 'I dunno'
+            tags: product.tags
           },
           productMoreDetail: {
             description: product.descriptionHtml
