@@ -24,6 +24,7 @@ export const BaseLayout: React.FC = ({children}) => {
       <NavTop
         onLogoClick={handleLogoClick}
         onWishlistClick={handleWishlistClick}
+        onLinkClick={index => null}
         links={[
           'Waffen',
           'Munition',
@@ -35,6 +36,7 @@ export const BaseLayout: React.FC = ({children}) => {
           'Zubehör',
           'Ersatzteile'
         ]}
+        activeLink={0}
       />
       {children}
       <Footer

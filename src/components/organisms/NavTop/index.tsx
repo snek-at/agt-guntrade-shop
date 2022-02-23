@@ -29,26 +29,39 @@ import {FaHeart} from 'react-icons/fa'
 
 export interface NavTopProps {
   links: string[]
+  activeLink?: number
+  onLinkClick: (index: number) => void
   onLogoClick: () => void
   onWishlistClick: () => void
 }
 
-const NavLink = ({children}: {children: ReactNode}) => (
-  <Link
-    px={2}
-    py={1}
-    rounded={'md'}
-    _hover={{
-      textDecoration: 'none',
-      bg: useColorModeValue('gray.200', 'gray.700')
-    }}
-    href={'#'}>
-    {children}
-  </Link>
-)
-
-const NavTop = ({links, onLogoClick, onWishlistClick}: NavTopProps) => {
+const NavTop = ({
+  links,
+  activeLink,
+  onLinkClick,
+  onLogoClick,
+  onWishlistClick
+}: NavTopProps) => {
   const {isOpen, onOpen, onClose} = useDisclosure()
+
+  const allLinkElement = links.map((link, index) => (
+    <Link
+      px={2}
+      py={1}
+      rounded={'md'}
+      bg={
+        index === activeLink
+          ? useColorModeValue('gray.200', 'gray.600')
+          : 'transparent'
+      }
+      _hover={{
+        textDecoration: 'none',
+        bg: useColorModeValue('gray.200', 'gray.600')
+      }}
+      onClick={() => onLinkClick(index)}>
+      {link}
+    </Link>
+  ))
 
   return (
     <>
@@ -173,9 +186,7 @@ const NavTop = ({links, onLogoClick, onWishlistClick}: NavTopProps) => {
         {isOpen ? (
           <Box pb={4} display={{md: 'none'}}>
             <Stack as={'nav'} spacing={4}>
-              {links.map(link => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
+              {allLinkElement}
             </Stack>
           </Box>
         ) : null}
@@ -196,9 +207,7 @@ const NavTop = ({links, onLogoClick, onWishlistClick}: NavTopProps) => {
             as={'nav'}
             spacing={4}
             justifyContent={'space-between'}>
-            {links.map(link => (
-              <NavLink key={link}>{link}</NavLink>
-            ))}
+            {allLinkElement}
           </HStack>
         </Flex>
       </Box>
