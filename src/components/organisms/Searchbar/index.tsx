@@ -29,7 +29,7 @@ import {GatsbyImage} from 'gatsby-plugin-image'
 import {ImageWithText} from '../../../layout/WishListLayout'
 import * as React from 'react'
 
-import {Link} from 'gatsby'
+import {Link, navigate} from 'gatsby'
 
 export interface SearchbarProps {
   searchResultProducts: Array<any>
@@ -107,6 +107,24 @@ export const Searchbar = (props: SearchbarProps) => {
     }
   }, [searchValue])
 
+  // event listener for keyboard events
+  React.useEffect(() => {
+    // handle strg + k
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'k' && e.ctrlKey) {
+        e.preventDefault()
+
+        onOpen()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [])
+
   return (
     <>
       <SearchbarButton onClick={onOpen} />
@@ -140,16 +158,16 @@ export const Searchbar = (props: SearchbarProps) => {
                   <Divider />
                   <VStack m="4" align="left">
                     {props.searchResultProducts.map((product, index) => (
-                      <Link to={`/products/${product.slug}`} key={index}>
+                      <Link to={`/products/${product.handle}`} key={index}>
                         <Box
                           key={index}
                           px="4"
                           py="2"
                           bg={useColorModeValue('gray.200', 'gray.600')}
-                          rounded="md"
                           _hover={{
                             bg: 'agt.blue'
                           }}
+                          rounded="md"
                           cursor="pointer"
                           transition="ease-out">
                           <ImageWithText
