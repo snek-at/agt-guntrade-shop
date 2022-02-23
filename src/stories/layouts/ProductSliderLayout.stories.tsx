@@ -1,7 +1,8 @@
 import {Story, Meta} from '@storybook/react'
+import {getProductNodes} from '../../test-data/shopify'
 import {ProductSliderLayout} from '../../layout/ProductSliderLayout'
 
-import {products} from '../pages/_data/products'
+const products = getProductNodes(8)
 
 export default {
   title: 'Layouts/ProductSliderLayout',
@@ -9,5 +10,9 @@ export default {
 } as Meta
 
 export const Page = () => (
-  <ProductSliderLayout title="Unsere Empfehlungen" products={products} />
+  <ProductSliderLayout
+    title="Unsere Empfehlungen"
+    products={products}
+    onProductClick={p => null}
+  />
 )

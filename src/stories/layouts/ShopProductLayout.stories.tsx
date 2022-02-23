@@ -1,13 +1,15 @@
 import {Story, Meta} from '@storybook/react'
 import {IGatsbyImageData} from 'gatsby-plugin-image'
+import {getProductNodes} from '../../test-data/shopify'
 import {ShopProductLayout} from '../../layout/ShopProductLayout'
-import {products} from '../pages/_data/products'
 export default {
   title: 'Layouts/ShopProductLayout',
   component: ShopProductLayout
 } as Meta
 
 const path = '/langwaffen/neuelangwaffen/products/'
+
+const products = getProductNodes(10)
 
 export const Product0 = () => (
   <ShopProductLayout
@@ -19,14 +21,17 @@ export const Product0 = () => (
     productDetail={{
       id: products[0].id,
       title: products[0].title,
-      price: products[0].priceRangeV2.maxVariantPrice.amount,
+      price: products[0].contextualPricing.maxVariantPricing.price.amount,
       status: 'Sofort lieferbar',
       onWishlistAdd: id => console.log('add to wishlist')
     }}
     productMoreDetail={{
       description: products[0].descriptionHtml
     }}
-    featuredProducts={products.slice(1, 7)}
+    featuredProducts={{
+      products: products.slice(1, 7),
+      onProductClick: () => null
+    }}
   />
 )
 
@@ -40,13 +45,16 @@ export const Product1 = () => (
     productDetail={{
       id: products[1].id,
       title: products[1].title,
-      price: products[1].priceRangeV2.maxVariantPrice.amount,
+      price: products[1].contextualPricing.maxVariantPricing.price.amount,
       status: 'Sofort lieferbar',
       onWishlistAdd: () => alert('Wishlist added')
     }}
     productMoreDetail={{
       description: products[1].descriptionHtml
     }}
-    featuredProducts={products.slice(0, 6)}
+    featuredProducts={{
+      products: products.slice(2, 7),
+      onProductClick: () => null
+    }}
   />
 )

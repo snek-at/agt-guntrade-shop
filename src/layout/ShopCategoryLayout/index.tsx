@@ -23,6 +23,7 @@ export type CategoryItem = {
   handle: string
   totalProducts: number
   image: {
+    alt: string
     gatsbyImageData: IGatsbyImageData
   } | null
 }
@@ -61,7 +62,6 @@ const Header = (props: {path: string; title: string}) => {
 }
 
 const CategoryGrid = (props: {
-  title: string
   items: Array<CategoryItem>
   onItemClick: (item: CategoryItem) => void
 }) => {
@@ -90,7 +90,7 @@ const CategoryGrid = (props: {
           <AspectRatio ratio={1}>
             <VStack>
               <GatsbyImage
-                alt={item.title}
+                alt={item.image?.alt || item.title}
                 image={item.image?.gatsbyImageData!}
                 style={{
                   minHeight: '100%',

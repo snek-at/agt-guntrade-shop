@@ -1,17 +1,20 @@
 import {Story, Meta} from '@storybook/react'
+import {getProductNodes} from '../../test-data/shopify'
 import {WishListLayout} from '../../layout/WishListLayout'
-import {products} from '../pages/_data/products'
 
 export default {
   title: 'Layouts/WishListLayout',
   component: WishListLayout
 } as Meta
 
+const products = getProductNodes(10)
+
 export const Filled = () => (
   <WishListLayout
     items={[
       {
         id: '1',
+        handle: 'test',
         title: 'Test',
         price: '1.00',
         categoriesString: 'Test',
@@ -20,6 +23,7 @@ export const Filled = () => (
       },
       {
         id: '2',
+        handle: 'test-1-1-1-1-1',
         title: 'Test  1 1 1 1 1',
         price: '1.00',
         categoriesString: 'Test123',
