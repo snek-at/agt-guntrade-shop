@@ -76,7 +76,7 @@ const ImageSlider = (props: {
   )
 
   return (
-    <Box my="4" w={{base: '100%', md: '70%'}}>
+    <Box my="4" w={'100%'}>
       <AspectRatio ratio={16 / 9}>
         <Box>
           <GatsbyImage
@@ -212,8 +212,8 @@ export const ShopProductLayout = (props: {
     <BaseLayout>
       <ShopLayout>
         <Header {...props.header} />
-        <VStack spacing={12}>
-          <Box>
+        <VStack spacing={12} w="100%">
+          <Box w="100%">
             <Flex direction={{base: 'column', md: 'row'}}>
               <ImageSlider
                 {...props.imageSlider}
