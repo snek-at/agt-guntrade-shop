@@ -23,6 +23,7 @@ type ProductPageProps = PageProps<
     productDetail: {
       id: string
       price: string
+      discountPrice?: string
       tags: string[]
     }
     productMoreDetail: {

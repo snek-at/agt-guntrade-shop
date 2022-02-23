@@ -166,6 +166,8 @@ const createAllProductsShopPage = (data, actions) => {
         productDetail: {
           id: product.id,
           price: product.contextualPricing.maxVariantPricing.price.amount,
+          discountPrice:
+            product.contextualPricing.maxVariantPricing.compareAtPrice?.amount,
           tags: product.tags
         },
         productMoreDetail: {

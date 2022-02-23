@@ -22,17 +22,58 @@ import {MdMessage} from 'react-icons/md'
 import {FaHeart, FaShare} from 'react-icons/fa'
 import {GatsbyImage, IGatsbyImageData} from 'gatsby-plugin-image'
 import {ProductSliderLayout} from '../ProductSliderLayout'
-import {BrandSliderLayout} from '../BrandSliderLayout'
 import {BaseLayout} from '../BaseLayout'
 
 const Header = (props: {title: string; path: string}) => {
   return (
-    <VStack align="left">
+    <VStack align="left" my="2">
       <Breadcrumbs path={props.path} />
       <Heading size="xl" fontWeight={'semibold'}>
         {props.title}
       </Heading>
     </VStack>
+  )
+}
+
+function Price(props: {price: string; discountPrice?: string}) {
+  const price = `${parseFloat(props.price).toFixed(2)} €`
+  if (props.discountPrice) {
+    const discountPrice = `${parseFloat(props.discountPrice).toFixed(2)} €`
+    // strike through price and put discount price on the right side
+    return (
+      <Flex
+        direction="row"
+        wrap="wrap"
+        justifyContent={{
+          base: 'center',
+          md: 'flex-start'
+        }}>
+        <Text
+          fontSize="xl"
+          fontWeight="semibold"
+          color="gray.600"
+          textDecoration={'line-through'}>
+          {price}
+        </Text>
+
+        <Heading
+          size="3xl"
+          mt={{
+            base: 0,
+            md: 4
+          }}
+          fontWeight={'semibold'}
+          color="red.500">
+          {discountPrice}
+        </Heading>
+      </Flex>
+    )
+  }
+
+  return (
+    <Heading size="3xl" fontWeight={'semibold'}>
+      {price}
+    </Heading>
   )
 }
 
@@ -116,21 +157,21 @@ const ProductDetail = (props: {
   id: string
   title: string
   price: string
+  discountPrice?: string
   status: string
   isOnWishList?: boolean
   onWishlistAdd: (id: string) => void
 }) => {
   return (
     <Box
-      w={{base: '100%', md: '30%'}}
+      w={{base: '100%', md: '40%'}}
+      minW="300px"
       pl={{base: 0, md: 4}}
       position={'sticky'}
       top="15"
       alignSelf={'flex-start'}>
       <VStack align={'left'} spacing="4">
-        <Heading size="3xl" fontWeight={'semibold'}>
-          {`${props.price}€`}
-        </Heading>
+        <Price price={props.price} discountPrice={props.discountPrice} />
         <Text size="xs" fontWeight={'thin'}>
           inkl. MwSt.
         </Text>
@@ -214,7 +255,7 @@ export const ShopProductLayout = (props: {
         <Header {...props.header} />
         <VStack spacing={12} w="100%">
           <Box w="100%">
-            <Flex direction={{base: 'column', md: 'row'}}>
+            <Flex direction={{base: 'column', lg: 'row'}}>
               <ImageSlider
                 {...props.imageSlider}
                 productMoreDetail={props.productMoreDetail}
