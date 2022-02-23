@@ -28,39 +28,37 @@ import {AiTwotoneHeart} from 'react-icons/ai'
 import {FaHeart} from 'react-icons/fa'
 import Searchbar from '../Searchbar'
 
+import {Link as GatsbyLink} from 'gatsby'
+
 export interface NavTopProps {
-  links: string[]
-  activeLink?: number
-  onLinkClick: (index: number) => void
-  onLogoClick: () => void
-  onWishlistClick: () => void
+  links: {
+    name: string
+    path: string
+  }[]
+  activePath?: string
 }
 
-const NavTop = ({
-  links,
-  activeLink,
-  onLinkClick,
-  onLogoClick,
-  onWishlistClick
-}: NavTopProps) => {
+const NavTop = ({links, activePath}: NavTopProps) => {
   const {isOpen, onOpen, onClose} = useDisclosure()
 
-  const allLinkElement = links.map((link, index) => (
+  const allLinkElement = links.map((link, i) => (
     <Link
+      key={i}
+      as={GatsbyLink}
+      to={link.path}
       px={2}
       py={1}
       rounded={'md'}
       bg={
-        index === activeLink
+        link.path === activePath
           ? useColorModeValue('gray.200', 'gray.600')
           : 'transparent'
       }
       _hover={{
         textDecoration: 'none',
         bg: useColorModeValue('gray.200', 'gray.600')
-      }}
-      onClick={() => onLinkClick(index)}>
-      {link}
+      }}>
+      {link.name}
     </Link>
   ))
 
@@ -86,12 +84,13 @@ const NavTop = ({
             bg={['agt.gray', 'agt.gray', 'agt.gray', 'agt.gray']}
           />
           <HStack
+            as={GatsbyLink}
+            to="/"
             cursor={'pointer'}
             spacing={{base: '10', md: '20'}}
             alignItems={'center'}
             maxW="2xl"
-            css={style.Logo}
-            onClick={onLogoClick}>
+            css={style.Logo}>
             <Logo />
           </HStack>
           <Searchbar searchResultProducts={[]} onSearch={v => console.log(v)} />
@@ -118,6 +117,8 @@ const NavTop = ({
             </MenuList>
         </Menu> */}
             <Button
+              as={GatsbyLink}
+              to="/wishlist"
               size="sm"
               rounded="md"
               color={['white']}
@@ -126,8 +127,7 @@ const NavTop = ({
               _hover={{
                 bg: ['primary.100', 'primary.100', 'primary.600', 'primary.600']
               }}
-              leftIcon={<FaHeart />}
-              onClick={onWishlistClick}>
+              leftIcon={<FaHeart />}>
               Wunschliste
             </Button>
             <IconButton

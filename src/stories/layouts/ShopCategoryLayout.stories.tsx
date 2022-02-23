@@ -19,12 +19,12 @@ export const Page = () => (
     title="Vectan Schwarzpulverpresslinge"
     category={{
       items: categories as any,
-      onItemClick: item => alert(item.handle)
+      getPath: (handle: string) => `/${handle}`
     }}
     productGrid={{
       title: 'Top Produkte',
       items: products.slice(0, 8),
-      onItemClick: item => alert(item.handle)
+      getPath: (handle: string) => `/products/${handle}`
     }}
   />
 )

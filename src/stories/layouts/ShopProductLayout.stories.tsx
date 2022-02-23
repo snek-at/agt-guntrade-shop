@@ -30,7 +30,6 @@ export const Product0 = () => (
     }}
     featuredProducts={{
       products: products.slice(1, 7),
-      onProductClick: () => null
     }}
   />
 )
@@ -54,7 +53,6 @@ export const Product1 = () => (
     }}
     featuredProducts={{
       products: products.slice(2, 7),
-      onProductClick: () => null
     }}
   />
 )

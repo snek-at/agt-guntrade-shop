@@ -61,15 +61,10 @@ const ProductPage = ({pageContext, location}: ProductPageProps) => {
     }
   }
 
-  const handleFeaturedProductClick = (product: any) => {
-    navigate(`/products/${product.handle}/`)
-  }
-
   return (
     <ShopProductLayout
       featuredProducts={{
-        products: pageContext.featuredProducts,
-        onProductClick: handleFeaturedProductClick
+        products: pageContext.featuredProducts
       }}
       header={{title: pageContext.header.title, path: location.pathname}}
       imageSlider={pageContext.imageSlider}

@@ -23,21 +23,20 @@ const CategoryPage = ({pageContext, location}: CategoryPageProps) => {
       path={location.pathname}
       category={{
         ...pageContext.category,
-        onItemClick: (item: CategoryItem) => {
-          // remove the trailing slash
+        getPath: (handle: string) => {
           const pathname = location.pathname.replace(/\/$/, '')
 
-          if (item.handle === 'alle-produkte') {
-            navigate(`${pathname}/products/`)
+          if (handle === 'alle-produkte') {
+            return `${pathname}/products/`
           } else {
-            navigate(`${pathname}/${item.handle.split('-').at(-1)}`)
+            return `${pathname}/${handle.split('-').at(-1)}`
           }
         }
       }}
       productGrid={{
         ...pageContext.productGrid,
-        onItemClick: (item: any) => {
-          navigate(`/products/${item.handle}`)
+        getPath: (handle: string) => {
+          return `/products/${handle}`
         }
       }}
     />

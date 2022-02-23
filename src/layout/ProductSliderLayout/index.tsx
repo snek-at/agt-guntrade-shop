@@ -15,20 +15,20 @@ import {generateProductCard, ProductCardLayout} from '../ProductCardLayout'
 import {gridPadBoxes} from '../../common/utils'
 import styled from '@emotion/styled'
 import {Slider} from './Slider'
+import {Link} from 'gatsby'
 
 const MotionBox = motion<BoxProps>(Box)
 
 export const ProductSliderLayout = (props: {
   title: string
   products: Array<any>
-  onProductClick: (product: any) => void
 }) => {
   const productsForSlider = React.useMemo(
     () =>
       props.products.map(product => (
-        <Box onClick={() => props.onProductClick(product)}>
+        <Link to={`/products/${product.handle}`}>
           {generateProductCard(product)}
-        </Box>
+        </Link>
       )),
     [props.products]
   )

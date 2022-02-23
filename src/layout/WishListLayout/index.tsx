@@ -36,7 +36,9 @@ import {WishlistProduct} from '../../services/wishlist'
 import {BaseLayout} from '../BaseLayout'
 import {ShopLayout} from '../ShopLayout'
 
-const ContinueShoppingText = (props: {onClick: () => void}) => (
+import {Link as GatsbyLink} from 'gatsby'
+
+const ContinueShoppingText = () => (
   <HStack
     mt={{
       base: 2,
@@ -44,17 +46,17 @@ const ContinueShoppingText = (props: {onClick: () => void}) => (
     }}
     justify="center">
     <Text>oder,</Text>
-    <Link color={'agt.blue'} fontWeight="semibold" onClick={props.onClick}>
+    <Link
+      as={GatsbyLink}
+      color={'agt.blue'}
+      fontWeight="semibold"
+      to="/products">
       zu den Artikeln
     </Link>
   </HStack>
 )
 
-const SummaryBox = (props: {
-  totalPrice: number
-  onRequestNow: () => void
-  onContinueShopping: () => void
-}) => {
+const SummaryBox = (props: {totalPrice: number; onRequestNow: () => void}) => {
   return (
     <>
       <VStack
@@ -88,12 +90,12 @@ const SummaryBox = (props: {
           <Text>Jetzt anfragen</Text>
         </Button>
       </VStack>
-      <ContinueShoppingText onClick={props.onContinueShopping} />
+      <ContinueShoppingText />
     </>
   )
 }
 
-const EmptyWishList = (props: {onContinueShopping: () => void}) => {
+const EmptyWishList = () => {
   return (
     <VStack
       align="center"
@@ -114,7 +116,7 @@ const EmptyWishList = (props: {onContinueShopping: () => void}) => {
       <Text fontSize={'xl'}>
         Füllen Sie sie mit Ihren Wunschartikeln aus dem Shop auf.
       </Text>
-      <ContinueShoppingText onClick={props.onContinueShopping} />
+      <ContinueShoppingText />
     </VStack>
   )
 }
@@ -124,8 +126,6 @@ export const WishListLayout = (props: {
   onRemove: (id: string) => void
   onQuantityChange: (id: string, quantity: number) => void
   onRequestNow: () => void
-  onContinueShopping: () => void
-  onProductOpen: (id: string) => void
 }) => {
   const itemLength = props.items.length
 
@@ -135,11 +135,7 @@ export const WishListLayout = (props: {
   )
 
   const summaryBox = (
-    <SummaryBox
-      totalPrice={totalPrice}
-      onRequestNow={props.onRequestNow}
-      onContinueShopping={props.onContinueShopping}
-    />
+    <SummaryBox totalPrice={totalPrice} onRequestNow={props.onRequestNow} />
   )
 
   return (
@@ -166,7 +162,6 @@ export const WishListLayout = (props: {
                       onQuantityChange={(quantity: number) =>
                         props.onQuantityChange(item.id, quantity)
                       }
-                      onOpenProduct={() => props.onProductOpen(item.id)}
                     />
                   ))}
                 </VStack>
@@ -193,7 +188,7 @@ export const WishListLayout = (props: {
               </Box>
             </>
           ) : (
-            <EmptyWishList onContinueShopping={props.onContinueShopping} />
+            <EmptyWishList />
           )}
         </Box>
       </ShopLayout>
@@ -230,6 +225,7 @@ export const ImageWithText = (props: {
 
 const WishListItem = (props: {
   title: string
+  handle: string
   categoriesString: string
   image: {
     alt: string
@@ -239,16 +235,15 @@ const WishListItem = (props: {
   quantity: number
   onQuantityChange: (value: number) => void
   onRemove: () => void
-  onOpenProduct: () => void
 }) => {
   const imageWithText = (
-    <Box cursor={'pointer'} onClick={props.onOpenProduct}>
+    <Link as={GatsbyLink} to={`/products/${props.handle}`}>
       <ImageWithText
         title={props.title}
         image={props.image}
         categoriesString={props.categoriesString}
       />
-    </Box>
+    </Link>
   )
 
   const stepper = (

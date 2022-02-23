@@ -34,8 +34,6 @@ export const Filled = () => (
     onRemove={() => {}}
     onQuantityChange={() => {}}
     onRequestNow={() => {}}
-    onContinueShopping={() => {}}
-    onProductOpen={() => {}}
   />
 )
 
@@ -45,7 +43,5 @@ export const Empty = () => (
     onRemove={() => {}}
     onQuantityChange={() => {}}
     onRequestNow={() => {}}
-    onContinueShopping={() => {}}
-    onProductOpen={() => {}}
   />
 )

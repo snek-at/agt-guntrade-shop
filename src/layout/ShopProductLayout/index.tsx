@@ -246,7 +246,6 @@ export const ShopProductLayout = (props: {
   productMoreDetail: React.ComponentProps<typeof ProductMoreDetail>
   featuredProducts: {
     products: Array<any>
-    onProductClick: (item: any) => void
   }
 }) => {
   return (

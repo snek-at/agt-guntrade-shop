@@ -5,6 +5,7 @@ import {
   Grid,
   Heading,
   HStack,
+  Link,
   SimpleGrid,
   Text,
   VStack
@@ -18,6 +19,8 @@ import React from 'react'
 import {ProductGrid} from '../ProductGridLayout'
 import {BaseLayout} from '../BaseLayout'
 
+import {Link as GatsbyLink} from 'gatsby'
+
 export type CategoryItem = {
   title: string
   handle: string
@@ -26,6 +29,14 @@ export type CategoryItem = {
     alt: string
     gatsbyImageData: IGatsbyImageData
   } | null
+}
+
+const categoryLinkTo = (item: CategoryItem) => {
+  if (item.handle === 'alle-produkte') {
+    return './products'
+  } else {
+    return `./${item.handle.split('-').at(-1)}`
+  }
 }
 
 const Header = (props: {path: string; title: string}) => {
@@ -63,20 +74,21 @@ const Header = (props: {path: string; title: string}) => {
 
 const CategoryGrid = (props: {
   items: Array<CategoryItem>
-  onItemClick: (item: CategoryItem) => void
+  getPath: (handle: string) => string
 }) => {
   // grid that does not stretch if there are less items than the grid size
 
-  const {items, onItemClick} = props
+  const {items} = props
 
   const emptyBoxes: Array<any> = gridPadBoxes(items)
 
   return (
     <SimpleGrid spacing={'4'} {...props} minChildWidth="200px" py="8">
       {items.map((item, index) => (
-        <Box
+        <Link
+          as={GatsbyLink}
+          to={props.getPath(item.handle)}
           key={index}
-          onClick={() => onItemClick(item)}
           borderRadius="lg"
           overflow="hidden"
           position="relative"
@@ -105,7 +117,7 @@ const CategoryGrid = (props: {
             textAlign={
               'center'
             }>{`${item.title} (${item.totalProducts})`}</Text>
-        </Box>
+        </Link>
       ))}
       {emptyBoxes}
     </SimpleGrid>

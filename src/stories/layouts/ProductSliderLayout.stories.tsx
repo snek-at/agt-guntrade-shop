@@ -13,6 +13,5 @@ export const Page = () => (
   <ProductSliderLayout
     title="Unsere Empfehlungen"
     products={products}
-    onProductClick={p => null}
   />
 )

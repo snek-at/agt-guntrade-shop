@@ -5,18 +5,6 @@ import {WishListLayout} from '../layout/WishListLayout'
 const WishlistPage = ({}: PageProps) => {
   const {wishlist, updateQuantity, removeFromWishlist} = useWishlist()
 
-  const handleProductOpen = (productId: string) => {
-    const product = wishlist.find(item => item.id === productId)
-
-    if (product) {
-      navigate(`/products/${product.handle}`)
-    }
-  }
-
-  const handleContinueShopping = () => {
-    navigate('/products')
-  }
-
   const handleRequestNow = () => {
     alert('Request now')
   }
@@ -26,9 +14,7 @@ const WishlistPage = ({}: PageProps) => {
       items={wishlist}
       onRemove={removeFromWishlist}
       onQuantityChange={updateQuantity}
-      onContinueShopping={handleContinueShopping}
       onRequestNow={handleRequestNow}
-      onProductOpen={handleProductOpen}
     />
   )
 }

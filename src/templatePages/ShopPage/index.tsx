@@ -120,11 +120,11 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
       }}
       products={{
         items: displayedProducts,
-        onItemClick: (item: any) => {
+        getPath: (handle: string) => {
           // remove the trailing slash
           const pathname = location.pathname.replace(/\/$/, '')
 
-          navigate(`${pathname}/${item.handle}`)
+          return `${pathname}/${handle}`
         }
       }}
       onLoadMore={() => {
