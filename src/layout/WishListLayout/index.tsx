@@ -201,7 +201,7 @@ export const WishListLayout = (props: {
   )
 }
 
-const ImageWithText = (props: {
+export const ImageWithText = (props: {
   title: string
   categoriesString: string
   image: {

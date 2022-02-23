@@ -26,6 +26,7 @@ import {Logo} from '../../../common/assets'
 import * as style from './style'
 import {AiTwotoneHeart} from 'react-icons/ai'
 import {FaHeart} from 'react-icons/fa'
+import Searchbar from '../Searchbar'
 
 export interface NavTopProps {
   links: string[]
@@ -93,49 +94,7 @@ const NavTop = ({
             onClick={onLogoClick}>
             <Logo />
           </HStack>
-          <Button
-            maxW="3xl"
-            flex="1"
-            type="button"
-            mx="6"
-            lineHeight="1.2"
-            w="100%"
-            bg={useColorModeValue('white', 'gray.700')}
-            whiteSpace="nowrap"
-            display={{base: 'none', md: 'flex'}}
-            alignItems="center"
-            color="gray.400"
-            py="3"
-            px="4"
-            outline="0"
-            _focus={{shadow: 'outline'}}
-            shadow="base"
-            rounded="md"
-            // {...props}
-          >
-            <SearchIcon />
-            <HStack w="full" ml="3" spacing="4px">
-              <Text textAlign="left" flex="1">
-                Finde Artikel
-              </Text>
-              <HStack spacing="4px">
-                <VisuallyHidden>Drücke</VisuallyHidden>
-                <Kbd color="gray.500" rounded="2px">
-                  <Box
-                    as="abbr"
-                    title={'Strg'}
-                    textDecoration="none !important">
-                    {'Strg'}
-                  </Box>
-                </Kbd>
-                <VisuallyHidden>und</VisuallyHidden>
-                <Kbd color="gray.500" rounded="2px">
-                  K
-                </Kbd>
-                <VisuallyHidden> zum suchen</VisuallyHidden>
-              </HStack>
-            </HStack>
-          </Button>
+          <Searchbar searchResultProducts={[]} onSearch={v => console.log(v)} />
           <HStack spacing={8} alignItems={'center'} justifyContent={'flex-end'}>
             {/* <Menu>
             <MenuButton
