@@ -17,7 +17,6 @@ import styled from '@emotion/styled'
 import {Slider} from './Slider'
 import {Link} from 'gatsby'
 
-const MotionBox = motion<BoxProps>(Box)
 
 export const ProductSliderLayout = (props: {
   title: string

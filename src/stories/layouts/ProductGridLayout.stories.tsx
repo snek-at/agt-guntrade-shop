@@ -10,13 +10,16 @@ export default {
 } as Meta
 
 export const Basic = () => (
-  <ProductGrid items={products} onItemClick={() => {}} />
+  <ProductGrid
+    items={products}
+    getPath={(handle: string) => `/products/${handle}`}
+  />
 )
 
 export const WithTitle = () => (
   <ProductGrid
     title="Unsere Empfehlungen"
     items={products}
-    onItemClick={() => {}}
+    getPath={(handle: string) => `/products/${handle}`}
   />
 )

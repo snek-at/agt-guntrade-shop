@@ -136,23 +136,25 @@ export const Searchbar = (props: SearchbarProps) => {
         scrollBehavior="inside">
         <ModalOverlay />
         <ModalContent>
+          <ModalHeader p={0} m={2}>
+            <InputGroup>
+              <InputLeftElement
+                pointerEvents="none"
+                children={<SearchIcon color={'agt.blue'} />}
+              />
+              <Input
+                placeholder={'Suche nach Artikeln'}
+                border="none"
+                _focus={{
+                  boxShadow: 'none'
+                }}
+                color={useColorModeValue('gray.700', 'gray.300')}
+                onChange={delayedSearch}
+              />
+            </InputGroup>
+          </ModalHeader>
           <ModalBody px="2">
             <Box>
-              <InputGroup>
-                <InputLeftElement
-                  pointerEvents="none"
-                  children={<SearchIcon color={'agt.blue'} />}
-                />
-                <Input
-                  placeholder={'Suche nach Artikeln'}
-                  border="none"
-                  _focus={{
-                    boxShadow: 'none'
-                  }}
-                  color={useColorModeValue('gray.700', 'gray.300')}
-                  onChange={delayedSearch}
-                />
-              </InputGroup>
               {props.searchResultProducts.length > 0 && (
                 <>
                   <Divider />
