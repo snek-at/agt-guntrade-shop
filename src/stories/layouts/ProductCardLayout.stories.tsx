@@ -49,7 +49,6 @@ export const Basic = () => (
     name="Hamilton"
     categoriesString="Clothing, Shoes"
     price="4.5"
-    onClick={() => alert('click')}
   />
 )
 
@@ -89,6 +88,5 @@ export const WithDiscount = () => (
     categoriesString="Clothing, Shoes"
     price="200.00"
     discountPrice="50.0"
-    onClick={() => alert('click')}
   />
 )
