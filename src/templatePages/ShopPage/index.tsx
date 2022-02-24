@@ -7,7 +7,6 @@ import {
   useProductSearch
 } from '../../common/requests/storefront'
 import {ShopCatalogLayout} from '../../layout/ShopCatalogLayout'
-import slugify from 'slugify'
 
 type ShopPageProps = PageProps<
   {},
@@ -121,13 +120,11 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
       }}
       products={{
         items: displayedProducts,
-        onItemClick: (item: any) => {
-          const to =
-            location.pathname +
-            (location.pathname.endsWith('/') ? '' : '/') +
-            slugify(item.title, {remove: /[*+~.()'"!:@]/g}) +
-            '/'
-          navigate(to)
+        getPath: (handle: string) => {
+          // remove the trailing slash
+          const pathname = location.pathname.replace(/\/$/, '')
+
+          return `${pathname}/${handle}`
         }
       }}
       onLoadMore={() => {

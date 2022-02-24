@@ -3,7 +3,16 @@ import Footer from '../../components/organisms/Footer'
 import NavTop from '../../components/organisms/NavTop'
 import SideButton from '../../components/molecules/buttons/SideButtons'
 import ScrollToTopButton from '../../components/molecules/buttons/ScrollToTopButton'
+import {navigate} from 'gatsby'
 export const BaseLayout: React.FC = ({children}) => {
+  const handleLogoClick = () => {
+    navigate('/')
+  }
+
+  const handleWishlistClick = () => {
+    navigate('/wishlist')
+  }
+
   return (
     <>
       <ScrollToTopButton onScrollToTopClick={() => null} />
@@ -14,16 +23,44 @@ export const BaseLayout: React.FC = ({children}) => {
       />
       <NavTop
         links={[
-          'Waffen',
-          'Munition',
-          'Wiederladen',
-          'Optik',
-          'AR15/AR10',
-          'Laufrohlinge',
-          'Magazine',
-          'Zubehör',
-          'Ersatzteile'
+          {
+            name: 'Waffen',
+            path: '/waffen'
+          },
+          {
+            name: 'Munition',
+            path: '/munition'
+          },
+          {
+            name: 'Wiederladen',
+            path: '/wiederladen'
+          },
+          {
+            name: 'Optik',
+            path: '/optik'
+          },
+          {
+            name: 'AR15/AR10',
+            path: '/ar15-ar10'
+          },
+          {
+            name: 'Laufrohlinge',
+            path: '/laufrohlinge'
+          },
+          {
+            name: 'Magazine',
+            path: '/magazine'
+          },
+          {
+            name: 'Zubehör',
+            path: '/zubehoer'
+          },
+          {
+            name: 'Ersatzteile',
+            path: '/ersatzteile'
+          }
         ]}
+        activePath={'/waffen'}
       />
       {children}
       <Footer

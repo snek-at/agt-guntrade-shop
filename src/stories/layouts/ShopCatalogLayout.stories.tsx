@@ -1,6 +1,8 @@
 import {Story, Meta} from '@storybook/react'
+import {getProductNodes} from '../../test-data/shopify'
 import {ShopCatalogLayout} from '../../layout/ShopCatalogLayout'
-import {products} from '../pages/_data/products'
+
+const products = getProductNodes(12)
 
 export default {
   title: 'Layouts/ShopCatalogLayout',
@@ -19,7 +21,7 @@ export const Page = () => (
     }}
     products={{
       items: products,
-      onItemClick: (item: any) => console.log(item)
+      getPath: (handle: string) => `${path}/${handle}`
     }}
     filter={{
       allTags: ['Widerladen:Kurzwaffe', 'widerladen:Langwaffe'],

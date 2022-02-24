@@ -24,7 +24,7 @@ query ($query: String!, $sortKey: ProductSortKeys, $first: Int, $last: Int, $aft
         node {
           title
           handle
-          priceRangeV2: priceRange {
+          price: priceRange {
             maxVariantPrice {
               amount
             }

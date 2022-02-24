@@ -1,6 +1,7 @@
 import {
   Box,
   Heading,
+  Link,
   SimpleGrid,
   SimpleGridProps,
   VStack
@@ -9,11 +10,13 @@ import React from 'react'
 import {gridPadBoxes} from '../../common/utils'
 import {generateProductCard} from '../ProductCardLayout'
 
+import {Link as GatsbyLink} from 'gatsby'
+
 export const ProductGrid = (props: {
   title?: string
   items: Array<any>
-  onItemClick: (item: any) => void
   minChildWidth?: SimpleGridProps['minChildWidth']
+  getPath: (handle: string) => string
 }) => {
   const emptyBoxes = gridPadBoxes(props.items)
 
@@ -28,9 +31,9 @@ export const ProductGrid = (props: {
       <SimpleGrid spacing={4} minChildWidth={props.minChildWidth || '200px'}>
         {props.items.map((item, key) => {
           return (
-            <Box key={key} onClick={() => props.onItemClick(item)}>
+            <Link key={key} as={GatsbyLink} to={props.getPath(item.handle)}>
               {generateProductCard(item)}
-            </Box>
+            </Link>
           )
         })}
         {emptyBoxes}

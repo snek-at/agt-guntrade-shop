@@ -24,27 +24,43 @@ import {HamburgerIcon, CloseIcon, AddIcon, SearchIcon} from '@chakra-ui/icons'
 import {FiShoppingCart} from '@react-icons/all-files/fi/FiShoppingCart'
 import {Logo} from '../../../common/assets'
 import * as style from './style'
+import {AiTwotoneHeart} from 'react-icons/ai'
+import {FaHeart} from 'react-icons/fa'
+import Searchbar from '../Searchbar'
+
+import {Link as GatsbyLink} from 'gatsby'
 
 export interface NavTopProps {
-  links: string[]
+  links: {
+    name: string
+    path: string
+  }[]
+  activePath?: string
 }
 
-const NavLink = ({children}: {children: ReactNode}) => (
-  <Link
-    px={2}
-    py={1}
-    rounded={'md'}
-    _hover={{
-      textDecoration: 'none',
-      bg: useColorModeValue('gray.200', 'gray.700')
-    }}
-    href={'#'}>
-    {children}
-  </Link>
-)
-
-const NavTop = ({links}: NavTopProps) => {
+const NavTop = ({links, activePath}: NavTopProps) => {
   const {isOpen, onOpen, onClose} = useDisclosure()
+
+  const allLinkElement = links.map((link, i) => (
+    <Link
+      key={i}
+      as={GatsbyLink}
+      to={link.path}
+      px={2}
+      py={1}
+      rounded={'md'}
+      bg={
+        link.path === activePath
+          ? useColorModeValue('gray.200', 'gray.600')
+          : 'transparent'
+      }
+      _hover={{
+        textDecoration: 'none',
+        bg: useColorModeValue('gray.200', 'gray.600')
+      }}>
+      {link.name}
+    </Link>
+  ))
 
   return (
     <>
@@ -68,56 +84,16 @@ const NavTop = ({links}: NavTopProps) => {
             bg={['agt.gray', 'agt.gray', 'agt.gray', 'agt.gray']}
           />
           <HStack
+            as={GatsbyLink}
+            to="/"
+            cursor={'pointer'}
             spacing={{base: '10', md: '20'}}
             alignItems={'center'}
             maxW="2xl"
             css={style.Logo}>
             <Logo />
           </HStack>
-          <Button
-            maxW="3xl"
-            flex="1"
-            type="button"
-            mx="6"
-            href={'#'}
-            lineHeight="1.2"
-            w="100%"
-            bg={useColorModeValue('white', 'gray.700')}
-            whiteSpace="nowrap"
-            display={{base: 'none', md: 'flex'}}
-            alignItems="center"
-            color="gray.400"
-            py="3"
-            px="4"
-            outline="0"
-            _focus={{shadow: 'outline'}}
-            shadow="base"
-            rounded="md"
-            // {...props}
-          >
-            <SearchIcon />
-            <HStack w="full" ml="3" spacing="4px">
-              <Text textAlign="left" flex="1">
-                Finde Artikel
-              </Text>
-              <HStack spacing="4px">
-                <VisuallyHidden>Drücke</VisuallyHidden>
-                <Kbd color="gray.500" rounded="2px">
-                  <Box
-                    as="abbr"
-                    title={'Strg'}
-                    textDecoration="none !important">
-                    {'Strg'}
-                  </Box>
-                </Kbd>
-                <VisuallyHidden>und</VisuallyHidden>
-                <Kbd color="gray.500" rounded="2px">
-                  K
-                </Kbd>
-                <VisuallyHidden> zum suchen</VisuallyHidden>
-              </HStack>
-            </HStack>
-          </Button>
+          <Searchbar searchResultProducts={[]} onSearch={v => console.log(v)} />
           <HStack spacing={8} alignItems={'center'} justifyContent={'flex-end'}>
             {/* <Menu>
             <MenuButton
@@ -141,6 +117,8 @@ const NavTop = ({links}: NavTopProps) => {
             </MenuList>
         </Menu> */}
             <Button
+              as={GatsbyLink}
+              to="/wishlist"
               size="sm"
               rounded="md"
               color={['white']}
@@ -149,11 +127,10 @@ const NavTop = ({links}: NavTopProps) => {
               _hover={{
                 bg: ['primary.100', 'primary.100', 'primary.600', 'primary.600']
               }}
-              leftIcon={<FiShoppingCart />}>
-              Einkaufswagn
+              leftIcon={<FaHeart />}>
+              Wunschliste
             </Button>
             <IconButton
-              center
               justifyContent={'center'}
               size={'md'}
               icon={<FiShoppingCart />}
@@ -168,9 +145,7 @@ const NavTop = ({links}: NavTopProps) => {
         {isOpen ? (
           <Box pb={4} display={{md: 'none'}}>
             <Stack as={'nav'} spacing={4}>
-              {links.map(link => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
+              {allLinkElement}
             </Stack>
           </Box>
         ) : null}
@@ -191,9 +166,7 @@ const NavTop = ({links}: NavTopProps) => {
             as={'nav'}
             spacing={4}
             justifyContent={'space-between'}>
-            {links.map(link => (
-              <NavLink key={link}>{link}</NavLink>
-            ))}
+            {allLinkElement}
           </HStack>
         </Flex>
       </Box>
