@@ -1,5 +1,4 @@
 import {PageProps, navigate} from 'gatsby'
-import slugify from 'slugify'
 
 import {ShopCategoryLayout, CategoryItem} from '../../layout/ShopCategoryLayout'
 
@@ -24,23 +23,20 @@ const CategoryPage = ({pageContext, location}: CategoryPageProps) => {
       path={location.pathname}
       category={{
         ...pageContext.category,
-        onItemClick: (item: CategoryItem) => {
-          const to =
-            location.pathname +
-            (!location.pathname.endsWith('/') ? '/' : '') +
-            (item.title == 'Alle Produkte'
-              ? 'products'
-              : slugify(item.title, {remove: /[*+~.()'"!:@]/g}).toLowerCase()) +
-            '/'
-          navigate(to)
+        getPath: (handle: string) => {
+          const pathname = location.pathname.replace(/\/$/, '')
+
+          if (handle === 'alle-produkte') {
+            return `${pathname}/products/`
+          } else {
+            return `${pathname}/${handle.split('-').at(-1)}`
+          }
         }
       }}
       productGrid={{
         ...pageContext.productGrid,
-        onItemClick: (item: any) => {
-          const to =
-            '/products/' + slugify(item.title, {remove: /[*+~.()'"!:@]/g}) + '/'
-          navigate(to)
+        getPath: (handle: string) => {
+          return `/products/${handle}`
         }
       }}
     />

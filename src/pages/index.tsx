@@ -7,7 +7,6 @@ import ReviewSection from '../components/organisms/sections/ReviewSection'
 import FeaturedProductsSection from '../components/organisms/sections/FeaturedProductsSection/2'
 import AboutSection from '../components/organisms/sections/AboutSection'
 import FAQSection from '../components/organisms/sections/FAQSection/2'
-import slugify from 'slugify'
 import {Image} from '@chakra-ui/image'
 
 import {PageProps} from 'gatsby'
@@ -25,10 +24,7 @@ const IndexPage = ({
   const products = data.allShopifyProduct.edges.map((product: any) => {
     return {
       ...product.node,
-      slug:
-        'products/' +
-        slugify(product.node.title, {remove: /[*+~.()'"!:@]/g}) +
-        '/'
+      slug: `/products/${product.node.handle}`
     }
   })
 

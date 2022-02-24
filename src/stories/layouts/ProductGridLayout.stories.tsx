@@ -1,7 +1,8 @@
 import {Story, Meta} from '@storybook/react'
+import {allShopifyProduct, getProductNodes} from '../../test-data/shopify'
 import {ProductGrid} from '../../layout/ProductGridLayout'
 
-import {products} from '../pages/_data/products'
+const products = getProductNodes(16)
 
 export default {
   title: 'Layouts/ProductGridLayout',
@@ -9,13 +10,16 @@ export default {
 } as Meta
 
 export const Basic = () => (
-  <ProductGrid items={products} onItemClick={() => {}} />
+  <ProductGrid
+    items={products}
+    getPath={(handle: string) => `/products/${handle}`}
+  />
 )
 
 export const WithTitle = () => (
   <ProductGrid
     title="Unsere Empfehlungen"
     items={products}
-    onItemClick={() => {}}
+    getPath={(handle: string) => `/products/${handle}`}
   />
 )

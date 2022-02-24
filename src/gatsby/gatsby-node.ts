@@ -15,7 +15,7 @@ GatsbyNode.sourceNodes = async ({
 
   const {createNode} = actions
 
-  await fetchReviews(createNode, createNodeId, createContentDigest)
+  //await fetchReviews(createNode, createNodeId, createContentDigest)
 }
 
 GatsbyNode.createPages = async function ({actions, graphql}) {
@@ -33,6 +33,15 @@ GatsbyNode.createSchemaCustomization = ({actions}) => {
       sourceLink: String
       sourceImage: String
       source: String
+    }
+
+    type ShopifyPrice {
+      amount: String
+    }
+
+    type ShopifyProductContextualPricingMaxVariantPricing {
+      compareAtPrice: ShopifyPrice
+      price: ShopifyPrice
     }
   `
 

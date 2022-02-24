@@ -1,5 +1,6 @@
 import {
   Box,
+  BoxProps,
   Icon,
   IconButton,
   IconButtonProps,
@@ -10,6 +11,9 @@ import {
 import React from 'react'
 import {generateProductCard} from '../ProductCardLayout'
 import {FaChevronCircleLeft, FaChevronCircleRight} from 'react-icons/fa'
+import {motion} from 'framer-motion'
+
+const MotionBox = motion<BoxProps>(Box)
 
 export const Slider = (props: {
   items: Array<JSX.Element>
@@ -90,7 +94,7 @@ export const Slider = (props: {
           spacing={2}
           minChildWidth={props.minChildWidth}>
           {items.map((item, index) => (
-            <>{shouldDisplay(index) && item}</>
+            <>{shouldDisplay(index) && <MotionBox>{item}</MotionBox>}</>
           ))}
         </SimpleGrid>
 

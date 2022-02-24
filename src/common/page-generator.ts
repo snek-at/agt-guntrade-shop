@@ -1,7 +1,5 @@
 // @ts-nocheck
 
-import slugify from 'slugify'
-
 // splitAndType splits the handle and checks for the collectiontype (A, AB, ABC...)
 const splitAndType = handle => {
   const splitHandle = handle.split('-')
@@ -68,30 +66,21 @@ const getUnfilteredRelatedProducts = (data, handle, splitHandle) => {
 
 const getFilteredProducts = (unfilteredRelatedProducts, handle) => {
   const filteredRelatedProducts = []
-  if (unfilteredRelatedProducts.length > 0) {
-    const titles = []
-    let runs = 0
-    for (let i = 0; i < 12; i++) {
-      const potentialProduct =
-        unfilteredRelatedProducts[
-          Math.floor(Math.random() * unfilteredRelatedProducts.length)
-        ]
-      if (titles.includes(potentialProduct.title)) {
-        i = i - 1
-      } else {
-        potentialProduct.slug =
-          handle.slice(handle.indexOf('-') + 1).replaceAll('-', '/') +
-          '/products/' +
-          slugify(potentialProduct.title, {remove: /[*+~.()'"!:@]/g})
-        titles.push(potentialProduct.title)
-        filteredRelatedProducts.push(potentialProduct)
-      }
-      if (titles.length === unfilteredRelatedProducts.length || runs > 10000) {
-        break
-      }
-      runs++
-    }
+
+  const iterationLimit =
+    unfilteredRelatedProducts.length > 12
+      ? 12
+      : unfilteredRelatedProducts.length
+
+  for (let i = 0; i < iterationLimit; i++) {
+    const randomIndex = Math.floor(
+      Math.random() * unfilteredRelatedProducts.length
+    )
+
+    filteredRelatedProducts.push(unfilteredRelatedProducts[randomIndex])
+    unfilteredRelatedProducts.splice(randomIndex, 1)
   }
+
   return filteredRelatedProducts
 }
 
@@ -120,14 +109,24 @@ const createAllProductsShopPage = (data, actions) => {
 
   actions.createPage({
     path: '/products/',
-    component: require.resolve('../templates/ShopPage/index.tsx'),
+    component: require.resolve('../templatePages/ShopPage/index.tsx'),
     context: {
-      title: 'Alle Produkte',
-      handle: 'produkte',
-      products: products.slice(0, 21),
-      tags: tags,
-      allTags: data.meta.tags,
-      amountOfProducts: products.length
+      header: {title: 'Alle Produkte'},
+      products: {items: products.slice(0, 21)},
+      filter: {
+        allTags: data.meta.tags,
+        activeTags: [],
+        initialFilters: {
+          tags: [],
+          maxPrice: Math.max(
+            ...products.map(
+              product =>
+                product.contextualPricing.maxVariantPricing.price.amount
+            )
+          )
+        },
+        hasNextPage: products.length > 21
+      }
     }
   })
 
@@ -144,28 +143,32 @@ const createAllProductsShopPage = (data, actions) => {
       ''
     )
 
-    const slugifiedTitle = slugify(product.title, {remove: /[*+~.()'"!:@]/g})
+    console.log(product.handle)
 
     actions.createPage({
-      path: '/products/' + slugifiedTitle + '/',
+      path: `/products/${product.handle}/`,
       component: require.resolve('../templatePages/ProductPage/index.tsx'),
       context: {
         header: {title: product.title},
+        handle: product.handle,
         imageSlider: {
           featuredImage: {
-            alt: slugifiedTitle,
+            alt: product.featuredImage.alt || product.title,
             gatsbyImageData: product.featuredImage.gatsbyImageData
           },
           images: product.images
             .filter(image => image.shopifyId !== product.featuredImage.id)
             .map(image => ({
-              alt: slugifiedTitle,
+              alt: image.alt || product.title,
               gatsbyImageData: image.gatsbyImageData
             }))
         },
         productDetail: {
-          price: product.priceRangeV2.maxVariantPrice.amount,
-          status: 'I dunno'
+          id: product.id,
+          price: product.contextualPricing.maxVariantPricing.price.amount,
+          discountPrice:
+            product.contextualPricing.maxVariantPricing.compareAtPrice?.amount,
+          tags: product.tags
         },
         productMoreDetail: {
           description: product.descriptionHtml
@@ -206,17 +209,17 @@ const createCollectionShopAndProductPages = (data, actions) => {
       component: require.resolve(`../templatePages/CategoryPage/index.tsx`),
       context: {
         category: {
+          handle: edge.node.handle,
           title: edge.node.title.split(' ').at(-1),
           items: subcategories.map(subcategory => ({
             title:
               subcategory.node.title === edge.node.title
                 ? 'Alle Produkte'
                 : subcategory.node.title.split(' ').at(-1),
-            handle: !isNaN(subcategory.node.handle.split('-').at(-1))
-              ? subcategory.node.handle.slice(
-                  subcategory.node.handle.indexOf('-') + 1
-                )
-              : subcategory.node.handle,
+            handle:
+              subcategory.node.handle === edge.node.handle
+                ? 'alle-produkte'
+                : subcategory.node.handle,
             totalProducts: subcategory.node.products
               ? subcategory.node.products.length
               : 0,
@@ -230,31 +233,35 @@ const createCollectionShopAndProductPages = (data, actions) => {
       }
     })
 
-    let tags = {}
-    edge.node.products.map(product => {
-      product.tags.map(tag => {
-        const splitTag = tag.split(':')
-        if (typeof tags[splitTag[0]] === 'undefined') {
-          tags[splitTag[0]] = [splitTag[1]]
-        } else if (!tags[splitTag[0]].includes(splitTag[1])) {
-          tags[splitTag[0]].push(splitTag[1])
-        }
-      })
-    })
+    const activeTags = data.meta.tags.filter(tag =>
+      tag.endsWith(edge.node.title.split(' ').at(-1))
+    )
 
     slug = slug + '/products/'
     actions.createPage({
       path: slug,
-      component: require.resolve('../templates/ShopPage/index.tsx'),
+      component: require.resolve('../templatePages/ShopPage/index.tsx'),
       context: {
-        title: edge.node.title.slice(edge.node.title.indexOf(' ') + 1),
-        handle: splitHandle.toString().replaceAll(',', '-') + '-products',
-        products: edge.node.products
-          .sort((a, b) => (a.title > b.title ? 1 : -1))
-          .slice(0, 21),
-        tags: tags,
-        allTags: data.meta.tags,
-        amountOfProducts: edge.node.products.length
+        header: {title: edge.node.title.split(' ').at(-1)},
+        products: {
+          items: edge.node.products
+            .sort((a, b) => (a.title > b.title ? 1 : -1))
+            .slice(0, 21)
+        },
+        filter: {
+          allTags: data.meta.tags,
+          activeTags: activeTags,
+          initialFilters: {
+            tags: activeTags,
+            maxPrice: Math.max(
+              ...edge.node.products.map(
+                product =>
+                  product.contextualPricing.maxVariantPricing.price.amount
+              )
+            )
+          },
+          hasNextPage: edge.node.products.length > 21
+        }
       }
     })
 
@@ -269,28 +276,28 @@ const createCollectionShopAndProductPages = (data, actions) => {
         edge.node.handle
       )
 
-      const slugifiedTitle = slugify(product.title, {remove: /[*+~.()'"!:@]/g})
-
       actions.createPage({
-        path: slug + slugifiedTitle + '/',
+        path: `${slug}${product.handle}/`,
         component: require.resolve('../templatePages/ProductPage/index.tsx'),
         context: {
+          handle: product.handle,
           header: {title: product.title},
           imageSlider: {
             featuredImage: {
-              alt: slugifiedTitle,
+              alt: product.featuredImage.alt || product.title,
               gatsbyImageData: product.featuredImage.gatsbyImageData
             },
             images: product.images
               .filter(image => image.shopifyId !== product.featuredImage.id)
               .map(image => ({
-                alt: slugifiedTitle,
+                alt: image.alt || product.title,
                 gatsbyImageData: image.gatsbyImageData
               }))
           },
           productDetail: {
-            price: product.priceRangeV2.maxVariantPrice.amount,
-            status: 'I dunno'
+            id: product.id,
+            price: product.contextualPricing.maxVariantPricing.price.amount,
+            tags: product.tags
           },
           productMoreDetail: {
             description: product.descriptionHtml
@@ -318,18 +325,21 @@ export const createPages = async (actions, graphql) => {
             }
             products {
               id
+              handle
               createdAt
               descriptionHtml
               title
               tags
               status
               totalInventory
-              priceRangeV2 {
-                maxVariantPrice {
-                  amount
-                }
-                minVariantPrice {
-                  amount
+              contextualPricing {
+                maxVariantPricing {
+                  price {
+                    amount
+                  }
+                  compareAtPrice {
+                    amount
+                  }
                 }
               }
               images {
@@ -348,6 +358,7 @@ export const createPages = async (actions, graphql) => {
         edges {
           node {
             id
+            handle
             collections {
               handle
             }
@@ -357,9 +368,14 @@ export const createPages = async (actions, graphql) => {
             status
             totalInventory
             createdAt
-            priceRangeV2 {
-              maxVariantPrice {
-                amount
+            contextualPricing {
+              maxVariantPricing {
+                price {
+                  amount
+                }
+                compareAtPrice {
+                  amount
+                }
               }
             }
             images {

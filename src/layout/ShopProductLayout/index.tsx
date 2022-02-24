@@ -13,7 +13,8 @@ import {
   Divider,
   Center,
   WrapItem,
-  Wrap
+  Wrap,
+  useClipboard
 } from '@chakra-ui/react'
 import React from 'react'
 import {Breadcrumbs, ShopLayout} from '../ShopLayout'
@@ -22,17 +23,58 @@ import {MdMessage} from 'react-icons/md'
 import {FaHeart, FaShare} from 'react-icons/fa'
 import {GatsbyImage, IGatsbyImageData} from 'gatsby-plugin-image'
 import {ProductSliderLayout} from '../ProductSliderLayout'
-import {BrandSliderLayout} from '../BrandSliderLayout'
 import {BaseLayout} from '../BaseLayout'
 
 const Header = (props: {title: string; path: string}) => {
   return (
-    <VStack align="left">
+    <VStack align="left" my="2">
       <Breadcrumbs path={props.path} />
       <Heading size="xl" fontWeight={'semibold'}>
         {props.title}
       </Heading>
     </VStack>
+  )
+}
+
+function Price(props: {price: string; discountPrice?: string}) {
+  const price = `${parseFloat(props.price).toFixed(2)} €`
+  if (props.discountPrice) {
+    const discountPrice = `${parseFloat(props.discountPrice).toFixed(2)} €`
+    // strike through price and put discount price on the right side
+    return (
+      <Flex
+        direction="row"
+        wrap="wrap"
+        justifyContent={{
+          base: 'center',
+          md: 'flex-start'
+        }}>
+        <Text
+          fontSize="xl"
+          fontWeight="semibold"
+          color="gray.600"
+          textDecoration={'line-through'}>
+          {price}
+        </Text>
+
+        <Heading
+          size="3xl"
+          mt={{
+            base: 0,
+            md: 4
+          }}
+          fontWeight={'semibold'}
+          color="red.500">
+          {discountPrice}
+        </Heading>
+      </Flex>
+    )
+  }
+
+  return (
+    <Heading size="3xl" fontWeight={'semibold'}>
+      {price}
+    </Heading>
   )
 }
 
@@ -76,7 +118,7 @@ const ImageSlider = (props: {
   )
 
   return (
-    <Box my="4" w={{base: '100%', md: '70%'}}>
+    <Box my="4" w={'100%'}>
       <AspectRatio ratio={16 / 9}>
         <Box>
           <GatsbyImage
@@ -113,21 +155,24 @@ const ImageSlider = (props: {
 }
 
 const ProductDetail = (props: {
+  id: string
   title: string
   price: string
+  discountPrice?: string
   status: string
+  isOnWishList?: boolean
+  onWishlistAdd: (id: string) => void
 }) => {
   return (
     <Box
-      w={{base: '100%', md: '30%'}}
+      w={{base: '100%', md: '40%'}}
+      minW="300px"
       pl={{base: 0, md: 4}}
       position={'sticky'}
       top="15"
       alignSelf={'flex-start'}>
       <VStack align={'left'} spacing="4">
-        <Heading size="3xl" fontWeight={'semibold'}>
-          {`${props.price}€`}
-        </Heading>
+        <Price price={props.price} discountPrice={props.discountPrice} />
         <Text size="xs" fontWeight={'thin'}>
           inkl. MwSt.
         </Text>
@@ -140,32 +185,65 @@ const ProductDetail = (props: {
           textTransform="uppercase"
           leftIcon={<Icon as={MdMessage} />}
           borderRadius={'full'}
-          colorScheme="blue"
+          bg={'agt.gray'}
+          color={'white'}
+          _hover={{
+            bg: 'agt.blue'
+          }}
           size="lg">
           <Text>Jetzt anfragen</Text>
         </Button>
         <Divider />
         <Flex alignItems={'center'} justifyContent="center" fontSize={'xl'}>
-          <Box mx="auto">
-            <Text fontWeight={'semibold'}>
+          <Box mx="auto" onClick={() => props.onWishlistAdd(props.id)}>
+            <Text
+              fontWeight={'semibold'}
+              color={props.isOnWishList ? 'red.500' : undefined}
+              _hover={{
+                color: props.isOnWishList ? 'red.400' : 'red.300'
+              }}
+              cursor="pointer">
               <Center>
                 <Icon as={FaHeart} mr="2" />
-                Wishlist
+                Merken
               </Center>
             </Text>
           </Box>
           <Box mx="auto">
-            <Text fontWeight={'semibold'} verticalAlign="center">
-              <Center>
-                <Icon as={FaShare} mr="2" />
-                Teilen
-              </Center>
-            </Text>
+            <ShareText />
           </Box>
         </Flex>
         <Divider />
       </VStack>
     </Box>
+  )
+}
+
+function ShareText() {
+  const value = typeof window !== 'undefined' ? window.location.href : ''
+
+  const {hasCopied, onCopy} = useClipboard(value)
+
+  return (
+    <Text
+      fontWeight={'semibold'}
+      verticalAlign="center"
+      color={hasCopied ? 'red.500' : undefined}
+      _hover={{
+        color: hasCopied ? 'red.400' : 'red.300'
+      }}
+      cursor="pointer"
+      onClick={onCopy}>
+      <Center>
+        <Icon as={FaShare} mr="2" />
+        Teilen
+        {hasCopied && (
+          <Text ml="2" fontWeight={'thin'}>
+            (Kopiert!)
+          </Text>
+        )}
+      </Center>
+    </Text>
   )
 }
 
@@ -194,15 +272,17 @@ export const ShopProductLayout = (props: {
   imageSlider: React.ComponentProps<typeof ImageSlider>
   productDetail: React.ComponentProps<typeof ProductDetail>
   productMoreDetail: React.ComponentProps<typeof ProductMoreDetail>
-  featuredProducts: Array<any>
+  featuredProducts: {
+    products: Array<any>
+  }
 }) => {
   return (
     <BaseLayout>
       <ShopLayout>
         <Header {...props.header} />
-        <VStack spacing={12}>
-          <Box>
-            <Flex direction={{base: 'column', md: 'row'}}>
+        <VStack spacing={12} w="100%">
+          <Box w="100%">
+            <Flex direction={{base: 'column', lg: 'row'}}>
               <ImageSlider
                 {...props.imageSlider}
                 productMoreDetail={props.productMoreDetail}
@@ -215,7 +295,7 @@ export const ShopProductLayout = (props: {
           </Box>
           <ProductSliderLayout
             title="Unsere Empfehlungen"
-            products={props.featuredProducts}
+            {...props.featuredProducts}
           />
           <Box h="14"></Box>
         </VStack>

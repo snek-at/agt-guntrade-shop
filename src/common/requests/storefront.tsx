@@ -1,9 +1,11 @@
+import {getShopifyImage} from '../../../plugins/gatsby-source-shopify'
 import queryString from 'query-string'
 import * as React from 'react'
 import {createClient, Provider as UrlqProvider, useQuery} from 'urql'
+import {ImageStyles} from 'src/templates/ProductPage/style'
 
 export const ProductsQuery = `
-query ($query: String!, $sortKey: ProductSortKeys, $first: Int, $last: Int, $after: String, $before: String) {
+query ($query: String!, $sortKey: ProductSortKeys, $first: Int, $last: Int, $after: String, $before: String, $reverse: Boolean) {
     products(
       query: $query
       sortKey: $sortKey
@@ -11,6 +13,7 @@ query ($query: String!, $sortKey: ProductSortKeys, $first: Int, $last: Int, $aft
       last: $last
       after: $after
       before: $before
+      reverse: $reverse
     ) {
       pageInfo {
         hasNextPage
@@ -27,16 +30,22 @@ query ($query: String!, $sortKey: ProductSortKeys, $first: Int, $last: Int, $aft
             }
           }
           compareAtPrice: compareAtPriceRange{
-            maxVarinatPrice{
+            maxVariantPrice{
               amount
             }
           }
           id
           tags
+          featuredImage{
+            url
+            width
+            height
+            altText
+          }
           images(first: 10){
             edges {
               node {
-                originalSrc
+                url
                 width
                 height
                 altText
@@ -140,13 +149,24 @@ export const getSearchResults = async ({query, count = 24}) => {
 }
 
 export const useProductSearch = (
-  filters,
-  allTags,
-  sortKey,
+  filters: {
+    term: string | null
+    tags: string[]
+    minPrice: number
+    maxPrice: number
+  },
+  allTags: Array<string>,
+  sortKey: string,
   pause = false,
   count = 20,
-  initialData: Array<any> = [],
-  initialFilters
+  initialData: any,
+  initialFilters: {
+    term: string | null
+    tags: string[]
+    minPrice: number
+    maxPrice: number
+  },
+  reverse: boolean
 ) => {
   const [query, setQuery] = React.useState(createQuery(filters))
   const [cursors, setCursors] = React.useState({
@@ -172,7 +192,8 @@ export const useProductSearch = (
       first: !cursors.before ? count : null,
       last: cursors.before ? count : null,
       after: cursors.after,
-      before: cursors.before
+      before: cursors.before,
+      reverse: reverse
     },
     pause: shouldPause
   })
@@ -198,10 +219,20 @@ export const useProductSearch = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters, cursors, sortKey])
 
+  const resetCursor = () => {
+    setCursors({
+      before: null,
+      after: null
+    })
+  }
+
   const fetchNextPage = () => {
     // when we go forward we want all products after the first one of our array
-    const prods = result.data.products
-    const nextCursor = prods.edges[prods.edges.length - 1].cursor
+    const prods =
+      result?.data?.porducts?.edges || initialData?.data?.products?.edges
+    const nextCursor = prods[prods.length - 1].cursor
+    console.log(prods)
+    console.log('cursor', nextCursor)
     setCursors({
       before: null,
       after: nextCursor
@@ -215,10 +246,10 @@ export const useProductSearch = (
 
   let hasNextPage
 
-  const products = React.useMemo(() => {
-    if (query === createQuery(initialFilters)) {
+  let products = React.useMemo(() => {
+    /*if (query === createQuery(initialFilters)) {
       return initialData
-    }
+    }*/
     if (result.data && initialRender) setInitialRender(false)
     return result.data?.products?.edges || []
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -229,14 +260,30 @@ export const useProductSearch = (
   }
 
   const isFetching = !initialRender && result.fetching
-
+  if (products.length > 0) {
+    if (products[0].node) {
+      products = products.map((product: any) => ({
+        ...product.node,
+        featuredImage: {
+          alt: product.node.title,
+          gatsbyImageData: getShopifyImage({
+            image: {
+              ...product.node.featuredImage,
+              originalSrc: product.node.featuredImage.url
+            }
+          })
+        }
+      }))
+    }
+  }
   return {
     data: result.data,
     isFetching,
     hasNextPage,
     products,
     filterCount,
-    fetchNextPage
+    fetchNextPage,
+    resetCursor
   }
 }
 export const SearchProvider = ({children}: any) => {

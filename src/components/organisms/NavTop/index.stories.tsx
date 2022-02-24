@@ -12,14 +12,42 @@ const Template: Story<NavTopProps> = args => <NavTop {...args} />
 export const Default = Template.bind({})
 Default.args = {
   links: [
-    'Waffen',
-    'Munition',
-    'Wiederladen',
-    'Optik',
-    'AR15/AR10',
-    'Laufrohlinge',
-    'Magazine',
-    'Zubehör',
-    'Ersatzteile'
-  ]
+    {
+      name: 'Waffen',
+      path: '/waffen'
+    },
+    {
+      name: 'Munition',
+      path: '/munition'
+    },
+    {
+      name: 'Wiederladen',
+      path: '/wiederladen'
+    },
+    {
+      name: 'Optik',
+      path: '/optik'
+    },
+    {
+      name: 'AR15/AR10',
+      path: '/ar15-ar10'
+    },
+    {
+      name: 'Laufrohlinge',
+      path: '/laufrohlinge'
+    },
+    {
+      name: 'Magazine',
+      path: '/magazine'
+    },
+    {
+      name: 'Zubehör',
+      path: '/zubehoer'
+    },
+    {
+      name: 'Ersatzteile',
+      path: '/ersatzteile'
+    }
+  ],
+  activePath: '/waffen'
 }
