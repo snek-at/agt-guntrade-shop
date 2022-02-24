@@ -226,13 +226,8 @@ export const useProductSearch = (
     })
   }
 
-  const fetchNextPage = () => {
+  const fetchNextPage = (nextCursor: any) => {
     // when we go forward we want all products after the first one of our array
-    const prods =
-      result?.data?.porducts?.edges || initialData?.data?.products?.edges
-    const nextCursor = prods[prods.length - 1].cursor
-    console.log(prods)
-    console.log('cursor', nextCursor)
     setCursors({
       before: null,
       after: nextCursor
@@ -260,8 +255,11 @@ export const useProductSearch = (
   }
 
   const isFetching = !initialRender && result.fetching
+
+  let curs: Array<string> = []
   if (products.length > 0) {
     if (products[0].node) {
+      curs = products.map((product: any) => product.cursor)
       products = products.map((product: any) => ({
         ...product.node,
         featuredImage: {
@@ -281,6 +279,7 @@ export const useProductSearch = (
     isFetching,
     hasNextPage,
     products,
+    curs,
     filterCount,
     fetchNextPage,
     resetCursor

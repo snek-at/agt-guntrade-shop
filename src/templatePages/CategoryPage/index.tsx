@@ -18,6 +18,20 @@ type CategoryPageProps = PageProps<
 >
 
 const CategoryPage = ({pageContext, location}: CategoryPageProps) => {
+  /* const n = location.pathname.endsWith('/') ? 2 : 0
+  let url = location.pathname
+  for (let i = 0; i < n; i++) {
+    url = url.slice(url.lastIndexOf('/') + 1)
+  }
+
+  history.replaceState('AGT-Guntrade', '', url) */
+  if (pageContext.category.items.length === 1) {
+    navigate(
+      location.pathname.endsWith('/')
+        ? location.pathname + 'products/'
+        : location.pathname + '/products/'
+    )
+  }
   return (
     <ShopCategoryLayout
       title={pageContext.category.title}

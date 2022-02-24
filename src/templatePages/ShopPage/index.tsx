@@ -47,7 +47,7 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
     pageContext.products.items
   )
   const [initialData, setInitialData] = React.useState<any>()
-  const {data, products, hasNextPage, resetCursor, fetchNextPage} =
+  const {data, products, hasNextPage, resetCursor, fetchNextPage, curs} =
     useProductSearch(
       {
         term: filters.term,
@@ -131,13 +131,10 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
         }
       }}
       onLoadMore={() => {
-        console.log('funkt')
-
-        if (
-          hasNextPage ||
-          (typeof hasNextPage === 'undefined' && pageContext.filter.hasNextPage)
-        ) {
-          fetchNextPage()
+        if (hasNextPage) {
+          if (curs) {
+            fetchNextPage(curs[curs.length])
+          }
           setLazyload(true)
           return true
         }

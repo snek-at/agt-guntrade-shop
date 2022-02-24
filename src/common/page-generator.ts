@@ -70,8 +70,11 @@ const getFilteredProducts = (unfilteredRelatedProducts, handle) => {
   const filteredRelatedProducts = []
   if (unfilteredRelatedProducts.length > 0) {
     const titles = []
-    let runs = 0
-    for (let i = 0; i < 12; i++) {
+    const amount =
+      unfilteredRelatedProducts.length > 12
+        ? 12
+        : unfilteredRelatedProducts.length
+    for (let i = 0; i < amount; i++) {
       const potentialProduct =
         unfilteredRelatedProducts[
           Math.floor(Math.random() * unfilteredRelatedProducts.length)
@@ -86,10 +89,6 @@ const getFilteredProducts = (unfilteredRelatedProducts, handle) => {
         titles.push(potentialProduct.title)
         filteredRelatedProducts.push(potentialProduct)
       }
-      if (titles.length === unfilteredRelatedProducts.length || runs > 10000) {
-        break
-      }
-      runs++
     }
   }
   return filteredRelatedProducts
