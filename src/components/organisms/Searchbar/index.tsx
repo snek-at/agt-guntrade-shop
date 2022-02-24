@@ -167,7 +167,8 @@ export const Searchbar = (props: SearchbarProps) => {
                           py="2"
                           bg={useColorModeValue('gray.200', 'gray.600')}
                           _hover={{
-                            bg: 'agt.blue'
+                            bg: 'agt.blue',
+                            color: 'white'
                           }}
                           rounded="md"
                           cursor="pointer"
