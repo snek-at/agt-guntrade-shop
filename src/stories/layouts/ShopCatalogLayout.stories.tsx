@@ -21,7 +21,7 @@ export const Page = () => (
     }}
     products={{
       items: products,
-      onItemClick: (item: any) => console.log(item)
+      getPath: (handle: string) => `${path}/${handle}`
     }}
     filter={{
       allTags: ['Widerladen:Kurzwaffe', 'widerladen:Langwaffe'],
