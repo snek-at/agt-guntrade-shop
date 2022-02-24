@@ -13,7 +13,8 @@ import {
   Divider,
   Center,
   WrapItem,
-  Wrap
+  Wrap,
+  useClipboard
 } from '@chakra-ui/react'
 import React from 'react'
 import {Breadcrumbs, ShopLayout} from '../ShopLayout'
@@ -184,7 +185,11 @@ const ProductDetail = (props: {
           textTransform="uppercase"
           leftIcon={<Icon as={MdMessage} />}
           borderRadius={'full'}
-          colorScheme="blue"
+          bg={'agt.gray'}
+          color={'white'}
+          _hover={{
+            bg: 'agt.blue'
+          }}
           size="lg">
           <Text>Jetzt anfragen</Text>
         </Button>
@@ -205,17 +210,40 @@ const ProductDetail = (props: {
             </Text>
           </Box>
           <Box mx="auto">
-            <Text fontWeight={'semibold'} verticalAlign="center">
-              <Center>
-                <Icon as={FaShare} mr="2" />
-                Teilen
-              </Center>
-            </Text>
+            <ShareText />
           </Box>
         </Flex>
         <Divider />
       </VStack>
     </Box>
+  )
+}
+
+function ShareText() {
+  const value = typeof window !== 'undefined' ? window.location.href : ''
+
+  const {hasCopied, onCopy} = useClipboard(value)
+
+  return (
+    <Text
+      fontWeight={'semibold'}
+      verticalAlign="center"
+      color={hasCopied ? 'red.500' : undefined}
+      _hover={{
+        color: hasCopied ? 'red.400' : 'red.300'
+      }}
+      cursor="pointer"
+      onClick={onCopy}>
+      <Center>
+        <Icon as={FaShare} mr="2" />
+        Teilen
+        {hasCopied && (
+          <Text ml="2" fontWeight={'thin'}>
+            (Kopiert!)
+          </Text>
+        )}
+      </Center>
+    </Text>
   )
 }
 
