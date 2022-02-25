@@ -32,7 +32,7 @@ const IndexPage = ({
     <BaseLayout>
       <ScrollSpy />
       <HeroSection categoryProducts={{New: data.newShopifyProduct.edges}} />
-      <FeaturedProductsSection products={products} />
+      <FeaturedProductsSection getPath={(handle: string) => `/products/${handle}`} products={products} />
       <ReviewSection
         heading={<p>I'm a heading.</p>}
         data={data.allGoogleReview.nodes}
@@ -70,62 +70,118 @@ const IndexPage = ({
 
 //#region > Exports
 export const query = graphql`
-  query {
-    allGoogleReview {
-      nodes {
-        id
-        rating
-        body
-        sourceImage
-        source
-      }
+query {
+  allGoogleReview {
+    nodes {
+      id
+      rating
+      body
+      sourceImage
+      source
     }
-    allShopifyProduct(limit: 20) {
-      edges {
-        node {
-          createdAt
-          description
-          images {
-            gatsbyImageData
-          }
-          priceRangeV2 {
-            maxVariantPrice {
-              amount
-            }
-            minVariantPrice {
-              amount
-            }
-          }
-          tags
-          title
+  }
+  meta: allShopifyProduct {
+    tags: distinct(field: tags)
+  }
+  allShopifyCollection {
+    edges {
+      node {
+        title
+        handle
+        image {
+          gatsbyImageData
         }
-      }
-    }
-    newShopifyProduct: allShopifyProduct(
-      limit: 6
-      sort: {fields: createdAt, order: DESC}
-    ) {
-      edges {
-        node {
+        products {
+          id
+          handle
           createdAt
-          description
+          descriptionHtml
+          title
+          tags
+          status
+          totalInventory
+          contextualPricing {
+            maxVariantPricing {
+              price {
+                amount
+              }
+              compareAtPrice {
+                amount
+              }
+            }
+          }
           images {
+            shopifyId
             gatsbyImageData
           }
-          priceRangeV2 {
-            maxVariantPrice {
-              amount
-            }
-            minVariantPrice {
-              amount
-            }
+          featuredImage {
+            id
+            gatsbyImageData
           }
-          tags
-          title
         }
       }
     }
   }
+  allShopifyProduct(sort: {fields: title, order: ASC}) {
+    edges {
+      node {
+        id
+        handle
+        collections {
+          handle
+        }
+        descriptionHtml
+        title
+        tags
+        status
+        totalInventory
+        createdAt
+        contextualPricing {
+          maxVariantPricing {
+            price {
+              amount
+            }
+            compareAtPrice {
+              amount
+            }
+          }
+        }
+        images {
+          shopifyId
+          gatsbyImageData
+        }
+        featuredImage {
+          id
+          gatsbyImageData
+        }
+      }
+    }
+  }
+  newShopifyProduct: allShopifyProduct(
+    limit: 6
+    sort: {fields: createdAt, order: DESC}
+  ) {
+    edges {
+      node {
+        createdAt
+        description
+        images {
+          gatsbyImageData
+        }
+        priceRangeV2 {
+          maxVariantPrice {
+            amount
+          }
+          minVariantPrice {
+            amount
+          }
+        }
+        tags
+        title
+      }
+    }
+  }
+}
 `
 
 export default IndexPage
