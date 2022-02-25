@@ -257,7 +257,7 @@ export const ShopCatalogLayout = (props: {
   }, [])
 
   return (
-    <BaseLayout>
+    <BaseLayout withSearch={false}>
       <ShopLayout>
         <Header
           {...props.header}

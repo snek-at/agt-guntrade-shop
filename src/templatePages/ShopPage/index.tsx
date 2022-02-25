@@ -46,8 +46,10 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
     pageContext.products.items
   )
   const [initialData, setInitialData] = React.useState<any>()
+  const [cursors, setCursors] = React.useState<Array<string>>([])
   const {data, products, hasNextPage, resetCursor, fetchNextPage, curs} =
     useProductSearch(
+      false,
       {
         term: filters.term,
         tags: filters.tags,
@@ -63,6 +65,8 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
       reverse
     )
 
+  if (curs[0]) setCursors(curs)
+  console.log(curs, hasNextPage)
   if (!isEqual(displayedProducts, products) && products.length > 0) {
     if (lazyload) {
       setDisplayedProducts(displayedProducts.concat(products))
@@ -72,72 +76,79 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
     setInitialData(data)
   }
   return (
-    <ShopCatalogLayout
-      filter={{
-        ...pageContext.filter,
-        onActiveTagsChange: (tags: Array<string>) => {
-          resetCursor()
-          setLazyload(false)
-          setFilters({...filters, tags: tags, initialFilters: filters})
-        },
-        priceFilter: {
-          minPrice: 0,
-          maxPrice: pageContext.filter.initialFilters.maxPrice,
-          onPriceChange: (min, max) => {
+    <>
+      <ShopCatalogLayout
+        filter={{
+          ...pageContext.filter,
+          onActiveTagsChange: (tags: Array<string>) => {
             resetCursor()
             setLazyload(false)
-            setFilters({...filters, minPrice: min, maxPrice: max})
+            setFilters({...filters, tags: tags, initialFilters: filters})
+          },
+          priceFilter: {
+            minPrice: 0,
+            maxPrice: pageContext.filter.initialFilters.maxPrice,
+            onPriceChange: (min, max) => {
+              resetCursor()
+              setLazyload(false)
+              setFilters({...filters, minPrice: min, maxPrice: max})
+            }
           }
-        }
-      }}
-      header={{
-        title: pageContext.header.title,
-        path: location.pathname,
-        sortOptions: ['Alphabetisch', 'Preis aufsteigend', 'Preis absteigend'],
-        onSortChange: (option: string) => {
-          let sortOption: string
-          switch (option) {
-            case 'Alphabetisch':
-              sortOption = 'TITLE'
-              setReverse(false)
-              break
-            case 'Preis aufsteigend':
-              sortOption = 'PRICE'
-              setReverse(false)
-              break
-            case 'Preis absteigend':
-              sortOption = 'PRICE'
-              setReverse(true)
-              break
-            default:
-              sortOption = 'TITLE'
-              setReverse(false)
+        }}
+        header={{
+          title: pageContext.header.title,
+          path: location.pathname,
+          sortOptions: [
+            'Alphabetisch',
+            'Preis aufsteigend',
+            'Preis absteigend'
+          ],
+          onSortChange: (option: string) => {
+            let sortOption: string
+            switch (option) {
+              case 'Alphabetisch':
+                sortOption = 'TITLE'
+                setReverse(false)
+                break
+              case 'Preis aufsteigend':
+                sortOption = 'PRICE'
+                setReverse(false)
+                break
+              case 'Preis absteigend':
+                sortOption = 'PRICE'
+                setReverse(true)
+                break
+              default:
+                sortOption = 'TITLE'
+                setReverse(false)
+            }
+            resetCursor()
+            setLazyload(false)
+            setSortKey(sortOption)
           }
-          resetCursor()
-          setLazyload(false)
-          setSortKey(sortOption)
-        }
-      }}
-      products={{
-        items: displayedProducts,
-        getPath: (handle: string) => {
-          // remove the trailing slash
-          const pathname = location.pathname.replace(/\/$/, '')
+        }}
+        products={{
+          items: displayedProducts,
+          getPath: (handle: string) => {
+            // remove the trailing slash
+            const pathname = location.pathname.replace(/\/$/, '')
 
-          return `${pathname}/${handle}`
-        }
-      }}
-      onLoadMore={() => {
+            return `${pathname}/${handle}`
+          }
+        }}
+        onLoadMore={() => {
+          /*console.log(curs, hasNextPage)
         if (hasNextPage) {
           if (curs) {
             fetchNextPage(curs[curs.length])
           }
           setLazyload(true)
           return true
-        }
-        return false
-      }}
-    />
+        } */
+          return false
+        }}
+      />
+    </>
   )
 }
 

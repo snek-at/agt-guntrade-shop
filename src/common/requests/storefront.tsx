@@ -149,14 +149,15 @@ export const getSearchResults = async ({query, count = 24}) => {
 }
 
 export const useProductSearch = (
+  dontReplaceState: boolean | undefined,
   filters: {
     term: string | null
     tags: string[]
     minPrice: number
-    maxPrice: number
+    maxPrice: number | undefined
   },
   allTags: Array<string>,
-  sortKey: string,
+  sortKey: string | undefined,
   pause = false,
   count = 20,
   initialData: any,
@@ -164,7 +165,7 @@ export const useProductSearch = (
     term: string | null
     tags: string[]
     minPrice: number
-    maxPrice: number
+    maxPrice: number | undefined
   },
   reverse: boolean
 ) => {
@@ -214,7 +215,7 @@ export const useProductSearch = (
     const url = new URL(window.location.href)
     url.search = qs
     url.hash = ''
-    window.history.replaceState({}, null, url.toString())
+    !dontReplaceState && window.history.replaceState({}, null, url.toString())
     setQuery(createQuery(filters))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters, cursors, sortKey])
@@ -262,6 +263,17 @@ export const useProductSearch = (
       curs = products.map((product: any) => product.cursor)
       products = products.map((product: any) => ({
         ...product.node,
+        contextualPricing: {
+          maxVariantPricing: {
+            compareAtPrice: {
+              amount:
+                product.node.compareAtPrice.maxVariantPrice.amount === '0.0'
+                  ? undefined
+                  : product.node.compareAtPrice.maxVariantPrice.amount
+            },
+            price: {amount: product.node.price.maxVariantPrice.amount}
+          }
+        },
         featuredImage: {
           alt: product.node.title,
           gatsbyImageData: getShopifyImage({

@@ -1,10 +1,49 @@
-import React from 'react'
+import React, {Props} from 'react'
 import Footer from '../../components/organisms/Footer'
 import NavTop from '../../components/organisms/NavTop'
 import SideButton from '../../components/molecules/buttons/SideButtons'
 import ScrollToTopButton from '../../components/molecules/buttons/ScrollToTopButton'
 import {navigate} from 'gatsby'
-export const BaseLayout: React.FC = ({children}) => {
+import {
+  useProductSearch,
+  SearchProvider
+} from '../../common/requests/storefront'
+import {BsTerminal} from 'react-icons/bs'
+import {isEqual} from 'lodash'
+import {propNames} from '@chakra-ui/react'
+
+export const BaseLayoutWithoutSearch: React.FC = ({children}) => {
+  const [searchTerm, setSearchTerm] = React.useState<Array<string>>(['', ''])
+  const [resultProducts, setResultProducts] = React.useState<Array<any>>([])
+
+  const filters = {
+    term: searchTerm[0],
+    tags: [],
+    minPrice: 0,
+    maxPrice: undefined
+  }
+
+  const {products} = useProductSearch(
+    true,
+    filters,
+    [],
+    undefined,
+    false,
+    10,
+    [],
+    {
+      ...filters,
+      term: ''
+    },
+    false
+  )
+  if (
+    !isEqual(resultProducts, products) &&
+    products.length > 0 &&
+    searchTerm[0] !== searchTerm[1]
+  ) {
+    setResultProducts(products)
+  }
   const handleLogoClick = () => {
     navigate('/')
   }
@@ -22,6 +61,12 @@ export const BaseLayout: React.FC = ({children}) => {
         onSideButton3Click={() => null}
       />
       <NavTop
+        search={{
+          resultProducts: resultProducts,
+          searchProducts: (term: string) => {
+            setSearchTerm([term, searchTerm[0]])
+          }
+        }}
         links={[
           {
             name: 'Waffen',
@@ -84,3 +129,18 @@ export const BaseLayout: React.FC = ({children}) => {
     </>
   )
 }
+
+export const BaseLayout = (props: {
+  children: React.ReactNode
+  withSearch: boolean
+}) => (
+  <>
+    {props.withSearch ? (
+      <SearchProvider>
+        <BaseLayoutWithoutSearch children={props.children} />
+      </SearchProvider>
+    ) : (
+      <BaseLayoutWithoutSearch children={props.children} />
+    )}
+  </>
+)

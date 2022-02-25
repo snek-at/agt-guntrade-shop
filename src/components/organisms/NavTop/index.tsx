@@ -35,10 +35,14 @@ export interface NavTopProps {
     name: string
     path: string
   }[]
+  search: {
+    searchProducts: (term: string) => void
+    resultProducts: Array<any>
+  }
   activePath?: string
 }
 
-const NavTop = ({links, activePath}: NavTopProps) => {
+const NavTop = ({links, activePath, search}: NavTopProps) => {
   const {isOpen, onOpen, onClose} = useDisclosure()
 
   const allLinkElement = links.map((link, i) => (
@@ -93,7 +97,10 @@ const NavTop = ({links, activePath}: NavTopProps) => {
             css={style.Logo}>
             <Logo />
           </HStack>
-          <Searchbar searchResultProducts={[]} onSearch={v => console.log(v)} />
+          <Searchbar
+            searchResultProducts={search.resultProducts}
+            onSearch={term => search.searchProducts(term)}
+          />
           <HStack spacing={8} alignItems={'center'} justifyContent={'flex-end'}>
             {/* <Menu>
             <MenuButton

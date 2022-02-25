@@ -139,7 +139,7 @@ export const WishListLayout = (props: {
   )
 
   return (
-    <BaseLayout>
+    <BaseLayout withSearch={true}>
       <ShopLayout>
         <Box
           m={{

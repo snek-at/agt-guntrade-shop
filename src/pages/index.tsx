@@ -29,7 +29,7 @@ const IndexPage = ({
   })
 
   return (
-    <BaseLayout>
+    <BaseLayout withSearch={true}>
       <ScrollSpy />
       <HeroSection categoryProducts={{New: data.newShopifyProduct.edges}} />
       <FeaturedProductsSection products={products} />
