@@ -33,8 +33,7 @@ export const Page = () => (
         onPriceChange: (min, max) => alert(`${min} - ${max}`)
       }
     }}
-    onLoadMore={() => {
-      return false
-    }}
+    onLoadMore={() => {}}
+    loading={true}
   />
 )

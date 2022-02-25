@@ -1,12 +1,12 @@
 import {navigate, PageProps} from 'gatsby'
 import React from 'react'
-import {isEqual} from 'lodash'
 
 import {
   SearchProvider,
   useProductSearch
 } from '../../common/requests/storefront'
 import {ShopCatalogLayout} from '../../layout/ShopCatalogLayout'
+import {Button, usePrevious} from '@chakra-ui/react'
 
 type ShopPageProps = PageProps<
   {},
@@ -39,14 +39,21 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
       minPrice: 0
     }
   })
+
+  const prevFilter = usePrevious(filters)
+  console.log('filters', filters)
+  console.log('prevFilter', prevFilter)
+
   const [sortKey, setSortKey] = React.useState('TITLE')
   const [reverse, setReverse] = React.useState(false)
   const [lazyload, setLazyload] = React.useState(false)
-  const [displayedProducts, setDisplayedProducts] = React.useState(
+  const [allProducts, setAllProducts] = React.useState(
     pageContext.products.items
   )
+
   const [initialData, setInitialData] = React.useState<any>()
-  const {data, products, hasNextPage, resetCursor, fetchNextPage, curs} =
+
+  const {data, isFetching, products, hasNextPage, resetCursor, fetchNextPage} =
     useProductSearch(
       {
         term: filters.term,
@@ -57,87 +64,128 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
       pageContext.filter.allTags,
       sortKey,
       false,
-      21,
+      12,
       initialData,
       filters.initialFilters,
       reverse
     )
 
-  if (!isEqual(displayedProducts, products) && products.length > 0) {
-    if (lazyload) {
-      setDisplayedProducts(displayedProducts.concat(products))
-    } else {
-      setDisplayedProducts(products)
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [shouldResetFilters, setShouldResetFilters] = React.useState(false)
+  const [hasMore, setHasMore] = React.useState(pageContext.filter.hasNextPage)
+
+  React.useEffect(() => {
+    setHasMore(hasNextPage)
+  }, [hasNextPage])
+
+  React.useEffect(() => {
+    setShouldResetFilters(true)
+  }, [filters])
+
+  React.useEffect(() => {
+    if (
+      JSON.stringify(products.map(p => p.handle)) !==
+      JSON.stringify(allProducts.map(p => p.handle))
+    ) {
+      if (shouldResetFilters) {
+        setAllProducts(products)
+        setShouldResetFilters(false)
+      } else {
+        // merge the new products with the old ones
+        setAllProducts(allProducts.concat(products))
+      }
+
+      setInitialData(data)
     }
-    setInitialData(data)
+  }, [JSON.stringify(products.map(p => p.handle)), shouldResetFilters])
+
+  React.useEffect(() => {
+    if (isLoading) {
+      if (hasMore) {
+        if (!isFetching) {
+          fetchNextPage()
+        }
+      }
+    }
+    setIsLoading(false)
+  }, [isLoading, hasMore, isFetching])
+
+  const handleLoadMore = () => {
+    if (hasMore) {
+      setIsLoading(true)
+
+      return true
+    }
+
+    return false
   }
+
   return (
-    <ShopCatalogLayout
-      filter={{
-        ...pageContext.filter,
-        onActiveTagsChange: (tags: Array<string>) => {
-          resetCursor()
-          setLazyload(false)
-          setFilters({...filters, tags: tags, initialFilters: filters})
-        },
-        priceFilter: {
-          minPrice: 0,
-          maxPrice: pageContext.filter.initialFilters.maxPrice,
-          onPriceChange: (min, max) => {
+    <>
+      <Button onClick={handleLoadMore}>Load more</Button>
+      <ShopCatalogLayout
+        loading={isFetching}
+        filter={{
+          ...pageContext.filter,
+          onActiveTagsChange: (tags: Array<string>) => {
             resetCursor()
             setLazyload(false)
-            setFilters({...filters, minPrice: min, maxPrice: max})
+            setFilters({...filters, tags: tags, initialFilters: filters})
+          },
+          priceFilter: {
+            minPrice: 0,
+            maxPrice: pageContext.filter.initialFilters.maxPrice,
+            onPriceChange: (min, max) => {
+              resetCursor()
+              setLazyload(false)
+              setFilters({...filters, minPrice: min, maxPrice: max})
+            }
           }
-        }
-      }}
-      header={{
-        title: pageContext.header.title,
-        path: location.pathname,
-        sortOptions: ['Alphabetisch', 'Preis aufsteigend', 'Preis absteigend'],
-        onSortChange: (option: string) => {
-          let sortOption: string
-          switch (option) {
-            case 'Alphabetisch':
-              sortOption = 'TITLE'
-              setReverse(false)
-              break
-            case 'Preis aufsteigend':
-              sortOption = 'PRICE'
-              setReverse(false)
-              break
-            case 'Preis absteigend':
-              sortOption = 'PRICE'
-              setReverse(true)
-              break
-            default:
-              sortOption = 'TITLE'
-              setReverse(false)
+        }}
+        header={{
+          title: pageContext.header.title,
+          path: location.pathname,
+          sortOptions: [
+            'Alphabetisch',
+            'Preis aufsteigend',
+            'Preis absteigend'
+          ],
+          onSortChange: (option: string) => {
+            let sortOption: string
+            switch (option) {
+              case 'Alphabetisch':
+                sortOption = 'TITLE'
+                setReverse(false)
+                break
+              case 'Preis aufsteigend':
+                sortOption = 'PRICE'
+                setReverse(false)
+                break
+              case 'Preis absteigend':
+                sortOption = 'PRICE'
+                setReverse(true)
+                break
+              default:
+                sortOption = 'TITLE'
+                setReverse(false)
+            }
+            resetCursor()
+            setLazyload(false)
+            setSortKey(sortOption)
           }
-          resetCursor()
-          setLazyload(false)
-          setSortKey(sortOption)
-        }
-      }}
-      products={{
-        items: displayedProducts,
-        getPath: (handle: string) => {
-          // remove the trailing slash
-          const pathname = location.pathname.replace(/\/$/, '')
+        }}
+        products={{
+          items: allProducts,
+          getPath: (handle: string) => {
+            // remove the trailing slash
+            const pathname = location.pathname.replace(/\/$/, '')
 
-          return `${pathname}/${handle}`
-        }
-      }}
-      onLoadMore={() => {
-        if (hasNextPage) {
-          if (curs) {
-            fetchNextPage(curs[curs.length])
+            return `${pathname}/${handle}`
           }
-          setLazyload(true)
-          return true
-        }
-        return false
-      }}
-    />
+        }}
+        onLoadMore={() => setIsLoading(true)}
+      />
+    </>
   )
 }
 

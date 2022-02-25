@@ -112,7 +112,7 @@ const createAllProductsShopPage = (data, actions) => {
     component: require.resolve('../templatePages/ShopPage/index.tsx'),
     context: {
       header: {title: 'Alle Produkte'},
-      products: {items: products.slice(0, 21)},
+      products: {items: products.slice(0, 12)},
       filter: {
         allTags: data.meta.tags,
         activeTags: [],
@@ -125,7 +125,7 @@ const createAllProductsShopPage = (data, actions) => {
             )
           )
         },
-        hasNextPage: products.length > 21
+        hasNextPage: products.length > 12
       }
     }
   })
@@ -246,7 +246,7 @@ const createCollectionShopAndProductPages = (data, actions) => {
         products: {
           items: edge.node.products
             .sort((a, b) => (a.title > b.title ? 1 : -1))
-            .slice(0, 21)
+            .slice(0, 12)
         },
         filter: {
           allTags: data.meta.tags,
@@ -260,7 +260,7 @@ const createCollectionShopAndProductPages = (data, actions) => {
               )
             )
           },
-          hasNextPage: edge.node.products.length > 21
+          hasNextPage: edge.node.products.length > 12
         }
       }
     })

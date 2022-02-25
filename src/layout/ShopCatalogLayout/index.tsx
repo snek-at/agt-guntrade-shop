@@ -218,23 +218,18 @@ export const ShopCatalogLayout = (props: {
   filter: React.ComponentProps<typeof Filter>
   products: React.ComponentProps<typeof ProductGrid>
   header: React.ComponentProps<typeof Header>
-  onLoadMore: () => boolean // return true if more products are available
+  onLoadMore: () => void // return true if more products are available
+  loading: boolean
 }) => {
   const mobile = useDisclosure()
   const [isDesktop] = useMediaQuery('(min-width: 1268px)')
 
   const gridRef = React.useRef<HTMLDivElement>(null)
 
-  const [loading, setLoading] = React.useState(false)
-
   const fetchMore = React.useCallback(() => {
-    if (!loading) {
-      // fetch more products
-      if (props.onLoadMore()) {
-        setLoading(true)
-      }
-    }
-  }, [])
+    //alert(`fetch more loading ${props.loading}`)
+    props.onLoadMore()
+  }, [props.loading, props.onLoadMore()])
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -292,7 +287,7 @@ export const ShopCatalogLayout = (props: {
 
           <Box w="100%" ref={gridRef}>
             <ProductGrid {...props.products} />
-            <Center w="100%">{loading && <Spinner />}</Center>
+            <Center w="100%">{props.loading && <Spinner />}</Center>
           </Box>
         </Flex>
       </ShopLayout>
