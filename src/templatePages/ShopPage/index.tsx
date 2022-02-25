@@ -122,7 +122,6 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
 
   return (
     <>
-      <Button onClick={handleLoadMore}>Load more</Button>
       <ShopCatalogLayout
         loading={isFetching}
         filter={{
