@@ -84,7 +84,11 @@ const SummaryBox = (props: {totalPrice: number; onRequestNow: () => void}) => {
           textTransform="uppercase"
           leftIcon={<Icon as={MdMessage} />}
           borderRadius={'full'}
-          colorScheme="blue"
+          bg={'agt.gray'}
+          color={'white'}
+          _hover={{
+            bg: 'agt.blue'
+          }}
           size="lg"
           onClick={props.onRequestNow}>
           <Text>Jetzt anfragen</Text>

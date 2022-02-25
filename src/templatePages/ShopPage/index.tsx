@@ -169,7 +169,7 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
                 setReverse(false)
             }
             resetCursor()
-            setLazyload(false)
+            setShouldResetFilters(true)
             setSortKey(sortOption)
           }
         }}

@@ -119,8 +119,6 @@ const PriceRangeFilter = (props: {
 
   const handlePriceChange = (value: [number, number]) => {
     setValue(value)
-
-    props.onPriceChange(value[0], value[1])
   }
 
   return (
@@ -134,7 +132,8 @@ const PriceRangeFilter = (props: {
           min={props.minPrice}
           max={props.maxPrice}
           value={value}
-          onChangeEnd={handlePriceChange}>
+          onChange={handlePriceChange}
+          onChangeEnd={value => props.onPriceChange(value[0], value[1])}>
           <RangeSliderTrack>
             <RangeSliderFilledTrack />
           </RangeSliderTrack>
