@@ -1,31 +1,50 @@
-import {Container, SimpleGrid, Center, Box, Heading} from '@chakra-ui/layout'
+import {Container, SimpleGrid, Center, Box, Heading, Link} from '@chakra-ui/layout'
 import {Button} from '@chakra-ui/button'
 import FeaturedProductCard from '../../../../molecules/ProductCard/3'
+import {gridPadBoxes} from '../../../../common/utils'
+import {generateProductCard} from '../../../../../layout/ProductCardLayout'
 import {Bullet} from '../../../../../common/assets'
+import { IGatsbyImageData } from "gatsby-plugin-image"
+import {Link as GatsbyLink} from 'gatsby'
 
-interface ShopifyNode {
-  images: any[]
-  priceRangeV2: {
-    maxVariantPrice: {
-      amount: number
-    }
-    minVariantPrice: {
-      amount: number
+export interface ShopifyNode {
+  id: string
+  handle: string
+  collections: {
+    handle: string
+  }[]
+  descriptionHtml: string
+  title: string
+  tags: string[]
+  status: string
+  totalinventory?: number
+  createdAt: string
+  contextualPricing: {
+    maxVariantPricing: {
+      price: {
+        amount: string
+      },
+      compareAtPrice: {
+        amount: string
+      } | null
     }
   }
-  tags: string[]
-  title: string
-  caliber: string
-  reducedprice?: number
-  direction?: string
-  isNew: boolean
+  images: {
+    shopifyId: string
+    gatsbyImageData: any
+  }[]
+  featuredImage: {
+    id: string
+    gatsbyImageData: any
+  }
 }
 
 export interface FeaturedProductsSectionProps {
   products: ShopifyNode[]
+  getPath: (handle: string) => string
 }
 
-const FeaturedProductsSection = ({products}: FeaturedProductsSectionProps) => {
+const FeaturedProductsSection = ({products, getPath}: FeaturedProductsSectionProps) => {
   return (
     <Container as="section" maxW="8xl" pt="6" id="featuredproducts">
       <Box textAlign="center" my="10">
@@ -33,17 +52,13 @@ const FeaturedProductsSection = ({products}: FeaturedProductsSectionProps) => {
         <Bullet color="agt.red" w="unset" fontSize="xl" mt="5" mb="10" />
       </Box>
       <SimpleGrid columns={{base: 2, md: 3, xl: 4}} spacing="5">
-        {products.map((product, index) => (
-          <FeaturedProductCard
-            isNew={product.isNew}
-            name={product.title}
-            caliber={product.tags[1]}
-            price={product.priceRangeV2.maxVariantPrice.amount}
-            reducedprice={product.priceRangeV2.maxVariantPrice.amount}
-            images={product.images}
-            direction={index === 0 || index === 4 ? 'rigth' : 'left'}
-          />
-        ))}
+        {products.map((item, key) => {
+          return (
+            <Link key={key} as={GatsbyLink} to={getPath(item.handle)}>
+              {generateProductCard(item)}
+            </Link>
+          )
+        })}
       </SimpleGrid>
       <Center mt={{base: '0', md: '10'}}>
         <Button

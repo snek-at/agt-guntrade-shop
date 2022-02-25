@@ -128,7 +128,7 @@ const makeQueryStringValue = (allItems: any[], selectedItems: any[]) => {
   return selectedItems
 }
 
-export const getSearchResults = async ({query, count = 24}) => {
+export const getSearchResults = async ({query, count = 5}) => {
   const filters = getValuesFromQuery(query)
 
   // Relevance is non-deterministic if there is no query, so we default to "title" instead
@@ -159,7 +159,7 @@ export const useProductSearch = (
   allTags: Array<string>,
   sortKey: string | undefined,
   pause = false,
-  count = 20,
+  count = 5,
   initialData: any,
   initialFilters: {
     term: string | null
@@ -196,7 +196,7 @@ export const useProductSearch = (
       before: cursors.before,
       reverse: reverse
     },
-    pause: shouldPause
+    pause: false
   })
 
   React.useEffect(() => {
@@ -227,8 +227,16 @@ export const useProductSearch = (
     })
   }
 
-  const fetchNextPage = (nextCursor: any) => {
+  console.log('result', result)
+
+  const fetchNextPage = () => {
     // when we go forward we want all products after the first one of our array
+    const prods =
+      result?.data?.products?.edges || initialData?.data?.products?.edges
+
+    const nextCursor = prods[prods.length - 1].cursor
+    console.log('cursor', nextCursor)
+
     setCursors({
       before: null,
       after: nextCursor
@@ -242,7 +250,7 @@ export const useProductSearch = (
 
   let hasNextPage
 
-  let products = React.useMemo(() => {
+  let products: Array<any> = React.useMemo(() => {
     /*if (query === createQuery(initialFilters)) {
       return initialData
     }*/
@@ -255,7 +263,19 @@ export const useProductSearch = (
     hasNextPage = result.data.products.pageInfo.hasNextPage
   }
 
-  const isFetching = !initialRender && result.fetching
+  const isFetching = result.fetching
+
+  const getCompareAtPrice = (product: any) => {
+    const price = product.node.compareAtPrice.maxVariantPrice.amount
+
+    if (price && parseInt(price) > 0) {
+      return {
+        amount: price
+      }
+    }
+
+    return null
+  }
 
   let curs: Array<string> = []
   if (products.length > 0) {
@@ -265,13 +285,10 @@ export const useProductSearch = (
         ...product.node,
         contextualPricing: {
           maxVariantPricing: {
-            compareAtPrice: {
-              amount:
-                product.node.compareAtPrice.maxVariantPrice.amount === '0.0'
-                  ? undefined
-                  : product.node.compareAtPrice.maxVariantPrice.amount
+            price: {
+              amount: product.node.price.maxVariantPrice.amount
             },
-            price: {amount: product.node.price.maxVariantPrice.amount}
+            compareAtPrice: getCompareAtPrice(product)
           }
         },
         featuredImage: {
@@ -286,6 +303,9 @@ export const useProductSearch = (
       }))
     }
   }
+
+  console.log('resuult', result)
+
   return {
     data: result.data,
     isFetching,

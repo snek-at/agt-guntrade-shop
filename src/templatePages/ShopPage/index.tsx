@@ -1,12 +1,12 @@
 import {navigate, PageProps} from 'gatsby'
 import React from 'react'
-import {isEqual} from 'lodash'
 
 import {
   SearchProvider,
   useProductSearch
 } from '../../common/requests/storefront'
 import {ShopCatalogLayout} from '../../layout/ShopCatalogLayout'
+import {Button, usePrevious} from '@chakra-ui/react'
 
 type ShopPageProps = PageProps<
   {},
@@ -39,15 +39,21 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
       minPrice: 0
     }
   })
+
+  const prevFilter = usePrevious(filters)
+  console.log('filters', filters)
+  console.log('prevFilter', prevFilter)
+
   const [sortKey, setSortKey] = React.useState('TITLE')
   const [reverse, setReverse] = React.useState(false)
   const [lazyload, setLazyload] = React.useState(false)
-  const [displayedProducts, setDisplayedProducts] = React.useState(
+  const [allProducts, setAllProducts] = React.useState(
     pageContext.products.items
   )
+
   const [initialData, setInitialData] = React.useState<any>()
-  const [cursors, setCursors] = React.useState<Array<string>>([])
-  const {data, products, hasNextPage, resetCursor, fetchNextPage, curs} =
+
+  const {data, isFetching, products, hasNextPage, resetCursor, fetchNextPage} =
     useProductSearch(
       false,
       {
@@ -59,25 +65,66 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
       pageContext.filter.allTags,
       sortKey,
       false,
-      21,
+      12,
       initialData,
       filters.initialFilters,
       reverse
     )
 
-  if (curs[0]) setCursors(curs)
-  console.log(curs, hasNextPage)
-  if (!isEqual(displayedProducts, products) && products.length > 0) {
-    if (lazyload) {
-      setDisplayedProducts(displayedProducts.concat(products))
-    } else {
-      setDisplayedProducts(products)
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [shouldResetFilters, setShouldResetFilters] = React.useState(false)
+  const [hasMore, setHasMore] = React.useState(pageContext.filter.hasNextPage)
+
+  React.useEffect(() => {
+    setHasMore(hasNextPage)
+  }, [hasNextPage])
+
+  React.useEffect(() => {
+    setShouldResetFilters(true)
+  }, [filters])
+
+  React.useEffect(() => {
+    if (
+      JSON.stringify(products.map(p => p.handle)) !==
+      JSON.stringify(allProducts.map(p => p.handle))
+    ) {
+      if (shouldResetFilters) {
+        setAllProducts(products)
+        setShouldResetFilters(false)
+      } else {
+        // merge the new products with the old ones
+        setAllProducts(allProducts.concat(products))
+      }
+
+      setInitialData(data)
     }
-    setInitialData(data)
+  }, [JSON.stringify(products.map(p => p.handle)), shouldResetFilters])
+
+  React.useEffect(() => {
+    if (isLoading) {
+      if (hasMore) {
+        if (!isFetching) {
+          fetchNextPage()
+        }
+      }
+    }
+    setIsLoading(false)
+  }, [isLoading, hasMore, isFetching])
+
+  const handleLoadMore = () => {
+    if (hasMore) {
+      setIsLoading(true)
+
+      return true
+    }
+
+    return false
   }
+
   return (
     <>
       <ShopCatalogLayout
+        loading={isFetching}
         filter={{
           ...pageContext.filter,
           onActiveTagsChange: (tags: Array<string>) => {
@@ -123,12 +170,12 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
                 setReverse(false)
             }
             resetCursor()
-            setLazyload(false)
+            setShouldResetFilters(true)
             setSortKey(sortOption)
           }
         }}
         products={{
-          items: displayedProducts,
+          items: allProducts,
           getPath: (handle: string) => {
             // remove the trailing slash
             const pathname = location.pathname.replace(/\/$/, '')
@@ -136,17 +183,7 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
             return `${pathname}/${handle}`
           }
         }}
-        onLoadMore={() => {
-          /*console.log(curs, hasNextPage)
-        if (hasNextPage) {
-          if (curs) {
-            fetchNextPage(curs[curs.length])
-          }
-          setLazyload(true)
-          return true
-        } */
-          return false
-        }}
+        onLoadMore={() => setIsLoading(true)}
       />
     </>
   )

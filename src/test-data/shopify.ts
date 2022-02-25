@@ -1,3 +1,5 @@
+import { IGatsbyImageData } from "gatsby-plugin-image"
+
 export const {allShopifyCollection, allShopifyProduct} = {
   allShopifyCollection: {
     edges: [
@@ -8353,6 +8355,38 @@ export const {allShopifyCollection, allShopifyProduct} = {
   }
 }
 
+interface ShopifyNode {
+  id: string
+  handle: string
+  collections: {
+    handle: string
+  }[]
+  descriptionHtml: string
+  title: string
+  tags: string[]
+  status: string
+  totalinventory?: number
+  createdAt: string
+  contextualPricing: {
+    maxVariantPricing: {
+      price: {
+        amount: string
+      },
+      compareAtPrice: {
+        amount: string
+      } | null
+    }
+  }
+  images: {
+    shopifyId: string
+    gatsbyImageData: any
+  }[]
+  featuredImage: {
+    id: string
+    gatsbyImageData: any
+  }
+}
+
 const getRandomProduct = () => {
   const products = allShopifyProduct.edges
   const randomIndex = Math.floor(Math.random() * products.length)
@@ -8367,11 +8401,11 @@ const getRandomCategory = () => {
 
 export const getProductNodes = (total: number) => {
   // return random nodes for testing
-  const products = []
+  const products: ShopifyNode[] = []
 
   for (let i = 0; i < total; i++) {
     // get random product from all products
-    const randomProduct = getRandomProduct()
+    const randomProduct: ShopifyNode = getRandomProduct()
 
     products.push(randomProduct)
   }
