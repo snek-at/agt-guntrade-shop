@@ -5,7 +5,6 @@
     Fix space in category title
     Fix product itself showing in relatedProducts
     Hidden tag
-    Alltags showing in ShopPage
     Fix back not working
 */
 
@@ -100,16 +99,6 @@ const getFilteredProducts = (unfilteredRelatedProducts, handle) => {
 }
 
 const createAllProductsShopPage = (data, actions) => {
-  let tags = {}
-  data.meta.tags.map(tag => {
-    const splitTag = tag.split(':')
-    if (typeof tags[splitTag[0]] === 'undefined') {
-      tags[splitTag[0]] = [splitTag[1]]
-    } else if (!tags[splitTag[0]].includes(splitTag[1])) {
-      tags[splitTag[0]].push(splitTag[1])
-    }
-  })
-
   const products = []
   const collections = {}
   data.allShopifyProduct.edges.map(edge => {
@@ -130,6 +119,7 @@ const createAllProductsShopPage = (data, actions) => {
       products: {items: products.slice(0, 12)},
       filter: {
         allTags: data.meta.tags,
+        productPageTags: data.meta.tags,
         activeTags: [],
         initialFilters: {
           tags: [],
@@ -251,6 +241,12 @@ const createCollectionShopAndProductPages = (data, actions) => {
       const activeTags = data.meta.tags.filter(tag =>
         tag.endsWith(edge.node.title.split(' ').at(-1))
       )
+      const productPageTags = new Set<string>()
+      edge.node.products.forEach(product => {
+        product.tags.forEach(tag => {
+          productPageTags.add(tag)
+        })
+      })
 
       slug = slug + '/products/'
       actions.createPage({
@@ -265,6 +261,9 @@ const createCollectionShopAndProductPages = (data, actions) => {
           },
           filter: {
             allTags: data.meta.tags,
+            productPageTags: Array.from(productPageTags).filter(
+              tag => !activeTags.includes(tag)
+            ),
             activeTags: activeTags,
             initialFilters: {
               tags: activeTags,

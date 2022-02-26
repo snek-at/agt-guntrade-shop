@@ -12,6 +12,7 @@ type ShopPageProps = PageProps<
   {
     filter: {
       allTags: Array<string>
+      productPageTags: Array<string>
       activeTags: Array<string>
       initialFilters: {
         term: string | null
@@ -112,9 +113,14 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
         loading={isFetching}
         filter={{
           ...pageContext.filter,
+          allTags: pageContext.filter.productPageTags,
           onActiveTagsChange: (tags: Array<string>) => {
             resetCursor()
-            setFilters({...filters, tags: tags, initialFilters: filters})
+            setFilters({
+              ...filters,
+              tags: tags.concat(pageContext.filter.activeTags),
+              initialFilters: filters
+            })
           },
           priceFilter: {
             minPrice: 0,
