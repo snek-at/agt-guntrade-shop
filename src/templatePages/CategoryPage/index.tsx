@@ -42,6 +42,8 @@ const CategoryPage = ({pageContext, location}: CategoryPageProps) => {
 
           if (handle === 'alle-produkte') {
             return `${pathname}/products/`
+          } else if (handle.startsWith('a-')) {
+            return `/${handle.split('-').at(-1)}/${pathname.split('/').at(-1)}`
           } else {
             return `${pathname}/${handle.split('-').at(-1)}`
           }
