@@ -1,60 +1,76 @@
 // @ts-nocheck
 
-// splitAndType splits the handle and checks for the collectiontype (A, AB, ABC...)
-const splitAndType = handle => {
+/* TODO:
+    navbar static query extra component "NavbarContainer"
+    navbar data query || nodes
+    tag filter initialtag and
+    fix relatedCategories (a category product page issue)
+    Fix space in category title
+*/
+
+const splitAndCheckHandle = (handle: string) => {
   const splitHandle = handle.split('-')
-  let collectionType
 
   if (!isNaN(splitHandle.at(-1))) {
     splitHandle.pop(-1)
   }
+  return splitHandle
+}
+
+/**
+ *
+ */
+const getSubcollectionType = (splitHandle: Array<string>) => {
+  let subcollectionType
 
   const len = splitHandle.length
-
+  /**
+   * If true we have a handle that looks like a-waffen or ab-weapons-shotguns (this will be used as an example throughout)
+   * So we first decide the subcollectionType which looks will like this: abc
+   *
+   * Then we build it into a full identifier by excluding other abc categories that are not related
+   * by adding -weapons-shotguns-
+   *
+   * Else if the handle looks like or b-shotguns or bc-shotguns-pumpguns (again the used example)
+   * We return an a in front.
+   */
   if (len > 1 && splitHandle[0][0] === 'a') {
-    collectionType =
+    subcollectionType =
       splitHandle[0] +
       String.fromCharCode(
         splitHandle[0].charCodeAt(splitHandle[0].length - 1) + 1
       )
     for (let i = 1; i < splitHandle[0].length + 1; i++) {
-      collectionType = collectionType + '-' + splitHandle[i]
+      subcollectionType = subcollectionType + '-' + splitHandle[i]
     }
-    collectionType = collectionType + '-'
+    subcollectionType = subcollectionType + '-'
+  } else if (len > 1 && splitHandle[0][0] === 'b') {
+    subcollectionType = 'a-'
   } else {
-    // ASCII 97 === a. MinLen = 2 so we use 95 as our basevalue.
-    collectionType =
-      String.fromCharCode(
-        95 +
-          (len === 2 && splitHandle[0] === 'a'
-            ? 3
-            : len > 2 && splitHandle[0][0] !== 'a'
-            ? 2
-            : len === 2
-            ? 2
-            : len + 1)
-      ) + '-'
+    console.error('Error: Handle too short or starts with invalid type.')
+    return ''
   }
-
-  return [splitHandle, collectionType]
+  return subcollectionType
 }
 
-const getUnfilteredRelatedProducts = (data, handle, splitHandle) => {
+const getUnfilteredRelatedProducts = (
+  data: any,
+  handle: string,
+  splitHandle: Array<string>
+) => {
   const relatedCategories = data.allShopifyCollection.edges.filter(edge2 => {
     if (splitHandle[0].length === 2 && splitHandle[0][0] === 'b') {
       return (
         edge2.node.handle.includes(
           splitHandle.slice(1, -1).toString().replaceAll(',', '-')
-        ) &&
-        edge2.node.handle !== handle &&
-        edge2.node.handle.split('-').length === splitHandle.length
+        ) && edge2.node.handle.split('-').length === splitHandle.length
       )
     } else if (splitHandle[0].length > 1) {
-      return (
-        edge2.node.handle.endsWith(
-          splitHandle.slice(2).toString().replaceAll(',', '-')
-        ) && edge2.node.handle !== handle
+      return edge2.node.handle.endsWith(
+        splitHandle.slice(2).toString().replaceAll(',', '-')
       )
+    } else if (splitHandle[0].length === 1 && splitHandle[0][0] === 'a') {
+      return edge2.node.handle === handle
     }
   })
 
@@ -134,7 +150,7 @@ const createAllProductsShopPage = (data, actions) => {
     let unfilteredRelatedProducts = []
     for (const handle of collections[product.id]) {
       unfilteredRelatedProducts = unfilteredRelatedProducts.concat(
-        getUnfilteredRelatedProducts(data, handle, splitAndType(handle)[0])
+        getUnfilteredRelatedProducts(data, handle, splitAndCheckHandle(handle))
       )
     }
 
@@ -181,7 +197,8 @@ const createAllProductsShopPage = (data, actions) => {
 
 const createCollectionShopAndProductPages = (data, actions) => {
   data.allShopifyCollection.edges.forEach(edge => {
-    const [splitHandle, collectionType] = splitAndType(edge.node.handle)
+    const splitHandle = splitAndCheckHandle(edge.node.handle)
+    const subcollectionType = getSubcollectionType(splitHandle)
 
     let slug =
       '/' +
@@ -193,7 +210,7 @@ const createCollectionShopAndProductPages = (data, actions) => {
     const subcategories = data.allShopifyCollection.edges
       .filter(edge2 => {
         return (
-          edge2.node.handle.startsWith(collectionType) ||
+          edge2.node.handle.startsWith(subcollectionType) ||
           edge.node.handle === edge2.node.handle
         )
       })
