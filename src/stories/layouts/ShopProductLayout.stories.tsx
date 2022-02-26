@@ -1,5 +1,4 @@
-import {Story, Meta} from '@storybook/react'
-import {IGatsbyImageData} from 'gatsby-plugin-image'
+import {Meta} from '@storybook/react'
 import {getProductNodes} from '../../test-data/shopify'
 import {ShopProductLayout} from '../../layout/ShopProductLayout'
 export default {
@@ -29,7 +28,7 @@ export const Product0 = () => (
       description: products[0].descriptionHtml
     }}
     featuredProducts={{
-      products: products.slice(1, 7),
+      products: products.slice(1, 7)
     }}
   />
 )
@@ -52,7 +51,7 @@ export const Product1 = () => (
       description: products[1].descriptionHtml
     }}
     featuredProducts={{
-      products: products.slice(2, 7),
+      products: products.slice(2, 7)
     }}
   />
 )

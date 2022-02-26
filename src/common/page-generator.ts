@@ -7,8 +7,6 @@
     Hidden tag
     Alltags showing in ShopPage
     Fix back not working
-    If category empty no link
-    Remove at from components
 */
 
 const splitAndCheckHandle = (handle: string) => {
@@ -60,7 +58,6 @@ const getUnfilteredRelatedProducts = (
 ) => {
   const relatedCategories = data.allShopifyCollection.edges.filter(edge2 => {
     if (splitHandle[0].length === 2 && splitHandle[0][0] === 'b') {
-      console.log(splitHandle.slice(1, -1))
       return (
         edge2.node.handle.includes(
           splitHandle.slice(1, -1).toString().replaceAll(',', '-')
@@ -161,8 +158,6 @@ const createAllProductsShopPage = (data, actions) => {
       ''
     )
 
-    console.log(product.handle)
-
     actions.createPage({
       path: `/products/${product.handle}/`,
       component: require.resolve('../templatePages/ProductPage/index.tsx'),
@@ -223,108 +218,110 @@ const createCollectionShopAndProductPages = (data, actions) => {
           : -1
       )
 
-    actions.createPage({
-      path: slug,
-      component: require.resolve(`../templatePages/CategoryPage/index.tsx`),
-      context: {
-        category: {
-          handle: edge.node.handle,
-          title: edge.node.title.split(' ').at(-1),
-          items: subcategories.map(subcategory => ({
-            title:
-              subcategory.node.title === edge.node.title
-                ? 'Alle Produkte'
-                : subcategory.node.title.split(' ').at(-1),
-            handle:
-              subcategory.node.handle === edge.node.handle
-                ? 'alle-produkte'
-                : subcategory.node.handle,
-            totalProducts: subcategory.node.products
-              ? subcategory.node.products.length
-              : 0,
-            image: subcategory.node.image ? subcategory.node.image : undefined
-          }))
-        },
-        productGrid: {
-          title: 'Hello my dudes',
-          items: edge.node.products.slice(0, 8)
-        }
-      }
-    })
-
-    const activeTags = data.meta.tags.filter(tag =>
-      tag.endsWith(edge.node.title.split(' ').at(-1))
-    )
-
-    slug = slug + '/products/'
-    actions.createPage({
-      path: slug,
-      component: require.resolve('../templatePages/ShopPage/index.tsx'),
-      context: {
-        header: {title: edge.node.title.split(' ').at(-1)},
-        products: {
-          items: edge.node.products
-            .sort((a, b) => (a.title > b.title ? 1 : -1))
-            .slice(0, 12)
-        },
-        filter: {
-          allTags: data.meta.tags,
-          activeTags: activeTags,
-          initialFilters: {
-            tags: activeTags,
-            maxPrice: Math.max(
-              ...edge.node.products.map(
-                product =>
-                  product.contextualPricing.maxVariantPricing.price.amount
-              )
-            )
-          },
-          hasNextPage: edge.node.products.length > 12
-        }
-      }
-    })
-
-    edge.node.products.forEach(product => {
-      const unfilteredRelatedProducts = getUnfilteredRelatedProducts(
-        data,
-        edge.node.handle,
-        splitHandle
-      )
-      const filteredRelatedProducts = getFilteredProducts(
-        unfilteredRelatedProducts,
-        edge.node.handle
-      )
-
+    if (edge.node.products.length > 0) {
       actions.createPage({
-        path: `${slug}${product.handle}/`,
-        component: require.resolve('../templatePages/ProductPage/index.tsx'),
+        path: slug,
+        component: require.resolve(`../templatePages/CategoryPage/index.tsx`),
         context: {
-          handle: product.handle,
-          header: {title: product.title},
-          imageSlider: {
-            featuredImage: {
-              alt: product.featuredImage.alt || product.title,
-              gatsbyImageData: product.featuredImage.gatsbyImageData
-            },
-            images: product.images
-              .filter(image => image.shopifyId !== product.featuredImage.id)
-              .map(image => ({
-                alt: image.alt || product.title,
-                gatsbyImageData: image.gatsbyImageData
-              }))
+          category: {
+            handle: edge.node.handle,
+            title: edge.node.title.split(' ').at(-1),
+            items: subcategories.map(subcategory => ({
+              title:
+                subcategory.node.title === edge.node.title
+                  ? 'Alle Produkte'
+                  : subcategory.node.title.split(' ').at(-1),
+              handle:
+                subcategory.node.handle === edge.node.handle
+                  ? 'alle-produkte'
+                  : subcategory.node.handle,
+              totalProducts: subcategory.node.products
+                ? subcategory.node.products.length
+                : 0,
+              image: subcategory.node.image ? subcategory.node.image : undefined
+            }))
           },
-          productDetail: {
-            id: product.id,
-            price: product.contextualPricing.maxVariantPricing.price.amount,
-            tags: product.tags
-          },
-          productMoreDetail: {
-            description: product.descriptionHtml
-          },
-          featuredProducts: filteredRelatedProducts
+          productGrid: {
+            title: 'Hello my dudes',
+            items: edge.node.products.slice(0, 8)
+          }
         }
       })
-    })
+
+      const activeTags = data.meta.tags.filter(tag =>
+        tag.endsWith(edge.node.title.split(' ').at(-1))
+      )
+
+      slug = slug + '/products/'
+      actions.createPage({
+        path: slug,
+        component: require.resolve('../templatePages/ShopPage/index.tsx'),
+        context: {
+          header: {title: edge.node.title.split(' ').at(-1)},
+          products: {
+            items: edge.node.products
+              .sort((a, b) => (a.title > b.title ? 1 : -1))
+              .slice(0, 12)
+          },
+          filter: {
+            allTags: data.meta.tags,
+            activeTags: activeTags,
+            initialFilters: {
+              tags: activeTags,
+              maxPrice: Math.max(
+                ...edge.node.products.map(
+                  product =>
+                    product.contextualPricing.maxVariantPricing.price.amount
+                )
+              )
+            },
+            hasNextPage: edge.node.products.length > 12
+          }
+        }
+      })
+
+      edge.node.products.forEach(product => {
+        const unfilteredRelatedProducts = getUnfilteredRelatedProducts(
+          data,
+          edge.node.handle,
+          splitHandle
+        )
+        const filteredRelatedProducts = getFilteredProducts(
+          unfilteredRelatedProducts,
+          edge.node.handle
+        )
+
+        actions.createPage({
+          path: `${slug}${product.handle}/`,
+          component: require.resolve('../templatePages/ProductPage/index.tsx'),
+          context: {
+            handle: product.handle,
+            header: {title: product.title},
+            imageSlider: {
+              featuredImage: {
+                alt: product.featuredImage.alt || product.title,
+                gatsbyImageData: product.featuredImage.gatsbyImageData
+              },
+              images: product.images
+                .filter(image => image.shopifyId !== product.featuredImage.id)
+                .map(image => ({
+                  alt: image.alt || product.title,
+                  gatsbyImageData: image.gatsbyImageData
+                }))
+            },
+            productDetail: {
+              id: product.id,
+              price: product.contextualPricing.maxVariantPricing.price.amount,
+              tags: product.tags
+            },
+            productMoreDetail: {
+              description: product.descriptionHtml
+            },
+            featuredProducts: filteredRelatedProducts
+          }
+        })
+      })
+    }
   })
 }
 

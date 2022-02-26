@@ -37,12 +37,14 @@ const CategoryPage = ({pageContext, location}: CategoryPageProps) => {
       path={location.pathname}
       category={{
         ...pageContext.category,
-        getPath: (handle: string) => {
+        getPath: (handle: string, totalProducts: number) => {
           const pathname = location.pathname.replace(/\/$/, '')
           const splitHandle = handle.split('-')
           const splitPath = pathname.split('/')
 
-          if (handle === 'alle-produkte') {
+          if (totalProducts === 0) {
+            return pathname
+          } else if (handle === 'alle-produkte') {
             return `${pathname}/products/`
           } else if (handle.startsWith('a-')) {
             return `/${splitHandle[splitHandle.length - 1]}/${

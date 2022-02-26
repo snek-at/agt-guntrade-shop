@@ -136,7 +136,6 @@ const ProductCard = ({
             {(imageIndex &&
               images.length > 1 &&
               images.map((gatsbyimage, index) => {
-                console.log(gatsbyimage.gatsbyImageData)
                 return (
                   imageIndex === index && (
                     <MotionBox initial={{opacity: 0}} animate={{opacity: 1}}>

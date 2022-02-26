@@ -11,7 +11,6 @@ const ProductsSection = ({products}: ProductsSectionProps) => {
       <Wrap justify="center" spacing="5">
         {products.map((product, index) => (
           <>
-            {console.log(index)}
             <ProductCard
               name={product.name}
               description={product.description}
