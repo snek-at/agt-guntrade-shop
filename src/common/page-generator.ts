@@ -5,6 +5,10 @@
     Fix space in category title
     Fix product itself showing in relatedProducts
     Hidden tag
+    Alltags showing in ShopPage
+    Fix back not working
+    If category empty no link
+    Remove at from components
 */
 
 const splitAndCheckHandle = (handle: string) => {

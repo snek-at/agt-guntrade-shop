@@ -15,7 +15,8 @@ const NavContainer = (props: {
     }
   `)
   const links = data.handles.handle.map((handle: string) => {
-    const lastElement = handle.split('-').at(-1)
+    const parts = handle.split('-')
+    const lastElement = parts[parts.length - 1]
 
     return {name: lastElement, path: `/${lastElement}`}
   })
