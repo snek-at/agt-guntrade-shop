@@ -131,7 +131,7 @@ export const ShopCategoryLayout = (props: {
   productGrid: React.ComponentProps<typeof ProductGrid>
 }) => {
   return (
-    <BaseLayout withSearch={true}>
+    <BaseLayout withSearch={true} activePath={props.path}>
       <Header path={props.path} title={props.title} />
       <ShopLayout>
         <VStack spacing={16} align="left">

@@ -29,7 +29,7 @@ const IndexPage = ({
   })
 
   return (
-    <BaseLayout withSearch={true}>
+    <BaseLayout withSearch={true} activePath={location.pathname}>
       <ScrollSpy />
       <HeroSection categoryProducts={{New: data.newShopifyProduct.edges}} />
       <FeaturedProductsSection getPath={(handle: string) => `/products/${handle}`} products={products} />

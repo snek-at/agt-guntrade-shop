@@ -124,6 +124,7 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
   return (
     <>
       <ShopCatalogLayout
+        activePath={location.pathname}
         loading={isFetching}
         filter={{
           ...pageContext.filter,

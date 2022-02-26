@@ -219,6 +219,7 @@ export const ShopCatalogLayout = (props: {
   header: React.ComponentProps<typeof Header>
   onLoadMore: () => void // return true if more products are available
   loading: boolean
+  activePath: string
 }) => {
   const mobile = useDisclosure()
   const [isDesktop] = useMediaQuery('(min-width: 1268px)')
@@ -251,7 +252,7 @@ export const ShopCatalogLayout = (props: {
   }, [])
 
   return (
-    <BaseLayout withSearch={false}>
+    <BaseLayout withSearch={false} activePath={props.activePath}>
       <ShopLayout>
         <Header
           {...props.header}

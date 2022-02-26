@@ -1,6 +1,5 @@
-import React, {Props} from 'react'
+import React from 'react'
 import Footer from '../../components/organisms/Footer'
-import NavTop from '../../components/organisms/NavTop'
 import SideButton from '../../components/molecules/buttons/SideButtons'
 import ScrollToTopButton from '../../components/molecules/buttons/ScrollToTopButton'
 import {navigate} from 'gatsby'
@@ -8,11 +7,13 @@ import {
   useProductSearch,
   SearchProvider
 } from '../../common/requests/storefront'
-import {BsTerminal} from 'react-icons/bs'
 import {isEqual} from 'lodash'
-import {propNames} from '@chakra-ui/react'
+import NavContainer from '../../components/organisms/NavContainer'
 
-export const BaseLayoutWithoutSearch: React.FC = ({children}) => {
+export const BaseLayoutWithoutSearch: React.FC<{activePath: string}> = ({
+  children,
+  activePath
+}) => {
   const [searchTerm, setSearchTerm] = React.useState<Array<string>>(['', ''])
   const [resultProducts, setResultProducts] = React.useState<Array<any>>([])
 
@@ -60,52 +61,14 @@ export const BaseLayoutWithoutSearch: React.FC = ({children}) => {
         onSideButton2Click={() => null}
         onSideButton3Click={() => null}
       />
-      <NavTop
+      <NavContainer
         search={{
           resultProducts: resultProducts,
           searchProducts: (term: string) => {
             setSearchTerm([term, searchTerm[0]])
           }
         }}
-        links={[
-          {
-            name: 'Waffen',
-            path: '/waffen'
-          },
-          {
-            name: 'Munition',
-            path: '/munition'
-          },
-          {
-            name: 'Wiederladen',
-            path: '/wiederladen'
-          },
-          {
-            name: 'Optik',
-            path: '/optik'
-          },
-          {
-            name: 'AR15/AR10',
-            path: '/ar15-ar10'
-          },
-          {
-            name: 'Laufrohlinge',
-            path: '/laufrohlinge'
-          },
-          {
-            name: 'Magazine',
-            path: '/magazine'
-          },
-          {
-            name: 'Zubehör',
-            path: '/zubehoer'
-          },
-          {
-            name: 'Ersatzteile',
-            path: '/ersatzteile'
-          }
-        ]}
-        activePath={'/waffen'}
+        activePath={activePath}
       />
       {children}
       <Footer
@@ -133,14 +96,21 @@ export const BaseLayoutWithoutSearch: React.FC = ({children}) => {
 export const BaseLayout = (props: {
   children: React.ReactNode
   withSearch: boolean
+  activePath: string
 }) => (
   <>
     {props.withSearch ? (
       <SearchProvider>
-        <BaseLayoutWithoutSearch children={props.children} />
+        <BaseLayoutWithoutSearch
+          activePath={props.activePath}
+          children={props.children}
+        />
       </SearchProvider>
     ) : (
-      <BaseLayoutWithoutSearch children={props.children} />
+      <BaseLayoutWithoutSearch
+        activePath={props.activePath}
+        children={props.children}
+      />
     )}
   </>
 )

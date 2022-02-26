@@ -277,7 +277,7 @@ export const ShopProductLayout = (props: {
   }
 }) => {
   return (
-    <BaseLayout withSearch={true}>
+    <BaseLayout withSearch={true} activePath={props.header.path}>
       <ShopLayout>
         <Header {...props.header} />
         <VStack spacing={12} w="100%">

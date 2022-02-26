@@ -6,6 +6,7 @@
     tag filter initialtag and
     fix relatedCategories (a category product page issue)
     Fix space in category title
+    Fix product itself showing in relatedProducts
 */
 
 const splitAndCheckHandle = (handle: string) => {
@@ -17,9 +18,6 @@ const splitAndCheckHandle = (handle: string) => {
   return splitHandle
 }
 
-/**
- *
- */
 const getSubcollectionType = (splitHandle: Array<string>) => {
   let subcollectionType
 
@@ -31,8 +29,8 @@ const getSubcollectionType = (splitHandle: Array<string>) => {
    * Then we build it into a full identifier by excluding other abc categories that are not related
    * by adding -weapons-shotguns-
    *
-   * Else if the handle looks like or b-shotguns or bc-shotguns-pumpguns (again the used example)
-   * We return an a in front.
+   * Else if the handle looks like or b-shotguns or bc-shotguns-pumpguns
+   * We return an a-.
    */
   if (len > 1 && splitHandle[0][0] === 'a') {
     subcollectionType =
@@ -60,6 +58,7 @@ const getUnfilteredRelatedProducts = (
 ) => {
   const relatedCategories = data.allShopifyCollection.edges.filter(edge2 => {
     if (splitHandle[0].length === 2 && splitHandle[0][0] === 'b') {
+      console.log(splitHandle.slice(1, -1))
       return (
         edge2.node.handle.includes(
           splitHandle.slice(1, -1).toString().replaceAll(',', '-')
@@ -83,6 +82,7 @@ const getUnfilteredRelatedProducts = (
 const getFilteredProducts = (unfilteredRelatedProducts, handle) => {
   const filteredRelatedProducts = []
 
+  //change this to change the amount of displayed RelatedProducts
   const iterationLimit =
     unfilteredRelatedProducts.length > 12
       ? 12

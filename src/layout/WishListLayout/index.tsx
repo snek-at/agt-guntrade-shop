@@ -130,6 +130,7 @@ export const WishListLayout = (props: {
   onRemove: (id: string) => void
   onQuantityChange: (id: string, quantity: number) => void
   onRequestNow: () => void
+  activePath: string
 }) => {
   const itemLength = props.items.length
 
@@ -143,7 +144,7 @@ export const WishListLayout = (props: {
   )
 
   return (
-    <BaseLayout withSearch={true}>
+    <BaseLayout withSearch={true} activePath={props.activePath}>
       <ShopLayout>
         <Box
           m={{
