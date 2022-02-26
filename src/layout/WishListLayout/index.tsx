@@ -1,35 +1,22 @@
 import {
-  AspectRatio,
   Box,
   Button,
   CloseButton,
-  Divider,
   Flex,
   Heading,
   HStack,
   Icon,
-  Image,
   Link,
-  List,
-  ListItem,
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
-  Select,
-  Spacer,
   Text,
   useColorModeValue,
   VStack
 } from '@chakra-ui/react'
-import {
-  GatsbyImage,
-  GatsbyImageProps,
-  IGatsbyImageData
-} from 'gatsby-plugin-image'
-import React from 'react'
-import {AiFillApi} from 'react-icons/ai'
+import {GatsbyImage, IGatsbyImageData} from 'gatsby-plugin-image'
 import {FaHeartBroken} from 'react-icons/fa'
 import {MdMessage} from 'react-icons/md'
 import {WishlistProduct} from '../../services/wishlist'

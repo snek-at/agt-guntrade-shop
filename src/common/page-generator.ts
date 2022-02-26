@@ -1,12 +1,10 @@
 // @ts-nocheck
 
 /* TODO:
-    navbar static query extra component "NavbarContainer"
-    navbar data query || nodes
     tag filter initialtag and
-    fix relatedCategories (a category product page issue)
     Fix space in category title
     Fix product itself showing in relatedProducts
+    Hidden tag
 */
 
 const splitAndCheckHandle = (handle: string) => {
@@ -24,7 +22,7 @@ const getSubcollectionType = (splitHandle: Array<string>) => {
   const len = splitHandle.length
   /**
    * If true we have a handle that looks like a-waffen or ab-weapons-shotguns (this will be used as an example throughout)
-   * So we first decide the subcollectionType which looks will like this: abc
+   * So we first decide the subcollectionType which looks like this: abc
    *
    * Then we build it into a full identifier by excluding other abc categories that are not related
    * by adding -weapons-shotguns-

@@ -10,18 +10,11 @@ import {
 } from '@chakra-ui/react'
 
 import {AnimatePresence, motion} from 'framer-motion'
+import {GatsbyImage} from 'gatsby-plugin-image'
 import * as style from './style'
 
-export interface CategoryItemType {
-  image: string
-  name: string
-  price: number
-  reducedPrice?: number
-  isNew: boolean
-}
-
 export interface CategoryTabProps {
-  items: CategoryItemType[]
+  items: Array<any>
   direction: string
   visible: string
 }
@@ -84,13 +77,11 @@ const CategoryTab = ({items, direction, visible}: CategoryTabProps) => {
                   before: {borderColor: 'agt.red'},
                   _after: {borderColor: 'agt.red'}
                 }}>
-                <Image
-                  src={item.image}
-                  alt={item.name}
-                  w="fit-content"
-                  fallback={<Box />}
+                <GatsbyImage
+                  image={item.node.featuredImage.gatsbyImageData}
+                  alt={item.node.handle}
                 />
-                {item.isNew && (
+                {item.node.isNew && (
                   <Circle
                     size="10px"
                     position="absolute"
@@ -106,30 +97,50 @@ const CategoryTab = ({items, direction, visible}: CategoryTabProps) => {
                   color="black"
                   minH="5rem"
                   textAlign="center">
-                  {item.name.split(';')[0]}
+                  {item.node.title}
                 </Text>
                 <Badge
                   variant="solid"
                   bg="agt.blue"
                   borderRadius="5px"
                   h="1.1rem">
-                  {item.name.split(';')[1]}
+                  {
+                    item.node.tags
+                      .filter((tag: string) => tag.startsWith('Kaliber:'))[0]
+                      .split(':')[1]
+                  }
                 </Badge>
                 <Flex alignItems="flex-end" justifyContent="flex-end">
                   <Text
-                    mb={typeof item.reducedPrice === 'undefined' ? '0' : '0.5'}
+                    mb={
+                      typeof item.node.reducedPrice === 'undefined'
+                        ? '0'
+                        : '0.5'
+                    }
                     fontSize={
-                      typeof item.reducedPrice === 'undefined' ? '20' : '16'
+                      typeof item.node.reducedPrice === 'undefined'
+                        ? '20'
+                        : '16'
                     }
                     textDecor={
-                      typeof item.reducedPrice !== 'undefined'
+                      typeof item.node.reducedPrice !== 'undefined'
                         ? 'line-through'
                         : 'none'
                     }>
-                    {item.price}€
+                    {parseFloat(
+                      item.node.contextualPricing.maxVariantPricing.price.amount
+                    ).toFixed(2)}
+                    €
                   </Text>
-                  {typeof item.reducedPrice !== 'undefined' && (
-                    <Text fontSize="20">{item.reducedPrice}€</Text>
+                  {item.node.contextualPricing.maxVariantPricing
+                    .compareAtPrice !== null && (
+                    <Text fontSize="20">
+                      {parseFloat(
+                        item.node.contextualPricing.maxVariantPricing
+                          .compareAtPrice.amount
+                      ).toFixed(2)}
+                      €
+                    </Text>
                   )}
                 </Flex>
               </Box>

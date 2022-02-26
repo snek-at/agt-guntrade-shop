@@ -1,8 +1,6 @@
 import {
   AspectRatio,
   Box,
-  Flex,
-  Grid,
   Heading,
   HStack,
   Link,
@@ -29,14 +27,6 @@ export type CategoryItem = {
     alt: string
     gatsbyImageData: IGatsbyImageData
   } | null
-}
-
-const categoryLinkTo = (item: CategoryItem) => {
-  if (item.handle === 'alle-produkte') {
-    return './products'
-  } else {
-    return `./${item.handle.split('-').at(-1)}`
-  }
 }
 
 const Header = (props: {path: string; title: string}) => {

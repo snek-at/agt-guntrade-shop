@@ -4,8 +4,6 @@ import {
   Button,
   Flex,
   Heading,
-  HStack,
-  Image,
   Text,
   useColorModeValue,
   VStack,

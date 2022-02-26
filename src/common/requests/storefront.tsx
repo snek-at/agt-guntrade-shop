@@ -2,7 +2,6 @@ import {getShopifyImage} from '../../../plugins/gatsby-source-shopify'
 import queryString from 'query-string'
 import * as React from 'react'
 import {createClient, Provider as UrlqProvider, useQuery} from 'urql'
-import {ImageStyles} from 'src/templates/ProductPage/style'
 
 export const ProductsQuery = `
 query ($query: String!, $sortKey: ProductSortKeys, $first: Int, $last: Int, $after: String, $before: String, $reverse: Boolean) {
@@ -227,15 +226,12 @@ export const useProductSearch = (
     })
   }
 
-  console.log('result', result)
-
   const fetchNextPage = () => {
     // when we go forward we want all products after the first one of our array
     const prods =
       result?.data?.products?.edges || initialData?.data?.products?.edges
 
     const nextCursor = prods[prods.length - 1].cursor
-    console.log('cursor', nextCursor)
 
     setCursors({
       before: null,
@@ -303,8 +299,6 @@ export const useProductSearch = (
       }))
     }
   }
-
-  console.log('resuult', result)
 
   return {
     data: result.data,

@@ -2,7 +2,6 @@ import React from 'react'
 import Footer from '../../components/organisms/Footer'
 import SideButton from '../../components/molecules/buttons/SideButtons'
 import ScrollToTopButton from '../../components/molecules/buttons/ScrollToTopButton'
-import {navigate} from 'gatsby'
 import {
   useProductSearch,
   SearchProvider
@@ -44,13 +43,6 @@ export const BaseLayoutWithoutSearch: React.FC<{activePath: string}> = ({
     searchTerm[0] !== searchTerm[1]
   ) {
     setResultProducts(products)
-  }
-  const handleLogoClick = () => {
-    navigate('/')
-  }
-
-  const handleWishlistClick = () => {
-    navigate('/wishlist')
   }
 
   return (

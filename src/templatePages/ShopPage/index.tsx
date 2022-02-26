@@ -1,4 +1,4 @@
-import {navigate, PageProps} from 'gatsby'
+import {PageProps} from 'gatsby'
 import React from 'react'
 
 import {
@@ -6,7 +6,6 @@ import {
   useProductSearch
 } from '../../common/requests/storefront'
 import {ShopCatalogLayout} from '../../layout/ShopCatalogLayout'
-import {Button, usePrevious} from '@chakra-ui/react'
 
 type ShopPageProps = PageProps<
   {},
@@ -40,13 +39,8 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
     }
   })
 
-  const prevFilter = usePrevious(filters)
-  console.log('filters', filters)
-  console.log('prevFilter', prevFilter)
-
   const [sortKey, setSortKey] = React.useState('TITLE')
   const [reverse, setReverse] = React.useState(false)
-  const [lazyload, setLazyload] = React.useState(false)
   const [allProducts, setAllProducts] = React.useState(
     pageContext.products.items
   )
@@ -111,16 +105,6 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
     setIsLoading(false)
   }, [isLoading, hasMore, isFetching])
 
-  const handleLoadMore = () => {
-    if (hasMore) {
-      setIsLoading(true)
-
-      return true
-    }
-
-    return false
-  }
-
   return (
     <>
       <ShopCatalogLayout
@@ -130,7 +114,6 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
           ...pageContext.filter,
           onActiveTagsChange: (tags: Array<string>) => {
             resetCursor()
-            setLazyload(false)
             setFilters({...filters, tags: tags, initialFilters: filters})
           },
           priceFilter: {
@@ -138,7 +121,6 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
             maxPrice: pageContext.filter.initialFilters.maxPrice,
             onPriceChange: (min, max) => {
               resetCursor()
-              setLazyload(false)
               setFilters({...filters, minPrice: min, maxPrice: max})
             }
           }

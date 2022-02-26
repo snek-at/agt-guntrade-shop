@@ -1,30 +1,18 @@
-import React, {ReactNode} from 'react'
 import {
   Box,
   Flex,
-  Avatar,
   HStack,
   Link,
   IconButton,
   Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
-  StackDivider,
   useDisclosure,
   useColorModeValue,
-  Stack,
-  VisuallyHidden,
-  Kbd,
-  Text
+  Stack
 } from '@chakra-ui/react'
-import {HamburgerIcon, CloseIcon, AddIcon, SearchIcon} from '@chakra-ui/icons'
+import {HamburgerIcon, CloseIcon} from '@chakra-ui/icons'
 import {FiShoppingCart} from '@react-icons/all-files/fi/FiShoppingCart'
 import {Logo} from '../../../common/assets'
 import * as style from './style'
-import {AiTwotoneHeart} from 'react-icons/ai'
 import {FaHeart} from 'react-icons/fa'
 import Searchbar from '../Searchbar'
 
