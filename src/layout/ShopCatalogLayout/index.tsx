@@ -1,52 +1,33 @@
-import {ChevronRightIcon} from '@chakra-ui/icons'
 import {
-  AspectRatio,
   Box,
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
   Button,
   Center,
   Checkbox,
   Divider,
   Drawer,
   DrawerContent,
-  DrawerOverlay,
   Flex,
   Heading,
-  HStack,
   Icon,
   RangeSlider,
   RangeSliderFilledTrack,
-  RangeSliderMark,
   RangeSliderThumb,
   RangeSliderTrack,
   Select,
-  Slider,
-  SliderFilledTrack,
-  SliderMark,
-  SliderThumb,
-  SliderTrack,
   Spacer,
   Spinner,
   Stack,
   Text,
-  useBreakpointValue,
   useColorModeValue,
   useDisclosure,
   useMediaQuery,
-  VStack,
-  Wrap,
-  WrapItem
+  VStack
 } from '@chakra-ui/react'
-import {useProductSearch} from '../../common/requests/storefront'
 
-import {FaEuroSign, FaFilter, FaHome, FaSort} from 'react-icons/fa'
+import {FaFilter, FaSort} from 'react-icons/fa'
 import React from 'react'
 import {Breadcrumbs, ShopLayout} from '../ShopLayout'
-import {ProductCardLayout} from '../ProductCardLayout'
 import {ProductGrid} from '../ProductGridLayout'
-import {BsBox} from 'react-icons/bs'
 import {BaseLayout} from '../BaseLayout'
 
 // tag builder => input tag output type:content
@@ -219,6 +200,7 @@ export const ShopCatalogLayout = (props: {
   header: React.ComponentProps<typeof Header>
   onLoadMore: () => void // return true if more products are available
   loading: boolean
+  activePath: string
 }) => {
   const mobile = useDisclosure()
   const [isDesktop] = useMediaQuery('(min-width: 1268px)')
@@ -251,7 +233,7 @@ export const ShopCatalogLayout = (props: {
   }, [])
 
   return (
-    <BaseLayout>
+    <BaseLayout withSearch={false} activePath={props.activePath}>
       <ShopLayout>
         <Header
           {...props.header}

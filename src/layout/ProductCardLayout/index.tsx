@@ -1,25 +1,15 @@
 import {
   Flex,
-  Circle,
   Box,
-  Image,
   Badge,
   useColorModeValue,
-  Icon,
-  chakra,
-  Tooltip,
   HStack,
   Text,
   VStack,
-  IconButton,
-  Button,
-  useBreakpointValue,
-  useBreakpoint
+  Button
 } from '@chakra-ui/react'
 import {GatsbyImage, IGatsbyImageData} from 'gatsby-plugin-image'
 import React from 'react'
-import {BsEye, BsHeart, BsStar, BsStarFill, BsStarHalf} from 'react-icons/bs'
-import {FiShoppingCart} from 'react-icons/fi'
 
 function calculateTextColorForBackgroundColor(hexColor: string) {
   const rgb = hexColor

@@ -1,8 +1,6 @@
 import {
   AspectRatio,
   Box,
-  Flex,
-  Grid,
   Heading,
   HStack,
   Link,
@@ -29,14 +27,6 @@ export type CategoryItem = {
     alt: string
     gatsbyImageData: IGatsbyImageData
   } | null
-}
-
-const categoryLinkTo = (item: CategoryItem) => {
-  if (item.handle === 'alle-produkte') {
-    return './products'
-  } else {
-    return `./${item.handle.split('-').at(-1)}`
-  }
 }
 
 const Header = (props: {path: string; title: string}) => {
@@ -74,7 +64,7 @@ const Header = (props: {path: string; title: string}) => {
 
 const CategoryGrid = (props: {
   items: Array<CategoryItem>
-  getPath: (handle: string) => string
+  getPath: (handle: string, totalProducts: number) => string
 }) => {
   // grid that does not stretch if there are less items than the grid size
 
@@ -87,7 +77,7 @@ const CategoryGrid = (props: {
       {items.map((item, index) => (
         <Link
           as={GatsbyLink}
-          to={props.getPath(item.handle)}
+          to={props.getPath(item.handle, item.totalProducts)}
           key={index}
           borderRadius="lg"
           overflow="hidden"
@@ -131,9 +121,8 @@ export const ShopCategoryLayout = (props: {
   productGrid: React.ComponentProps<typeof ProductGrid>
 }) => {
   return (
-    <BaseLayout>
+    <BaseLayout withSearch={true} activePath={props.path}>
       <Header path={props.path} title={props.title} />
-
       <ShopLayout>
         <VStack spacing={16} align="left">
           <CategoryGrid {...props.category} />

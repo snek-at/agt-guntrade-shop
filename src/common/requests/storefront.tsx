@@ -2,7 +2,6 @@ import {getShopifyImage} from '../../../plugins/gatsby-source-shopify'
 import queryString from 'query-string'
 import * as React from 'react'
 import {createClient, Provider as UrlqProvider, useQuery} from 'urql'
-import {ImageStyles} from 'src/templates/ProductPage/style'
 
 export const ProductsQuery = `
 query ($query: String!, $sortKey: ProductSortKeys, $first: Int, $last: Int, $after: String, $before: String, $reverse: Boolean) {
@@ -149,14 +148,15 @@ export const getSearchResults = async ({query, count = 5}) => {
 }
 
 export const useProductSearch = (
+  dontReplaceState: boolean | undefined,
   filters: {
     term: string | null
     tags: string[]
     minPrice: number
-    maxPrice: number
+    maxPrice: number | undefined
   },
   allTags: Array<string>,
-  sortKey: string,
+  sortKey: string | undefined,
   pause = false,
   count = 5,
   initialData: any,
@@ -164,7 +164,7 @@ export const useProductSearch = (
     term: string | null
     tags: string[]
     minPrice: number
-    maxPrice: number
+    maxPrice: number | undefined
   },
   reverse: boolean
 ) => {
@@ -214,7 +214,7 @@ export const useProductSearch = (
     const url = new URL(window.location.href)
     url.search = qs
     url.hash = ''
-    window.history.replaceState({}, null, url.toString())
+    !dontReplaceState && window.history.replaceState({}, null, url.toString())
     setQuery(createQuery(filters))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters, cursors, sortKey])
@@ -226,15 +226,12 @@ export const useProductSearch = (
     })
   }
 
-  console.log('result', result)
-
   const fetchNextPage = () => {
     // when we go forward we want all products after the first one of our array
     const prods =
       result?.data?.products?.edges || initialData?.data?.products?.edges
 
     const nextCursor = prods[prods.length - 1].cursor
-    console.log('cursor', nextCursor)
 
     setCursors({
       before: null,
@@ -302,8 +299,6 @@ export const useProductSearch = (
       }))
     }
   }
-
-  console.log('resuult', result)
 
   return {
     data: result.data,

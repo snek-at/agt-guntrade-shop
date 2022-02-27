@@ -1,30 +1,18 @@
-import React, {ReactNode} from 'react'
 import {
   Box,
   Flex,
-  Avatar,
   HStack,
   Link,
   IconButton,
   Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
-  StackDivider,
   useDisclosure,
   useColorModeValue,
-  Stack,
-  VisuallyHidden,
-  Kbd,
-  Text
+  Stack
 } from '@chakra-ui/react'
-import {HamburgerIcon, CloseIcon, AddIcon, SearchIcon} from '@chakra-ui/icons'
+import {HamburgerIcon, CloseIcon} from '@chakra-ui/icons'
 import {FiShoppingCart} from '@react-icons/all-files/fi/FiShoppingCart'
 import {Logo} from '../../../common/assets'
 import * as style from './style'
-import {AiTwotoneHeart} from 'react-icons/ai'
 import {FaHeart} from 'react-icons/fa'
 import Searchbar from '../Searchbar'
 
@@ -35,14 +23,19 @@ export interface NavTopProps {
     name: string
     path: string
   }[]
+  search: {
+    searchProducts: (term: string) => void
+    resultProducts: Array<any>
+  }
   activePath?: string
 }
 
-const NavTop = ({links, activePath}: NavTopProps) => {
+const NavTop = ({links, activePath, search}: NavTopProps) => {
   const {isOpen, onOpen, onClose} = useDisclosure()
 
   const allLinkElement = links.map((link, i) => (
     <Link
+      textTransform={'capitalize'}
       key={i}
       as={GatsbyLink}
       to={link.path}
@@ -93,7 +86,10 @@ const NavTop = ({links, activePath}: NavTopProps) => {
             css={style.Logo}>
             <Logo />
           </HStack>
-          <Searchbar searchResultProducts={[]} onSearch={v => console.log(v)} />
+          <Searchbar
+            searchResultProducts={search.resultProducts}
+            onSearch={term => search.searchProducts(term)}
+          />
           <HStack spacing={8} alignItems={'center'} justifyContent={'flex-end'}>
             {/* <Menu>
             <MenuButton

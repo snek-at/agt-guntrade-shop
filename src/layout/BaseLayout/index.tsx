@@ -1,16 +1,48 @@
 import React from 'react'
 import Footer from '../../components/organisms/Footer'
-import NavTop from '../../components/organisms/NavTop'
 import SideButton from '../../components/molecules/buttons/SideButtons'
 import ScrollToTopButton from '../../components/molecules/buttons/ScrollToTopButton'
-import {navigate} from 'gatsby'
-export const BaseLayout: React.FC = ({children}) => {
-  const handleLogoClick = () => {
-    navigate('/')
+import {
+  useProductSearch,
+  SearchProvider
+} from '../../common/requests/storefront'
+import {isEqual} from 'lodash'
+import NavContainer from '../../components/organisms/NavContainer'
+
+export const BaseLayoutWithoutSearch: React.FC<{activePath: string}> = ({
+  children,
+  activePath
+}) => {
+  const [searchTerm, setSearchTerm] = React.useState<Array<string>>(['', ''])
+  const [resultProducts, setResultProducts] = React.useState<Array<any>>([])
+
+  const filters = {
+    term: searchTerm[0],
+    tags: [],
+    minPrice: 0,
+    maxPrice: undefined
   }
 
-  const handleWishlistClick = () => {
-    navigate('/wishlist')
+  const {products} = useProductSearch(
+    true,
+    filters,
+    [],
+    undefined,
+    false,
+    10,
+    [],
+    {
+      ...filters,
+      term: ''
+    },
+    false
+  )
+  if (
+    !isEqual(resultProducts, products) &&
+    products.length > 0 &&
+    searchTerm[0] !== searchTerm[1]
+  ) {
+    setResultProducts(products)
   }
 
   return (
@@ -21,46 +53,14 @@ export const BaseLayout: React.FC = ({children}) => {
         onSideButton2Click={() => null}
         onSideButton3Click={() => null}
       />
-      <NavTop
-        links={[
-          {
-            name: 'Waffen',
-            path: '/waffen'
-          },
-          {
-            name: 'Munition',
-            path: '/munition'
-          },
-          {
-            name: 'Wiederladen',
-            path: '/wiederladen'
-          },
-          {
-            name: 'Optik',
-            path: '/optik'
-          },
-          {
-            name: 'AR15/AR10',
-            path: '/ar15-ar10'
-          },
-          {
-            name: 'Laufrohlinge',
-            path: '/laufrohlinge'
-          },
-          {
-            name: 'Magazine',
-            path: '/magazine'
-          },
-          {
-            name: 'Zubehör',
-            path: '/zubehoer'
-          },
-          {
-            name: 'Ersatzteile',
-            path: '/ersatzteile'
+      <NavContainer
+        search={{
+          resultProducts: resultProducts,
+          searchProducts: (term: string) => {
+            setSearchTerm([term, searchTerm[0]])
           }
-        ]}
-        activePath={'/waffen'}
+        }}
+        activePath={activePath}
       />
       {children}
       <Footer
@@ -84,3 +84,25 @@ export const BaseLayout: React.FC = ({children}) => {
     </>
   )
 }
+
+export const BaseLayout = (props: {
+  children: React.ReactNode
+  withSearch: boolean
+  activePath: string
+}) => (
+  <>
+    {props.withSearch ? (
+      <SearchProvider>
+        <BaseLayoutWithoutSearch
+          activePath={props.activePath}
+          children={props.children}
+        />
+      </SearchProvider>
+    ) : (
+      <BaseLayoutWithoutSearch
+        activePath={props.activePath}
+        children={props.children}
+      />
+    )}
+  </>
+)

@@ -1,4 +1,4 @@
-import {navigate, PageProps} from 'gatsby'
+import {PageProps} from 'gatsby'
 import React from 'react'
 
 import {
@@ -6,13 +6,13 @@ import {
   useProductSearch
 } from '../../common/requests/storefront'
 import {ShopCatalogLayout} from '../../layout/ShopCatalogLayout'
-import {Button, usePrevious} from '@chakra-ui/react'
 
 type ShopPageProps = PageProps<
   {},
   {
     filter: {
       allTags: Array<string>
+      productPageTags: Array<string>
       activeTags: Array<string>
       initialFilters: {
         term: string | null
@@ -40,13 +40,8 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
     }
   })
 
-  const prevFilter = usePrevious(filters)
-  console.log('filters', filters)
-  console.log('prevFilter', prevFilter)
-
   const [sortKey, setSortKey] = React.useState('TITLE')
   const [reverse, setReverse] = React.useState(false)
-  const [lazyload, setLazyload] = React.useState(false)
   const [allProducts, setAllProducts] = React.useState(
     pageContext.products.items
   )
@@ -55,6 +50,7 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
 
   const {data, isFetching, products, hasNextPage, resetCursor, fetchNextPage} =
     useProductSearch(
+      false,
       {
         term: filters.term,
         tags: filters.tags,
@@ -110,33 +106,27 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
     setIsLoading(false)
   }, [isLoading, hasMore, isFetching])
 
-  const handleLoadMore = () => {
-    if (hasMore) {
-      setIsLoading(true)
-
-      return true
-    }
-
-    return false
-  }
-
   return (
     <>
       <ShopCatalogLayout
+        activePath={location.pathname}
         loading={isFetching}
         filter={{
           ...pageContext.filter,
+          allTags: pageContext.filter.productPageTags,
           onActiveTagsChange: (tags: Array<string>) => {
             resetCursor()
-            setLazyload(false)
-            setFilters({...filters, tags: tags, initialFilters: filters})
+            setFilters({
+              ...filters,
+              tags: tags.concat(pageContext.filter.activeTags),
+              initialFilters: filters
+            })
           },
           priceFilter: {
             minPrice: 0,
             maxPrice: pageContext.filter.initialFilters.maxPrice,
             onPriceChange: (min, max) => {
               resetCursor()
-              setLazyload(false)
               setFilters({...filters, minPrice: min, maxPrice: max})
             }
           }
