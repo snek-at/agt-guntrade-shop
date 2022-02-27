@@ -8,6 +8,7 @@ import FeaturedProductsSection from '../components/organisms/sections/FeaturedPr
 import AboutSection from '../components/organisms/sections/AboutSection'
 import FAQSection from '../components/organisms/sections/FAQSection/2'
 import {Image} from '@chakra-ui/image'
+import React from 'react'
 
 import {PageProps} from 'gatsby'
 import {BaseLayout} from '../layout/BaseLayout'
@@ -17,21 +18,43 @@ import {BaseLayout} from '../layout/BaseLayout'
 const IndexPage = ({
   data
 }: PageProps<{
-  allShopifyProduct: {edges: Array<any>}
+  oldShopifyProduct: {edges: Array<any>}
   allGoogleReview: {nodes: Array<any>}
   newShopifyProduct: {edges: Array<any>}
 }>) => {
-  const products = data.allShopifyProduct.edges.map((product: any) => {
-    return {
-      ...product.node,
-      slug: `/products/${product.node.handle}`
+  const products = React.useMemo(() => {
+    const featuredProducts: Array<any> = []
+    const allProducts: Array<any> = Array.from(
+      new Set<any>(
+        featuredProducts.concat(
+          data.newShopifyProduct.edges,
+          data.oldShopifyProduct.edges
+        )
+      )
+    )
+    //change this to change the amount of displayed RelatedProducts
+    const iterationLimit = allProducts.length > 12 ? 12 : allProducts.length
+
+    for (let i = 0; i < iterationLimit; i++) {
+      const randomIndex = Math.floor(Math.random() * allProducts.length)
+
+      featuredProducts.push(allProducts[randomIndex])
+      allProducts.splice(randomIndex, 1)
     }
-  })
+    return featuredProducts.map((product: any) => {
+      return {
+        ...product.node,
+        slug: `/products/${product.node.handle}`
+      }
+    })
+  }, [data.newShopifyProduct, data.oldShopifyProduct])
 
   return (
     <BaseLayout withSearch={true} activePath={location.pathname}>
       <ScrollSpy />
-      <HeroSection categoryProducts={{New: data.newShopifyProduct.edges}} />
+      <HeroSection
+        categoryProducts={{New: data.newShopifyProduct.edges.slice(0, 6)}}
+      />
       <FeaturedProductsSection
         getPath={(handle: string) => `/products/${handle}`}
         products={products}
@@ -125,20 +148,17 @@ export const query = graphql`
         }
       }
     }
-    allShopifyProduct(sort: {fields: title, order: ASC}) {
+    newShopifyProduct: allShopifyProduct(
+      limit: 100
+      sort: {fields: createdAt, order: DESC}
+    ) {
       edges {
         node {
-          id
-          handle
-          collections {
-            handle
-          }
-          descriptionHtml
-          title
-          tags
-          status
-          totalInventory
           createdAt
+          description
+          featuredImage {
+            gatsbyImageData
+          }
           contextualPricing {
             maxVariantPricing {
               price {
@@ -149,20 +169,14 @@ export const query = graphql`
               }
             }
           }
-          images {
-            shopifyId
-            gatsbyImageData
-          }
-          featuredImage {
-            id
-            gatsbyImageData
-          }
+          tags
+          title
         }
       }
     }
-    newShopifyProduct: allShopifyProduct(
-      limit: 6
-      sort: {fields: createdAt, order: DESC}
+    oldShopifyProduct: allShopifyProduct(
+      limit: 100
+      sort: {fields: createdAt, order: ASC}
     ) {
       edges {
         node {

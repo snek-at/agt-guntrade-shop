@@ -1,8 +1,6 @@
 // @ts-nocheck
 
 /* TODO:
-    tag filter initialtag and
-    multi tag sites
     Fix space in category title
     Fix product itself showing in relatedProducts
     Fix back not working
