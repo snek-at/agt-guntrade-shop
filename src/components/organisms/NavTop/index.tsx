@@ -33,6 +33,8 @@ export interface NavTopProps {
 const NavTop = ({links, activePath, search}: NavTopProps) => {
   const {isOpen, onOpen, onClose} = useDisclosure()
 
+  const cleanedActivePath = activePath?.split('/')[1]
+
   const allLinkElement = links.map((link, i) => (
     <Link
       textTransform={'capitalize'}
@@ -43,7 +45,7 @@ const NavTop = ({links, activePath, search}: NavTopProps) => {
       py={1}
       rounded={'md'}
       bg={
-        link.path === activePath
+        link.path === `/${cleanedActivePath}`
           ? useColorModeValue('gray.200', 'gray.600')
           : 'transparent'
       }
