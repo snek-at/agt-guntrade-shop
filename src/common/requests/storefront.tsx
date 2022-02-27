@@ -56,21 +56,35 @@ query ($query: String!, $sortKey: ProductSortKeys, $first: Int, $last: Int, $aft
     }
   }`
 
-const makeFilter = (field: string, selectedItems: any) => {
-  if (!selectedItems?.length) return
+const makeFilter = (
+  field: string,
+  selectedItems: any,
+  permanentTags: Array<any>
+) => {
   if (selectedItems && !Array.isArray(selectedItems)) {
     selectedItems = [selectedItems]
   }
-  return `(${selectedItems
+  const selected = selectedItems
     .map((item: any) => `${field}:${JSON.stringify(item)}`)
-    .join(' OR ')})`
+    .join(' OR ')
+  if (permanentTags?.length > 0) {
+    const perm = permanentTags
+      .map((tag: any) => `${field}:${JSON.stringify(tag)}`)
+      .join(' AND ')
+    if (selected !== '') {
+      return `${perm} AND (${selected})`
+    } else {
+      return perm
+    }
+  }
+  return `(${selected})`
 }
 
-export const createQuery = (filters: any) => {
+export const createQuery = (filters: any, permanentTags: Array<string>) => {
   const {term, tags, minPrice, maxPrice} = filters
   const parts = [
     term,
-    makeFilter('tag', tags)
+    makeFilter('tag', tags, permanentTags)
     // Exclude empty filter values
   ].filter(Boolean)
   if (maxPrice) {
@@ -127,26 +141,6 @@ const makeQueryStringValue = (allItems: any[], selectedItems: any[]) => {
   return selectedItems
 }
 
-export const getSearchResults = async ({query, count = 5}) => {
-  const filters = getValuesFromQuery(query)
-
-  // Relevance is non-deterministic if there is no query, so we default to "title" instead
-  const initialSortKey = filters.term ? 'RELEVANCE' : 'TITLE'
-
-  const urqlQuery = createQuery(filters)
-
-  const results = await urqlClient
-    .query(ProductsQuery, {
-      query: urqlQuery,
-      // this does not support paginated results
-      first: count,
-      sortKey: filters.sortKey || initialSortKey
-    })
-    .toPromise()
-
-  return results.data?.products?.edges
-}
-
 export const useProductSearch = (
   dontReplaceState: boolean | undefined,
   filters: {
@@ -166,9 +160,10 @@ export const useProductSearch = (
     minPrice: number
     maxPrice: number | undefined
   },
-  reverse: boolean
+  reverse: boolean,
+  permanentTags: Array<string> = []
 ) => {
-  const [query, setQuery] = React.useState(createQuery(filters))
+  const [query, setQuery] = React.useState(createQuery(filters, permanentTags))
   const [cursors, setCursors] = React.useState({
     before: null,
     after: null
@@ -178,11 +173,6 @@ export const useProductSearch = (
 
   // Relevance is non-deterministic if there is no query, so we default to "title" instead
   const initialSortKey = filters.term ? 'RELEVANCE' : 'TITLE'
-  // only fetch after the filters have changed
-  const shouldPause = React.useMemo(
-    () => query === createQuery(initialFilters) || pause,
-    [query, pause, initialFilters]
-  )
 
   const [result] = useQuery({
     query: ProductsQuery,
@@ -215,7 +205,7 @@ export const useProductSearch = (
     url.search = qs
     url.hash = ''
     !dontReplaceState && window.history.replaceState({}, null, url.toString())
-    setQuery(createQuery(filters))
+    setQuery(createQuery(filters, permanentTags))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters, cursors, sortKey])
 

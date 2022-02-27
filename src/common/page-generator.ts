@@ -2,9 +2,9 @@
 
 /* TODO:
     tag filter initialtag and
+    multi tag sites
     Fix space in category title
     Fix product itself showing in relatedProducts
-    Hidden tag
     Fix back not working
 */
 
@@ -19,8 +19,8 @@ const splitAndCheckHandle = (handle: string) => {
 
 const getSubcollectionType = (splitHandle: Array<string>) => {
   let subcollectionType
-
   const len = splitHandle.length
+
   /**
    * If true we have a handle that looks like a-waffen or ab-weapons-shotguns (this will be used as an example throughout)
    * So we first decide the subcollectionType which looks like this: abc
@@ -47,6 +47,7 @@ const getSubcollectionType = (splitHandle: Array<string>) => {
     console.error('Error: Handle too short or starts with invalid type.')
     return ''
   }
+
   return subcollectionType
 }
 
@@ -238,9 +239,17 @@ const createCollectionShopAndProductPages = (data, actions) => {
         }
       })
 
-      const activeTags = data.meta.tags.filter(tag =>
-        tag.endsWith(edge.node.title.split(' ').at(-1))
-      )
+      const activeTags = data.meta.tags.filter(tag => {
+        const splitTitle = edge.node.title.split(' ')
+        splitTitle.shift()
+        let rval = false
+        for (let i = 0; i >= -splitTitle.length; i--) {
+          if (tag.endsWith(splitTitle.at(i))) {
+            rval = true
+          }
+        }
+        return rval
+      })
       const productPageTags = new Set<string>()
       edge.node.products.forEach(product => {
         product.tags.forEach(tag => {
@@ -266,7 +275,7 @@ const createCollectionShopAndProductPages = (data, actions) => {
             ),
             activeTags: activeTags,
             initialFilters: {
-              tags: activeTags,
+              tags: [],
               maxPrice: Math.max(
                 ...edge.node.products.map(
                   product =>

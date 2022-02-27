@@ -63,7 +63,8 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
       12,
       initialData,
       filters.initialFilters,
-      reverse
+      reverse,
+      pageContext.filter.activeTags
     )
 
   const [isLoading, setIsLoading] = React.useState(false)
@@ -113,12 +114,13 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
         loading={isFetching}
         filter={{
           ...pageContext.filter,
+          activeTags: [],
           allTags: pageContext.filter.productPageTags,
           onActiveTagsChange: (tags: Array<string>) => {
             resetCursor()
             setFilters({
               ...filters,
-              tags: tags.concat(pageContext.filter.activeTags),
+              tags: tags,
               initialFilters: filters
             })
           },
