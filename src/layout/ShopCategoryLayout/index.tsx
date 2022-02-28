@@ -64,7 +64,7 @@ const Header = (props: {path: string; title: string}) => {
 
 const CategoryGrid = (props: {
   items: Array<CategoryItem>
-  getPath: (handle: string, totalProducts: number) => string
+  getPath: (title: string, totalProducts: number) => string
 }) => {
   // grid that does not stretch if there are less items than the grid size
 
@@ -77,7 +77,7 @@ const CategoryGrid = (props: {
       {items.map((item, index) => (
         <Link
           as={GatsbyLink}
-          to={props.getPath(item.handle, item.totalProducts)}
+          to={props.getPath(item.title, item.totalProducts)}
           key={index}
           borderRadius="lg"
           overflow="hidden"

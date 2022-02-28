@@ -1,4 +1,4 @@
-import {PageProps, navigate} from 'gatsby'
+import {PageProps} from 'gatsby'
 
 import {ShopCategoryLayout, CategoryItem} from '../../layout/ShopCategoryLayout'
 
@@ -17,41 +17,29 @@ type CategoryPageProps = PageProps<
 >
 
 const CategoryPage = ({pageContext, location}: CategoryPageProps) => {
-  /* const n = location.pathname.endsWith('/') ? 2 : 0
-  let url = location.pathname
-  for (let i = 0; i < n; i++) {
-    url = url.slice(url.lastIndexOf('/') + 1)
-  }
-
-  history.replaceState('AGT-Guntrade', '', url) */
-  if (pageContext.category.items.length === 1) {
-    navigate(
-      location.pathname.endsWith('/')
-        ? location.pathname + 'products/'
-        : location.pathname + '/products/'
-    )
-  }
   return (
     <ShopCategoryLayout
       title={pageContext.category.title}
       path={location.pathname}
       category={{
         ...pageContext.category,
-        getPath: (handle: string, totalProducts: number) => {
+        getPath: (title: string, totalProducts: number) => {
           const pathname = location.pathname.replace(/\/$/, '')
-          const splitHandle = handle.split('-')
+          const splitTitle = title.split(':')
           const splitPath = pathname.split('/')
 
           if (totalProducts === 0) {
             return pathname
-          } else if (handle === 'alle-produkte') {
+          } else if (title === 'Alle Produkte') {
             return `${pathname}/products/`
-          } else if (handle.startsWith('a-')) {
-            return `/${splitHandle[splitHandle.length - 1]}/${
-              splitPath[splitPath.length - 1]
-            }`
+          } else if (title.startsWith('A:')) {
+            return `/${splitTitle[splitTitle.length - 1]
+              .toLowerCase()
+              .replaceAll(' ', '-')}/${splitPath[splitPath.length - 1]}`
           } else {
-            return `${pathname}/${splitHandle[splitHandle.length - 1]}`
+            return `${pathname}/${splitTitle[splitTitle.length - 1]
+              .toLowerCase()
+              .replaceAll(' ', '-')}`
           }
         }
       }}

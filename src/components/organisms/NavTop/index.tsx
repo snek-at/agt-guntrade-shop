@@ -37,7 +37,6 @@ const NavTop = ({links, activePath, search}: NavTopProps) => {
 
   const allLinkElement = links.map((link, i) => (
     <Link
-      textTransform={'capitalize'}
       key={i}
       as={GatsbyLink}
       to={link.path}

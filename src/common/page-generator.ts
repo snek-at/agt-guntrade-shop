@@ -1,9 +1,8 @@
 // @ts-nocheck
 
 /* TODO:
-    Fix space in category title
-    Fix product itself showing in relatedProducts
-    Fix back not working
+    Collection meta tag to choose hero collections || Random hero collections
+    Tag filtering /products/
 */
 
 const splitAndCheckHandle = (handle: string) => {
@@ -17,7 +16,7 @@ const splitAndCheckHandle = (handle: string) => {
 
 const getSubcollectionType = (splitHandle: Array<string>) => {
   let subcollectionType
-  const len = splitHandle.length
+  const len = splitHandle[0].length + 1
 
   /**
    * If true we have a handle that looks like a-waffen or ab-weapons-shotguns (this will be used as an example throughout)
@@ -76,7 +75,7 @@ const getUnfilteredRelatedProducts = (
   )
 }
 
-const getFilteredProducts = (unfilteredRelatedProducts, handle) => {
+const getFilteredProducts = (unfilteredRelatedProducts, handle, product?) => {
   const filteredRelatedProducts = []
 
   //change this to change the amount of displayed RelatedProducts
@@ -90,7 +89,15 @@ const getFilteredProducts = (unfilteredRelatedProducts, handle) => {
       Math.random() * unfilteredRelatedProducts.length
     )
 
-    filteredRelatedProducts.push(unfilteredRelatedProducts[randomIndex])
+    if (product) {
+      if (product !== filteredRelatedProducts[randomIndex]) {
+        filteredRelatedProducts.push(unfilteredRelatedProducts[randomIndex])
+      } else {
+        i -= 1
+      }
+    } else {
+      filteredRelatedProducts.push(unfilteredRelatedProducts[randomIndex])
+    }
     unfilteredRelatedProducts.splice(randomIndex, 1)
   }
 
@@ -144,7 +151,8 @@ const createAllProductsShopPage = (data, actions) => {
 
     const filteredRelatedProducts = getFilteredProducts(
       unfilteredRelatedProducts,
-      ''
+      '',
+      product
     )
 
     actions.createPage({
@@ -188,10 +196,12 @@ const createCollectionShopAndProductPages = (data, actions) => {
 
     let slug =
       '/' +
-      splitHandle
-        .toString()
-        .substring(edge.node.handle.indexOf('-') + 1)
-        .replaceAll(',', '/')
+      edge.node.title
+        .split(':')
+        .slice(1)
+        .join('/')
+        .toLowerCase()
+        .replaceAll(' ', '-')
 
     const subcategories = data.allShopifyCollection.edges
       .filter(edge2 => {
@@ -207,6 +217,21 @@ const createCollectionShopAndProductPages = (data, actions) => {
           : -1
       )
 
+    const items = subcategories.map(subcategory => ({
+      title:
+        subcategory.node.title === edge.node.title
+          ? 'Alle Produkte'
+          : subcategory.node.title.split(':').at(-1),
+      handle:
+        subcategory.node.handle === edge.node.handle
+          ? 'alle-produkte'
+          : subcategory.node.handle,
+      totalProducts: subcategory.node.products
+        ? subcategory.node.products.length
+        : 0,
+      image: subcategory.node.image ? subcategory.node.image : undefined
+    }))
+
     if (edge.node.products.length > 0) {
       actions.createPage({
         path: slug,
@@ -214,21 +239,8 @@ const createCollectionShopAndProductPages = (data, actions) => {
         context: {
           category: {
             handle: edge.node.handle,
-            title: edge.node.title.split(' ').at(-1),
-            items: subcategories.map(subcategory => ({
-              title:
-                subcategory.node.title === edge.node.title
-                  ? 'Alle Produkte'
-                  : subcategory.node.title.split(' ').at(-1),
-              handle:
-                subcategory.node.handle === edge.node.handle
-                  ? 'alle-produkte'
-                  : subcategory.node.handle,
-              totalProducts: subcategory.node.products
-                ? subcategory.node.products.length
-                : 0,
-              image: subcategory.node.image ? subcategory.node.image : undefined
-            }))
+            title: edge.node.title.split(':').at(-1),
+            items: items
           },
           productGrid: {
             title: 'Hello my dudes',
@@ -236,98 +248,109 @@ const createCollectionShopAndProductPages = (data, actions) => {
           }
         }
       })
+    }
 
-      const activeTags = data.meta.tags.filter(tag => {
-        const splitTitle = edge.node.title.split(' ')
-        splitTitle.shift()
-        let rval = false
-        for (let i = 0; i >= -splitTitle.length; i--) {
-          if (tag.endsWith(splitTitle.at(i))) {
-            rval = true
-          }
+    const activeTags = data.meta.tags.filter(tag => {
+      const splitTitle = edge.node.title.split(':')
+      splitTitle.shift()
+      let rval = false
+      for (let i = 0; i >= -splitTitle.length; i--) {
+        if (tag.endsWith(splitTitle.at(i))) {
+          rval = true
         }
-        return rval
+      }
+      return rval
+    })
+    const productPageTags = new Set<string>()
+    edge.node.products.forEach(product => {
+      product.tags.forEach(tag => {
+        productPageTags.add(tag)
       })
-      const productPageTags = new Set<string>()
-      edge.node.products.forEach(product => {
-        product.tags.forEach(tag => {
-          productPageTags.add(tag)
-        })
-      })
+    })
 
-      slug = slug + '/products/'
-      actions.createPage({
-        path: slug,
-        component: require.resolve('../templatePages/ShopPage/index.tsx'),
-        context: {
-          header: {title: edge.node.title.split(' ').at(-1)},
-          products: {
-            items: edge.node.products
-              .sort((a, b) => (a.title > b.title ? 1 : -1))
-              .slice(0, 12)
-          },
-          filter: {
-            allTags: data.meta.tags,
-            productPageTags: Array.from(productPageTags).filter(
-              tag => !activeTags.includes(tag)
-            ),
-            activeTags: activeTags,
-            initialFilters: {
-              tags: [],
-              maxPrice: Math.max(
-                ...edge.node.products.map(
-                  product =>
-                    product.contextualPricing.maxVariantPricing.price.amount
-                )
+    const oldSlug = slug
+    slug = slug + '/products/'
+    actions.createPage({
+      path: slug,
+      component: require.resolve('../templatePages/ShopPage/index.tsx'),
+      context: {
+        header: {title: edge.node.title.split(':').at(-1)},
+        products: {
+          items: edge.node.products
+            .sort((a, b) => (a.title > b.title ? 1 : -1))
+            .slice(0, 12)
+        },
+        filter: {
+          allTags: data.meta.tags,
+          productPageTags: Array.from(productPageTags).filter(
+            tag => !activeTags.includes(tag)
+          ),
+          activeTags: activeTags,
+          initialFilters: {
+            tags: [],
+            maxPrice: Math.max(
+              ...edge.node.products.map(
+                product =>
+                  product.contextualPricing.maxVariantPricing.price.amount
               )
-            },
-            hasNextPage: edge.node.products.length > 12
-          }
+            )
+          },
+          hasNextPage: edge.node.products.length > 12
         }
-      })
+      }
+    })
 
-      edge.node.products.forEach(product => {
-        const unfilteredRelatedProducts = getUnfilteredRelatedProducts(
-          data,
-          edge.node.handle,
-          splitHandle
-        )
-        const filteredRelatedProducts = getFilteredProducts(
-          unfilteredRelatedProducts,
-          edge.node.handle
-        )
-
-        actions.createPage({
-          path: `${slug}${product.handle}/`,
-          component: require.resolve('../templatePages/ProductPage/index.tsx'),
-          context: {
-            handle: product.handle,
-            header: {title: product.title},
-            imageSlider: {
-              featuredImage: {
-                alt: product.featuredImage.alt || product.title,
-                gatsbyImageData: product.featuredImage.gatsbyImageData
-              },
-              images: product.images
-                .filter(image => image.shopifyId !== product.featuredImage.id)
-                .map(image => ({
-                  alt: image.alt || product.title,
-                  gatsbyImageData: image.gatsbyImageData
-                }))
-            },
-            productDetail: {
-              id: product.id,
-              price: product.contextualPricing.maxVariantPricing.price.amount,
-              tags: product.tags
-            },
-            productMoreDetail: {
-              description: product.descriptionHtml
-            },
-            featuredProducts: filteredRelatedProducts
-          }
-        })
+    if (items.length <= 1 && edge.node.products.length > 0) {
+      actions.createRedirect({
+        fromPath: oldSlug,
+        toPath: slug,
+        redirectInBrowser: true,
+        isPermanent: true
       })
     }
+
+    edge.node.products.forEach(product => {
+      const unfilteredRelatedProducts = getUnfilteredRelatedProducts(
+        data,
+        edge.node.handle,
+        splitHandle
+      )
+      const filteredRelatedProducts = getFilteredProducts(
+        unfilteredRelatedProducts,
+        edge.node.handle,
+        product
+      )
+
+      actions.createPage({
+        path: `${slug}${product.handle}/`,
+        component: require.resolve('../templatePages/ProductPage/index.tsx'),
+        context: {
+          handle: product.handle,
+          header: {title: product.title},
+          imageSlider: {
+            featuredImage: {
+              alt: product.featuredImage.alt || product.title,
+              gatsbyImageData: product.featuredImage.gatsbyImageData
+            },
+            images: product.images
+              .filter(image => image.shopifyId !== product.featuredImage.id)
+              .map(image => ({
+                alt: image.alt || product.title,
+                gatsbyImageData: image.gatsbyImageData
+              }))
+          },
+          productDetail: {
+            id: product.id,
+            price: product.contextualPricing.maxVariantPricing.price.amount,
+            tags: product.tags
+          },
+          productMoreDetail: {
+            description: product.descriptionHtml
+          },
+          featuredProducts: filteredRelatedProducts
+        }
+      })
+    })
   })
 }
 

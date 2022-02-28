@@ -17,6 +17,7 @@ GatsbyConfig.plugins = [
     }
   },
   `gatsby-plugin-image`,
+  `gatsby-plugin-meta-redirect`,
   {
     resolve: `gatsby-plugin-sharp`,
     options: {
