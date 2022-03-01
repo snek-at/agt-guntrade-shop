@@ -4,6 +4,41 @@
     Collection meta tag to choose hero collections || Random hero collections
     Tag filtering /products/
 */
+const getCategoryTagsAndPriorities = (data: any, tags?: Array<string>) => {
+  let max = 0
+
+  let categoryTagsAndPrios = data.allShopifyCollection.edges.map(edge => {
+    const firstElement = edge.node.title.split(':')[0]
+    const prio = firstElement[0] === 'A' ? firstElement.length : undefined
+    if (typeof prio !== 'undefined' && prio > max) {
+      max = prio
+    }
+    return {
+      priority: prio,
+      tag: data.meta.tags.filter((tag: string) =>
+        tag.endsWith(edge.node.title.split(':').at(-1))
+      )
+    }
+  })
+
+  if (tags) {
+    return {
+      maxPrio: max,
+      data: categoryTagsAndPrios.filter(
+        (tagAndPrio: any) =>
+          (tagAndPrio.tag[0] ? tags.includes(tagAndPrio.tag[0]) : false) &&
+          typeof tagAndPrio.priority !== 'undefined'
+      )
+    }
+  }
+
+  return {
+    maxPrio: max,
+    data: categoryTagsAndPrios.filter(
+      (tagAndPrio: any) => typeof tagAndPrio.priority !== 'undefined'
+    )
+  }
+}
 
 const splitAndCheckHandle = (handle: string) => {
   const splitHandle = handle.split('-')
@@ -117,6 +152,8 @@ const createAllProductsShopPage = (data, actions) => {
     collections[edge.node.id] = handles
   })
 
+  const categoryTagsAndPriorities = getCategoryTagsAndPriorities(data)
+
   actions.createPage({
     path: '/products/',
     component: require.resolve('../templatePages/ShopPage/index.tsx'),
@@ -124,6 +161,7 @@ const createAllProductsShopPage = (data, actions) => {
       header: {title: 'Alle Produkte'},
       products: {items: products.slice(0, 12)},
       filter: {
+        categoryTagsAndPriorities: categoryTagsAndPriorities,
         allTags: data.meta.tags,
         productPageTags: data.meta.tags,
         activeTags: [],
@@ -261,6 +299,7 @@ const createCollectionShopAndProductPages = (data, actions) => {
       }
       return rval
     })
+
     const productPageTags = new Set<string>()
     edge.node.products.forEach(product => {
       product.tags.forEach(tag => {
@@ -268,6 +307,16 @@ const createCollectionShopAndProductPages = (data, actions) => {
       })
     })
 
+    const productPageTagsArray = Array.from(productPageTags).filter(
+      tag => !activeTags.includes(tag)
+    )
+
+    const categoryTagsAndPriorities = getCategoryTagsAndPriorities(
+      data,
+      productPageTagsArray
+    )
+
+    console.log(categoryTagsAndPriorities.data)
     const oldSlug = slug
     slug = slug + '/products/'
     actions.createPage({
@@ -281,10 +330,9 @@ const createCollectionShopAndProductPages = (data, actions) => {
             .slice(0, 12)
         },
         filter: {
+          categoryTagsAndPriorities: categoryTagsAndPriorities,
           allTags: data.meta.tags,
-          productPageTags: Array.from(productPageTags).filter(
-            tag => !activeTags.includes(tag)
-          ),
+          productPageTags: productPageTagsArray,
           activeTags: activeTags,
           initialFilters: {
             tags: [],

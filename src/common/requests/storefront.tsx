@@ -59,32 +59,87 @@ query ($query: String!, $sortKey: ProductSortKeys, $first: Int, $last: Int, $aft
 const makeFilter = (
   field: string,
   selectedItems: any,
-  permanentTags: Array<any>
+  permanentTags: Array<any>,
+  categoryTagsAndPriority:
+    | {
+        maxPrio: number
+        data: Array<{priority: number; tag: string}>
+      }
+    | undefined
 ) => {
   if (selectedItems && !Array.isArray(selectedItems)) {
     selectedItems = [selectedItems]
   }
-  const selected = selectedItems
-    .map((item: any) => `${field}:${JSON.stringify(item)}`)
-    .join(' OR ')
+
+  const selected = []
+  if (categoryTagsAndPriority) {
+    for (let i = 1; i < categoryTagsAndPriority.maxPrio; i++) {
+      selected.push(
+        categoryTagsAndPriority.data
+          .map(tagAndPrio => {
+            if (
+              selectedItems.includes(
+                tagAndPrio.tag[0] ? tagAndPrio.tag[0] : 'undefined'
+              )
+            ) {
+              if (tagAndPrio.priority === i) {
+                return `${field}:${JSON.stringify(tagAndPrio.tag[0])}`
+              }
+            }
+          })
+          .filter(rgw => typeof rgw !== 'undefined')
+      )
+    }
+  } else {
+    const categoryTags = selectedItems
+      .filter((item: string) => item.startsWith('Kategorie:'))
+      .map((item: string) => `${field}:${JSON.stringify(item)}`)
+    selected.push(categoryTags)
+  }
+
+  const nonCategoryTags = selectedItems
+    .filter((item: string) => !item.startsWith('Kategorie:'))
+    .map((item: string) => `${field}:${JSON.stringify(item)}`)
+
+  selected.push(nonCategoryTags)
+
+  let selectedStrings: Array<string> = []
+  if (selected.length === 3) {
+    selectedStrings = selected
+      .filter(array => array.length > 0)
+      .map(array => `(${array.join(' OR ')})`)
+  }
+
   if (permanentTags?.length > 0) {
     const perm = permanentTags
       .map((tag: any) => `${field}:${JSON.stringify(tag)}`)
       .join(' AND ')
-    if (selected !== '') {
-      return `${perm} AND (${selected})`
+    if (selected !== []) {
+      return `${perm} AND (${selectedStrings.join(' AND ')})`
     } else {
       return perm
     }
   }
-  return `(${selected})`
+
+  console.log(selectedStrings.join(' AND '))
+
+  return `(${selectedStrings.join(' AND ')})`
 }
 
-export const createQuery = (filters: any, permanentTags: Array<string>) => {
+export const createQuery = (
+  filters: any,
+  permanentTags: Array<string>,
+  categoryTagsAndPriorities:
+    | {
+        maxPrio: number
+        data: Array<{priority: number; tag: string}>
+      }
+    | undefined
+) => {
   const {term, tags, minPrice, maxPrice} = filters
   const parts = [
     term,
-    makeFilter('tag', tags, permanentTags)
+    makeFilter('tag', tags, permanentTags, categoryTagsAndPriorities)
     // Exclude empty filter values
   ].filter(Boolean)
   if (maxPrice) {
@@ -161,9 +216,15 @@ export const useProductSearch = (
     maxPrice: number | undefined
   },
   reverse: boolean,
-  permanentTags: Array<string> = []
+  permanentTags: Array<string> = [],
+  categoryTagsAndPriorities: {
+    maxPrio: number
+    data: Array<{priority: number; tag: string}>
+  }
 ) => {
-  const [query, setQuery] = React.useState(createQuery(filters, permanentTags))
+  const [query, setQuery] = React.useState(
+    createQuery(filters, permanentTags, categoryTagsAndPriorities)
+  )
   const [cursors, setCursors] = React.useState({
     before: null,
     after: null
@@ -205,7 +266,7 @@ export const useProductSearch = (
     url.search = qs
     url.hash = ''
     !dontReplaceState && window.history.replaceState({}, null, url.toString())
-    setQuery(createQuery(filters, permanentTags))
+    setQuery(createQuery(filters, permanentTags, categoryTagsAndPriorities))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters, cursors, sortKey])
 

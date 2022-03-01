@@ -12,6 +12,7 @@ type ShopPageProps = PageProps<
   {
     filter: {
       allTags: Array<string>
+      categoryTagsAndPriorities: {maxPrio: number, data: Array<{priority: number; tag: string}>}
       productPageTags: Array<string>
       activeTags: Array<string>
       initialFilters: {
@@ -64,7 +65,8 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
       initialData,
       filters.initialFilters,
       reverse,
-      pageContext.filter.activeTags
+      pageContext.filter.activeTags,
+      pageContext.filter.categoryTagsAndPriorities
     )
 
   const [isLoading, setIsLoading] = React.useState(false)
