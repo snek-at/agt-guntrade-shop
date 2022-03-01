@@ -117,10 +117,10 @@ const getUnfilteredRelatedProducts = (
     }
   })
 
-  console.log(
+  /* console.log(
     handle,
     relatedCategories.map(edge => edge.node.handle)
-  )
+  ) */
   return [].concat.apply(
     [],
     relatedCategories.map(category => category.node.products)
@@ -145,7 +145,7 @@ const getFilteredProducts = (unfilteredRelatedProducts, handle, product?) => {
       if (product !== filteredRelatedProducts[randomIndex]) {
         filteredRelatedProducts.push(unfilteredRelatedProducts[randomIndex])
       } else {
-        i -= 1
+        i -= 1 // This causes endless loops
       }
     } else {
       filteredRelatedProducts.push(unfilteredRelatedProducts[randomIndex])

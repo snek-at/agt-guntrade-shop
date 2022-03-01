@@ -80,7 +80,7 @@ function ImageBoxWithTags(props: {
       bg={useColorModeValue('gray.200', 'gray.600')}
       overflow="hidden"
       position="relative"
-      _hover={{boxShadow: 'lg'}}
+      _hover={{boxShadow: 'xl'}}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}>
       <GatsbyImage image={image.gatsbyImageData} alt={image.alt} />

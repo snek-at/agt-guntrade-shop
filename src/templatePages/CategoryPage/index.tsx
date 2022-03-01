@@ -23,7 +23,7 @@ const CategoryPage = ({pageContext, location}: CategoryPageProps) => {
       path={location.pathname}
       category={{
         ...pageContext.category,
-        getPath: (title: string, totalProducts: number) => {
+        getPath: (title: string, handle: string, totalProducts: number) => {
           const pathname = location.pathname.replace(/\/$/, '')
           const splitTitle = title.split(':')
           const splitPath = pathname.split('/')
@@ -32,7 +32,7 @@ const CategoryPage = ({pageContext, location}: CategoryPageProps) => {
             return pathname
           } else if (title === 'Alle Produkte') {
             return `${pathname}/products/`
-          } else if (title.startsWith('A:')) {
+          } else if (handle.startsWith('a-')) {
             return `/${splitTitle[splitTitle.length - 1]
               .toLowerCase()
               .replaceAll(' ', '-')}/${splitPath[splitPath.length - 1]}`
