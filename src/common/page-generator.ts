@@ -144,8 +144,6 @@ const getFilteredProducts = (unfilteredRelatedProducts, handle, product?) => {
     if (product) {
       if (product !== filteredRelatedProducts[randomIndex]) {
         filteredRelatedProducts.push(unfilteredRelatedProducts[randomIndex])
-      } else {
-        i -= 1 // This causes endless loops
       }
     } else {
       filteredRelatedProducts.push(unfilteredRelatedProducts[randomIndex])
