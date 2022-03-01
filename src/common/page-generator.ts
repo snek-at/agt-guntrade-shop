@@ -2,8 +2,19 @@
 
 /* TODO:
     Collection meta tag to choose hero collections || Random hero collections
-    Tag filtering /products/
 */
+
+/**
+ * First we check whether the first Element is an A we exclude other categories because tags don't include the
+ * category type (ABC, BC, ...).
+ * Next we asign a priority depending on the length of the categorytype.
+ *
+ * If tags isn't undefined the filter function has to check whether the tag in the categoryTagsAndPrios
+ * object is in the tags.
+ *
+ * Before we return the resulting arrayobject we filter out the undefined priorities in order to avoid
+ * queries to shopify like "( OR  OR  OR  OR )"
+ */
 const getCategoryTagsAndPriorities = (data: any, tags?: Array<string>) => {
   let max = 0
 
@@ -88,22 +99,28 @@ const getUnfilteredRelatedProducts = (
   handle: string,
   splitHandle: Array<string>
 ) => {
-  const relatedCategories = data.allShopifyCollection.edges.filter(edge2 => {
+  const relatedCategories = data.allShopifyCollection.edges.filter(edge => {
     if (splitHandle[0].length === 2 && splitHandle[0][0] === 'b') {
       return (
-        edge2.node.handle.includes(
+        edge.node.handle.includes(
           splitHandle.slice(1, -1).toString().replaceAll(',', '-')
-        ) && edge2.node.handle.split('-').length === splitHandle.length
+        ) && edge.node.handle.split('-').length === splitHandle.length
       )
     } else if (splitHandle[0].length > 1) {
-      return edge2.node.handle.endsWith(
+      return edge.node.handle.endsWith(
         splitHandle.slice(2).toString().replaceAll(',', '-')
       )
     } else if (splitHandle[0].length === 1 && splitHandle[0][0] === 'a') {
-      return edge2.node.handle === handle
+      return edge.node.handle === handle
+    } else if (splitHandle[0].length === 1 && splitHandle[0][0] === 'b') {
+      return edge.node.handle.endsWith(splitHandle.slice(1).join('-'))
     }
   })
 
+  console.log(
+    handle,
+    relatedCategories.map(edge => edge.node.handle)
+  )
   return [].concat.apply(
     [],
     relatedCategories.map(category => category.node.products)
@@ -316,7 +333,6 @@ const createCollectionShopAndProductPages = (data, actions) => {
       productPageTagsArray
     )
 
-    console.log(categoryTagsAndPriorities.data)
     const oldSlug = slug
     slug = slug + '/products/'
     actions.createPage({

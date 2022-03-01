@@ -103,12 +103,9 @@ const makeFilter = (
 
   selected.push(nonCategoryTags)
 
-  let selectedStrings: Array<string> = []
-  if (selected.length === 3) {
-    selectedStrings = selected
-      .filter(array => array.length > 0)
-      .map(array => `(${array.join(' OR ')})`)
-  }
+  const selectedStrings = selected
+    .filter(array => array.length > 0)
+    .map(array => `(${array.join(' OR ')})`)
 
   if (permanentTags?.length > 0) {
     const perm = permanentTags
@@ -120,8 +117,6 @@ const makeFilter = (
       return perm
     }
   }
-
-  console.log(selectedStrings.join(' AND '))
 
   return `(${selectedStrings.join(' AND ')})`
 }
