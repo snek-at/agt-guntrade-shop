@@ -57,6 +57,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
+    "react-hook-form": "^7.27.1",
     "react-icons": "^4.3.1",
     "react-magnetic-di": "^2.2.6",
     "react-scrollspy": "^3.4.3",

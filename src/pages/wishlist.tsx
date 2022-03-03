@@ -22,7 +22,13 @@ const WishlistPage = ({}: PageProps) => {
         onRequestNow={handleRequestNow}
         activePath=""
       />
-      <ContactModal wishlist={wishlist} isOpen={isOpen} heading={<p>Kaufanfrage (unverbindlich)</p>} text={<p>This is me</p>} onClose={()=>onClose()} />
+      <ContactModal
+        wishlist={wishlist}
+        isOpen={isOpen}
+        heading={<p>Kaufanfrage (unverbindlich)</p>}
+        text={<p>This is me</p>}
+        onClose={() => onClose()}
+      />
     </>
   )
 }
