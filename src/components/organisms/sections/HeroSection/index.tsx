@@ -13,7 +13,10 @@ import * as style from './style'
 
 export interface HeroSectionProps {}
 
-const HeroSection = (props: {categoryProducts: any}) => {
+const HeroSection = (props: {
+  categoryProducts: any
+  showcaseProducts: any[]
+}) => {
   return (
     <>
       <Box
@@ -36,28 +39,7 @@ const HeroSection = (props: {categoryProducts: any}) => {
           />
         </style.BG>
         <Container maxW="8xl" py="6">
-          <WeaponShowcase
-            weapons={[
-              {
-                title: 'Pistole',
-                description: 'This is a pistol',
-                image: 'https://i.imgur.com/sw7n0g8.png',
-                price: 100
-              },
-              {
-                title: 'Peng',
-                description: 'This is a pistol',
-                image: 'https://i.imgur.com/OzO2Wsj.png',
-                price: 700
-              },
-              {
-                title: 'Bum',
-                description: 'This is a pistol',
-                image: 'https://i.imgur.com/RWZXVAf.png',
-                price: 800
-              }
-            ]}
-          />
+          <WeaponShowcase weapons={props.showcaseProducts} />
           <CategoryShowcase tabs={props.categoryProducts} />
           <Flex
             mt="8"

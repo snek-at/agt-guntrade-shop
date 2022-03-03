@@ -1,18 +1,12 @@
 import {Button} from '@chakra-ui/button'
-import {Image} from '@chakra-ui/image'
 import {Box, BoxProps, Circle, Flex, Text, FlexProps} from '@chakra-ui/layout'
 import {AnimatePresence, motion} from 'framer-motion'
+import {GatsbyImage} from 'gatsby-plugin-image'
 import React from 'react'
-
-interface WeaponType {
-  image: string
-  title: string
-  description: string
-  price: number
-}
+import {navigate} from 'gatsby'
 
 export interface WeaponShowcaseProps {
-  weapons: WeaponType[]
+  weapons: Array<any>
 }
 
 const DescriptionBox = motion<FlexProps>(Flex)
@@ -41,7 +35,7 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
       <Box
         color="white"
         zIndex="1"
-        w={{base: '300px', md: '770px', lg: '60%'}}
+        w={{base: 'auto', md: '770px', lg: '60%'}}
         alignSelf="center"
         mt="10">
         <Flex direction={{base: 'column', md: 'row'}} alignSelf="center">
@@ -55,14 +49,13 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                     initial={{opacity: 0, x: -300}}
                     animate={{opacity: 1, x: 0}}
                     transition={{duration: 0.3, type: 'spring'}}>
-                    <Image
-                      minW={{base: '300px', md: '450px'}}
-                      minH={{base: '180px', md: '270px'}}
-                      maxW={{base: '300px', md: '450px'}}
-                      maxH={{base: '180px', md: '270px'}}
-                      src={weapon.image}
-                      alt={weapon.title}
-                    />
+                    <Box height={'360px'} width={'360px'} mt={'-50px'}>
+                      <GatsbyImage
+                        image={weapon.featuredImage.gatsbyImageData}
+                        alt={weapon.handle}
+                        objectFit="contain"
+                      />
+                    </Box>
                     <Text
                       zIndex="1"
                       transform="rotate(-20deg)"
@@ -72,14 +65,20 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                       fontSize={{base: '27', md: '40'}}
                       fontWeight="bold"
                       position="relative"
-                      ml={{base: '100px', md: '200px'}}
-                      mt={{base: '-100px', md: '-150px'}}
+                      ml={'200px'}
+                      mt={'-160px'}
                       w="max-content"
                       border="4px"
                       borderColor="agt.red"
                       color="agt.red"
                       userSelect="none">
-                      {weapon.price} €
+                      {weapon.contextualPricing.maxVariantPricing
+                        .compareAtPrice !== null
+                        ? weapon.contextualPricing.maxVariantPricing
+                            .compareAtPrice.amount
+                        : weapon.contextualPricing.maxVariantPricing.price
+                            .amount}{' '}
+                      €
                     </Text>
                   </WeaponBox>
                 )
@@ -88,12 +87,20 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
           </AnimatePresence>
           <AnimatePresence>
             {weapons.map((weapon, index) => {
+              const title = weapon.metafields.filter(
+                (metafield: any) => metafield.key === 'weaponshowcase_title'
+              )[0]
+              const description = weapon.metafields.filter(
+                (metafield: any) =>
+                  metafield.key === 'weaponshowcase_beschreibung'
+              )[0]
+
               return (
                 current === weapon && (
                   <DescriptionBox
                     direction={{base: 'row', md: 'column'}}
                     mt={{base: '14', md: '0'}}
-                    w="300px"
+                    w={{base: '300px', md: '370px', lg: '60%'}}
                     key={index}
                     ml={{base: 'auto', lg: '10'}}
                     mr={{base: 'auto', md: '0'}}
@@ -105,10 +112,10 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                         fontWeight="bold"
                         fontSize={{base: '23', md: '55'}}
                         casing="uppercase">
-                        {weapon.title}
+                        {title.value}
                       </Text>
                       <Text fontSize={{base: '17.5', md: '35'}}>
-                        {weapon.description}
+                        {description.value}
                       </Text>
                     </Box>
                     <Button
@@ -118,7 +125,8 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                       borderRadius="5px"
                       bg="agt.blue"
                       _hover={{bg: 'white', color: 'black'}}
-                      variant="solid">
+                      variant="solid"
+                      onClick={() => navigate(`/products/${weapon.handle}`)}>
                       Mehr davon
                     </Button>
                   </DescriptionBox>

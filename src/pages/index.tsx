@@ -22,6 +22,7 @@ const IndexPage = ({
   allGoogleReview: {nodes: Array<any>}
   newShopifyProduct: {edges: Array<any>}
   heroCollections: {edges: Array<any>}
+  weaponShowcaseProducts: {edges: Array<any>}
 }>) => {
   const products = React.useMemo(() => {
     const featuredProducts: Array<any> = []
@@ -70,11 +71,17 @@ const IndexPage = ({
     heroProducts[title] = {items: products, title: edge.node.title}
   })
 
-  console.log(heroProducts)
+  const showCaseProducts = data.weaponShowcaseProducts.edges.map(
+    product => product.node
+  )
+
   return (
     <BaseLayout withSearch={true} activePath={location.pathname}>
       <ScrollSpy />
-      <HeroSection categoryProducts={heroProducts} />
+      <HeroSection
+        categoryProducts={heroProducts}
+        showcaseProducts={showCaseProducts}
+      />
       <FeaturedProductsSection
         getPath={(handle: string) => `/products/${handle}`}
         products={products}
@@ -255,6 +262,33 @@ export const query = graphql`
             }
             tags
             title
+          }
+        }
+      }
+    }
+    weaponShowcaseProducts: allShopifyProduct(
+      filter: {metafields: {elemMatch: {key: {regex: "g/^weaponshowcase/"}}}}
+    ) {
+      edges {
+        node {
+          handle
+          featuredImage {
+            gatsbyImageData
+          }
+          contextualPricing {
+            maxVariantPricing {
+              price {
+                amount
+              }
+              compareAtPrice {
+                amount
+              }
+            }
+          }
+          title
+          metafields {
+            key
+            value
           }
         }
       }
