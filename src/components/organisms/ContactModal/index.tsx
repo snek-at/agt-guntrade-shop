@@ -78,10 +78,7 @@ Mit freundlichen Grüßen!
     reset(defaultValues)
   }, [wishlist])
 
-  console.log(errors)
-
   const onSubmit = async (data: typeof defaultValues) => {
-    console.log(data)
     onClose()
   }
 

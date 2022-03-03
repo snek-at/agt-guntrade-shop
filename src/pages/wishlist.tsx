@@ -26,7 +26,7 @@ const WishlistPage = ({}: PageProps) => {
         wishlist={wishlist}
         isOpen={isOpen}
         heading={<p>Kaufanfrage (unverbindlich)</p>}
-        text={<p>This is me</p>}
+        text={''}
         onClose={() => onClose()}
       />
     </>
