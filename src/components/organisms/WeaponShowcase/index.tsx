@@ -28,10 +28,7 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
   }, [current])
 
   return (
-    <Flex
-      justifyContent="center"
-      alignItems="center"
-      minH={{base: 'max-content', md: '460px'}}>
+    <Flex justifyContent="center" alignItems="center" minH="600px">
       <Box
         color="white"
         zIndex="1"
@@ -138,7 +135,7 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
         <Flex
           justifyContent="center"
           alignContent="center"
-          mt={{base: 10, md: '20'}}
+          mt={{base: '10', md: '20'}}
           mb={{base: '10', lg: '5'}}>
           {weapons.map(weapon => {
             return (
