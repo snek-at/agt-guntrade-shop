@@ -145,8 +145,8 @@ const getFilteredProducts = (unfilteredRelatedProducts, handle, product?) => {
       if (product.handle !== unfilteredRelatedProducts[randomIndex].handle) {
         if (
           filteredRelatedProducts.filter(
-            (product: any) =>
-              product.handle === unfilteredRelatedProducts[randomIndex].handle
+            (val: any) =>
+              val.handle === unfilteredRelatedProducts[randomIndex].handle
           ).length === 0
         ) {
           filteredRelatedProducts.push(unfilteredRelatedProducts[randomIndex])
@@ -155,8 +155,8 @@ const getFilteredProducts = (unfilteredRelatedProducts, handle, product?) => {
     } else {
       if (
         filteredRelatedProducts.filter(
-          (product: any) =>
-            product.handle === unfilteredRelatedProducts[randomIndex].handle
+          (val: any) =>
+            val.handle === unfilteredRelatedProducts[randomIndex].handle
         ).length === 0
       ) {
         filteredRelatedProducts.push(unfilteredRelatedProducts[randomIndex])
