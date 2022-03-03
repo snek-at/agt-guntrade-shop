@@ -128,7 +128,7 @@ const getUnfilteredRelatedProducts = (
 }
 
 const getFilteredProducts = (unfilteredRelatedProducts, handle, product?) => {
-  const filteredRelatedProducts = []
+  const filteredRelatedProducts = new Set<any>()
 
   //change this to change the amount of displayed RelatedProducts
   const iterationLimit =
@@ -142,16 +142,24 @@ const getFilteredProducts = (unfilteredRelatedProducts, handle, product?) => {
     )
 
     if (product) {
-      if (product !== filteredRelatedProducts[randomIndex]) {
-        filteredRelatedProducts.push(unfilteredRelatedProducts[randomIndex])
+      if (product.handle !== unfilteredRelatedProducts[randomIndex].handle) {
+        filteredRelatedProducts.add(unfilteredRelatedProducts[randomIndex])
       }
     } else {
-      filteredRelatedProducts.push(unfilteredRelatedProducts[randomIndex])
+      filteredRelatedProducts.add(unfilteredRelatedProducts[randomIndex])
     }
     unfilteredRelatedProducts.splice(randomIndex, 1)
+
+    if (
+      filteredRelatedProducts.size < iterationLimit &&
+      unfilteredRelatedProducts.length > 0 &&
+      i + 1 === iterationLimit
+    ) {
+      i -= 1
+    }
   }
 
-  return filteredRelatedProducts
+  return Array.from(filteredRelatedProducts.values())
 }
 
 const createAllProductsShopPage = (data, actions) => {

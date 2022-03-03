@@ -32,7 +32,7 @@ const IndexPage = ({
           data.newShopifyProduct.edges,
           data.oldShopifyProduct.edges
         )
-      )
+      ).values()
     )
     //change this to change the amount of displayed RelatedProducts
     const iterationLimit = allProducts.length > 12 ? 12 : allProducts.length
