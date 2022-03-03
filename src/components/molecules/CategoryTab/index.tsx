@@ -78,10 +78,10 @@ const CategoryTab = ({items, direction, visible}: CategoryTabProps) => {
                   _after: {borderColor: 'agt.red'}
                 }}>
                 <GatsbyImage
-                  image={item.node.featuredImage.gatsbyImageData}
-                  alt={item.node.handle}
+                  image={item.featuredImage.gatsbyImageData}
+                  alt={item.handle}
                 />
-                {item.node.isNew && (
+                {item.isNew && (
                   <Circle
                     size="10px"
                     position="absolute"
@@ -97,7 +97,7 @@ const CategoryTab = ({items, direction, visible}: CategoryTabProps) => {
                   color="black"
                   minH="5rem"
                   textAlign="center">
-                  {item.node.title}
+                  {item.title}
                 </Text>
                 <Badge
                   variant="solid"
@@ -105,39 +105,33 @@ const CategoryTab = ({items, direction, visible}: CategoryTabProps) => {
                   borderRadius="5px"
                   h="1.1rem">
                   {
-                    item.node.tags
+                    item.tags
                       .filter((tag: string) => tag.startsWith('Kaliber:'))[0]
                       .split(':')[1]
                   }
                 </Badge>
                 <Flex alignItems="flex-end" justifyContent="flex-end">
                   <Text
-                    mb={
-                      typeof item.node.reducedPrice === 'undefined'
-                        ? '0'
-                        : '0.5'
-                    }
+                    mb={typeof item.reducedPrice === 'undefined' ? '0' : '0.5'}
                     fontSize={
-                      typeof item.node.reducedPrice === 'undefined'
-                        ? '20'
-                        : '16'
+                      typeof item.reducedPrice === 'undefined' ? '20' : '16'
                     }
                     textDecor={
-                      typeof item.node.reducedPrice !== 'undefined'
+                      typeof item.reducedPrice !== 'undefined'
                         ? 'line-through'
                         : 'none'
                     }>
                     {parseFloat(
-                      item.node.contextualPricing.maxVariantPricing.price.amount
+                      item.contextualPricing.maxVariantPricing.price.amount
                     ).toFixed(2)}
                     €
                   </Text>
-                  {item.node.contextualPricing.maxVariantPricing
-                    .compareAtPrice !== null && (
+                  {item.contextualPricing.maxVariantPricing.compareAtPrice !==
+                    null && (
                     <Text fontSize="20">
                       {parseFloat(
-                        item.node.contextualPricing.maxVariantPricing
-                          .compareAtPrice.amount
+                        item.contextualPricing.maxVariantPricing.compareAtPrice
+                          .amount
                       ).toFixed(2)}
                       €
                     </Text>

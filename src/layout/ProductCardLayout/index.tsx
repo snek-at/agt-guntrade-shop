@@ -72,7 +72,6 @@ function ImageBoxWithTags(props: {
   const {image, tags} = props
 
   const [isHover, setIsHover] = React.useState(false)
-
   return (
     <Box
       borderRadius="md"

@@ -21,6 +21,7 @@ const IndexPage = ({
   oldShopifyProduct: {edges: Array<any>}
   allGoogleReview: {nodes: Array<any>}
   newShopifyProduct: {edges: Array<any>}
+  heroCollections: {edges: Array<any>}
 }>) => {
   const products = React.useMemo(() => {
     const featuredProducts: Array<any> = []
@@ -49,12 +50,22 @@ const IndexPage = ({
     })
   }, [data.newShopifyProduct, data.oldShopifyProduct])
 
+  let heroProducts: {[name: string]: any[]} = {
+    New: data.newShopifyProduct.edges.slice(0, 6).map(product => product.node)
+  }
+
+  data.heroCollections.edges.forEach(edge => {
+    const title: string = edge.node.title.split(':').at(-1)
+    const products = edge.node.products.slice(0, 6)
+
+    heroProducts[title] = products
+  })
+
+  console.log(heroProducts)
   return (
     <BaseLayout withSearch={true} activePath={location.pathname}>
       <ScrollSpy />
-      <HeroSection
-        categoryProducts={{New: data.newShopifyProduct.edges.slice(0, 6)}}
-      />
+      <HeroSection categoryProducts={heroProducts} />
       <FeaturedProductsSection
         getPath={(handle: string) => `/products/${handle}`}
         products={products}
@@ -197,6 +208,42 @@ export const query = graphql`
           }
           tags
           title
+        }
+      }
+    }
+    heroCollections: allShopifyCollection(
+      filter: {
+        metafields: {
+          elemMatch: {key: {eq: "im_hero_anzeigen"}, value: {eq: "true"}}
+        }
+      }
+    ) {
+      edges {
+        node {
+          title
+          metafields {
+            value
+            key
+          }
+          products {
+            createdAt
+            description
+            featuredImage {
+              gatsbyImageData
+            }
+            contextualPricing {
+              maxVariantPricing {
+                price {
+                  amount
+                }
+                compareAtPrice {
+                  amount
+                }
+              }
+            }
+            tags
+            title
+          }
         }
       }
     }
