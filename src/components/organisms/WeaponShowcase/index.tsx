@@ -5,6 +5,8 @@ import {GatsbyImage} from 'gatsby-plugin-image'
 import React from 'react'
 import {navigate} from 'gatsby'
 
+import {flipImage} from './style'
+
 export interface WeaponShowcaseProps {
   weapons: Array<any>
 }
@@ -46,8 +48,13 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                     initial={{opacity: 0, x: -300}}
                     animate={{opacity: 1, x: 0}}
                     transition={{duration: 0.3, type: 'spring'}}>
-                    <Box height={'360px'} width={'360px'} mt={'-50px'}>
+                    <Box
+                      height={'360px'}
+                      width={'360px'}
+                      mt={'-50px'}
+                      css={flipImage(true)}>
                       <GatsbyImage
+                        imgClassName="image"
                         image={weapon.featuredImage.gatsbyImageData}
                         alt={weapon.handle}
                         objectFit="contain"
@@ -55,26 +62,27 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                     </Box>
                     <Text
                       zIndex="1"
-                      transform="rotate(-20deg)"
+                      transform="rotate(20deg)"
                       borderRadius="10px"
                       py="1"
                       px={{base: '1', md: '3'}}
                       fontSize={{base: '27', md: '40'}}
                       fontWeight="bold"
                       position="relative"
-                      ml={'200px'}
                       mt={'-160px'}
                       w="max-content"
                       border="4px"
                       borderColor="agt.red"
                       color="agt.red"
                       userSelect="none">
-                      {weapon.contextualPricing.maxVariantPricing
-                        .compareAtPrice !== null
-                        ? weapon.contextualPricing.maxVariantPricing
-                            .compareAtPrice.amount
-                        : weapon.contextualPricing.maxVariantPricing.price
-                            .amount}{' '}
+                      {parseFloat(
+                        weapon.contextualPricing.maxVariantPricing
+                          .compareAtPrice !== null
+                          ? weapon.contextualPricing.maxVariantPricing
+                              .compareAtPrice.amount
+                          : weapon.contextualPricing.maxVariantPricing.price
+                              .amount
+                      ).toFixed(2)}{' '}
                       €
                     </Text>
                   </WeaponBox>

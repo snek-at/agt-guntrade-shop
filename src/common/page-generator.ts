@@ -117,10 +117,6 @@ const getUnfilteredRelatedProducts = (
     }
   })
 
-  /* console.log(
-    handle,
-    relatedCategories.map(edge => edge.node.handle)
-  ) */
   return [].concat.apply(
     [],
     relatedCategories.map(category => category.node.products)
