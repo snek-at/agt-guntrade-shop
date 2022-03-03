@@ -1,11 +1,15 @@
-import {Container, SimpleGrid, Center, Box, Heading, Link} from '@chakra-ui/layout'
+import {
+  Container,
+  SimpleGrid,
+  Center,
+  Box,
+  Heading,
+  Link
+} from '@chakra-ui/layout'
 import {Button} from '@chakra-ui/button'
-import FeaturedProductCard from '../../../../molecules/ProductCard/3'
-import {gridPadBoxes} from '../../../../common/utils'
 import {generateProductCard} from '../../../../../layout/ProductCardLayout'
 import {Bullet} from '../../../../../common/assets'
-import { IGatsbyImageData } from "gatsby-plugin-image"
-import {Link as GatsbyLink} from 'gatsby'
+import {Link as GatsbyLink, navigate} from 'gatsby'
 
 export interface ShopifyNode {
   id: string
@@ -23,7 +27,7 @@ export interface ShopifyNode {
     maxVariantPricing: {
       price: {
         amount: string
-      },
+      }
       compareAtPrice: {
         amount: string
       } | null
@@ -44,11 +48,14 @@ export interface FeaturedProductsSectionProps {
   getPath: (handle: string) => string
 }
 
-const FeaturedProductsSection = ({products, getPath}: FeaturedProductsSectionProps) => {
+const FeaturedProductsSection = ({
+  products,
+  getPath
+}: FeaturedProductsSectionProps) => {
   return (
     <Container as="section" maxW="8xl" pt="6" id="featuredproducts">
       <Box textAlign="center" my="10">
-        <Heading>Featured Products</Heading>
+        <Heading>Unser Sortiment</Heading>
         <Bullet color="agt.red" w="unset" fontSize="xl" mt="5" mb="10" />
       </Box>
       <SimpleGrid columns={{base: 2, md: 3, xl: 4}} spacing="5">
@@ -68,7 +75,8 @@ const FeaturedProductsSection = ({products, getPath}: FeaturedProductsSectionPro
           bg="agt.blue"
           variant="solid"
           size="lg"
-          onClick={() => null}>
+          _hover={{bg: 'agt.blueAccent'}}
+          onClick={() => navigate('/products')}>
           Mehr davon
         </Button>
       </Center>

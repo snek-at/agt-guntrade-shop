@@ -3,9 +3,13 @@ import {Box, Center, Flex, Text} from '@chakra-ui/layout'
 import CategoryTab from '../../molecules/CategoryTab'
 import React from 'react'
 import {useBreakpointValue} from '@chakra-ui/media-query'
+import {navigate} from 'gatsby'
 
 interface Tab {
-  [category: string]: any[]
+  [category: string]: {
+    title: string
+    items: any[]
+  }
 }
 
 export interface CategoryShowcaseProps {
@@ -20,6 +24,16 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
     base: {borderTopRadius: '5px'},
     md: {borderTopLeftRadius: '5px'}
   })
+
+  const getCategoryPath = (tabTitle: string) => {
+    const splitTitle = tabs[tabTitle].title
+      .toLowerCase()
+      .replaceAll(' ', '-')
+      .split(':')
+      .splice(1)
+
+    return splitTitle.map(value => `/${value}`).join('')
+  }
 
   const categories = Object.keys(tabs)
 
@@ -67,8 +81,11 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
           return (
             <CategoryTab
               visible={current === category ? 'visible' : 'hidden'}
-              items={tabs[category]}
+              items={tabs[category].items}
               direction={direction}
+              getPath={handle => {
+                return `${getCategoryPath(category)}/products/${handle}`
+              }}
             />
           )
         })}
@@ -80,7 +97,9 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
           colorScheme="agt.grayScheme"
           variant="solid"
           size="lg"
-          onClick={() => null}>
+          onClick={() =>
+            navigate(current === 'New' ? '/products' : getCategoryPath(current))
+          }>
           Mehr davon
         </Button>
       </Center>

@@ -44,21 +44,30 @@ const IndexPage = ({
     }
     return featuredProducts.map((product: any) => {
       return {
-        ...product.node,
-        slug: `/products/${product.node.handle}`
+        ...product.node
       }
     })
   }, [data.newShopifyProduct, data.oldShopifyProduct])
 
-  let heroProducts: {[name: string]: any[]} = {
-    New: data.newShopifyProduct.edges.slice(0, 6).map(product => product.node)
+  let heroProducts: {
+    [name: string]: {
+      title: string
+      items: any[]
+    }
+  } = {
+    New: {
+      items: data.newShopifyProduct.edges
+        .slice(0, 6)
+        .map(product => product.node),
+      title: 'products'
+    }
   }
 
   data.heroCollections.edges.forEach(edge => {
     const title: string = edge.node.title.split(':').at(-1)
     const products = edge.node.products.slice(0, 6)
 
-    heroProducts[title] = products
+    heroProducts[title] = {items: products, title: edge.node.title}
   })
 
   console.log(heroProducts)
@@ -165,6 +174,7 @@ export const query = graphql`
     ) {
       edges {
         node {
+          handle
           createdAt
           description
           featuredImage {
@@ -191,6 +201,7 @@ export const query = graphql`
     ) {
       edges {
         node {
+          handle
           createdAt
           description
           featuredImage {
@@ -226,6 +237,7 @@ export const query = graphql`
             key
           }
           products {
+            handle
             createdAt
             description
             featuredImage {
