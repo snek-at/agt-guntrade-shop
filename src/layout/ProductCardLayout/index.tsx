@@ -11,6 +11,8 @@ import {
 import {GatsbyImage, IGatsbyImageData} from 'gatsby-plugin-image'
 import React from 'react'
 
+import {cardStyle} from './style'
+
 function calculateTextColorForBackgroundColor(hexColor: string) {
   const rgb = hexColor
     .replace('#', '')
@@ -71,17 +73,14 @@ function ImageBoxWithTags(props: {
   // Box with image as background and tags on bottom
   const {image, tags} = props
 
-  const [isHover, setIsHover] = React.useState(false)
   return (
     <Box
+      className="background"
       borderRadius="md"
       boxShadow="lg"
       bg={useColorModeValue('gray.200', 'gray.600')}
       overflow="hidden"
-      position="relative"
-      _hover={{boxShadow: 'xl'}}
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}>
+      position="relative">
       <GatsbyImage image={image.gatsbyImageData} alt={image.alt} />
       <Flex position="absolute" top="0" left="0" right="0" p={2}>
         {tags.map(tag => (
@@ -174,6 +173,7 @@ export function ProductCardLayout(props: ProductCardProps) {
 
   return (
     <VStack
+      css={cardStyle()}
       boxSize={'full'}
       cursor="pointer"
       textAlign={{

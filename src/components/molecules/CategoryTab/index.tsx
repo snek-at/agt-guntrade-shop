@@ -6,7 +6,8 @@ import {
   Text,
   Image,
   Circle,
-  Flex
+  Flex,
+  useColorModeValue
 } from '@chakra-ui/react'
 
 import {AnimatePresence, motion} from 'framer-motion'
@@ -71,7 +72,6 @@ const CategoryTab = ({
             {items.map(item => (
               <Link to={getPath(item.handle)}>
                 <Box
-                  textAlign={'end'}
                   className="borderline"
                   position="relative"
                   cursor="pointer"
@@ -89,50 +89,36 @@ const CategoryTab = ({
                     image={item.featuredImage.gatsbyImageData}
                     alt={item.handle}
                   />
-                  <Badge
-                    variant="solid"
-                    bg="agt.blue"
-                    borderRadius="5px"
-                    h="1.1rem">
+                  <Text fontSize="sm" fontWeight={'thin'} mt="5">
                     {
                       item.tags
                         .filter((tag: string) => tag.startsWith('Kaliber:'))[0]
                         .split(':')[1]
                     }
-                  </Badge>
-                  <Text
-                    w="100%"
-                    mt="5"
-                    color="black"
-                    minH="5rem"
-                    textAlign="center">
+                  </Text>
+                  <Text w="100%" color="black" minH="5rem">
                     {item.title}
                   </Text>
-                  <Flex alignItems="flex-end" justifyContent="flex-end">
+                  <Flex>
                     <Text
-                      mb={
-                        typeof item.reducedPrice === 'undefined' ? '0' : '0.5'
-                      }
-                      fontSize={
-                        typeof item.reducedPrice === 'undefined' ? '20' : '16'
-                      }
                       textDecor={
-                        typeof item.reducedPrice !== 'undefined'
+                        item.contextualPricing.maxVariantPricing
+                          .compareAtPrice !== null
                           ? 'line-through'
                           : 'none'
                       }>
                       {parseFloat(
                         item.contextualPricing.maxVariantPricing.price.amount
-                      ).toFixed(2)}
+                      ).toFixed(2)}{' '}
                       €
                     </Text>
                     {item.contextualPricing.maxVariantPricing.compareAtPrice !==
                       null && (
-                      <Text fontSize="20">
+                      <Text color="agt.red" fontWeight={'bold'} ml="2">
                         {parseFloat(
                           item.contextualPricing.maxVariantPricing
                             .compareAtPrice.amount
-                        ).toFixed(2)}
+                        ).toFixed(2)}{' '}
                         €
                       </Text>
                     )}
