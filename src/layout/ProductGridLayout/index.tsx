@@ -31,7 +31,7 @@ export const ProductGrid = (props: {
       <SimpleGrid spacing={4} minChildWidth={props.minChildWidth || '200px'}>
         {props.items.map((item, key) => {
           return (
-            <Link key={key} as={GatsbyLink} to={props.getPath(item.handle)}>
+            <Link key={item.id} as={GatsbyLink} to={props.getPath(item.handle)}>
               {generateProductCard(item)}
             </Link>
           )
