@@ -38,7 +38,7 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
   const categories = Object.keys(tabs)
 
   return (
-    <Box zIndex="2" position="relative">
+    <Box zIndex="2" position="relative" mt={-20}>
       <Flex direction={{base: 'column', md: 'row'}}>
         {categories.map((category, index) => {
           return (

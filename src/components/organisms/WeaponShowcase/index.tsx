@@ -30,13 +30,13 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
   }, [current])
 
   return (
-    <Flex justifyContent="center" alignItems="center" minH="600px">
+    <Flex justifyContent="center" alignItems="center" minH={'700px'}>
       <Box
         color="white"
         zIndex="1"
         w={{base: 'auto', md: '770px', lg: '60%'}}
         alignSelf="center"
-        mt="10">
+        mt={{base: '-20', md: '10'}}>
         <Flex direction={{base: 'column', md: 'row'}} alignSelf="center">
           <AnimatePresence initial={false}>
             {weapons.map((weapon, index) => {
@@ -47,7 +47,7 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                     key={index}
                     initial={{opacity: 0, x: -300}}
                     animate={{opacity: 1, x: 0}}
-                    transition={{duration: 0.3, type: 'spring'}}>
+                    transition={{duration: 0.5, type: 'spring'}}>
                     <Box
                       height={'360px'}
                       width={'360px'}
@@ -66,7 +66,7 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                       borderRadius="10px"
                       py="1"
                       px={{base: '1', md: '3'}}
-                      fontSize={{base: '27', md: '40'}}
+                      fontSize={{base: '25', md: '35'}}
                       fontWeight="bold"
                       position="relative"
                       mt={'-160px'}
@@ -115,16 +115,16 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                     <Box mt={{base: '-2', md: '0'}}>
                       <Text
                         fontWeight="bold"
-                        fontSize={{base: '23', md: '55'}}
+                        fontSize={{base: '20', md: '4vw', lg: '2vw'}}
                         casing="uppercase">
                         {title.value}
                       </Text>
-                      <Text fontSize={{base: '17.5', md: '35'}}>
+                      <Text fontSize={{base: '15', md: '3.5vw', lg: '1.75vw'}}>
                         {description.value}
                       </Text>
                     </Box>
                     <Button
-                      ml={{base: 'auto', md: '0'}}
+                      ml={{base: 2, md: 0}}
                       mt={{base: '0', md: '10'}}
                       size="lg"
                       borderRadius="5px"
