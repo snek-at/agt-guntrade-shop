@@ -2,12 +2,13 @@ import {css} from '@emotion/react'
 
 export const Spy = css`
   .active-scroll-spy {
-    color: red;
   }
   svg {
-    &:hover #crosshair4 {
-      opacity: 0.5;
+    #crosshair4 {
+      opacity: 1;
       fill: #eb1933;
+    }
+    &:hover #crosshair4 {
       animation-name: spin;
       transform-origin: center;
       animation-duration: 500ms;

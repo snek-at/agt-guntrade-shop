@@ -58,13 +58,14 @@
     "react-hook-form": "^7.27.1",
     "react-icons": "^4.3.1",
     "react-magnetic-di": "^2.2.6",
+    "react-scroll": "^1.8.6",
     "react-scrollspy": "^3.4.3",
     "sharp": "^0.30.1",
     "urql": "^2.0.6"
   },
   "devDependencies": {
-    "@snek-at/storybook-addon-chakra-ui": "1.0.0-beta.2",
     "@babel/core": "^7.15.8",
+    "@snek-at/storybook-addon-chakra-ui": "1.0.0-beta.2",
     "@storybook/addon-actions": "^6.4.19",
     "@storybook/addon-essentials": "^6.4.19",
     "@storybook/addon-interactions": "^6.4.19",

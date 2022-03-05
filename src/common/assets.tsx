@@ -167,10 +167,10 @@ export const Logo = (props: any) => {
 export const Spy = (props: any) => {
   return (
     <svg
-      width={40}
+      width={30}
       viewBox="0 0 413 413"
       xmlns="http://www.w3.org/2000/svg"
-      {...props}>
+      {...props.style}>
       <path
         id="small-circle4"
         fill="#2151a1"
@@ -180,6 +180,16 @@ export const Spy = (props: any) => {
               56.78,124.55 123.65,57.68 206.13,57.68
               288.62,57.68 355.48,124.55 355.48,207.03 Z"
       />
+      <text
+        id="#text"
+        x="50%"
+        y="55%"
+        fill="white"
+        dominant-baseline="middle"
+        text-anchor="middle"
+        fontSize={'250'}>
+        {props.number}
+      </text>
       <path
         id="crosshair4"
         fill="currentColor"

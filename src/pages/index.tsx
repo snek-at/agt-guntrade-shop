@@ -9,6 +9,7 @@ import AboutSection from '../components/organisms/sections/AboutSection'
 import FAQSection from '../components/organisms/sections/FAQSection/2'
 import {Image} from '@chakra-ui/image'
 import React from 'react'
+import {Element} from 'react-scroll'
 
 import {PageProps} from 'gatsby'
 import {BaseLayout} from '../layout/BaseLayout'
@@ -93,48 +94,60 @@ const IndexPage = ({
   const showCaseProducts = data.weaponShowcaseProducts.edges.map(
     product => product.node
   )
-
   return (
     <BaseLayout withSearch={true} activePath={path}>
       <ScrollSpy />
-      <HeroSection
-        categoryProducts={heroProducts}
-        showcaseProducts={showCaseProducts}
-      />
-      <FeaturedProductsSection
-        getPath={(handle: string) => `/products/${handle}`}
-        products={products}
-      />
-      <ReviewSection
-        heading={<p>I'm a heading.</p>}
-        data={data.allGoogleReview.nodes}
-      />
-      <NewsSection heading={<p>I'm a news.</p>} />
-      <AboutSection
-        heading={<p>I'm a heading</p>}
-        teaser={<p>I'm a teaser</p>}
-        text={
-          <p>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-            et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
-            Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-            sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
-            accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
-            no sea takimata sanctus est Lorem ipsum dolor sit amet.
-          </p>
-        }
-        backgroundimage={
-          <Image
-            src="https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832_960_720.jpg"
-            alt="alt"
-            className="backgroundimage"
-          />
-        }
-      />
-      <FAQSection heading={<p>I'm a heading</p>} />
+      <Element name="hero">
+        <HeroSection
+          categoryProducts={heroProducts}
+          showcaseProducts={showCaseProducts}
+        />
+      </Element>
+      <Element name="featuredproducts">
+        <FeaturedProductsSection
+          getPath={(handle: string) => `/products/${handle}`}
+          products={products}
+        />
+      </Element>
+      <Element name="reviews">
+        <ReviewSection
+          heading={<p>I'm a heading.</p>}
+          data={data.allGoogleReview.nodes}
+        />
+      </Element>
+      <Element name="news">
+        <NewsSection heading={<p>I'm a news.</p>} />
+      </Element>
+      <Element name="about">
+        <AboutSection
+          heading={<p>I'm a heading</p>}
+          teaser={<p>I'm a teaser</p>}
+          text={
+            <p>
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+              erat, sed diam voluptua. At vero eos et accusam et justo duo
+              dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+              sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+              amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+              invidunt ut labore et dolore magna aliquyam erat, sed diam
+              voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+              Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
+              dolor sit amet.
+            </p>
+          }
+          backgroundimage={
+            <Image
+              src="https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832_960_720.jpg"
+              alt="alt"
+              className="backgroundimage"
+            />
+          }
+        />
+      </Element>
+      <Element name="faq">
+        <FAQSection heading={<p>I'm a heading</p>} />
+      </Element>
     </BaseLayout>
   )
 }
