@@ -16,15 +16,15 @@ type CategoryPageProps = PageProps<
   }
 >
 
-const CategoryPage = ({pageContext, location}: CategoryPageProps) => {
+const CategoryPage = ({pageContext, path}: CategoryPageProps) => {
   return (
     <ShopCategoryLayout
       title={pageContext.category.title}
-      path={location.pathname}
+      path={path}
       category={{
         ...pageContext.category,
         getPath: (title: string, handle: string, totalProducts: number) => {
-          const pathname = location.pathname.replace(/\/$/, '')
+          const pathname = path.replace(/\/$/, '')
           const splitTitle = title.split(':')
           const splitPath = pathname.split('/')
 

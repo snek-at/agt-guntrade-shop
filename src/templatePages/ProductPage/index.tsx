@@ -33,7 +33,7 @@ type ProductPageProps = PageProps<
   }
 >
 
-const ProductPage = ({pageContext, location}: ProductPageProps) => {
+const ProductPage = ({pageContext, path}: ProductPageProps) => {
   const {wishlist, addToWishlist, removeFromWishlist} = useWishlist()
 
   const isOnWishList = wishlist.some(
@@ -66,7 +66,7 @@ const ProductPage = ({pageContext, location}: ProductPageProps) => {
       featuredProducts={{
         products: pageContext.featuredProducts
       }}
-      header={{title: pageContext.header.title, path: location.pathname}}
+      header={{title: pageContext.header.title, path: path}}
       imageSlider={pageContext.imageSlider}
       productDetail={{
         title: pageContext.header.title,

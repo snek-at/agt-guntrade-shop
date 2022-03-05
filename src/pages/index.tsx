@@ -16,7 +16,8 @@ import {BaseLayout} from '../layout/BaseLayout'
 
 //#region > Functions
 const IndexPage = ({
-  data
+  data,
+  path
 }: PageProps<{
   oldShopifyProduct: {edges: Array<any>}
   allGoogleReview: {nodes: Array<any>}
@@ -94,7 +95,7 @@ const IndexPage = ({
   )
 
   return (
-    <BaseLayout withSearch={true} activePath={location.pathname}>
+    <BaseLayout withSearch={true} activePath={path}>
       <ScrollSpy />
       <HeroSection
         categoryProducts={heroProducts}

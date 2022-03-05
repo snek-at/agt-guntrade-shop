@@ -40,6 +40,11 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
         <Flex direction={{base: 'column', md: 'row'}} alignSelf="center">
           <AnimatePresence initial={false}>
             {weapons.map((weapon, index) => {
+              const flip = weapon.metafields.filter(
+                (metafield: any) =>
+                  metafield.key === 'weaponshowcase_bild_spiegeln'
+              )[0]
+
               return (
                 weapon === current && (
                   <WeaponBox
@@ -52,7 +57,9 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                       height={'360px'}
                       width={'360px'}
                       mt={'-50px'}
-                      css={flipImage(true)}>
+                      css={flipImage(
+                        typeof flip === 'undefined' || flip.value === 'true'
+                      )}>
                       <GatsbyImage
                         imgClassName="image"
                         image={weapon.featuredImage.gatsbyImageData}
@@ -119,7 +126,9 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                         casing="uppercase">
                         {title.value}
                       </Text>
-                      <Text fontSize={{base: '15', md: '3.5vw', lg: '1.75vw'}}>
+                      <Text
+                        minH={{base: 30, md: '7vw', lg: '3.5vw'}}
+                        fontSize={{base: '15', md: '3.5vw', lg: '1.75vw'}}>
                         {description.value}
                       </Text>
                     </Box>

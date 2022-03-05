@@ -27,9 +27,10 @@ const getWindowWidth = () => {
 }
 
 export const useWindowWidth = () => {
-  const [windowWidth, setWindowWidth] = React.useState(getWindowWidth())
+  const [windowWidth, setWindowWidth] = React.useState<number>()
 
   React.useEffect(() => {
+    setWindowWidth(getWindowWidth())
     const handleResize = () => {
       setWindowWidth(getWindowWidth())
     }

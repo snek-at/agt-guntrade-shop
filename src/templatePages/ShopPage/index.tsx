@@ -12,7 +12,10 @@ type ShopPageProps = PageProps<
   {
     filter: {
       allTags: Array<string>
-      categoryTagsAndPriorities: {maxPrio: number, data: Array<{priority: number; tag: string}>}
+      categoryTagsAndPriorities: {
+        maxPrio: number
+        data: Array<{priority: number; tag: string}>
+      }
       productPageTags: Array<string>
       activeTags: Array<string>
       initialFilters: {
@@ -31,7 +34,7 @@ type ShopPageProps = PageProps<
   }
 >
 
-const ShopPage = ({pageContext, location}: ShopPageProps) => {
+const ShopPage = ({pageContext, path}: ShopPageProps) => {
   const [filters, setFilters] = React.useState({
     ...pageContext.filter.initialFilters,
     minPrice: 0,
@@ -112,7 +115,7 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
   return (
     <>
       <ShopCatalogLayout
-        activePath={location.pathname}
+        activePath={path}
         loading={isFetching}
         filter={{
           ...pageContext.filter,
@@ -137,7 +140,7 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
         }}
         header={{
           title: pageContext.header.title,
-          path: location.pathname,
+          path: path,
           sortOptions: [
             'Alphabetisch',
             'Preis aufsteigend',
@@ -171,7 +174,7 @@ const ShopPage = ({pageContext, location}: ShopPageProps) => {
           items: allProducts,
           getPath: (handle: string) => {
             // remove the trailing slash
-            const pathname = location.pathname.replace(/\/$/, '')
+            const pathname = path.replace(/\/$/, '')
 
             return `${pathname}/${handle}`
           }

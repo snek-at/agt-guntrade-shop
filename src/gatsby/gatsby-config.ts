@@ -44,7 +44,32 @@ GatsbyConfig.plugins = [
       shopifyConnections: ['collections']
     }
   },
-  `gatsby-transformer-sharp`
+  `gatsby-transformer-sharp`,
+  {
+    resolve: `gatsby-plugin-sitemap`,
+    options: {
+      query: `
+        {
+          allSitePage {
+            nodes {
+              path
+            }
+          }
+        }`,
+      resolveSiteUrl: () => process.env.URL,
+      resolvePages: ({allSitePage: {nodes: allPages}}: any) => {
+        return allPages.map((page: any) => {
+          return {...page}
+        })
+      },
+      serialize: ({path, modifiedGmt}: {path: any; modifiedGmt: any}) => {
+        return {
+          url: path,
+          lastmod: modifiedGmt
+        }
+      }
+    }
+  }
 ]
 
 export default GatsbyConfig
