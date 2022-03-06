@@ -10,6 +10,7 @@ import {Button} from '@chakra-ui/button'
 import {generateProductCard} from '../../../../../layout/ProductCardLayout'
 import {Bullet} from '../../../../../common/assets'
 import {Link as GatsbyLink, navigate} from 'gatsby'
+import {Field} from '@jaenjs/jaen'
 
 export interface ShopifyNode {
   id: string
@@ -55,7 +56,12 @@ const FeaturedProductsSection = ({
   return (
     <Container as="section" maxW="8xl" pt="6" id="featuredproducts">
       <Box textAlign="center" my="10">
-        <Heading>Unser Sortiment</Heading>
+        <Heading>
+          <Field.Text
+            name="featured-products-heading"
+            defaultValue="Unser Sortiment"
+          />
+        </Heading>
         <Bullet color="agt.red" w="unset" fontSize="xl" mt="5" mb="10" />
       </Box>
       <SimpleGrid columns={{base: 2, md: 3, xl: 4}} spacing="5">

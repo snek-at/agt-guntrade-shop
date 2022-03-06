@@ -1,9 +1,10 @@
 import React from 'react'
 import {useDisclosure} from '@chakra-ui/hooks'
-import {navigate, PageProps} from 'gatsby'
+import {graphql, navigate, PageProps} from 'gatsby'
 import {useWishlist} from '../services/wishlist'
 import {WishListLayout} from '../layout/WishListLayout'
 import ContactModal from '../components/organisms/ContactModal'
+import {connectPage} from '@jaenjs/jaen'
 
 const WishlistPage = ({}: PageProps) => {
   const {wishlist, updateQuantity, removeFromWishlist} = useWishlist()
@@ -33,4 +34,12 @@ const WishlistPage = ({}: PageProps) => {
   )
 }
 
-export default WishlistPage
+export default connectPage(WishlistPage, {
+  displayName: 'WishlistPage'
+})
+
+export const query = graphql`
+  query ($jaenPageId: String!) {
+    ...JaenPageQuery
+  }
+`

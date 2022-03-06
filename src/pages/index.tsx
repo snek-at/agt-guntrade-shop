@@ -13,6 +13,7 @@ import {Element} from 'react-scroll'
 
 import {PageProps} from 'gatsby'
 import {BaseLayout} from '../layout/BaseLayout'
+import {connectPage} from '@jaenjs/jaen'
 //#endregion
 
 //#region > Functions
@@ -149,7 +150,16 @@ const IndexPage = ({
 
 //#region > Exports
 export const query = graphql`
-  query {
+  query ($jaenPageId: String!) {
+    ...JaenPageQuery
+    allJaenPage {
+      nodes {
+        ...JaenPageData
+        children {
+          ...JaenPageData
+        }
+      }
+    }
     allGoogleReview {
       nodes {
         id
@@ -322,5 +332,7 @@ export const query = graphql`
   }
 `
 
-export default IndexPage
+export default connectPage(IndexPage, {
+  displayName: 'IndexPage'
+})
 //#endregion

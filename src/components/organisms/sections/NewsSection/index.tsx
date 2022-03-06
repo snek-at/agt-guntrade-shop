@@ -23,6 +23,7 @@ import {useColorModeValue} from '@chakra-ui/color-mode'
 import {Divider, Skeleton} from '@chakra-ui/react'
 
 import {Bullet} from '../../../../common/assets'
+import {Field} from '@jaenjs/jaen'
 
 export interface NewsSectionProps {
   heading: React.ReactNode
@@ -59,6 +60,21 @@ const NewsSection = ({heading}: NewsSectionProps) => {
       }
     }
   }
+
+  const newsIndex = (
+    <Field.Index
+      jaenPageId="JaenPage /news/"
+      renderPage={page => {
+        return (
+          <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
+            {page.jaenPageMetadata?.title}
+          </Box>
+        )
+      }}
+    />
+  )
+
+  console.log('NEWSINDEX', newsIndex)
 
   const isMobile = useBreakpointValue({base: true, md: false})
 
@@ -97,7 +113,7 @@ const NewsSection = ({heading}: NewsSectionProps) => {
               zIndex="3"
             />
           </Circle>
-          <Skeleton h="300px" />
+          {newsIndex}
           <Circle
             cursor="pointer"
             className="button2"

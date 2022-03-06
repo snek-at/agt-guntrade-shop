@@ -191,6 +191,7 @@ const createAllProductsShopPage = (data, actions) => {
     path: '/products/',
     component: require.resolve('../templatePages/ShopPage/index.tsx'),
     context: {
+      skipJaenPage: true,
       header: {title: 'Alle Produkte'},
       products: {items: products.slice(0, 12)},
       filter: {
@@ -230,6 +231,7 @@ const createAllProductsShopPage = (data, actions) => {
       path: `/products/${product.handle}/`,
       component: require.resolve('../templatePages/ProductPage/index.tsx'),
       context: {
+        skipJaenPage: true,
         header: {title: product.title},
         handle: product.handle,
         imageSlider: {
@@ -308,6 +310,7 @@ const createCollectionShopAndProductPages = (data, actions) => {
         path: slug,
         component: require.resolve(`../templatePages/CategoryPage/index.tsx`),
         context: {
+          skipJaenPage: true,
           category: {
             handle: edge.node.handle,
             title: edge.node.title.split(':').at(-1),
@@ -355,6 +358,7 @@ const createCollectionShopAndProductPages = (data, actions) => {
       path: slug,
       component: require.resolve('../templatePages/ShopPage/index.tsx'),
       context: {
+        skipJaenPage: true,
         header: {title: edge.node.title.split(':').at(-1)},
         products: {
           items: edge.node.products
@@ -405,6 +409,7 @@ const createCollectionShopAndProductPages = (data, actions) => {
         path: `${slug}${product.handle}/`,
         component: require.resolve('../templatePages/ProductPage/index.tsx'),
         context: {
+          skipJaenPage: true,
           handle: product.handle,
           header: {title: product.title},
           imageSlider: {

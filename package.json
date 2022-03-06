@@ -38,6 +38,7 @@
     "@chakra-ui/react": "^1.6.9",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
+    "@jaenjs/jaen": "3.0.0-beta.6",
     "@react-icons/all-files": "^4.1.0",
     "@types/react-scroll": "^1.8.3",
     "@types/react-scrollspy": "^3.3.5",

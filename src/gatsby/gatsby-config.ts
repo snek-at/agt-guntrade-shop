@@ -1,14 +1,22 @@
 import dotenv from 'dotenv'
 import {GatsbyConfig as GatsbyConfigType} from 'gatsby'
 
+import {site} from '../../jaen-data/internal.json'
+
 dotenv.config()
 
 const GatsbyConfig: GatsbyConfigType = {
   jsxRuntime: 'automatic',
-  siteMetadata: {}
+  siteMetadata: site.siteMetadata
 }
 
 GatsbyConfig.plugins = [
+  {
+    resolve: '@jaenjs/jaen',
+    options: {
+      jaenProjectId: 1
+    }
+  },
   {
     resolve: '@chakra-ui/gatsby-plugin',
     options: {
@@ -48,6 +56,7 @@ GatsbyConfig.plugins = [
   {
     resolve: `gatsby-plugin-sitemap`,
     options: {
+      excludes: [`/jaen/admin`, `/_`],
       query: `
         {
           allSitePage {
@@ -56,13 +65,14 @@ GatsbyConfig.plugins = [
             }
           }
         }`,
-      resolveSiteUrl: () => process.env.URL,
+      resolveSiteUrl: () => site.siteMetadata.siteUrl,
       resolvePages: ({allSitePage: {nodes: allPages}}: any) => {
         return allPages.map((page: any) => {
           return {...page}
         })
       },
       serialize: ({path, modifiedGmt}: {path: any; modifiedGmt: any}) => {
+        console.log('PATH PATH', path, modifiedGmt)
         return {
           url: path,
           lastmod: modifiedGmt
