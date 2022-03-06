@@ -13,7 +13,36 @@ export interface AboutSectionProps {
 }
 
 const ScrollSpy = () => {
-  const items = ['hero', 'featuredproducts', 'reviews', 'news', 'about', 'faq']
+  // 'hero', 'featuredproducts', 'reviews', 'news', 'about', 'faq'
+  const items = [
+    {
+      name: 'hero',
+      label: 'AGT'
+    },
+    {
+      name: 'featuredproducts',
+      label: 'Sortiment'
+    },
+    {
+      name: 'reviews',
+      label: 'Bewertungen'
+    },
+    {
+      name: 'news',
+      label: 'Neuigkeiten'
+    },
+    {
+      name: 'about',
+      label: 'Über uns'
+    },
+    {
+      name: 'faq',
+      label: 'FAQ'
+    }
+  ]
+
+  const allItemNames = items.map(item => item.name)
+
   const [activeSection, setActiveSection] = React.useState<string>('hero')
 
   const scrollTo = (element: string | undefined) => {
@@ -34,7 +63,7 @@ const ScrollSpy = () => {
       css={style.Spy}>
       <Scrollspy
         offset={-500}
-        items={items}
+        items={allItemNames}
         onUpdate={(data: any) => {
           if (typeof data !== 'undefined') setActiveSection(data.id)
         }}
@@ -47,7 +76,7 @@ const ScrollSpy = () => {
           pr="2"
           borderTopRightRadius={'5px'}>
           <Spy
-            number={items.indexOf(activeSection)}
+            number={allItemNames.indexOf(activeSection)}
             style={{
               color: 'transparent'
             }}
@@ -59,7 +88,7 @@ const ScrollSpy = () => {
             color="white"
             className="text"
             casing={'capitalize'}>
-            {activeSection}
+            {items.find(item => item.name === activeSection)?.label}
           </Text>
           <ChevronDownIcon
             borderRadius={'5px'}
@@ -68,7 +97,9 @@ const ScrollSpy = () => {
             w={8}
             h={8}
             _hover={{bg: 'whiteAlpha.400'}}
-            onClick={() => scrollTo(items[items.indexOf(activeSection) + 1])}
+            onClick={() =>
+              scrollTo(allItemNames[allItemNames.indexOf(activeSection) + 1])
+            }
           />
           <ChevronUpIcon
             borderRadius="5px"
@@ -76,7 +107,9 @@ const ScrollSpy = () => {
             w={8}
             h={8}
             _hover={{bg: 'whiteAlpha.400'}}
-            onClick={() => scrollTo(items[items.indexOf(activeSection) - 1])}
+            onClick={() =>
+              scrollTo(allItemNames[allItemNames.indexOf(activeSection) - 1])
+            }
           />
         </Flex>
       </Scrollspy>
