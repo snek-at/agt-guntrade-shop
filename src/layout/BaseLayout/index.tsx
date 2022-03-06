@@ -8,6 +8,7 @@ import {
 } from '../../common/requests/storefront'
 import {isEqual} from 'lodash'
 import NavContainer from '../../components/organisms/NavContainer'
+import CookieModal from '../../components/molecules/CookieModal'
 
 export const BaseLayoutWithoutSearch: React.FC<{activePath: string}> = ({
   children,
@@ -47,6 +48,7 @@ export const BaseLayoutWithoutSearch: React.FC<{activePath: string}> = ({
 
   return (
     <>
+      <CookieModal/>
       <ScrollToTopButton onScrollToTopClick={() => null} />
       <SideButton
         onSideButton1Click={() => null}
