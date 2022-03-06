@@ -55,7 +55,7 @@ interface ResponsiveSliderProps {
 // #region Functions
 const SliderStack = motion<StackProps>(HStack)
 
-export const Slider = (props: SliderProps) => {
+const Slider = (props: SliderProps) => {
   const [animationDirection, setAnimationDirection] = React.useState<string>('')
   const [curPage, setCurPage] = React.useState(0)
 
@@ -74,6 +74,12 @@ export const Slider = (props: SliderProps) => {
     possibleCards * props.itemWidth + (possibleCards - 1) * props.spacing
 
   const pageCount = Math.ceil(items.length / possibleCards)
+
+  React.useEffect(() => {
+    if (pageCount < curPage) {
+      setCurPage(pageCount - 1)
+    }
+  }, [pageCount])
 
   const handlePageNavigate = (direction: 'left' | 'right') => {
     if (direction === 'left') {
