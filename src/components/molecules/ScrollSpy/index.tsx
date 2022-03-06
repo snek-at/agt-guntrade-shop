@@ -17,7 +17,6 @@ const ScrollSpy = () => {
   const [activeSection, setActiveSection] = React.useState<string>('hero')
 
   const scrollTo = (element: string | undefined) => {
-    console.log(element)
     if (element) {
       Scroll.scrollTo(element, {smooth: true, duration: 1000, offset: -100})
     }
@@ -36,7 +35,9 @@ const ScrollSpy = () => {
       <Scrollspy
         offset={-500}
         items={items}
-        onUpdate={(data: any) => setActiveSection(data.id)}
+        onUpdate={(data: any) => {
+          if (typeof data !== 'undefined') setActiveSection(data.id)
+        }}
         currentClassName="active-scroll-spy">
         <Flex
           alignItems="center"

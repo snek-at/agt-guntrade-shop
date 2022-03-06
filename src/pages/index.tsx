@@ -40,12 +40,6 @@ const IndexPage = ({
     for (let i = 0; i < iterationLimit; i++) {
       const randomIndex = Math.floor(Math.random() * allProducts.length)
 
-      console.log(
-        featuredProducts.filter(
-          (product: any) =>
-            product.node.handle === allProducts[randomIndex].node.handle
-        )
-      )
       if (
         featuredProducts.filter(
           (product: any) =>

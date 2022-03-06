@@ -39,6 +39,8 @@
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@react-icons/all-files": "^4.1.0",
+    "@types/react-scroll": "^1.8.3",
+    "@types/react-scrollspy": "^3.3.5",
     "framer-motion": "^4.1.17",
     "gatsby": "^4.7.2",
     "gatsby-plugin-gatsby-cloud": "^4.7.0",

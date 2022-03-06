@@ -1,22 +1,9 @@
-import {
-  Box,
-  BoxProps,
-  Button,
-  Flex,
-  Heading,
-  HStack,
-  Spacer,
-  VStack
-} from '@chakra-ui/react'
-import {AnimatePresence, motion, useAnimation} from 'framer-motion'
+import {Heading, VStack} from '@chakra-ui/react'
 import React from 'react'
-import {generateProductCard, ProductCardLayout} from '../ProductCardLayout'
+import {generateProductCard} from '../ProductCardLayout'
 
-import {gridPadBoxes} from '../../common/utils'
-import styled from '@emotion/styled'
-import {Slider} from './Slider'
+import {ResponsiveSlider} from './Slider'
 import {Link} from 'gatsby'
-
 
 export const ProductSliderLayout = (props: {
   title: string
@@ -37,7 +24,7 @@ export const ProductSliderLayout = (props: {
       <Heading textAlign={'center'} size="xl" borderBottom={'1px solid'}>
         {props.title}
       </Heading>
-      <Slider items={productsForSlider} />
+      <ResponsiveSlider items={productsForSlider} />
     </VStack>
   )
 }
