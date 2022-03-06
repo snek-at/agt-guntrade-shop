@@ -72,8 +72,6 @@ export const Slider = (props: SliderProps) => {
   const containerWidth =
     possibleCards * props.itemWidth + (possibleCards - 1) * props.spacing * 2
 
-  console.log(containerWidth, possibleCards)
-
   const pageCount = Math.ceil(items.length / possibleCards)
 
   const handlePageNavigate = (direction: 'left' | 'right') => {
@@ -148,7 +146,7 @@ export const Slider = (props: SliderProps) => {
             animate={animationDirection}>
             {items.map(item => (
               <>
-                <Box minWidth="345px">{item}</Box>
+                <Box minWidth={props.itemWidth}>{item}</Box>
               </>
             ))}
           </SliderStack>
@@ -179,7 +177,7 @@ const GridLayout = (props: GridProps) => {
 
 // #region Exports
 export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
-  const itemWidth = props.itemWidth ? useBreakpointValue(props.itemWidth) : 345
+  const itemWidth = props.itemWidth ? useBreakpointValue(props.itemWidth) : 280
   const itemsPerRow = props.itemsPerRow
     ? useBreakpointValue(props.itemsPerRow)
     : 1
