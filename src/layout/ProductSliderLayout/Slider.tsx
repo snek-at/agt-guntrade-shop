@@ -63,14 +63,14 @@ export const Slider = (props: SliderProps) => {
   let possibleCards = Math.floor(maxW / props.itemWidth)
 
   if (
-    possibleCards * props.itemWidth + (possibleCards - 1) * props.spacing * 2 >
+    possibleCards * props.itemWidth + (possibleCards - 1) * props.spacing >
     maxW
   ) {
     possibleCards -= 1
   }
 
   const containerWidth =
-    possibleCards * props.itemWidth + (possibleCards - 1) * props.spacing * 2
+    possibleCards * props.itemWidth + (possibleCards - 1) * props.spacing
 
   const pageCount = Math.ceil(items.length / possibleCards)
 
@@ -125,11 +125,11 @@ export const Slider = (props: SliderProps) => {
 
   const variants = {
     left: {
-      x: (-containerWidth - props.spacing * 2) * curPage,
+      x: (-containerWidth - props.spacing) * curPage,
       transition: {duration: 0.5}
     },
     right: {
-      x: (-containerWidth - props.spacing * 2) * curPage,
+      x: (-containerWidth - props.spacing) * curPage,
       transition: {duration: 0.5}
     }
   }
@@ -137,16 +137,16 @@ export const Slider = (props: SliderProps) => {
   // product card slider with framer motion
   return (
     <Flex justifyContent={'center'} position="relative" px="24">
-      <Box maxW={maxW}>
-        <Box maxW={containerWidth} overflow={'hidden'}>
+      <Box maxW={`${maxW}px`}>
+        <Box maxW={`${containerWidth}px`} overflow={'hidden'}>
           <SliderStack
-            spacing="10"
+            spacing={`${props.spacing}px`}
             align={'start'}
             variants={variants}
             animate={animationDirection}>
             {items.map(item => (
               <>
-                <Box minWidth={props.itemWidth}>{item}</Box>
+                <Box minWidth={`${props.itemWidth}px`}>{item}</Box>
               </>
             ))}
           </SliderStack>
@@ -176,12 +176,22 @@ const GridLayout = (props: GridProps) => {
 // #endregion
 
 // #region Exports
+
+/**
+ * Wraps the provided items into an Slider or a Grid depending on the size of the device.
+ * @param {object} props
+ * @param {ResponsiveNumber} props.spacing - The spacing between the cards (in px) - default 40.
+ * @param {ResponsiveNumber} props.maxWidthInVW - The maxWidth of the slider (in vw) - default 80.
+ * @param {ResponsiveNumber} props.itemWidth - The width of a single Item (in px). - default 280.
+ * @param {ResponsiveNumber} props.itemsPerRow - The items per row in the Grid.
+ * @param {Array<React.ReactNode>} props.items - The array of items.
+ */
 export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
   const itemWidth = props.itemWidth ? useBreakpointValue(props.itemWidth) : 280
   const itemsPerRow = props.itemsPerRow
     ? useBreakpointValue(props.itemsPerRow)
     : 1
-  const spacing = props.spacing ? useBreakpointValue(props.spacing) : 20
+  const spacing = props.spacing ? useBreakpointValue(props.spacing) : 40
   const maxWidthInVW = props.maxWidthInVW
     ? useBreakpointValue(props.maxWidthInVW)
     : 80
