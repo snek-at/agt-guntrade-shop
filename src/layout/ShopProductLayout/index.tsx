@@ -12,7 +12,8 @@ import {
   Center,
   WrapItem,
   Wrap,
-  useClipboard
+  useClipboard,
+  useDisclosure
 } from '@chakra-ui/react'
 import React from 'react'
 import {Breadcrumbs, ShopLayout} from '../ShopLayout'
@@ -22,6 +23,7 @@ import {FaHeart, FaShare} from 'react-icons/fa'
 import {GatsbyImage, IGatsbyImageData} from 'gatsby-plugin-image'
 import {ProductSliderLayout} from '../ProductSliderLayout'
 import {BaseLayout} from '../BaseLayout'
+import ContactModal from '../../components/organisms/ContactModal'
 
 const Header = (props: {title: string; path: string}) => {
   return (
@@ -161,59 +163,77 @@ const ProductDetail = (props: {
   isOnWishList?: boolean
   onWishlistAdd: (id: string) => void
 }) => {
+  const {isOpen, onOpen, onClose} = useDisclosure()
+
   return (
-    <Box
-      w={{base: '100%', md: '40%'}}
-      minW="300px"
-      pl={{base: 0, md: 4}}
-      position={'sticky'}
-      top="15"
-      alignSelf={'flex-start'}>
-      <VStack align={'left'} spacing="4">
-        <Price price={props.price} discountPrice={props.discountPrice} />
-        <Text size="xs" fontWeight={'thin'}>
-          inkl. MwSt.
-        </Text>
-        <Text color={useColorModeValue('green.500', 'green.300')}>
-          {props.status}
-        </Text>
-        <Button
-          fontSize={'2xl'}
-          fontWeight={'semibold'}
-          textTransform="uppercase"
-          leftIcon={<Icon as={MdMessage} />}
-          borderRadius={'full'}
-          bg={'agt.gray'}
-          color={'white'}
-          _hover={{
-            bg: 'agt.blue'
-          }}
-          size="lg">
-          <Text>Jetzt anfragen</Text>
-        </Button>
-        <Divider />
-        <Flex alignItems={'center'} justifyContent="center" fontSize={'xl'}>
-          <Box mx="auto" onClick={() => props.onWishlistAdd(props.id)}>
-            <Text
-              fontWeight={'semibold'}
-              color={props.isOnWishList ? 'red.500' : undefined}
-              _hover={{
-                color: props.isOnWishList ? 'red.400' : 'red.300'
-              }}
-              cursor="pointer">
-              <Center>
-                <Icon as={FaHeart} mr="2" />
-                Merken
-              </Center>
-            </Text>
-          </Box>
-          <Box mx="auto">
-            <ShareText />
-          </Box>
-        </Flex>
-        <Divider />
-      </VStack>
-    </Box>
+    <>
+      <ContactModal
+        wishlist={[
+          {
+            title: props.title,
+            quantity: 1
+          }
+        ]}
+        isOpen={isOpen}
+        heading={<p>Kaufanfrage (unverbindlich)</p>}
+        text={''}
+        onClose={() => onClose()}
+      />
+
+      <Box
+        w={{base: '100%', md: '40%'}}
+        minW="300px"
+        pl={{base: 0, md: 4}}
+        position={'sticky'}
+        top="15"
+        alignSelf={'flex-start'}>
+        <VStack align={'left'} spacing="4">
+          <Price price={props.price} discountPrice={props.discountPrice} />
+          <Text size="xs" fontWeight={'thin'}>
+            inkl. MwSt.
+          </Text>
+          <Text color={useColorModeValue('green.500', 'green.300')}>
+            {props.status}
+          </Text>
+          <Button
+            fontSize={'2xl'}
+            fontWeight={'semibold'}
+            textTransform="uppercase"
+            leftIcon={<Icon as={MdMessage} />}
+            borderRadius={'full'}
+            bg={'agt.gray'}
+            color={'white'}
+            _hover={{
+              bg: 'agt.blue'
+            }}
+            size="lg"
+            onClick={onOpen}>
+            <Text>Jetzt anfragen</Text>
+          </Button>
+          <Divider />
+          <Flex alignItems={'center'} justifyContent="center" fontSize={'xl'}>
+            <Box mx="auto" onClick={() => props.onWishlistAdd(props.id)}>
+              <Text
+                fontWeight={'semibold'}
+                color={props.isOnWishList ? 'red.500' : undefined}
+                _hover={{
+                  color: props.isOnWishList ? 'red.400' : 'red.300'
+                }}
+                cursor="pointer">
+                <Center>
+                  <Icon as={FaHeart} mr="2" />
+                  Merken
+                </Center>
+              </Text>
+            </Box>
+            <Box mx="auto">
+              <ShareText />
+            </Box>
+          </Flex>
+          <Divider />
+        </VStack>
+      </Box>
+    </>
   )
 }
 

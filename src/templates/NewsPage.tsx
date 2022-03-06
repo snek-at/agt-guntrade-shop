@@ -1,11 +1,11 @@
 import {Box, Heading, Text, Flex} from '@chakra-ui/layout'
 import {Image} from '@chakra-ui/react'
-
-import * as style from './style'
+import {connectTemplate} from '@jaenjs/jaen'
+import {graphql} from 'gatsby'
 
 const NewsPage = () => {
   return (
-    <Box width="100%" css={style.responsiveImage} position="relative" mt="20">
+    <Box width="100%" position="relative" mt="20">
       <Heading textAlign="center" mb="10">
         <p>some heading</p>
       </Heading>
@@ -34,4 +34,14 @@ const NewsPage = () => {
   )
 }
 
-export default NewsPage
+export default connectTemplate(NewsPage, {
+  displayName: 'NewsPage',
+  children: [],
+  isRootTemplate: true
+})
+
+export const query = graphql`
+  query ($jaenPageId: String!) {
+    ...JaenPageQuery
+  }
+`

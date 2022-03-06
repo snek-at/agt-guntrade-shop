@@ -1,9 +1,10 @@
 import React from 'react'
 import {useDisclosure} from '@chakra-ui/hooks'
-import {navigate, PageProps} from 'gatsby'
+import {graphql, navigate, PageProps} from 'gatsby'
 import {useWishlist} from '../services/wishlist'
 import {WishListLayout} from '../layout/WishListLayout'
 import ContactModal from '../components/organisms/ContactModal'
+import {connectPage} from '@jaenjs/jaen'
 
 const WishlistPage = ({}: PageProps) => {
   const {wishlist, updateQuantity, removeFromWishlist} = useWishlist()
@@ -22,9 +23,23 @@ const WishlistPage = ({}: PageProps) => {
         onRequestNow={handleRequestNow}
         activePath=""
       />
-      <ContactModal wishlist={wishlist} isOpen={isOpen} heading={<p>Kaufanfrage (unverbindlich)</p>} text={<p>This is me</p>} onClose={()=>onClose()} />
+      <ContactModal
+        wishlist={wishlist}
+        isOpen={isOpen}
+        heading={<p>Kaufanfrage (unverbindlich)</p>}
+        text={''}
+        onClose={() => onClose()}
+      />
     </>
   )
 }
 
-export default WishlistPage
+export default connectPage(WishlistPage, {
+  displayName: 'WishlistPage'
+})
+
+export const query = graphql`
+  query ($jaenPageId: String!) {
+    ...JaenPageQuery
+  }
+`

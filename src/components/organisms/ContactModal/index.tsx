@@ -2,28 +2,35 @@ import {Button, IconButton} from '@chakra-ui/button'
 import {Image} from '@chakra-ui/image'
 import {Input} from '@chakra-ui/input'
 import {Text, Box, Heading, Flex} from '@chakra-ui/layout'
-import {Modal, ModalContent, ModalOverlay, ModalHeader, ModalCloseButton, ModalBody} from '@chakra-ui/modal'
+import {
+  Modal,
+  ModalContent,
+  ModalOverlay,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody
+} from '@chakra-ui/modal'
 import {useToast} from '@chakra-ui/toast'
 import {ScaleFade} from '@chakra-ui/transition'
 import {IoIosCopy} from '@react-icons/all-files/io/IoIosCopy'
 import {IoMdShareAlt} from '@react-icons/all-files/io/IoMdShareAlt'
 import React from 'react'
-import {FormControl, FormLabel} from '@chakra-ui/form-control'
+import {FormControl, FormErrorMessage, FormLabel} from '@chakra-ui/form-control'
 import {Checkbox} from '@chakra-ui/checkbox'
 import {Select} from '@chakra-ui/select'
 import {Textarea} from '@chakra-ui/textarea'
 
 import * as style from './style'
-
+import {useForm} from 'react-hook-form'
 export interface ContactModalProps {
   isOpen: boolean
   heading: React.ReactNode
   text: React.ReactNode
-  imageSrc: string
-  url: string
   onClose: Function
-  tag: string
-  wishlist: any[]
+  wishlist: {
+    title: string
+    quantity: number
+  }[]
 }
 
 export const ContactModal = ({
@@ -31,27 +38,55 @@ export const ContactModal = ({
   heading,
   text,
   wishlist,
-  onClose,
+  onClose
 }: ContactModalProps) => {
-  const [share, setShare] = React.useState(false)
-  const toast = useToast()
-  // if (isOpen) {
-  //   history.pushState('AGT-Guntrade News', '', url)
-  // }
+  const generateEmailContent = () => {
+    const wishlistText = wishlist.map(item => {
+      return `- ${item.quantity} x ${item.title}`
+    })
 
-  let emailContent = `
+    const content = `Sehr geehrtes AGT Team,
+ich würde gerne ein Kaufangebot für folgende Artikel einholen:
 
-Ich würde die oben Angeführten Produkte gerne kaufen. Sind diese im Lager noch verfügbar?
+${wishlistText}
 
-Mit freundlichen Grüßen
-  `
+
+Mit freundlichen Grüßen!
+    `
+
+    return content
+  }
+
+  const defaultValues = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    message: generateEmailContent(),
+    agbChecked: false
+  }
+
+  const {
+    handleSubmit,
+    reset,
+    register,
+    formState: {errors, isSubmitting}
+  } = useForm<typeof defaultValues>({
+    defaultValues
+  })
+
+  React.useEffect(() => {
+    reset(defaultValues)
+  }, [wishlist])
+
+  const onSubmit = async (data: typeof defaultValues) => {
+    onClose()
+  }
 
   return (
     <Modal
       isOpen={isOpen}
       onClose={() => {
         onClose()
-        setShare(false)
       }}
       isCentered
       scrollBehavior="inside">
@@ -64,63 +99,79 @@ Mit freundlichen Grüßen
         <ModalCloseButton />
         <ModalBody mx="5" mb="5">
           <Text mb="3">{text}</Text>
-          <FormControl>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <Flex mb="3" direction={{base: 'column', md: 'row'}}>
               <Box mr="5" w={{base: '100%', md: '50%'}}>
-                <FormLabel htmlFor="first-name">Vorname</FormLabel>
-                <Input
-                  id="first-name"
-                  placeholder="Max"
-                  borderColor="#D4D4D9"
-                />
+                <FormControl isInvalid={!!errors.firstName}>
+                  <FormLabel htmlFor="first-name">Vorname</FormLabel>
+                  <Input
+                    placeholder="Max"
+                    {...register('firstName', {required: true})}
+                    borderColor="#D4D4D9"
+                  />
+                </FormControl>
               </Box>
               <Box w={{base: '100%', md: '50%'}}>
-                <FormLabel htmlFor="last-name">Nachname</FormLabel>
-                <Input
-                  id="last-name"
-                  placeholder="Mustermann"
-                  borderColor="#D4D4D9"
-                />
+                <FormControl isInvalid={!!errors.lastName}>
+                  <FormLabel htmlFor="last-name">Nachname</FormLabel>
+                  <Input
+                    placeholder="Mustermann"
+                    {...register('lastName', {required: true})}
+                    borderColor="#D4D4D9"
+                  />
+                </FormControl>
               </Box>
             </Flex>
+
             <Box mb="3">
-              <FormLabel htmlFor="email">Email Adresse</FormLabel>
-              <Input
-                id="email"
-                type="email"
-                placeholder="max.mustermann@example.at"
-                borderColor="#D4D4D9"
-              />
+              <FormControl isInvalid={!!errors.email}>
+                <FormLabel htmlFor="email">Email Adresse</FormLabel>
+                <Input
+                  placeholder="max.mustermann@example.at"
+                  {...register('email', {
+                    required: true,
+                    pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+                  })}
+                  borderColor="#D4D4D9"
+                />
+              </FormControl>
             </Box>
             <Box mb="5">
-              <FormLabel htmlFor="message">Nachricht</FormLabel>
-              <Textarea
-                resize="vertical"
-                borderColor="#D4D4D9"
-                h="30vh"
-                value={
-                  wishlist.map(item => (
-                    item.quantity + "x " + item.title + item.price
-                  )) + emailContent
-                }
-              />
+              <FormControl isInvalid={!!errors.message}>
+                <FormLabel htmlFor="message">Nachricht</FormLabel>
+                <Textarea
+                  resize="vertical"
+                  borderColor="#D4D4D9"
+                  h="30vh"
+                  {...register('message', {required: true})}
+                />
+              </FormControl>
             </Box>
             <Box>
-              <Flex my="3">
+              <FormControl isInvalid={!!errors.agbChecked}>
                 <Checkbox
+                  {...register('agbChecked', {required: true})}
                   borderColor="#D4D4D9"
                   h="fit-content"
                   mt="0.5"
-                  mr="2"
-                />
-                <Text>
+                  mr="2">
                   Ich habe die AGBs gelesen und stimme der Verarbeitung meiner
                   Daten zu.
-                </Text>
-              </Flex>
-              <Button colorScheme="agt.grayScheme">Absenden</Button>
+                </Checkbox>
+                {errors.agbChecked && (
+                  <FormErrorMessage>
+                    Bitte akzeptieren Sie die AGBs
+                  </FormErrorMessage>
+                )}
+              </FormControl>
+              <Button
+                colorScheme="agt.grayScheme"
+                type="submit"
+                isLoading={isSubmitting}>
+                Absenden
+              </Button>
             </Box>
-          </FormControl>
+          </form>
         </ModalBody>
       </ModalContent>
     </Modal>

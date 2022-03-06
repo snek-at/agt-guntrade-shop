@@ -10,6 +10,7 @@ const theme = {
       orange: '#ff6000',
       red: '#ef3340',
       blue: '#2151a1',
+      blueAccent: '#1d4890',
       gray: '#1f1f1d',
       lightgray: '#E6E6E9',
       grayScheme: {

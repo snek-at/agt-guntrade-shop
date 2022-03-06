@@ -64,20 +64,19 @@ const Header = (props: {path: string; title: string}) => {
 
 const CategoryGrid = (props: {
   items: Array<CategoryItem>
-  getPath: (handle: string, totalProducts: number) => string
+  getPath: (title: string, handle: string, totalProducts: number) => string
 }) => {
   // grid that does not stretch if there are less items than the grid size
 
   const {items} = props
 
   const emptyBoxes: Array<any> = gridPadBoxes(items)
-
   return (
     <SimpleGrid spacing={'4'} {...props} minChildWidth="200px" py="8">
       {items.map((item, index) => (
         <Link
           as={GatsbyLink}
-          to={props.getPath(item.handle, item.totalProducts)}
+          to={props.getPath(item.title, item.handle, item.totalProducts)}
           key={index}
           borderRadius="lg"
           overflow="hidden"

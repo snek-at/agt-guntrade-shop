@@ -1,4 +1,5 @@
-import {Box, Heading, Text} from '@chakra-ui/layout'
+import {Box, Heading} from '@chakra-ui/layout'
+import {navigate} from 'gatsby'
 
 import {Shine} from '../../../common/style/base'
 
@@ -7,6 +8,7 @@ export interface AccessorieShowcaseProps {}
 const AccessorieShowcase = ({}: AccessorieShowcaseProps) => {
   return (
     <Box
+      onClick={() => navigate('/zubehör')}
       cursor="pointer"
       h={{base: '300px', lg: '320px'}}
       css={Shine}

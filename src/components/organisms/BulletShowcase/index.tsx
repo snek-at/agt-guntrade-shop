@@ -3,6 +3,7 @@ import {useBreakpointValue} from '@chakra-ui/media-query'
 
 import {Shine} from '../../../common/style/base'
 import {BulletStyle} from './style'
+import {navigate} from 'gatsby'
 
 export interface BulletShowcaseProps {}
 
@@ -125,7 +126,7 @@ const Desktop = (
         colorScheme="agt.grayScheme"
         variant="solid"
         size="lg"
-        onClick={() => null}>
+        onClick={() => navigate('/munition')}>
         Mehr davon
       </Button>
     </Center>

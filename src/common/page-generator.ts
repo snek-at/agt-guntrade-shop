@@ -1,12 +1,55 @@
 // @ts-nocheck
 
 /* TODO:
-    tag filter initialtag and
-    Fix space in category title
-    Fix product itself showing in relatedProducts
-    Hidden tag
-    Fix back not working
+    Collection meta tag to choose hero collections || Random hero collections
 */
+
+/**
+ * First we check whether the first Element is an A we exclude other categories because tags don't include the
+ * category type (ABC, BC, ...).
+ * Next we asign a priority depending on the length of the categorytype.
+ *
+ * If tags isn't undefined the filter function has to check whether the tag in the categoryTagsAndPrios
+ * object is in the tags.
+ *
+ * Before we return the resulting arrayobject we filter out the undefined priorities in order to avoid
+ * queries to shopify like "( OR  OR  OR  OR )"
+ */
+const getCategoryTagsAndPriorities = (data: any, tags?: Array<string>) => {
+  let max = 0
+
+  let categoryTagsAndPrios = data.allShopifyCollection.edges.map(edge => {
+    const firstElement = edge.node.title.split(':')[0]
+    const prio = firstElement[0] === 'A' ? firstElement.length : undefined
+    if (typeof prio !== 'undefined' && prio > max) {
+      max = prio
+    }
+    return {
+      priority: prio,
+      tag: data.meta.tags.filter((tag: string) =>
+        tag.endsWith(edge.node.title.split(':').at(-1))
+      )
+    }
+  })
+
+  if (tags) {
+    return {
+      maxPrio: max,
+      data: categoryTagsAndPrios.filter(
+        (tagAndPrio: any) =>
+          (tagAndPrio.tag[0] ? tags.includes(tagAndPrio.tag[0]) : false) &&
+          typeof tagAndPrio.priority !== 'undefined'
+      )
+    }
+  }
+
+  return {
+    maxPrio: max,
+    data: categoryTagsAndPrios.filter(
+      (tagAndPrio: any) => typeof tagAndPrio.priority !== 'undefined'
+    )
+  }
+}
 
 const splitAndCheckHandle = (handle: string) => {
   const splitHandle = handle.split('-')
@@ -19,8 +62,8 @@ const splitAndCheckHandle = (handle: string) => {
 
 const getSubcollectionType = (splitHandle: Array<string>) => {
   let subcollectionType
+  const len = splitHandle[0].length + 1
 
-  const len = splitHandle.length
   /**
    * If true we have a handle that looks like a-waffen or ab-weapons-shotguns (this will be used as an example throughout)
    * So we first decide the subcollectionType which looks like this: abc
@@ -47,6 +90,7 @@ const getSubcollectionType = (splitHandle: Array<string>) => {
     console.error('Error: Handle too short or starts with invalid type.')
     return ''
   }
+
   return subcollectionType
 }
 
@@ -55,19 +99,21 @@ const getUnfilteredRelatedProducts = (
   handle: string,
   splitHandle: Array<string>
 ) => {
-  const relatedCategories = data.allShopifyCollection.edges.filter(edge2 => {
+  const relatedCategories = data.allShopifyCollection.edges.filter(edge => {
     if (splitHandle[0].length === 2 && splitHandle[0][0] === 'b') {
       return (
-        edge2.node.handle.includes(
+        edge.node.handle.includes(
           splitHandle.slice(1, -1).toString().replaceAll(',', '-')
-        ) && edge2.node.handle.split('-').length === splitHandle.length
+        ) && edge.node.handle.split('-').length === splitHandle.length
       )
     } else if (splitHandle[0].length > 1) {
-      return edge2.node.handle.endsWith(
+      return edge.node.handle.endsWith(
         splitHandle.slice(2).toString().replaceAll(',', '-')
       )
     } else if (splitHandle[0].length === 1 && splitHandle[0][0] === 'a') {
-      return edge2.node.handle === handle
+      return edge.node.handle === handle
+    } else if (splitHandle[0].length === 1 && splitHandle[0][0] === 'b') {
+      return edge.node.handle.endsWith(splitHandle.slice(1).join('-'))
     }
   })
 
@@ -77,8 +123,8 @@ const getUnfilteredRelatedProducts = (
   )
 }
 
-const getFilteredProducts = (unfilteredRelatedProducts, handle) => {
-  const filteredRelatedProducts = []
+const getFilteredProducts = (unfilteredRelatedProducts, handle, product?) => {
+  const filteredRelatedProducts: Array<any> = []
 
   //change this to change the amount of displayed RelatedProducts
   const iterationLimit =
@@ -91,11 +137,39 @@ const getFilteredProducts = (unfilteredRelatedProducts, handle) => {
       Math.random() * unfilteredRelatedProducts.length
     )
 
-    filteredRelatedProducts.push(unfilteredRelatedProducts[randomIndex])
+    if (product) {
+      if (product.handle !== unfilteredRelatedProducts[randomIndex].handle) {
+        if (
+          filteredRelatedProducts.filter(
+            (val: any) =>
+              val.handle === unfilteredRelatedProducts[randomIndex].handle
+          ).length === 0
+        ) {
+          filteredRelatedProducts.push(unfilteredRelatedProducts[randomIndex])
+        }
+      }
+    } else {
+      if (
+        filteredRelatedProducts.filter(
+          (val: any) =>
+            val.handle === unfilteredRelatedProducts[randomIndex].handle
+        ).length === 0
+      ) {
+        filteredRelatedProducts.push(unfilteredRelatedProducts[randomIndex])
+      }
+    }
     unfilteredRelatedProducts.splice(randomIndex, 1)
+
+    if (
+      filteredRelatedProducts.size < iterationLimit &&
+      unfilteredRelatedProducts.length > 0 &&
+      i + 1 === iterationLimit
+    ) {
+      i -= 1
+    }
   }
 
-  return filteredRelatedProducts
+  return Array.from(filteredRelatedProducts.values())
 }
 
 const createAllProductsShopPage = (data, actions) => {
@@ -111,13 +185,17 @@ const createAllProductsShopPage = (data, actions) => {
     collections[edge.node.id] = handles
   })
 
+  const categoryTagsAndPriorities = getCategoryTagsAndPriorities(data)
+
   actions.createPage({
     path: '/products/',
     component: require.resolve('../templatePages/ShopPage/index.tsx'),
     context: {
+      skipJaenPage: true,
       header: {title: 'Alle Produkte'},
       products: {items: products.slice(0, 12)},
       filter: {
+        categoryTagsAndPriorities: categoryTagsAndPriorities,
         allTags: data.meta.tags,
         productPageTags: data.meta.tags,
         activeTags: [],
@@ -145,13 +223,15 @@ const createAllProductsShopPage = (data, actions) => {
 
     const filteredRelatedProducts = getFilteredProducts(
       unfilteredRelatedProducts,
-      ''
+      '',
+      product
     )
 
     actions.createPage({
       path: `/products/${product.handle}/`,
       component: require.resolve('../templatePages/ProductPage/index.tsx'),
       context: {
+        skipJaenPage: true,
         header: {title: product.title},
         handle: product.handle,
         imageSlider: {
@@ -189,10 +269,12 @@ const createCollectionShopAndProductPages = (data, actions) => {
 
     let slug =
       '/' +
-      splitHandle
-        .toString()
-        .substring(edge.node.handle.indexOf('-') + 1)
-        .replaceAll(',', '/')
+      edge.node.title
+        .split(':')
+        .slice(1)
+        .join('/')
+        .toLowerCase()
+        .replaceAll(' ', '-')
 
     const subcategories = data.allShopifyCollection.edges
       .filter(edge2 => {
@@ -208,28 +290,31 @@ const createCollectionShopAndProductPages = (data, actions) => {
           : -1
       )
 
+    const items = subcategories.map(subcategory => ({
+      title:
+        subcategory.node.title === edge.node.title
+          ? 'Alle Produkte'
+          : subcategory.node.title.split(':').at(-1),
+      handle:
+        subcategory.node.handle === edge.node.handle
+          ? 'alle-produkte'
+          : subcategory.node.handle,
+      totalProducts: subcategory.node.products
+        ? subcategory.node.products.length
+        : 0,
+      image: subcategory.node.image ? subcategory.node.image : undefined
+    }))
+
     if (edge.node.products.length > 0) {
       actions.createPage({
         path: slug,
         component: require.resolve(`../templatePages/CategoryPage/index.tsx`),
         context: {
+          skipJaenPage: true,
           category: {
             handle: edge.node.handle,
-            title: edge.node.title.split(' ').at(-1),
-            items: subcategories.map(subcategory => ({
-              title:
-                subcategory.node.title === edge.node.title
-                  ? 'Alle Produkte'
-                  : subcategory.node.title.split(' ').at(-1),
-              handle:
-                subcategory.node.handle === edge.node.handle
-                  ? 'alle-produkte'
-                  : subcategory.node.handle,
-              totalProducts: subcategory.node.products
-                ? subcategory.node.products.length
-                : 0,
-              image: subcategory.node.image ? subcategory.node.image : undefined
-            }))
+            title: edge.node.title.split(':').at(-1),
+            items: items
           },
           productGrid: {
             title: 'Hello my dudes',
@@ -237,90 +322,120 @@ const createCollectionShopAndProductPages = (data, actions) => {
           }
         }
       })
+    }
 
-      const activeTags = data.meta.tags.filter(tag =>
-        tag.endsWith(edge.node.title.split(' ').at(-1))
-      )
-      const productPageTags = new Set<string>()
-      edge.node.products.forEach(product => {
-        product.tags.forEach(tag => {
-          productPageTags.add(tag)
-        })
-      })
-
-      slug = slug + '/products/'
-      actions.createPage({
-        path: slug,
-        component: require.resolve('../templatePages/ShopPage/index.tsx'),
-        context: {
-          header: {title: edge.node.title.split(' ').at(-1)},
-          products: {
-            items: edge.node.products
-              .sort((a, b) => (a.title > b.title ? 1 : -1))
-              .slice(0, 12)
-          },
-          filter: {
-            allTags: data.meta.tags,
-            productPageTags: Array.from(productPageTags).filter(
-              tag => !activeTags.includes(tag)
-            ),
-            activeTags: activeTags,
-            initialFilters: {
-              tags: activeTags,
-              maxPrice: Math.max(
-                ...edge.node.products.map(
-                  product =>
-                    product.contextualPricing.maxVariantPricing.price.amount
-                )
-              )
-            },
-            hasNextPage: edge.node.products.length > 12
-          }
+    const activeTags = data.meta.tags.filter(tag => {
+      const splitTitle = edge.node.title.split(':')
+      splitTitle.shift()
+      let rval = false
+      for (let i = 0; i >= -splitTitle.length; i--) {
+        if (tag.endsWith(splitTitle.at(i))) {
+          rval = true
         }
+      }
+      return rval
+    })
+
+    const productPageTags = new Set<string>()
+    edge.node.products.forEach(product => {
+      product.tags.forEach(tag => {
+        productPageTags.add(tag)
       })
+    })
 
-      edge.node.products.forEach(product => {
-        const unfilteredRelatedProducts = getUnfilteredRelatedProducts(
-          data,
-          edge.node.handle,
-          splitHandle
-        )
-        const filteredRelatedProducts = getFilteredProducts(
-          unfilteredRelatedProducts,
-          edge.node.handle
-        )
+    const productPageTagsArray = Array.from(productPageTags).filter(
+      tag => !activeTags.includes(tag)
+    )
 
-        actions.createPage({
-          path: `${slug}${product.handle}/`,
-          component: require.resolve('../templatePages/ProductPage/index.tsx'),
-          context: {
-            handle: product.handle,
-            header: {title: product.title},
-            imageSlider: {
-              featuredImage: {
-                alt: product.featuredImage.alt || product.title,
-                gatsbyImageData: product.featuredImage.gatsbyImageData
-              },
-              images: product.images
-                .filter(image => image.shopifyId !== product.featuredImage.id)
-                .map(image => ({
-                  alt: image.alt || product.title,
-                  gatsbyImageData: image.gatsbyImageData
-                }))
-            },
-            productDetail: {
-              id: product.id,
-              price: product.contextualPricing.maxVariantPricing.price.amount,
-              tags: product.tags
-            },
-            productMoreDetail: {
-              description: product.descriptionHtml
-            },
-            featuredProducts: filteredRelatedProducts
-          }
-        })
+    const categoryTagsAndPriorities = getCategoryTagsAndPriorities(
+      data,
+      productPageTagsArray
+    )
+
+    const oldSlug = slug
+    slug = slug + '/products/'
+    actions.createPage({
+      path: slug,
+      component: require.resolve('../templatePages/ShopPage/index.tsx'),
+      context: {
+        skipJaenPage: true,
+        header: {title: edge.node.title.split(':').at(-1)},
+        products: {
+          items: edge.node.products
+            .sort((a, b) => (a.title > b.title ? 1 : -1))
+            .slice(0, 12)
+        },
+        filter: {
+          categoryTagsAndPriorities: categoryTagsAndPriorities,
+          allTags: data.meta.tags,
+          productPageTags: productPageTagsArray,
+          activeTags: activeTags,
+          initialFilters: {
+            tags: [],
+            maxPrice: Math.max(
+              ...edge.node.products.map(
+                product =>
+                  product.contextualPricing.maxVariantPricing.price.amount
+              )
+            )
+          },
+          hasNextPage: edge.node.products.length > 12
+        }
+      }
+    })
+
+    if (items.length <= 1 && edge.node.products.length > 0) {
+      actions.createRedirect({
+        fromPath: oldSlug,
+        toPath: slug,
+        redirectInBrowser: true,
+        isPermanent: true
       })
     }
+
+    edge.node.products.forEach(product => {
+      const unfilteredRelatedProducts = getUnfilteredRelatedProducts(
+        data,
+        edge.node.handle,
+        splitHandle
+      )
+      const filteredRelatedProducts = getFilteredProducts(
+        unfilteredRelatedProducts,
+        edge.node.handle,
+        product
+      )
+
+      actions.createPage({
+        path: `${slug}${product.handle}/`,
+        component: require.resolve('../templatePages/ProductPage/index.tsx'),
+        context: {
+          skipJaenPage: true,
+          handle: product.handle,
+          header: {title: product.title},
+          imageSlider: {
+            featuredImage: {
+              alt: product.featuredImage.alt || product.title,
+              gatsbyImageData: product.featuredImage.gatsbyImageData
+            },
+            images: product.images
+              .filter(image => image.shopifyId !== product.featuredImage.id)
+              .map(image => ({
+                alt: image.alt || product.title,
+                gatsbyImageData: image.gatsbyImageData
+              }))
+          },
+          productDetail: {
+            id: product.id,
+            price: product.contextualPricing.maxVariantPricing.price.amount,
+            tags: product.tags
+          },
+          productMoreDetail: {
+            description: product.descriptionHtml
+          },
+          featuredProducts: filteredRelatedProducts
+        }
+      })
+    })
   })
 }
 

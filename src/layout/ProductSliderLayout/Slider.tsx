@@ -1,49 +1,95 @@
 import {
   Box,
-  BoxProps,
   Icon,
   IconButton,
   IconButtonProps,
+  HStack,
+  StackProps,
+  useBreakpointValue,
   SimpleGrid,
-  SimpleGridProps,
-  useBreakpointValue
+  Flex
 } from '@chakra-ui/react'
 import React from 'react'
-import {generateProductCard} from '../ProductCardLayout'
 import {FaChevronCircleLeft, FaChevronCircleRight} from 'react-icons/fa'
 import {motion} from 'framer-motion'
 
-const MotionBox = motion<BoxProps>(Box)
+import {useWindowWidth} from '../../common/utils'
 
-export const Slider = (props: {
-  items: Array<JSX.Element>
-  minChildWidth?: SimpleGridProps['minChildWidth']
-}) => {
-  const items = props.items
+// #region Interfaces
 
-  const perPage = useBreakpointValue({
-    base: 1,
-    md: 3,
-    lg: 4
-  }) as number
+interface ResponsiveNumber {
+  base?: number
+  sm?: number
+  md?: number
+  lg?: number
+  xl?: number
+  '2xl'?: number
+}
 
-  const pageCount = Math.ceil(items.length / perPage)
+interface BaseProps {
+  spacing: number
+  itemWidth: number
+  items: Array<React.ReactNode>
+}
+
+interface SliderProps extends BaseProps {
+  maxWidthInVW: number
+  screenWidth: number | undefined
+}
+
+interface GridProps extends BaseProps {
+  maxWidth: number | undefined
+  itemsPerRow: number
+}
+
+interface ResponsiveSliderProps {
+  spacing?: ResponsiveNumber
+  maxWidthInVW?: ResponsiveNumber
+  itemWidth?: ResponsiveNumber
+  items: Array<React.ReactNode>
+  itemsPerRow?: ResponsiveNumber
+}
+
+// #endregion
+
+// #region Functions
+const SliderStack = motion<StackProps>(HStack)
+
+const Slider = (props: SliderProps) => {
+  const [animationDirection, setAnimationDirection] = React.useState<string>('')
   const [curPage, setCurPage] = React.useState(0)
 
-  const start = curPage * perPage
-  const end = start + perPage - 1
+  const items = props.items
+  const maxW = (props.screenWidth || 0) * (props.maxWidthInVW / 100)
+  let possibleCards = Math.floor(maxW / props.itemWidth)
 
-  const shouldDisplay = (index: number) => {
-    return index >= start && index <= end
+  if (
+    possibleCards * props.itemWidth + (possibleCards - 1) * props.spacing >
+    maxW
+  ) {
+    possibleCards -= 1
   }
+
+  const containerWidth =
+    possibleCards * props.itemWidth + (possibleCards - 1) * props.spacing
+
+  const pageCount = Math.ceil(items.length / possibleCards)
+
+  React.useEffect(() => {
+    if (pageCount < curPage) {
+      setCurPage(pageCount - 1)
+    }
+  }, [pageCount])
 
   const handlePageNavigate = (direction: 'left' | 'right') => {
     if (direction === 'left') {
       if (curPage > 0) {
+        setAnimationDirection('left')
         setCurPage(curPage - 1)
       }
     } else {
       if (curPage < pageCount - 1) {
+        setAnimationDirection('right')
         setCurPage(curPage + 1)
       }
     }
@@ -84,23 +130,102 @@ export const Slider = (props: {
     }
   }
 
+  const variants = {
+    left: {
+      x: (-containerWidth - props.spacing) * curPage,
+      transition: {duration: 0.5}
+    },
+    right: {
+      x: (-containerWidth - props.spacing) * curPage,
+      transition: {duration: 0.5}
+    }
+  }
+
   // product card slider with framer motion
   return (
-    <Box pos="relative" overflow="hidden">
-      <Box px="24">
-        <SimpleGrid
-          row={1}
-          columns={perPage}
-          spacing={2}
-          minChildWidth={props.minChildWidth}>
-          {items.map((item, index) => (
-            <>{shouldDisplay(index) && <MotionBox>{item}</MotionBox>}</>
-          ))}
-        </SimpleGrid>
+    <Flex justifyContent={'center'} position="relative" px="24">
+      <Box maxW={`${maxW}px`}>
+        <Box maxW={`${containerWidth}px`} overflow={'hidden'}>
+          <SliderStack
+            spacing={`${props.spacing}px`}
+            align={'start'}
+            variants={variants}
+            animate={animationDirection}>
+            {items.map(item => (
+              <>
+                <Box minWidth={`${props.itemWidth}px`}>{item}</Box>
+              </>
+            ))}
+          </SliderStack>
 
-        {curPage > 0 && <NavigationButton direction="left" />}
-        {curPage < pageCount - 1 && <NavigationButton direction="right" />}
+          {curPage > 0 && <NavigationButton direction="left" />}
+          {curPage < pageCount - 1 && <NavigationButton direction="right" />}
+        </Box>
       </Box>
-    </Box>
+    </Flex>
   )
 }
+
+const GridLayout = (props: GridProps) => {
+  return (
+    <Flex justifyContent={'center'}>
+      <Box maxWidth={props.maxWidth}>
+        <SimpleGrid columns={props.itemsPerRow} spacing={props.spacing}>
+          {props.items.map(item => (
+            <Box width={props.itemWidth}>{item}</Box>
+          ))}
+        </SimpleGrid>
+      </Box>
+    </Flex>
+  )
+}
+
+// #endregion
+
+// #region Exports
+
+/**
+ * Wraps the provided items into an Slider or a Grid depending on the size of the device.
+ *
+ * @type ResponsiveNumber - A Chakra-UI responsive Value (object syntax).
+ *
+ * @param props.items - type:Array<React.ReactNode> array of items.
+ * @param props.spacing - optional default:40 - type:ResponsiveNumber -  The spacing between the cards (in px).
+ * @param props.maxWidthInVW - optional default:80 - type:ResponsiveNumber -  The maxWidth of the slider (in vw).
+ * @param props.itemWidth - optional default:280 - type:ResponsiveNumber -  The width of a single Item (in px).
+ * @param props.itemsPerRow - optional default:1 - type:ResponsiveNumber - The items per row in the Grid.
+ */
+export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
+  const itemWidth = props.itemWidth ? useBreakpointValue(props.itemWidth) : 280
+  const itemsPerRow = props.itemsPerRow
+    ? useBreakpointValue(props.itemsPerRow)
+    : 1
+  const spacing = props.spacing ? useBreakpointValue(props.spacing) : 40
+  const maxWidthInVW = props.maxWidthInVW
+    ? useBreakpointValue(props.maxWidthInVW)
+    : 80
+  const screenWidth = useWindowWidth()
+
+  const returnValue = useBreakpointValue({
+    base: (
+      <GridLayout
+        items={props.items}
+        maxWidth={(screenWidth || 0) * (maxWidthInVW / 100)}
+        itemWidth={itemWidth}
+        spacing={spacing}
+        itemsPerRow={itemsPerRow}
+      />
+    ),
+    md: (
+      <Slider
+        items={props.items}
+        maxWidthInVW={maxWidthInVW}
+        screenWidth={screenWidth}
+        itemWidth={itemWidth}
+        spacing={spacing}
+      />
+    )
+  })
+  return <>{returnValue}</>
+}
+// #endregion

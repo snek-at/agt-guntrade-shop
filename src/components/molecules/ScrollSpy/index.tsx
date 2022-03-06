@@ -1,8 +1,10 @@
-import {Flex, IconButton, ButtonGroup} from '@chakra-ui/react'
-import {FiGithub} from '@react-icons/all-files/fi/FiGithub'
+import {Flex, Text} from '@chakra-ui/react'
 import {Spy} from '../../../common/assets'
 import * as style from './style'
+import React from 'react'
 import Scrollspy from 'react-scrollspy'
+import {ChevronDownIcon, ChevronUpIcon} from '@chakra-ui/icons'
+import {scroller as Scroll} from 'react-scroll'
 
 export interface AboutSectionProps {
   link1: React.ReactNode
@@ -11,56 +13,105 @@ export interface AboutSectionProps {
 }
 
 const ScrollSpy = () => {
+  // 'hero', 'featuredproducts', 'reviews', 'news', 'about', 'faq'
+  const items = [
+    {
+      name: 'hero',
+      label: 'AGT'
+    },
+    {
+      name: 'featuredproducts',
+      label: 'Sortiment'
+    },
+    {
+      name: 'reviews',
+      label: 'Bewertungen'
+    },
+    {
+      name: 'news',
+      label: 'Neuigkeiten'
+    },
+    {
+      name: 'about',
+      label: 'Über uns'
+    },
+    {
+      name: 'faq',
+      label: 'FAQ'
+    }
+  ]
+
+  const allItemNames = items.map(item => item.name)
+
+  const [activeSection, setActiveSection] = React.useState<string>('hero')
+
+  const scrollTo = (element: string | undefined) => {
+    if (element) {
+      Scroll.scrollTo(element, {smooth: true, duration: 1000, offset: -100})
+    }
+  }
+
   return (
     <Flex
-      as="aside"
       color="white"
       position="fixed"
-      bottom="50%"
-      left="40px"
+      bottom="0"
+      left="0"
       display={{base: 'none', md: 'flex'}}
       flexDirection="column"
       zIndex="999"
       css={style.Spy}>
       <Scrollspy
         offset={-500}
-        items={['hero', 'featuredproducts', 'reviews', 'news', 'about', 'faq']}
+        items={allItemNames}
+        onUpdate={(data: any) => {
+          if (typeof data !== 'undefined') setActiveSection(data.id)
+        }}
         currentClassName="active-scroll-spy">
-        <Spy
-          data-to-scrollspy-id="hero"
-          onClick={() => 'hero'}
-          color="transparent"
-        />
-        <Spy
-          data-to-scrollspy-id="featuredproducts"
-          onClick={() => 'featuredproducts'}
-          color="transparent"
-          style={{marginTop: 10}}
-        />
-        <Spy
-          data-to-scrollspy-id="reviews"
-          onClick={() => 'reviews'}
-          color="transparent"
-          style={{marginTop: 10}}
-        />
-        <Spy
-          data-to-scrollspy-id="news"
-          onClick={() => 'news'}
-          color="transparent"
-          style={{marginTop: 10}}
-        />
-        <Spy
-          data-to-scrollspy-id="about"
-          onClick={() => 'about'}
-          color="transparent"
-          style={{marginTop: 10}}
-        />
-        <Spy
-          data-to-scrollspy-id="faq"
-          onClick={() => 'faq'}
-          color="transparent"
-          style={{marginTop: 10}}
-        />
+        <Flex
+          alignItems="center"
+          bg="agt.gray"
+          py="1"
+          pl="4"
+          pr="2"
+          borderTopRightRadius={'5px'}>
+          <Spy
+            number={allItemNames.indexOf(activeSection)}
+            style={{
+              color: 'transparent'
+            }}
+          />
+          <Text
+            fontWeight={'thin'}
+            ml="2"
+            fontSize={'1.25rem'}
+            color="white"
+            className="text"
+            casing={'capitalize'}>
+            {items.find(item => item.name === activeSection)?.label}
+          </Text>
+          <ChevronDownIcon
+            borderRadius={'5px'}
+            ml="2"
+            color="white"
+            w={8}
+            h={8}
+            _hover={{bg: 'whiteAlpha.400'}}
+            onClick={() =>
+              scrollTo(allItemNames[allItemNames.indexOf(activeSection) + 1])
+            }
+          />
+          <ChevronUpIcon
+            borderRadius="5px"
+            color="white"
+            w={8}
+            h={8}
+            _hover={{bg: 'whiteAlpha.400'}}
+            onClick={() =>
+              scrollTo(allItemNames[allItemNames.indexOf(activeSection) - 1])
+            }
+          />
+        </Flex>
       </Scrollspy>
     </Flex>
   )

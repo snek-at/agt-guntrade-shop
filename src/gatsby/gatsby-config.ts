@@ -1,14 +1,22 @@
 import dotenv from 'dotenv'
 import {GatsbyConfig as GatsbyConfigType} from 'gatsby'
 
+import {site} from '../../jaen-data/internal.json'
+
 dotenv.config()
 
 const GatsbyConfig: GatsbyConfigType = {
   jsxRuntime: 'automatic',
-  siteMetadata: {}
+  siteMetadata: site.siteMetadata
 }
 
 GatsbyConfig.plugins = [
+  {
+    resolve: '@jaenjs/jaen',
+    options: {
+      jaenProjectId: 1
+    }
+  },
   {
     resolve: '@chakra-ui/gatsby-plugin',
     options: {
@@ -17,6 +25,7 @@ GatsbyConfig.plugins = [
     }
   },
   `gatsby-plugin-image`,
+  `gatsby-plugin-meta-redirect`,
   {
     resolve: `gatsby-plugin-sharp`,
     options: {
@@ -43,7 +52,34 @@ GatsbyConfig.plugins = [
       shopifyConnections: ['collections']
     }
   },
-  `gatsby-transformer-sharp`
+  `gatsby-transformer-sharp`,
+  {
+    resolve: `gatsby-plugin-sitemap`,
+    options: {
+      excludes: [`/jaen/admin`, `/_`],
+      query: `
+        {
+          allSitePage {
+            nodes {
+              path
+            }
+          }
+        }`,
+      resolveSiteUrl: () => site.siteMetadata.siteUrl,
+      resolvePages: ({allSitePage: {nodes: allPages}}: any) => {
+        return allPages.map((page: any) => {
+          return {...page}
+        })
+      },
+      serialize: ({path, modifiedGmt}: {path: any; modifiedGmt: any}) => {
+        console.log('PATH PATH', path, modifiedGmt)
+        return {
+          url: path,
+          lastmod: modifiedGmt
+        }
+      }
+    }
+  }
 ]
 
 export default GatsbyConfig
