@@ -23,6 +23,7 @@ interface ResponsiveNumber {
   md?: number
   lg?: number
   xl?: number
+  '2xl'?: number
 }
 
 interface BaseProps {
@@ -179,11 +180,14 @@ const GridLayout = (props: GridProps) => {
 
 /**
  * Wraps the provided items into an Slider or a Grid depending on the size of the device.
- * @param {ResponsiveNumber} [props.spacing=40] - The spacing between the cards (in px).
- * @param {ResponsiveNumber} [props.maxWidthInVW=80] - The maxWidth of the slider (in vw).
- * @param {ResponsiveNumber} [props.itemWidth=280] - The width of a single Item (in px).
- * @param {ResponsiveNumber} [props.itemsPerRow=1] - The items per row in the Grid.
- * @param {Array<React.ReactNode>} props.items - The array of items.
+ *
+ * @type ResponsiveNumber - A Chakra-UI responsive Value (object syntax).
+ *
+ * @param props.items - type:Array<React.ReactNode> array of items.
+ * @param props.spacing - optional default:40 - type:ResponsiveNumber -  The spacing between the cards (in px).
+ * @param props.maxWidthInVW - optional default:80 - type:ResponsiveNumber -  The maxWidth of the slider (in vw).
+ * @param props.itemWidth - optional default:280 - type:ResponsiveNumber -  The width of a single Item (in px).
+ * @param props.itemsPerRow - optional default:1 - type:ResponsiveNumber - The items per row in the Grid.
  */
 export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
   const itemWidth = props.itemWidth ? useBreakpointValue(props.itemWidth) : 280
