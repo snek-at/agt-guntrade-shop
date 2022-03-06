@@ -179,11 +179,10 @@ const GridLayout = (props: GridProps) => {
 
 /**
  * Wraps the provided items into an Slider or a Grid depending on the size of the device.
- * @param {object} props
- * @param {ResponsiveNumber} props.spacing - The spacing between the cards (in px) - default 40.
- * @param {ResponsiveNumber} props.maxWidthInVW - The maxWidth of the slider (in vw) - default 80.
- * @param {ResponsiveNumber} props.itemWidth - The width of a single Item (in px). - default 280.
- * @param {ResponsiveNumber} props.itemsPerRow - The items per row in the Grid.
+ * @param {ResponsiveNumber} [props.spacing=40] - The spacing between the cards (in px).
+ * @param {ResponsiveNumber} [props.maxWidthInVW=80] - The maxWidth of the slider (in vw).
+ * @param {ResponsiveNumber} [props.itemWidth=280] - The width of a single Item (in px).
+ * @param {ResponsiveNumber} [props.itemsPerRow=1] - The items per row in the Grid.
  * @param {Array<React.ReactNode>} props.items - The array of items.
  */
 export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
