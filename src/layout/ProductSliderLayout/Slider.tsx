@@ -7,11 +7,12 @@ import {
   StackProps,
   useBreakpointValue,
   SimpleGrid,
-  Flex
+  Flex,
+  BoxProps
 } from '@chakra-ui/react'
 import React from 'react'
 import {FaChevronCircleLeft, FaChevronCircleRight} from 'react-icons/fa'
-import {motion} from 'framer-motion'
+import {motion, useMotionValue} from 'framer-motion'
 
 import {useWindowWidth} from '../../common/utils'
 
@@ -54,10 +55,12 @@ interface ResponsiveSliderProps {
 
 // #region Functions
 const SliderStack = motion<StackProps>(HStack)
+const MotionBox = motion<BoxProps>(Box)
 
 const Slider = (props: SliderProps) => {
   const [animationDirection, setAnimationDirection] = React.useState<string>('')
   const [curPage, setCurPage] = React.useState(0)
+  const [lastPage, setLastPage] = React.useState(0)
 
   const items = props.items
   const maxW = (props.screenWidth || 0) * (props.maxWidthInVW / 100)
@@ -77,6 +80,7 @@ const Slider = (props: SliderProps) => {
 
   React.useEffect(() => {
     if (pageCount < curPage) {
+      setLastPage(pageCount - 1)
       setCurPage(pageCount - 1)
     }
   }, [pageCount])
@@ -85,12 +89,24 @@ const Slider = (props: SliderProps) => {
     if (direction === 'left') {
       if (curPage > 0) {
         setAnimationDirection('left')
-        setCurPage(curPage - 1)
+        if (curPage % 1 !== 0) {
+          setLastPage(curPage)
+          setCurPage(Math.floor(curPage))
+        } else {
+          setLastPage(curPage)
+          setCurPage(curPage - 1)
+        }
       }
     } else {
       if (curPage < pageCount - 1) {
         setAnimationDirection('right')
-        setCurPage(curPage + 1)
+        if (curPage % 1 !== 0) {
+          setLastPage(curPage)
+          setCurPage(Math.ceil(curPage))
+        } else {
+          setLastPage(curPage)
+          setCurPage(curPage + 1)
+        }
       }
     }
   }
@@ -129,38 +145,69 @@ const Slider = (props: SliderProps) => {
       )
     }
   }
+  const x = useMotionValue(0)
+
+  const mathMagic = (targetPage: number) => {
+    const distance = -(containerWidth + props.spacing)
+    const targetPx = targetPage * distance
+    const position = x.get() === 0 ? lastPage * distance : x.get()
+    const solution = targetPx / position
+
+    return position % distance === 0 || targetPx === 0
+      ? targetPx
+      : position * solution
+  }
 
   const variants = {
     left: {
-      x: (-containerWidth - props.spacing) * curPage,
+      x: mathMagic(curPage),
       transition: {duration: 0.5}
     },
     right: {
-      x: (-containerWidth - props.spacing) * curPage,
+      x: mathMagic(curPage),
       transition: {duration: 0.5}
     }
   }
 
+  const handleDragEnd = () => {
+    if (x.getVelocity() === 0) {
+      setLastPage(curPage)
+      const pageCandidate = x.get() / -containerWidth
+      if (pageCandidate > pageCount) {
+        setCurPage(pageCount)
+      } else {
+        setCurPage(pageCandidate)
+      }
+    }
+  }
   // product card slider with framer motion
   return (
     <Flex justifyContent={'center'} position="relative" px="24">
       <Box maxW={`${maxW}px`}>
         <Box maxW={`${containerWidth}px`} overflow={'hidden'}>
-          <SliderStack
-            spacing={`${props.spacing}px`}
-            align={'start'}
+          <MotionBox
+            style={{x}}
+            drag="x"
+            onDragEnd={(event, info) => handleDragEnd()}
+            w={`${containerWidth * pageCount}px`}
+            dragConstraints={{
+              left: -containerWidth * (pageCount - 1) - 100,
+              right: 0
+            }}
+            dragPropagation
             variants={variants}
             animate={animationDirection}>
-            {items.map(item => (
-              <>
-                <Box minWidth={`${props.itemWidth}px`}>{item}</Box>
-              </>
-            ))}
-          </SliderStack>
-
-          {curPage > 0 && <NavigationButton direction="left" />}
-          {curPage < pageCount - 1 && <NavigationButton direction="right" />}
+            <SliderStack spacing={`${props.spacing}px`} align={'start'}>
+              {items.map(item => (
+                <>
+                  <Box minWidth={`${props.itemWidth}px`}>{item}</Box>
+                </>
+              ))}
+            </SliderStack>
+          </MotionBox>
         </Box>
+        {curPage > 0 && <NavigationButton direction="left" />}
+        {curPage < pageCount - 1 && <NavigationButton direction="right" />}
       </Box>
     </Flex>
   )
@@ -191,7 +238,7 @@ const GridLayout = (props: GridProps) => {
  *
  * @param props.items - type:Array<React.ReactNode> array of items.
  * @param props.spacing - optional default:40 - type:ResponsiveNumber -  The spacing between the cards (in px).
- * @param props.maxWidthInVW - optional default:80 - type:ResponsiveNumber -  The maxWidth of the slider (in vw).
+ * @param props.maxWidthInVW - optional default:80 - type:ResponsiveNumber -  The maxWidth of the slider or grid (in vw).
  * @param props.itemWidth - optional default:280 - type:ResponsiveNumber -  The width of a single Item (in px).
  * @param props.itemsPerRow - optional default:1 - type:ResponsiveNumber - The items per row in the Grid.
  */
