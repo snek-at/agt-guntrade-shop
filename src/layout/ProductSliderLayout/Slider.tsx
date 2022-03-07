@@ -262,6 +262,7 @@ const GridLayout = (props: GridProps) => {
  * @param props.maxWidthInVW - optional default:80 - type:ResponsiveNumber -  The maxWidth of the slider or grid (in vw).
  * @param props.itemWidth - optional default:280 - type:ResponsiveNumber -  The width of a single Item (in px).
  * @param props.itemsPerRow - optional default:1 - type:ResponsiveNumber - The items per row in the Grid.
+ * @param props.containerPadding - optional default:0 - type:ResponsiveNumber - The paddingX on the container useful for hover animations with x effect (in px).
  */
 export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
   const itemWidth = props.itemWidth ? useBreakpointValue(props.itemWidth) : 280

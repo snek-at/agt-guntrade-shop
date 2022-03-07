@@ -80,7 +80,8 @@ const IndexPage = ({
   }
 
   data.heroCollections.edges.forEach(edge => {
-    const title: string = edge.node.title.split(':').at(-1)
+    const title: string =
+      edge.node.title.split(':')[edge.node.title.split(':').length - 1]
     const products = edge.node.products.slice(0, 6)
 
     heroProducts[title] = {items: products, title: edge.node.title}
