@@ -51,6 +51,7 @@ interface ResponsiveSliderProps {
   itemWidth?: ResponsiveNumber
   items: Array<React.ReactNode>
   itemsPerRow?: ResponsiveNumber
+  breakpoint?: 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 }
 
 // #endregion
@@ -267,6 +268,7 @@ const GridLayout = (props: GridProps) => {
  * @param props.itemWidth - optional default:280 - type:ResponsiveNumber -  The width of a single Item (in px).
  * @param props.itemsPerRow - optional default:1 - type:ResponsiveNumber - The items per row in the Grid.
  * @param props.containerPadding - optional default:0 - type:ResponsiveNumber - The paddingX on the container useful for hover animations with x effect (in px).
+ * @param props.breakpoint - optional default:md - type:'sm'|'md'|'lg'|'xl'|'2xl' - The Chakra breakpoint at which the Grid changes into the Slider.
  */
 export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
   const itemWidth = props.itemWidth ? useBreakpointValue(props.itemWidth) : 280
@@ -280,7 +282,7 @@ export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
   const containerPadding = props.containerPadding
     ? useBreakpointValue(props.containerPadding)
     : 0
-
+  const breakpoint = props.breakpoint || 'md'
   const screenWidth = useWindowWidth()
 
   const returnValue = useBreakpointValue({
@@ -293,7 +295,7 @@ export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
         itemsPerRow={itemsPerRow}
       />
     ),
-    md: (
+    [breakpoint]: (
       <Slider
         containerPadding={containerPadding}
         items={props.items}
