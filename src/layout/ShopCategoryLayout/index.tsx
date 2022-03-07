@@ -49,14 +49,6 @@ const Header = (props: {path: string; title: string}) => {
         <Heading size="2xl" my="8">
           {props.title}
         </Heading>
-        <HStack
-          spacing={'10'}
-          textTransform="uppercase"
-          fontWeight={'semibold'}
-          fontSize="larger">
-          <Text>Highlights</Text>
-          <Text>Marken</Text>
-        </HStack>
       </Box>
     </Box>
   )

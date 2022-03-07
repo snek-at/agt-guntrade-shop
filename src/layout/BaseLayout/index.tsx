@@ -1,7 +1,6 @@
 import React from 'react'
 import Footer from '../../components/organisms/Footer'
 import SideButton from '../../components/molecules/buttons/SideButtons'
-import ScrollToTopButton from '../../components/molecules/buttons/ScrollToTopButton'
 import {
   useProductSearch,
   SearchProvider
@@ -48,8 +47,6 @@ export const BaseLayoutWithoutSearch: React.FC<{activePath: string}> = ({
 
   return (
     <>
-      <CookieModal/>
-      <ScrollToTopButton onScrollToTopClick={() => null} />
       <SideButton
         onSideButton1Click={() => null}
         onSideButton2Click={() => null}
