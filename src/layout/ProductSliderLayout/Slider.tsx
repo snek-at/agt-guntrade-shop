@@ -173,8 +173,8 @@ const Slider = (props: SliderProps) => {
     if (x.getVelocity() === 0) {
       setLastPage(curPage)
       const pageCandidate = x.get() / -containerWidth
-      if (pageCandidate > pageCount) {
-        setCurPage(pageCount)
+      if (pageCandidate > pageCount - 1) {
+        setCurPage(pageCount - 1)
       } else if (pageCandidate < 0) {
         setCurPage(0)
       } else {
@@ -194,7 +194,7 @@ const Slider = (props: SliderProps) => {
             onDragEnd={() => handleDragEnd()}
             w={`${containerWidth * pageCount}px`}
             dragConstraints={{
-              left: -containerWidth * (pageCount - 1) - 100,
+              left: -containerWidth * (pageCount - 1),
               right: 0
             }}
             variants={variants}
