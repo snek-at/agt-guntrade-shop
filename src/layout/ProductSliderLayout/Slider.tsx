@@ -175,11 +175,14 @@ const Slider = (props: SliderProps) => {
       const pageCandidate = x.get() / -containerWidth
       if (pageCandidate > pageCount) {
         setCurPage(pageCount)
+      } else if (pageCandidate < 0) {
+        setCurPage(0)
       } else {
         setCurPage(pageCandidate)
       }
     }
   }
+
   // product card slider with framer motion
   return (
     <Flex justifyContent={'center'} position="relative" px="24">
@@ -188,19 +191,22 @@ const Slider = (props: SliderProps) => {
           <MotionBox
             style={{x}}
             drag="x"
-            onDragEnd={(event, info) => handleDragEnd()}
+            onDragEnd={() => handleDragEnd()}
             w={`${containerWidth * pageCount}px`}
             dragConstraints={{
               left: -containerWidth * (pageCount - 1) - 100,
               right: 0
             }}
-            dragPropagation
             variants={variants}
             animate={animationDirection}>
             <SliderStack spacing={`${props.spacing}px`} align={'start'}>
               {items.map(item => (
                 <>
-                  <Box minWidth={`${props.itemWidth}px`}>{item}</Box>
+                  <MotionBox
+                    minWidth={`${props.itemWidth}px`}
+                    maxW={`${props.itemWidth}px`}>
+                    {item}
+                  </MotionBox>
                 </>
               ))}
             </SliderStack>
@@ -218,9 +224,9 @@ const GridLayout = (props: GridProps) => {
     <Flex justifyContent={'center'}>
       <Box maxWidth={props.maxWidth}>
         <SimpleGrid columns={props.itemsPerRow} spacing={props.spacing}>
-          {props.items.map(item => (
-            <Box width={props.itemWidth}>{item}</Box>
-          ))}
+          {props.items.map(item => {
+            return <Box width={props.itemWidth}>{item}</Box>
+          })}
         </SimpleGrid>
       </Box>
     </Flex>

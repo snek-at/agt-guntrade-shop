@@ -12,7 +12,10 @@ export const ProductSliderLayout = (props: {
   const productsForSlider = React.useMemo(
     () =>
       props.products.map(product => (
-        <Link to={`/products/${product.handle}`}>
+        <Link
+          to={`/products/${product.handle}`}
+          draggable="false"
+          onDragStart={e => e.preventDefault()}>
           {generateProductCard(product)}
         </Link>
       )),
