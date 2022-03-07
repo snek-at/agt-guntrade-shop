@@ -27,7 +27,10 @@ export const ProductSliderLayout = (props: {
       <Heading textAlign={'center'} size="xl" borderBottom={'1px solid'}>
         {props.title}
       </Heading>
-      <ResponsiveSlider items={productsForSlider} />
+      <ResponsiveSlider
+        items={productsForSlider}
+        containerPadding={{base: 15}}
+      />
     </VStack>
   )
 }

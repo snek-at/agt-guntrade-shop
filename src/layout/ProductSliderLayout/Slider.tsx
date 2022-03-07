@@ -34,6 +34,7 @@ interface BaseProps {
 }
 
 interface SliderProps extends BaseProps {
+  containerPadding: number
   maxWidthInVW: number
   screenWidth: number | undefined
 }
@@ -44,6 +45,7 @@ interface GridProps extends BaseProps {
 }
 
 interface ResponsiveSliderProps {
+  containerPadding?: ResponsiveNumber
   spacing?: ResponsiveNumber
   maxWidthInVW?: ResponsiveNumber
   itemWidth?: ResponsiveNumber
@@ -75,7 +77,9 @@ const Slider = (props: SliderProps) => {
   }
 
   const containerWidth =
-    possibleCards * props.itemWidth + (possibleCards - 1) * props.spacing
+    possibleCards * props.itemWidth +
+    (possibleCards - 1) * props.spacing +
+    props.containerPadding * 2
 
   const pageCount = Math.ceil(items.length / possibleCards)
 
@@ -149,7 +153,7 @@ const Slider = (props: SliderProps) => {
   const x = useMotionValue(0)
 
   const mathMagic = (targetPage: number) => {
-    const distance = -(containerWidth + props.spacing)
+    const distance = -(containerWidth + props.spacing - props.containerPadding)
     const targetPx = targetPage * distance
     const position = x.get() === 0 ? lastPage * distance : x.get()
     const solution = targetPx / position
@@ -206,7 +210,10 @@ const Slider = (props: SliderProps) => {
             }}
             variants={variants}
             animate={animationDirection}>
-            <SliderStack spacing={`${props.spacing}px`} align={'start'}>
+            <SliderStack
+              spacing={`${props.spacing}px`}
+              align={'start'}
+              px={`${props.containerPadding}px`}>
               {items.map(item => (
                 <>
                   <MotionBox
@@ -265,6 +272,10 @@ export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
   const maxWidthInVW = props.maxWidthInVW
     ? useBreakpointValue(props.maxWidthInVW)
     : 80
+  const containerPadding = props.containerPadding
+    ? useBreakpointValue(props.containerPadding)
+    : 0
+
   const screenWidth = useWindowWidth()
 
   const returnValue = useBreakpointValue({
@@ -279,6 +290,7 @@ export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
     ),
     md: (
       <Slider
+        containerPadding={containerPadding}
         items={props.items}
         maxWidthInVW={maxWidthInVW}
         screenWidth={screenWidth}
