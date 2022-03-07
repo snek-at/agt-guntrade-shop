@@ -190,6 +190,7 @@ const Slider = (props: SliderProps) => {
           <MotionBox
             style={{x}}
             drag="x"
+            dragTransition={{timeConstant: 200}}
             cursor={isDragging ? 'grabbing' : 'grab'}
             onDragStart={() => {
               setIsDragging(true)
@@ -200,7 +201,7 @@ const Slider = (props: SliderProps) => {
             onDragTransitionEnd={() => handleDragEnd()}
             w={`${containerWidth * pageCount}px`}
             dragConstraints={{
-              left: -containerWidth * (pageCount - 1),
+              left: -containerWidth * (pageCount - 1) - props.spacing,
               right: 0
             }}
             variants={variants}
