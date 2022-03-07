@@ -81,7 +81,12 @@ function ImageBoxWithTags(props: {
       bg={useColorModeValue('gray.200', 'gray.600')}
       overflow="hidden"
       position="relative">
-      <GatsbyImage image={image.gatsbyImageData} alt={image.alt} />
+      <GatsbyImage
+        onDragStart={e => e.preventDefault()}
+        draggable="false"
+        image={image.gatsbyImageData}
+        alt={image.alt}
+      />
       <Flex position="absolute" top="0" left="0" right="0" p={2}>
         {tags.map(tag => (
           <Badge

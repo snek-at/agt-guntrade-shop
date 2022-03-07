@@ -7,11 +7,12 @@ import {
   StackProps,
   useBreakpointValue,
   SimpleGrid,
-  Flex
+  Flex,
+  BoxProps
 } from '@chakra-ui/react'
 import React from 'react'
 import {FaChevronCircleLeft, FaChevronCircleRight} from 'react-icons/fa'
-import {motion} from 'framer-motion'
+import {motion, useMotionValue} from 'framer-motion'
 
 import {useWindowWidth} from '../../common/utils'
 
@@ -33,6 +34,7 @@ interface BaseProps {
 }
 
 interface SliderProps extends BaseProps {
+  containerPadding: number
   maxWidthInVW: number
   screenWidth: number | undefined
 }
@@ -43,6 +45,7 @@ interface GridProps extends BaseProps {
 }
 
 interface ResponsiveSliderProps {
+  containerPadding?: ResponsiveNumber
   spacing?: ResponsiveNumber
   maxWidthInVW?: ResponsiveNumber
   itemWidth?: ResponsiveNumber
@@ -54,10 +57,13 @@ interface ResponsiveSliderProps {
 
 // #region Functions
 const SliderStack = motion<StackProps>(HStack)
+const MotionBox = motion<BoxProps>(Box)
 
 const Slider = (props: SliderProps) => {
   const [animationDirection, setAnimationDirection] = React.useState<string>('')
   const [curPage, setCurPage] = React.useState(0)
+  const [lastPage, setLastPage] = React.useState(0)
+  const [isDragging, setIsDragging] = React.useState(false)
 
   const items = props.items
   const maxW = (props.screenWidth || 0) * (props.maxWidthInVW / 100)
@@ -71,12 +77,15 @@ const Slider = (props: SliderProps) => {
   }
 
   const containerWidth =
-    possibleCards * props.itemWidth + (possibleCards - 1) * props.spacing
+    possibleCards * props.itemWidth +
+    (possibleCards - 1) * props.spacing +
+    props.containerPadding * 2
 
   const pageCount = Math.ceil(items.length / possibleCards)
 
   React.useEffect(() => {
     if (pageCount < curPage) {
+      setLastPage(pageCount - 1)
       setCurPage(pageCount - 1)
     }
   }, [pageCount])
@@ -85,12 +94,24 @@ const Slider = (props: SliderProps) => {
     if (direction === 'left') {
       if (curPage > 0) {
         setAnimationDirection('left')
-        setCurPage(curPage - 1)
+        if (curPage % 1 !== 0) {
+          setLastPage(curPage)
+          setCurPage(Math.floor(curPage))
+        } else {
+          setLastPage(curPage)
+          setCurPage(curPage - 1)
+        }
       }
     } else {
       if (curPage < pageCount - 1) {
         setAnimationDirection('right')
-        setCurPage(curPage + 1)
+        if (curPage % 1 !== 0) {
+          setLastPage(curPage)
+          setCurPage(Math.ceil(curPage))
+        } else {
+          setLastPage(curPage)
+          setCurPage(curPage + 1)
+        }
       }
     }
   }
@@ -129,15 +150,43 @@ const Slider = (props: SliderProps) => {
       )
     }
   }
+  const x = useMotionValue(0)
+
+  const mathMagic = (targetPage: number) => {
+    const distance = -(
+      containerWidth +
+      props.spacing -
+      2 * props.containerPadding
+    )
+    const targetPx = targetPage * distance
+    const position = x.get() === 0 ? lastPage * distance : x.get()
+    const solution = targetPx / position
+
+    return position % distance === 0 || targetPx === 0
+      ? targetPx
+      : position * solution
+  }
 
   const variants = {
     left: {
-      x: (-containerWidth - props.spacing) * curPage,
+      x: mathMagic(curPage),
       transition: {duration: 0.5}
     },
     right: {
-      x: (-containerWidth - props.spacing) * curPage,
+      x: mathMagic(curPage),
       transition: {duration: 0.5}
+    }
+  }
+
+  const handleDragEnd = () => {
+    setLastPage(curPage)
+    const pageCandidate = x.get() / -containerWidth
+    if (pageCandidate > pageCount - 1) {
+      setCurPage(pageCount - 1)
+    } else if (pageCandidate < 0) {
+      setCurPage(0)
+    } else {
+      setCurPage(pageCandidate)
     }
   }
 
@@ -146,21 +195,44 @@ const Slider = (props: SliderProps) => {
     <Flex justifyContent={'center'} position="relative" px="24">
       <Box maxW={`${maxW}px`}>
         <Box maxW={`${containerWidth}px`} overflow={'hidden'}>
-          <SliderStack
-            spacing={`${props.spacing}px`}
-            align={'start'}
+          <MotionBox
+            style={{x}}
+            drag="x"
+            dragTransition={{timeConstant: 250}}
+            cursor={isDragging ? 'grabbing' : 'grab'}
+            onDragStart={() => {
+              setIsDragging(true)
+            }}
+            onDragEnd={() => {
+              setIsDragging(false)
+            }}
+            onDragTransitionEnd={() => handleDragEnd()}
+            w={`${containerWidth * pageCount}px`}
+            dragConstraints={{
+              left: -containerWidth * (pageCount - 1) - props.spacing,
+              right: 0
+            }}
             variants={variants}
             animate={animationDirection}>
-            {items.map(item => (
-              <>
-                <Box minWidth={`${props.itemWidth}px`}>{item}</Box>
-              </>
-            ))}
-          </SliderStack>
-
-          {curPage > 0 && <NavigationButton direction="left" />}
-          {curPage < pageCount - 1 && <NavigationButton direction="right" />}
+            <SliderStack
+              spacing={`${props.spacing}px`}
+              align={'start'}
+              px={`${props.containerPadding}px`}>
+              {items.map(item => (
+                <>
+                  <MotionBox
+                    pointerEvents={isDragging ? 'none' : 'auto'}
+                    minWidth={`${props.itemWidth}px`}
+                    maxW={`${props.itemWidth}px`}>
+                    {item}
+                  </MotionBox>
+                </>
+              ))}
+            </SliderStack>
+          </MotionBox>
         </Box>
+        {curPage > 0 && <NavigationButton direction="left" />}
+        {curPage < pageCount - 1 && <NavigationButton direction="right" />}
       </Box>
     </Flex>
   )
@@ -171,9 +243,9 @@ const GridLayout = (props: GridProps) => {
     <Flex justifyContent={'center'}>
       <Box maxWidth={props.maxWidth}>
         <SimpleGrid columns={props.itemsPerRow} spacing={props.spacing}>
-          {props.items.map(item => (
-            <Box width={props.itemWidth}>{item}</Box>
-          ))}
+          {props.items.map(item => {
+            return <Box width={props.itemWidth}>{item}</Box>
+          })}
         </SimpleGrid>
       </Box>
     </Flex>
@@ -191,9 +263,10 @@ const GridLayout = (props: GridProps) => {
  *
  * @param props.items - type:Array<React.ReactNode> array of items.
  * @param props.spacing - optional default:40 - type:ResponsiveNumber -  The spacing between the cards (in px).
- * @param props.maxWidthInVW - optional default:80 - type:ResponsiveNumber -  The maxWidth of the slider (in vw).
+ * @param props.maxWidthInVW - optional default:80 - type:ResponsiveNumber -  The maxWidth of the slider or grid (in vw).
  * @param props.itemWidth - optional default:280 - type:ResponsiveNumber -  The width of a single Item (in px).
  * @param props.itemsPerRow - optional default:1 - type:ResponsiveNumber - The items per row in the Grid.
+ * @param props.containerPadding - optional default:0 - type:ResponsiveNumber - The paddingX on the container useful for hover animations with x effect (in px).
  */
 export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
   const itemWidth = props.itemWidth ? useBreakpointValue(props.itemWidth) : 280
@@ -204,6 +277,10 @@ export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
   const maxWidthInVW = props.maxWidthInVW
     ? useBreakpointValue(props.maxWidthInVW)
     : 80
+  const containerPadding = props.containerPadding
+    ? useBreakpointValue(props.containerPadding)
+    : 0
+
   const screenWidth = useWindowWidth()
 
   const returnValue = useBreakpointValue({
@@ -218,6 +295,7 @@ export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
     ),
     md: (
       <Slider
+        containerPadding={containerPadding}
         items={props.items}
         maxWidthInVW={maxWidthInVW}
         screenWidth={screenWidth}
