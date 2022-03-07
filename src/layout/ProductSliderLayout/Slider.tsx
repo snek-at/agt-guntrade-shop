@@ -190,6 +190,7 @@ const Slider = (props: SliderProps) => {
           <MotionBox
             style={{x}}
             drag="x"
+            cursor={isDragging ? 'grabbing' : 'grab'}
             onDragStart={() => {
               setIsDragging(true)
             }}
