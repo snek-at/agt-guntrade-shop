@@ -47,9 +47,12 @@ export const useCookieState = () => {
   const [cookie, setCookie] = React.useState(CookieModalService.getValues())
 
   React.useEffect(() => {
-    CookieModalService.setValues(cookie)
-    setAccepted(true)
-  }, [cookie])
+    if (accepted) {
+      CookieModalService.setValues(cookie)
+    } else {
+      CookieModalService.clearValues()
+    }
+  }, [accepted])
 
   const updateCookie = React.useCallback(
     (name: keyof typeof cookie, value: boolean) => {
@@ -73,5 +76,12 @@ export const useCookieState = () => {
     setAccepted(false)
   }, [])
 
-  return {cookie, accepted, setValues, clearValues, updateCookie}
+  const accept = React.useCallback(
+    (accept: boolean) => {
+      setAccepted(accept)
+    },
+    [setAccepted]
+  )
+
+  return {cookie, accepted, accept, setValues, clearValues, updateCookie}
 }

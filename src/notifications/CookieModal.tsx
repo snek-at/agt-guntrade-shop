@@ -33,7 +33,7 @@ import {Link as GatsbyLink} from 'gatsby'
 import {CookieModalService, useCookieState} from '../services/cookiemodal'
 
 const CookieModal = () => {
-  const {cookie, setValues, updateCookie} = useCookieState()
+  const {cookie, accept, setValues, updateCookie} = useCookieState()
 
   const {onClose} = useModalContext()
 
@@ -53,6 +53,15 @@ const CookieModal = () => {
     return {creator, containerProps}
   }
 
+  const handleSave = () => {
+    accept(true)
+
+    // small hack to timeout the close
+    setTimeout(() => {
+      onClose()
+    }, 100)
+  }
+
   const checkAll = () => {
     //updateCookie('essential', true)
     //updateCookie('marketing', true)
@@ -64,16 +73,13 @@ const CookieModal = () => {
       marketing: true
     })
 
-    // small hack to timeout the close
-    setTimeout(() => {
-      onClose()
-    }, 100)
+    handleSave()
   }
 
   return (
     <>
       <ModalHeader>Cookie Einstellungen</ModalHeader>
-      <ModalCloseButton />
+      <ModalCloseButton onClick={handleSave} />
       <ModalBody pb={3}>
         <Box w="9rem" mx="auto">
           {/* <Lottie options={defaultOptions} speed={1} ariaRole="img" /> */}
@@ -118,7 +124,7 @@ const CookieModal = () => {
         <Button colorScheme="green" mr={3} onClick={() => checkAll()}>
           Alle akzeptieren
         </Button>
-        <Button onClick={() => onClose()}>Auswahl speichern</Button>
+        <Button onClick={handleSave}>Auswahl speichern</Button>
       </ModalFooter>
     </>
   )

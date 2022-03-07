@@ -201,7 +201,7 @@ export const PrivacyLayout = (props: {activePath: string}) => {
               </Text>
             )}
             <Button
-              onClick={() => cookieSettings.clearValues()}
+              onClick={() => cookieSettings.accept(false)}
               color="agt.red"
               size="sm"
               mt="2">
