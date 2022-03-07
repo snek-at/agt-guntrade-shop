@@ -61,6 +61,7 @@ const Slider = (props: SliderProps) => {
   const [animationDirection, setAnimationDirection] = React.useState<string>('')
   const [curPage, setCurPage] = React.useState(0)
   const [lastPage, setLastPage] = React.useState(0)
+  const [isDragging, setIsDragging] = React.useState(false)
 
   const items = props.items
   const maxW = (props.screenWidth || 0) * (props.maxWidthInVW / 100)
@@ -170,16 +171,14 @@ const Slider = (props: SliderProps) => {
   }
 
   const handleDragEnd = () => {
-    if (x.getVelocity() === 0) {
-      setLastPage(curPage)
-      const pageCandidate = x.get() / -containerWidth
-      if (pageCandidate > pageCount - 1) {
-        setCurPage(pageCount - 1)
-      } else if (pageCandidate < 0) {
-        setCurPage(0)
-      } else {
-        setCurPage(pageCandidate)
-      }
+    setLastPage(curPage)
+    const pageCandidate = x.get() / -containerWidth
+    if (pageCandidate > pageCount - 1) {
+      setCurPage(pageCount - 1)
+    } else if (pageCandidate < 0) {
+      setCurPage(0)
+    } else {
+      setCurPage(pageCandidate)
     }
   }
 
@@ -191,7 +190,13 @@ const Slider = (props: SliderProps) => {
           <MotionBox
             style={{x}}
             drag="x"
-            onDragEnd={() => handleDragEnd()}
+            onDragStart={() => {
+              setIsDragging(true)
+            }}
+            onDragEnd={() => {
+              setIsDragging(false)
+            }}
+            onDragTransitionEnd={() => handleDragEnd()}
             w={`${containerWidth * pageCount}px`}
             dragConstraints={{
               left: -containerWidth * (pageCount - 1),
@@ -203,6 +208,7 @@ const Slider = (props: SliderProps) => {
               {items.map(item => (
                 <>
                   <MotionBox
+                    pointerEvents={isDragging ? 'none' : 'auto'}
                     minWidth={`${props.itemWidth}px`}
                     maxW={`${props.itemWidth}px`}>
                     {item}
