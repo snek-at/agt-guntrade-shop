@@ -1,4 +1,4 @@
-import {Flex, Text} from '@chakra-ui/react'
+import {Box, Flex, Text, VStack} from '@chakra-ui/react'
 import {Spy} from '../../../common/assets'
 import * as style from './style'
 import React from 'react'
@@ -72,8 +72,7 @@ const ScrollSpy = () => {
           alignItems="center"
           bg="agt.gray"
           py="1"
-          pl="4"
-          pr="2"
+          px="2"
           borderTopRightRadius={'5px'}>
           <Spy
             number={allItemNames.indexOf(activeSection)}
@@ -81,36 +80,16 @@ const ScrollSpy = () => {
               color: 'transparent'
             }}
           />
+
           <Text
             fontWeight={'thin'}
             ml="2"
-            fontSize={'1.25rem'}
+            fontSize={'md'}
             color="white"
             className="text"
             casing={'capitalize'}>
             {items.find(item => item.name === activeSection)?.label}
           </Text>
-          <ChevronDownIcon
-            borderRadius={'5px'}
-            ml="2"
-            color="white"
-            w={8}
-            h={8}
-            _hover={{bg: 'whiteAlpha.400'}}
-            onClick={() =>
-              scrollTo(allItemNames[allItemNames.indexOf(activeSection) + 1])
-            }
-          />
-          <ChevronUpIcon
-            borderRadius="5px"
-            color="white"
-            w={8}
-            h={8}
-            _hover={{bg: 'whiteAlpha.400'}}
-            onClick={() =>
-              scrollTo(allItemNames[allItemNames.indexOf(activeSection) - 1])
-            }
-          />
         </Flex>
       </Scrollspy>
     </Flex>
