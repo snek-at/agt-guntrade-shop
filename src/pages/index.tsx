@@ -13,7 +13,7 @@ import {Element} from 'react-scroll'
 
 import {PageProps} from 'gatsby'
 import {BaseLayout} from '../layout/BaseLayout'
-import {connectPage} from '@jaenjs/jaen'
+import {connectPage, Field} from '@jaenjs/jaen'
 //#endregion
 
 //#region > Functions
@@ -141,7 +141,14 @@ const IndexPage = ({
         />
       </Element>
       <Element name="faq">
-        <FAQSection heading={<p>I'm a heading</p>} />
+        <FAQSection
+          heading={
+            <Field.Text
+              name="faq-heading"
+              defaultValue="Häufig gestellte Fragen"
+            />
+          }
+        />
       </Element>
     </BaseLayout>
   )

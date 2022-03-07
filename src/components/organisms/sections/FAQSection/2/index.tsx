@@ -12,6 +12,48 @@ import {Input} from '@chakra-ui/input'
 import {Box, Flex, Heading, Text} from '@chakra-ui/layout'
 import {Select} from '@chakra-ui/select'
 import {Textarea} from '@chakra-ui/textarea'
+import {connectSection, Field} from '@jaenjs/jaen'
+
+const FaqSectionItem = connectSection(
+  () => {
+    return (
+      <AccordionItem borderColor="#D4D4D9">
+        <AccordionButton
+          _expanded={{
+            bg: 'agt.red',
+            color: 'white',
+            _hover: {bg: '#BD0F1B'}
+          }}
+          bg="agt.lightgray"
+          _hover={{bg: '#D4D4D9'}}
+          py="2">
+          <Box flex="1" textAlign="left" px={4}>
+            <Field.Text name="question" defaultValue="Frage" />
+          </Box>
+          <AccordionIcon />
+        </AccordionButton>
+        <AccordionPanel
+          pb={4}
+          pt={2}
+          px={4}
+          borderX="1px"
+          borderColor="#D4D4D9">
+          <Field.Text
+            name="answer"
+            defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat."
+          />
+        </AccordionPanel>
+      </AccordionItem>
+    )
+  },
+  {
+    name: 'FaqSectionItem',
+    displayName: 'Frage'
+  }
+)
 
 export interface FAQSectionProps {
   heading: React.ReactNode
@@ -27,104 +69,23 @@ const FAQSection = ({heading}: FAQSectionProps) => {
       minH="100vh"
       justifyContent="center"
       alignItems="center">
-      <Flex>
+      <Flex w="100%">
         <Box w={{base: '100%', md: '50%'}} pr="10" mt="10">
           <Heading mb="5" color="white">
             {heading}
           </Heading>
-          <Accordion defaultIndex={[0]} bg="white" borderRadius="7px">
-            <AccordionItem border="0px" borderTopRadius="5px">
-              <AccordionButton
-                borderTopRadius="5px"
-                _expanded={{
-                  bg: 'agt.red',
-                  color: 'white',
-                  _hover: {bg: '#BD0F1B'}
-                }}
-                bg="agt.lightgray"
-                _hover={{bg: '#D4D4D9'}}>
-                <Box flex="1" textAlign="left">
-                  Frage 1
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-              <AccordionPanel pb={4} borderX="1px" borderColor="#D4D4D9">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
-              </AccordionPanel>
-            </AccordionItem>
-            <AccordionItem borderColor="#D4D4D9">
-              <AccordionButton
-                _expanded={{
-                  bg: 'agt.red',
-                  color: 'white',
-                  _hover: {bg: '#BD0F1B'}
-                }}
-                bg="agt.lightgray"
-                _hover={{bg: '#D4D4D9'}}>
-                <Box flex="1" textAlign="left">
-                  Frage 2
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-              <AccordionPanel pb={4} borderX="1px" borderColor="#D4D4D9">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
-              </AccordionPanel>
-            </AccordionItem>
-            <AccordionItem borderColor="#D4D4D9">
-              <AccordionButton
-                _expanded={{
-                  bg: 'agt.red',
-                  color: 'white',
-                  _hover: {bg: '#BD0F1B'}
-                }}
-                bg="agt.lightgray"
-                _hover={{bg: '#D4D4D9'}}>
-                <Box flex="1" textAlign="left">
-                  Frage 3
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-              <AccordionPanel pb={4} borderX="1px" borderColor="#D4D4D9">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
-              </AccordionPanel>
-            </AccordionItem>
-            <AccordionItem borderColor="#D4D4D9" borderBottomRadius="5px">
-              <AccordionButton
-                borderBottomRadius="5px"
-                _expanded={{
-                  borderBottomRadius: '0px',
-                  bg: 'agt.red',
-                  color: 'white',
-                  _hover: {bg: '#BD0F1B'}
-                }}
-                bg="agt.lightgray"
-                _hover={{bg: '#D4D4D9'}}>
-                <Box flex="1" textAlign="left">
-                  Frage 4
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-              <AccordionPanel
-                pb={4}
-                borderX="1px"
-                borderColor="#D4D4D9"
-                borderBottomRadius="5px">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
+          <Field.Section
+            as={Accordion}
+            props={{
+              bg: 'white',
+              borderRadius: '7px',
+              w: '100%',
+              defaultIndex: [0]
+            }}
+            name="faq"
+            displayName="FAQ"
+            sections={[FaqSectionItem]}
+          />
         </Box>
         <Box
           w={{base: '100%', md: '50%'}}
