@@ -153,7 +153,11 @@ const Slider = (props: SliderProps) => {
   const x = useMotionValue(0)
 
   const mathMagic = (targetPage: number) => {
-    const distance = -(containerWidth + props.spacing - props.containerPadding)
+    const distance = -(
+      containerWidth +
+      props.spacing -
+      2 * props.containerPadding
+    )
     const targetPx = targetPage * distance
     const position = x.get() === 0 ? lastPage * distance : x.get()
     const solution = targetPx / position
@@ -194,7 +198,7 @@ const Slider = (props: SliderProps) => {
           <MotionBox
             style={{x}}
             drag="x"
-            dragTransition={{timeConstant: 200}}
+            dragTransition={{timeConstant: 250}}
             cursor={isDragging ? 'grabbing' : 'grab'}
             onDragStart={() => {
               setIsDragging(true)
