@@ -30,7 +30,7 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
   }, [current])
 
   return (
-    <Flex justifyContent="center" alignItems="flex-start" py="48">
+    <Flex justifyContent="center" alignItems="flex-start" py="32">
       <Box
         color="white"
         zIndex="1"
