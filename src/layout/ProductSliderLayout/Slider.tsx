@@ -55,7 +55,7 @@ interface ResponsiveSliderProps {
   itemWidth?: ResponsiveNumber
   items: Array<React.ReactNode>
   itemsPerRow?: ResponsiveNumber
-  breakpoint?: 'sm' | 'md' | 'lg' | 'xl' | '2xl'
+  breakpoint?: 'base' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 }
 
 // #endregion
@@ -278,7 +278,8 @@ const GridLayout = (props: GridProps) => {
  * @param props.itemWidth - optional default:280 - type:ResponsiveNumber -  The width of a single Item (in px).
  * @param props.itemsPerRow - optional default:1 - type:ResponsiveNumber - The items per row in the Grid.
  * @param props.containerPadding - optional default:0 - type:ResponsiveNumber - The paddingX on the container useful for hover animations with x effect (in px).
- * @param props.breakpoint - optional default:md - type:'sm'|'md'|'lg'|'xl'|'2xl' - The Chakra breakpoint at which the Grid changes into the Slider.
+ * @param props.breakpoint - optional default:md - type:'base'|'sm'|'md'|'lg'|'xl'|'2xl' - The Chakra breakpoint at which the Grid changes into the Slider.
+ * If the value is 'base' no Grid will be displayed.
  * @param props.progressProps - optional - type:ProgressProps - The styling of the Chakra-UI progress element.
  */
 export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
@@ -307,6 +308,16 @@ export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
     ...props.progressProps
   }
 
+  const sliderProps = {
+    progressProps: progressProps,
+    containerPadding: containerPadding,
+    items: props.items,
+    maxWidthInVW: maxWidthInVW,
+    screenWidth: screenWidth,
+    itemWidth: itemWidth,
+    spacing: spacing
+  }
+
   const returnValue = useBreakpointValue({
     base: (
       <GridLayout
@@ -317,18 +328,9 @@ export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
         itemsPerRow={itemsPerRow}
       />
     ),
-    [breakpoint]: (
-      <Slider
-        progressProps={progressProps}
-        containerPadding={containerPadding}
-        items={props.items}
-        maxWidthInVW={maxWidthInVW}
-        screenWidth={screenWidth}
-        itemWidth={itemWidth}
-        spacing={spacing}
-      />
-    )
+    [breakpoint]: <Slider {...sliderProps} />
   })
+
   return <>{returnValue}</>
 }
 // #endregion
