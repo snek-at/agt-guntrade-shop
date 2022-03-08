@@ -140,11 +140,11 @@ const Mobile = (
     w="full"
     borderRadius="5px"
     textAlign="center"
-    backgroundImage="https://i.imgur.com/9Nrxlh0.jpg?fb"
+    backgroundImage="https://www.militarytrader.com/.image/t_share/MTY3Mzc5MTQyMzA5MTkzMzI4/image-placeholder-title.jpg"
     backgroundPosition="center"
     backgroundSize="cover"
     mt="5">
-    <Heading color="agt.gray" mt="140px" userSelect="none">
+    <Heading color="white" mt="140px" userSelect="none">
       Munition
     </Heading>
   </Box>
