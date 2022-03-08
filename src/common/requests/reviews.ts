@@ -3,7 +3,21 @@
 import axios from 'axios'
 import dotenv from 'dotenv'
 
-const NODE_TYPE = 'GoogleReview'
+export interface IReview {
+  source: string
+  body: string
+  body_html: string
+  id: string
+  rating: number
+  source_link: string
+  source_image: string
+  source_id: string
+  source_review_count: number
+  date: string
+  date_utc: Date
+  images: string[]
+  position: number
+}
 
 dotenv.config()
 
@@ -23,44 +37,8 @@ const request = async params => {
 
 let requestCount = 0
 
-const createReviewNodes = (
-  createNode,
-  createNodeId,
-  createContentDigest,
-  response
-) => {
-  const reviews = response.data.place_reviews_results || []
-  requestCount = requestCount + 1
-  reviews.forEach(review => {
-    const rating = review.rating
-    const position = review.position + 10 * requestCount
-    if (rating >= 3) {
-      createNode({
-        ...review,
-        positon: position,
-        rating: rating,
-        sourceImage: review.source_image,
-        sourceLink: review.source_link,
-        id: createNodeId(`${NODE_TYPE}-${position}`),
-        test: true,
-        parent: null,
-        children: [],
-        internal: {
-          type: NODE_TYPE,
-          content: JSON.stringify(review),
-          contentDigest: createContentDigest(review)
-        }
-      })
-    }
-  })
-}
-
-export const fetchReviews = async (
-  createNode,
-  createNodeId,
-  createContentDigest
-) => {
-  const apiKey = process.env.APIKEY
+export const fetchReviews = async () => {
+  const apiKey = process.env.SCALE_SERP_APIKEY
   const placeId = process.env.PLACE_ID
 
   if (!apiKey || typeof apiKey !== 'string') {
@@ -82,19 +60,30 @@ export const fetchReviews = async (
     hl: 'de'
   }
 
-  const response = await request(params)
-  createReviewNodes(createNode, createNodeId, createContentDigest, response)
+  const {
+    pagination: {next_page_token},
+    place_reviews_results: reviewsSlice1
+  }: {
+    pagination: {
+      next_page_token: string
+    }
+    place_reviews_results: IReview[]
+  } = await (
+    await request(params)
+  ).data
 
-  params = {
-    ...params,
-    next_page_token: response.data.pagination.next_page_token
-  }
+  const reviewsSlice2: IReview[] = await (
+    await request({
+      ...params,
+      next_page_token
+    })
+  ).data.place_reviews_results
 
-  const secondResponse = await request(params)
-  createReviewNodes(
-    createNode,
-    createNodeId,
-    createContentDigest,
-    secondResponse
-  )
+  return [
+    ...reviewsSlice1,
+    ...reviewsSlice2.map(review => ({
+      ...review,
+      position: review.position + reviewsSlice1.length
+    }))
+  ]
 }
