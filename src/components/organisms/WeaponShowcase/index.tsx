@@ -30,14 +30,18 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
   }, [current])
 
   return (
-    <Flex justifyContent="center" alignItems="flex-start" minH={'700px'}>
+    <Flex justifyContent="center" alignItems="flex-start" py="48">
       <Box
         color="white"
         zIndex="1"
-        w={{base: 'auto', md: '770px', lg: '60%'}}
+        w={{base: '300px', md: '770px', lg: '60%'}}
         alignSelf="center"
-        mt={{base: '-20', md: '10'}}>
-        <Flex direction={{base: 'column', md: 'row'}} alignSelf="center">
+        mt={{base: '-20'}}>
+        <Flex
+          direction={{base: 'column', md: 'row'}}
+          alignSelf="center"
+          alignItems={'center'}
+          justifyContent="center">
           <AnimatePresence initial={false}>
             {weapons.map((weapon, index) => {
               const flip = weapon.metafields.filter(
@@ -54,9 +58,9 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                     animate={{opacity: 1, x: 0}}
                     transition={{duration: 0.5, type: 'spring'}}>
                     <Box
-                      height={'360px'}
-                      width={'360px'}
-                      mt={'-50px'}
+                      height={{base: '300px', md: '450px'}}
+                      width={{base: '300px', md: '450px'}}
+                      mt={'-110px'}
                       css={flipImage(
                         typeof flip === 'undefined' || flip.value === 'true'
                       )}>
@@ -64,7 +68,6 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                         imgClassName="image"
                         image={weapon.featuredImage.gatsbyImageData}
                         alt={weapon.handle}
-                        objectFit="contain"
                       />
                     </Box>
                     <Text
@@ -76,7 +79,7 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                       fontSize={{base: '25', md: '35'}}
                       fontWeight="bold"
                       position="relative"
-                      mt={'-160px'}
+                      mt={{base: '-120px', md: '-190px'}}
                       w="max-content"
                       border="4px"
                       borderColor="agt.red"
@@ -110,6 +113,7 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
               return (
                 current === weapon && (
                   <DescriptionBox
+                    minW={{base: '300px', md: '370px', lg: '60%'}}
                     direction={{base: 'row', md: 'column'}}
                     mt={{base: '14', md: '0'}}
                     w={{base: '300px', md: '370px', lg: '60%'}}
@@ -127,7 +131,7 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                         {title.value}
                       </Text>
                       <Text
-                        minH={{base: 30, md: '7vw', lg: '3.5vw'}}
+                        minH={{base: 30, md: '8vw', lg: '4vw'}}
                         fontSize={{base: '15', md: '3.5vw', lg: '1.75vw'}}>
                         {description.value}
                       </Text>
@@ -152,6 +156,8 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
         <Flex
           justifyContent="center"
           alignContent="center"
+          position="relative"
+          zIndex="10"
           mt={{base: '10', md: '20'}}
           mb={{base: '10', lg: '5'}}>
           {weapons.map(weapon => {

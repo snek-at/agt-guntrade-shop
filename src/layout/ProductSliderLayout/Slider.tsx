@@ -279,7 +279,7 @@ const GridLayout = (props: GridProps) => {
  * @param props.itemsPerRow - optional default:1 - type:ResponsiveNumber - The items per row in the Grid.
  * @param props.containerPadding - optional default:0 - type:ResponsiveNumber - The paddingX on the container useful for hover animations with x effect (in px).
  * @param props.breakpoint - optional default:md - type:'sm'|'md'|'lg'|'xl'|'2xl' - The Chakra breakpoint at which the Grid changes into the Slider.
- * @param props.progressProps - optional - The styling of the chakra ui progress element.
+ * @param props.progressProps - optional - type:ProgressProps - The styling of the Chakra-UI progress element.
  */
 export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
   const itemWidth = props.itemWidth ? useBreakpointValue(props.itemWidth) : 280
