@@ -73,9 +73,8 @@ const FeaturedProductsSection = ({
           )
         })}
       </SimpleGrid>
-      <Center mt={{base: '0', md: '10'}}>
+      <Center mt={{base: '4', md: '10'}}>
         <Button
-          mt={{base: '0', md: '10'}}
           color="white"
           borderRadius="5px"
           bg="agt.blue"
