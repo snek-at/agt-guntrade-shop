@@ -64,6 +64,7 @@ const CategoryTab = ({
           initial="enter"
           animate="center"
           exit="exit"
+          px={2}
           transition={{duration: 0.15}}>
           <SimpleGrid
             columns={{base: 2, md: 3, xl: 6}}
