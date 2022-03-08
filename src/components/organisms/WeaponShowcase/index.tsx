@@ -38,13 +38,15 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
   }, [current])
 
   return (
-    <Flex justifyContent="center" alignItems="flex-start" py="32">
+    <Flex justifyContent="center" alignItems="flex-start">
       <Box
         color="white"
         zIndex="1"
+        h="40vh"
+        mt="12"
+        mb="36"
         w={{base: '300px', md: '770px', lg: '60%'}}
-        alignSelf="center"
-        mt={{base: '-20'}}>
+        alignSelf="center">
         <Flex
           direction={{base: 'column', md: 'row'}}
           alignSelf="center"
