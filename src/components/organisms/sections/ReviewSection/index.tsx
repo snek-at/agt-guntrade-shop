@@ -54,7 +54,7 @@ const ReviewSection = ({heading, data}: ReviewSectionProps) => {
       <ResponsiveSlider
         items={reviewsForSlider}
         containerPadding={{base: 4}}
-        spacing={{base: 4}}
+        spacing={{base: 4, md: 8, lg: 12}}
         progressProps={{
           colorScheme: 'agt.blueScheme',
           bgColor: useColorModeValue('gray.200', 'gray.600'),
