@@ -54,7 +54,6 @@ const ReviewSection = ({heading, data}: ReviewSectionProps) => {
       <ResponsiveSlider
         items={reviewsForSlider}
         breakpoint="base"
-        containerPadding={{base: 4}}
         spacing={{base: 4, md: 8, lg: 12}}
         progressProps={{
           colorScheme: 'agt.blueScheme',
