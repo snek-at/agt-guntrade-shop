@@ -22,6 +22,7 @@ import {Textarea} from '@chakra-ui/textarea'
 
 import * as style from './style'
 import {useForm} from 'react-hook-form'
+
 export interface ContactModalProps {
   isOpen: boolean
   heading: React.ReactNode
@@ -92,10 +93,13 @@ Mit freundlichen Grüßen!
       scrollBehavior="inside">
       <ModalOverlay />
       <ModalContent
+        bg="gray.50"
         borderRadius="5px"
         minH="60vh"
         maxW={{base: '90vw', md: '64vw', xl: '60vw'}}>
-        <ModalHeader>{heading}</ModalHeader>
+        <ModalHeader ml="5" fontWeight={'bold'}>
+          {heading}
+        </ModalHeader>
         <ModalCloseButton />
         <ModalBody mx="5" mb="5">
           <Text mb="3">{text}</Text>
@@ -105,6 +109,7 @@ Mit freundlichen Grüßen!
                 <FormControl isInvalid={!!errors.firstName}>
                   <FormLabel htmlFor="first-name">Vorname</FormLabel>
                   <Input
+                    bg="white"
                     placeholder="Max"
                     {...register('firstName', {required: true})}
                     borderColor="#D4D4D9"
@@ -115,6 +120,7 @@ Mit freundlichen Grüßen!
                 <FormControl isInvalid={!!errors.lastName}>
                   <FormLabel htmlFor="last-name">Nachname</FormLabel>
                   <Input
+                    bg="white"
                     placeholder="Mustermann"
                     {...register('lastName', {required: true})}
                     borderColor="#D4D4D9"
@@ -127,6 +133,7 @@ Mit freundlichen Grüßen!
               <FormControl isInvalid={!!errors.email}>
                 <FormLabel htmlFor="email">Email Adresse</FormLabel>
                 <Input
+                  bg="white"
                   placeholder="max.mustermann@example.at"
                   {...register('email', {
                     required: true,
@@ -140,6 +147,7 @@ Mit freundlichen Grüßen!
               <FormControl isInvalid={!!errors.message}>
                 <FormLabel htmlFor="message">Nachricht</FormLabel>
                 <Textarea
+                  bg="white"
                   resize="vertical"
                   borderColor="#D4D4D9"
                   h="30vh"
@@ -149,15 +157,20 @@ Mit freundlichen Grüßen!
             </Box>
             <Box>
               <FormControl isInvalid={!!errors.agbChecked}>
-                <Checkbox
-                  {...register('agbChecked', {required: true})}
-                  borderColor="#D4D4D9"
-                  h="fit-content"
-                  mt="0.5"
-                  mr="2">
-                  Ich habe die AGBs gelesen und stimme der Verarbeitung meiner
-                  Daten zu.
-                </Checkbox>
+                <Flex>
+                  <Checkbox
+                    {...register('agbChecked', {required: true})}
+                    borderColor="#D4D4D9"
+                    bg="white"
+                    h="fit-content"
+                    mt="0.5"
+                    mr="2"
+                  />
+                  <Text mt={'-2px'}>
+                    Ich habe die AGBs gelesen und stimme der Verarbeitung meiner
+                    Daten zu.
+                  </Text>
+                </Flex>
                 {errors.agbChecked && (
                   <FormErrorMessage>
                     Bitte akzeptieren Sie die AGBs
@@ -165,6 +178,7 @@ Mit freundlichen Grüßen!
                 )}
               </FormControl>
               <Button
+                mt="4"
                 colorScheme="agt.grayScheme"
                 type="submit"
                 isLoading={isSubmitting}>
