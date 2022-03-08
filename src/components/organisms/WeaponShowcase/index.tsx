@@ -1,5 +1,13 @@
 import {Button} from '@chakra-ui/button'
-import {Box, BoxProps, Circle, Flex, Text, FlexProps} from '@chakra-ui/layout'
+import {
+  Box,
+  BoxProps,
+  Circle,
+  Flex,
+  Text,
+  FlexProps,
+  VStack
+} from '@chakra-ui/layout'
 import {AnimatePresence, motion} from 'framer-motion'
 import {GatsbyImage} from 'gatsby-plugin-image'
 import React from 'react'
@@ -11,7 +19,7 @@ export interface WeaponShowcaseProps {
   weapons: Array<any>
 }
 
-const DescriptionBox = motion<FlexProps>(Flex)
+const DescriptionBox = motion<FlexProps>(VStack)
 const WeaponBox = motion<BoxProps>(Box)
 
 let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
@@ -113,6 +121,7 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
               return (
                 current === weapon && (
                   <DescriptionBox
+                    align={{base: 'center', md: 'flex-start'}}
                     minW={{base: '300px', md: '370px', lg: '60%'}}
                     direction={{base: 'row', md: 'column'}}
                     mt={{base: '14', md: '0'}}
@@ -137,8 +146,8 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                       </Text>
                     </Box>
                     <Button
+                      w={{base: '100%', md: '50%'}}
                       ml={{base: 2, md: 0}}
-                      mt={{base: '0', md: '10'}}
                       size="lg"
                       borderRadius="5px"
                       bg="agt.blue"
