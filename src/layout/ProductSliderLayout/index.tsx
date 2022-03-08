@@ -1,4 +1,4 @@
-import {Heading, VStack} from '@chakra-ui/react'
+import {Heading, useColorModeValue, VStack} from '@chakra-ui/react'
 import React from 'react'
 import {generateProductCard} from '../ProductCardLayout'
 
@@ -30,6 +30,10 @@ export const ProductSliderLayout = (props: {
       <ResponsiveSlider
         items={productsForSlider}
         containerPadding={{base: 15}}
+        progressProps={{
+          colorScheme: 'agt.grayScheme',
+          bgColor: useColorModeValue('gray.200', 'gray.600')
+        }}
       />
     </VStack>
   )

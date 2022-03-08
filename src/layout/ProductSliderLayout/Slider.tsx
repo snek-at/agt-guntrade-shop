@@ -8,7 +8,9 @@ import {
   useBreakpointValue,
   SimpleGrid,
   Flex,
-  BoxProps
+  BoxProps,
+  Progress,
+  ProgressProps
 } from '@chakra-ui/react'
 import React from 'react'
 import {FaChevronCircleLeft, FaChevronCircleRight} from 'react-icons/fa'
@@ -37,6 +39,7 @@ interface SliderProps extends BaseProps {
   containerPadding: number
   maxWidthInVW: number
   screenWidth: number | undefined
+  progressProps: ProgressProps
 }
 
 interface GridProps extends BaseProps {
@@ -45,6 +48,7 @@ interface GridProps extends BaseProps {
 }
 
 interface ResponsiveSliderProps {
+  progressProps?: ProgressProps
   containerPadding?: ResponsiveNumber
   spacing?: ResponsiveNumber
   maxWidthInVW?: ResponsiveNumber
@@ -193,7 +197,12 @@ const Slider = (props: SliderProps) => {
 
   // product card slider with framer motion
   return (
-    <Flex justifyContent={'center'} position="relative" px="24">
+    <Flex
+      justifyContent={'center'}
+      alignItems={'center'}
+      position="relative"
+      px="24"
+      direction={'column'}>
       <Box maxW={`${maxW}px`}>
         <Box maxW={`${containerWidth}px`} overflow={'hidden'}>
           <MotionBox
@@ -235,6 +244,7 @@ const Slider = (props: SliderProps) => {
         {curPage > 0 && <NavigationButton direction="left" />}
         {curPage < pageCount - 1 && <NavigationButton direction="right" />}
       </Box>
+      <Progress {...props.progressProps} max={pageCount - 1} value={curPage} />
     </Flex>
   )
 }
@@ -269,6 +279,7 @@ const GridLayout = (props: GridProps) => {
  * @param props.itemsPerRow - optional default:1 - type:ResponsiveNumber - The items per row in the Grid.
  * @param props.containerPadding - optional default:0 - type:ResponsiveNumber - The paddingX on the container useful for hover animations with x effect (in px).
  * @param props.breakpoint - optional default:md - type:'sm'|'md'|'lg'|'xl'|'2xl' - The Chakra breakpoint at which the Grid changes into the Slider.
+ * @param props.progressProps - optional - The styling of the chakra ui progress element.
  */
 export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
   const itemWidth = props.itemWidth ? useBreakpointValue(props.itemWidth) : 280
@@ -284,6 +295,17 @@ export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
     : 0
   const breakpoint = props.breakpoint || 'md'
   const screenWidth = useWindowWidth()
+  const baseProgressProps: ProgressProps = {
+    width: `${maxWidthInVW / 2}vw`,
+    height: '5px',
+    mt: 2,
+    borderRadius: 'lg',
+    colorScheme: 'gray'
+  }
+  const progressProps: ProgressProps = {
+    ...baseProgressProps,
+    ...props.progressProps
+  }
 
   const returnValue = useBreakpointValue({
     base: (
@@ -297,6 +319,7 @@ export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
     ),
     [breakpoint]: (
       <Slider
+        progressProps={progressProps}
         containerPadding={containerPadding}
         items={props.items}
         maxWidthInVW={maxWidthInVW}
