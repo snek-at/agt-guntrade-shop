@@ -107,7 +107,9 @@ const IndexPage = ({
       </Element>
       <Element name="reviews">
         <ReviewSection
-          heading={<p>I'm a heading.</p>}
+          heading={
+            <Field.Text name="reviews-heading" defaultValue="Bewertungen" />
+          }
           data={data.allGoogleReview.nodes}
         />
       </Element>
