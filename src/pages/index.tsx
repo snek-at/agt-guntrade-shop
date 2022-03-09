@@ -13,6 +13,7 @@ import React from 'react'
 import {PageProps} from 'gatsby'
 import {BaseLayout} from '../layout/BaseLayout'
 import {connectPage, Field} from '@jaenjs/jaen'
+import PartnerSection from '../components/organisms/sections/PartnerSection'
 //#endregion
 
 //#region > Functions
@@ -106,6 +107,7 @@ const IndexPage = ({
         }
         data={data.allGoogleReview.nodes}
       />
+      <PartnerSection />
       <NewsSection heading={<p>I'm a news.</p>} />
       <AboutSection
         heading={<p>I'm a heading</p>}

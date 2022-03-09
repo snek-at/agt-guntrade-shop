@@ -10,13 +10,15 @@ import {
   Flex,
   BoxProps,
   Progress,
-  ProgressProps
+  ProgressProps,
+  useColorModeValue
 } from '@chakra-ui/react'
 import React from 'react'
-import {FaChevronCircleLeft, FaChevronCircleRight} from 'react-icons/fa'
+import {FaChevronRight, FaChevronLeft} from 'react-icons/fa'
 import {motion, useMotionValue} from 'framer-motion'
 
 import {useWindowWidth} from '../../common/utils'
+import {CarouselStyle} from './style'
 
 // #region Interfaces
 
@@ -124,15 +126,17 @@ const Slider = (props: SliderProps) => {
   const NavigationButton = (props: {direction: 'left' | 'right'}) => {
     const customProps: IconButtonProps = {
       'aria-label': `Slide to ${props.direction}`,
-      boxSize: '16',
       position: 'absolute',
+      boxSize: '16',
       top: '50%',
       transform: 'translateY(-50%)',
       zIndex: 1,
       cursor: 'pointer',
+      bgColor: 'black',
       _hover: {
         boxShadow: '0px 0px 10px rgba(0,0,0,0.1)'
       },
+      className: 'button',
       isRound: true,
       onClick: () => handlePageNavigate(props.direction)
     }
@@ -142,7 +146,13 @@ const Slider = (props: SliderProps) => {
         <IconButton
           {...customProps}
           left={5}
-          icon={<Icon as={FaChevronCircleLeft} />}
+          icon={
+            <Icon
+              color={useColorModeValue('gray.200', 'gray.600')}
+              boxSize="8"
+              as={FaChevronLeft}
+            />
+          }
         />
       )
     } else {
@@ -150,7 +160,13 @@ const Slider = (props: SliderProps) => {
         <IconButton
           {...customProps}
           right={5}
-          icon={<Icon as={FaChevronCircleRight} />}
+          icon={
+            <Icon
+              color={useColorModeValue('gray.200', 'gray.600')}
+              boxSize="8"
+              as={FaChevronRight}
+            />
+          }
         />
       )
     }
@@ -198,13 +214,16 @@ const Slider = (props: SliderProps) => {
   // product card slider with framer motion
   return (
     <Flex
+      css={CarouselStyle()}
       justifyContent={'center'}
       alignItems={'center'}
       position="relative"
-      px="24"
       direction={'column'}>
-      <Box maxW={`${maxW}px`}>
-        <Box maxW={`${containerWidth}px`} overflow={'hidden'}>
+      <Box maxW={`${maxW}px`} position="relative" className="container">
+        <Box
+          maxW={`${containerWidth}px`}
+          overflow={'hidden'}
+          className="inner-container">
           <MotionBox
             style={{x}}
             drag="x"
