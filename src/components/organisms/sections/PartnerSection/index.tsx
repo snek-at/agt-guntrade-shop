@@ -35,7 +35,7 @@ const PartnerSection = () => {
     items.push(
       <Box>
         <PartnerCard mt={'0px'} />
-        <PartnerCard mt={'20px'} />
+        <PartnerCard mt={'10px'} />
       </Box>
     )
   }
