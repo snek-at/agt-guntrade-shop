@@ -112,20 +112,26 @@ const IndexPage = ({
         heading={<Field.Text name="news-heading" defaultValue="Neuigkeiten" />}
       />
       <AboutSection
-        heading={<p>I'm a heading</p>}
-        teaser={<p>I'm a teaser</p>}
+        heading={
+          <Field.Text name="about-heading" defaultValue="Wer wir sind" />
+        }
         text={
-          <p>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-            et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
-            Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-            sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
-            accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
-            no sea takimata sanctus est Lorem ipsum dolor sit amet.
-          </p>
+          <Field.Text
+            name="about-text"
+            rtf
+            defaultValue="Die Firma AGT Gun Trade KG mit eigener Büchsenmacher Werkstätte, hat
+         sich nicht nur auf den Handel mit Jagdwaffen und Sportwaffen deren
+         Munition Wiederladerartikel Optik Zubehör Waffenführerscheine und
+         Kurse Kommissionsverkauf Ankauf von Jagd und Sportwaffen jeglicher
+         Art sowie komplette Sammlung Auflösungen aus Nachlass, Erbschaften
+         in ganz Österreich. (Behördenwege-Formalitäten werden gerne
+         unsererseits erledigt) spezialisiert. SONDERN AUCH AUF
+         Die Entwicklung und Erzeugung von Waffen durch die Haus eigene Büchsenmacher Werkstätte
+         von Ferlacher-Jagdwaffen
+         wie auch auf Reparatur-Instandsetzung von Waffen jeglicher Art,
+         Montagearbeiten,
+         Schäften und Ausfertigen, Tauch und Streichbrünierungen."
+          />
         }
         backgroundimage={
           <Image

@@ -167,7 +167,7 @@ export const Logo = (props: any) => {
 export const Spy = (props: any) => {
   return (
     <svg
-      width={30}
+      width={24}
       viewBox="0 0 413 413"
       xmlns="http://www.w3.org/2000/svg"
       {...props.style}>

@@ -18,6 +18,10 @@ const NewsSection = ({heading}: NewsSectionProps) => {
     jaenPageId: 'JaenPage /news/'
   })
 
+  if (index.children.length === 0) {
+    return null
+  }
+
   return (
     <VStack spacing={6} my={4} py={16}>
       <Box textAlign="center">
