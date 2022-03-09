@@ -56,7 +56,7 @@ const FeaturedProductsSection = ({
   return (
     <Container as="section" maxW="8xl" pt="6" id="featuredproducts">
       <Box textAlign="center" my="10">
-        <Heading>
+        <Heading size="2xl">
           <Field.Text
             name="featured-products-heading"
             defaultValue="Unser Sortiment"

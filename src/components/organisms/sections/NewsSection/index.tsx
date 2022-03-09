@@ -23,9 +23,9 @@ const NewsSection = ({heading}: NewsSectionProps) => {
   }
 
   return (
-    <VStack spacing={6} my={4} py={16}>
+    <VStack spacing={6} mb={4} pb={16}>
       <Box textAlign="center">
-        <Heading size={'xl'} maxW="50vw">
+        <Heading size={'2xl'} maxW="50vw">
           {heading}
         </Heading>
         <Bullet color="agt.red" w="unset" fontSize="xl" mt="5" mb="10" />

@@ -79,7 +79,7 @@ const AboutSection = ({
           <Stack direction={{base: 'column', lg: 'row'}}>
             <Stack flex={1} justify={{lg: 'center'}}>
               <Box>
-                <Heading mb={5} size={'xl'}>
+                <Heading mb={5} size={'2xl'}>
                   {heading}
                 </Heading>
                 <Bullet color="agt.red" w="unset" fontSize="xl" mb="10" />
