@@ -45,7 +45,7 @@ const ReviewSection = ({heading, data}: ReviewSectionProps) => {
   return (
     <VStack spacing={6} bg="agt.gray" my={4} py={16}>
       <Box textAlign="center">
-        <Heading size={'xl'} color="white">
+        <Heading size={'xl'} color="white" maxW="50vw">
           {heading}
         </Heading>
         <Bullet color="agt.red" w="unset" fontSize="xl" mt="5" mb="10" />

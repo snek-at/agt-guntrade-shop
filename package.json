@@ -3,7 +3,7 @@
   "version": "1.2.0",
   "description": "A template repository for Jaen",
   "homepage": "https://agt-guntrade-shop.snek-at.snek.at/",
-  "author": "Florian Kleber",
+  "author": "snek-at",
   "license": "EUPL-1.2",
   "files": [
     "lib",
@@ -38,7 +38,7 @@
     "@chakra-ui/react": "^1.6.9",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
-    "@jaenjs/jaen": "3.0.0-beta.12",
+    "@jaenjs/jaen": "3.0.0-beta.14",
     "@react-icons/all-files": "^4.1.0",
     "@shopify/shopify-api": "^2.0.0",
     "@snek-at/react-lottie": "^1.0.0-beta.3",

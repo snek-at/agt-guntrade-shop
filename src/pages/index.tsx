@@ -108,7 +108,9 @@ const IndexPage = ({
         data={data.allGoogleReview.nodes}
       />
       <PartnerSection />
-      <NewsSection heading={<p>I'm a news.</p>} />
+      <NewsSection
+        heading={<Field.Text name="news-heading" defaultValue="Neuigkeiten" />}
+      />
       <AboutSection
         heading={<p>I'm a heading</p>}
         teaser={<p>I'm a teaser</p>}
