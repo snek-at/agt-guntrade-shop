@@ -52,7 +52,8 @@ interface GridProps extends BaseProps {
 interface ResponsiveSliderProps {
   progressProps?: ProgressProps
   containerPadding?: ResponsiveNumber
-  spacing?: ResponsiveNumber
+  sliderSpacing?: ResponsiveNumber
+  gridSpacing?: ResponsiveNumber
   maxWidthInVW?: ResponsiveNumber
   itemWidth?: ResponsiveNumber
   items: Array<React.ReactNode>
@@ -272,7 +273,7 @@ const GridLayout = (props: GridProps) => {
   return (
     <Flex justifyContent={'center'}>
       <Box maxWidth={props.maxWidth}>
-        <SimpleGrid columns={props.itemsPerRow} spacing={props.spacing}>
+        <SimpleGrid columns={props.itemsPerRow} spacing={props.spacing / 2}>
           {props.items.map(item => {
             return <Box width={props.itemWidth}>{item}</Box>
           })}
@@ -306,7 +307,10 @@ export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
   const itemsPerRow = props.itemsPerRow
     ? useBreakpointValue(props.itemsPerRow)
     : 1
-  const spacing = props.spacing ? useBreakpointValue(props.spacing) : 40
+  const sliderSpacing = props.spacing ? useBreakpointValue(props.spacing) : 40
+  const gridSpacing = props.grodSpacing
+    ? useBreakpointValue(props.gridSpacing)
+    : 20
   const maxWidthInVW = props.maxWidthInVW
     ? useBreakpointValue(props.maxWidthInVW)
     : 80
@@ -334,7 +338,7 @@ export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
     maxWidthInVW: maxWidthInVW,
     screenWidth: screenWidth,
     itemWidth: itemWidth,
-    spacing: spacing
+    spacing: sliderSpacing
   }
 
   const returnValue = useBreakpointValue({
@@ -343,7 +347,7 @@ export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
         items={props.items}
         maxWidth={(screenWidth || 0) * (maxWidthInVW / 100)}
         itemWidth={itemWidth}
-        spacing={spacing}
+        spacing={gridSpacing}
         itemsPerRow={itemsPerRow}
       />
     ),

@@ -44,7 +44,7 @@ const PartnerSection = () => {
     <Box my="20">
       <ResponsiveSlider
         breakpoint="base"
-        spacing={{base: 10}}
+        sliderSpacing={{base: 10}}
         items={items}
         progressProps={{
           colorScheme: 'agt.grayScheme',
