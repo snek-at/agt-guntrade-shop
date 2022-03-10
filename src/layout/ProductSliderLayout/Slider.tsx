@@ -68,7 +68,7 @@ const SliderStack = motion<StackProps>(HStack)
 const MotionBox = motion<BoxProps>(Box)
 
 const Slider = (props: SliderProps) => {
-  const animate = useAnimation()
+  const animation = useAnimation()
   const [curPage, setCurPage] = React.useState(0)
   const [lastPage, setLastPage] = React.useState(0)
   const [isDragging, setIsDragging] = React.useState(false)
@@ -120,7 +120,7 @@ const Slider = (props: SliderProps) => {
         }
       }
     }
-    calculateDistance(curPage)
+    calculateDistanceAndAnimate(curPage)
   }
 
   const NavigationButton = (props: {direction: 'left' | 'right'}) => {
@@ -174,7 +174,7 @@ const Slider = (props: SliderProps) => {
   }
   const x = useMotionValue(0)
 
-  const calculateDistance = (targetPage: number | undefined) => {
+  const calculateDistanceAndAnimate = (targetPage: number | undefined) => {
     const clickDistance = -(
       containerWidth +
       props.spacing -
@@ -185,8 +185,7 @@ const Slider = (props: SliderProps) => {
 
     if (lastPage % 1 !== 0) {
       const snapDistance = props.itemWidth + props.spacing
-      const scrollHelper = curPage > lastPage ? -0.1 : 0.1
-      console.log(scrollHelper)
+      const scrollHelper = curPage > lastPage ? -0.3 : 0.3
       targetPx =
         Math.round(position / snapDistance + scrollHelper) * snapDistance
     } else {
@@ -194,12 +193,13 @@ const Slider = (props: SliderProps) => {
     }
     const solution = targetPx / position
 
-    animate.start({
+    animation.start({
       x:
         position % clickDistance === 0 || targetPx === 0
           ? targetPx
           : position * solution
     })
+    setCurPage(x.get() / -containerWidth)
   }
 
   const handleDragEnd = () => {
@@ -212,7 +212,7 @@ const Slider = (props: SliderProps) => {
     } else {
       setCurPage(pageCandidate)
     }
-    calculateDistance(undefined)
+    calculateDistanceAndAnimate(undefined)
   }
 
   // product card slider with framer motion
@@ -244,7 +244,7 @@ const Slider = (props: SliderProps) => {
               left: -containerWidth * (pageCount - 1) - props.spacing,
               right: 0
             }}
-            animate={animate}>
+            animate={animation}>
             <SliderStack
               spacing={`${props.spacing}px`}
               align={'start'}
