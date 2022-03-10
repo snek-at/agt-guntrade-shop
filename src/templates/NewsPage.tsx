@@ -3,8 +3,14 @@ import {Field} from '@jaenjs/jaen'
 import {StaticImage} from 'gatsby-plugin-image'
 import {connectTemplate} from '@jaenjs/jaen'
 import {graphql} from 'gatsby'
+import {css} from '@emotion/react'
 
-import {NewsStyle} from './style'
+const NewsStyle = () => css`
+  .image {
+    width: 50%;
+    height: auto;
+  }
+`
 
 const NewsPage = () => {
   return (

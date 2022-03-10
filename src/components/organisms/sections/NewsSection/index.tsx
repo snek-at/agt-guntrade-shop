@@ -34,7 +34,7 @@ const NewsSection = ({heading}: NewsSectionProps) => {
       </Box>
       <ResponsiveSlider
         breakpoint="base"
-        spacing={{base: 4, md: 8, lg: 12}}
+        sliderSpacing={{base: 4, md: 8, lg: 12}}
         itemWidth={{base: 350}}
         items={index.children.map(page => {
           const url = `?${page.jaenPageMetadata.title}`
