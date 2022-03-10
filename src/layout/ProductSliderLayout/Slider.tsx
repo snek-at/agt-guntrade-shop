@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 import {FaChevronRight, FaChevronLeft} from 'react-icons/fa'
-import {motion, useMotionValue} from 'framer-motion'
+import {motion, useMotionValue, useAnimation} from 'framer-motion'
 
 import {useWindowWidth} from '../../common/utils'
 import {CarouselStyle} from './style'
@@ -68,7 +68,7 @@ const SliderStack = motion<StackProps>(HStack)
 const MotionBox = motion<BoxProps>(Box)
 
 const Slider = (props: SliderProps) => {
-  const [animationDirection, setAnimationDirection] = React.useState<string>('')
+  const animate = useAnimation()
   const [curPage, setCurPage] = React.useState(0)
   const [lastPage, setLastPage] = React.useState(0)
   const [isDragging, setIsDragging] = React.useState(false)
@@ -101,7 +101,6 @@ const Slider = (props: SliderProps) => {
   const handlePageNavigate = (direction: 'left' | 'right') => {
     if (direction === 'left') {
       if (curPage > 0) {
-        setAnimationDirection('left')
         if (curPage % 1 !== 0) {
           setLastPage(curPage)
           setCurPage(Math.floor(curPage))
@@ -112,7 +111,6 @@ const Slider = (props: SliderProps) => {
       }
     } else {
       if (curPage < pageCount - 1) {
-        setAnimationDirection('right')
         if (curPage % 1 !== 0) {
           setLastPage(curPage)
           setCurPage(Math.ceil(curPage))
@@ -122,12 +120,14 @@ const Slider = (props: SliderProps) => {
         }
       }
     }
+    calculateDistance(curPage)
   }
 
   const NavigationButton = (props: {direction: 'left' | 'right'}) => {
     const customProps: IconButtonProps = {
       'aria-label': `Slide to ${props.direction}`,
       position: 'absolute',
+      display: {base: 'none', lg: 'block'},
       boxSize: '16',
       top: '50%',
       transform: 'translateY(-50%)',
@@ -174,30 +174,32 @@ const Slider = (props: SliderProps) => {
   }
   const x = useMotionValue(0)
 
-  const mathMagic = (targetPage: number) => {
-    const distance = -(
+  const calculateDistance = (targetPage: number | undefined) => {
+    const clickDistance = -(
       containerWidth +
       props.spacing -
       2 * props.containerPadding
     )
-    const targetPx = targetPage * distance
-    const position = x.get() === 0 ? lastPage * distance : x.get()
+    const position = x.get() === 0 ? lastPage * clickDistance : x.get()
+    let targetPx: number
+
+    if (lastPage % 1 !== 0) {
+      const snapDistance = props.itemWidth + props.spacing
+      const scrollHelper = curPage > lastPage ? -0.1 : 0.1
+      console.log(scrollHelper)
+      targetPx =
+        Math.round(position / snapDistance + scrollHelper) * snapDistance
+    } else {
+      targetPx = (targetPage || 0) * clickDistance
+    }
     const solution = targetPx / position
 
-    return position % distance === 0 || targetPx === 0
-      ? targetPx
-      : position * solution
-  }
-
-  const variants = {
-    left: {
-      x: mathMagic(curPage),
-      transition: {duration: 0.5}
-    },
-    right: {
-      x: mathMagic(curPage),
-      transition: {duration: 0.5}
-    }
+    animate.start({
+      x:
+        position % clickDistance === 0 || targetPx === 0
+          ? targetPx
+          : position * solution
+    })
   }
 
   const handleDragEnd = () => {
@@ -210,6 +212,7 @@ const Slider = (props: SliderProps) => {
     } else {
       setCurPage(pageCandidate)
     }
+    calculateDistance(undefined)
   }
 
   // product card slider with framer motion
@@ -228,22 +231,20 @@ const Slider = (props: SliderProps) => {
           <MotionBox
             style={{x}}
             drag="x"
-            dragTransition={{timeConstant: 250}}
             cursor={isDragging ? 'grabbing' : 'grab'}
             onDragStart={() => {
               setIsDragging(true)
             }}
             onDragEnd={() => {
+              handleDragEnd()
               setIsDragging(false)
             }}
-            onDragTransitionEnd={() => handleDragEnd()}
             w={`${containerWidth * pageCount}px`}
             dragConstraints={{
               left: -containerWidth * (pageCount - 1) - props.spacing,
               right: 0
             }}
-            variants={variants}
-            animate={animationDirection}>
+            animate={animate}>
             <SliderStack
               spacing={`${props.spacing}px`}
               align={'start'}
