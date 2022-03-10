@@ -282,39 +282,39 @@ const createCollectionShopAndProductPages = (data, actions) => {
         .toLowerCase()
         .replaceAll(' ', '-')
 
-    const subcategories = data.allShopifyCollection.edges
-      .filter(edge2 => {
-        return (
-          edge2.node.handle.startsWith(subcollectionType) ||
-          edge.node.handle === edge2.node.handle
+    const subcategories = data.allShopifyCollection.edges.filter(edge2 => {
+      return (
+        edge2.node.handle.startsWith(subcollectionType) ||
+        edge.node.handle === edge2.node.handle
+      )
+    })
+
+    const items = subcategories
+      .map(subcategory => {
+        const totalProducts = getTotalProducts(
+          subcategory.node.title,
+          edge.node.products
         )
+        return {
+          title:
+            subcategory.node.title === edge.node.title
+              ? 'Alle Produkte'
+              : subcategory.node.title.split(':').at(-1),
+          handle:
+            subcategory.node.handle === edge.node.handle
+              ? 'alle-produkte'
+              : subcategory.node.handle,
+          totalProducts: totalProducts,
+          image: subcategory.node.image ? subcategory.node.image : undefined
+        }
       })
       .sort((a, b) =>
-        a.node.handle.slice(a.node.handle.indexOf('-') + 1) >
-          b.node.handle.slice(a.node.handle.indexOf('-') + 1) ||
-        b.node.handle === edge.node.handle
+        a.title.slice(a.title.lastIndexOf(':') + 1) >
+          b.title.slice(b.title.lastIndexOf(':') + 1) ||
+        b.title === 'Alle Produkte'
           ? 1
           : -1
       )
-
-    const items = subcategories.map(subcategory => {
-      const totalProducts = getTotalProducts(
-        subcategory.node.title,
-        edge.node.products
-      )
-      return {
-        title:
-          subcategory.node.title === edge.node.title
-            ? 'Alle Produkte'
-            : subcategory.node.title.split(':').at(-1),
-        handle:
-          subcategory.node.handle === edge.node.handle
-            ? 'alle-produkte'
-            : subcategory.node.handle,
-        totalProducts: totalProducts,
-        image: subcategory.node.image ? subcategory.node.image : undefined
-      }
-    })
 
     if (edge.node.products.length > 0) {
       actions.createPage({
