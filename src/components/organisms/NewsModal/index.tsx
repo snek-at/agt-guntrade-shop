@@ -17,6 +17,7 @@ export interface NewsModalProps {
   onClose: Function
   image: React.ReactNode
   url: string
+  highligth: React.ReactNode
 }
 
 export const NewsModal = ({
@@ -25,7 +26,8 @@ export const NewsModal = ({
   text,
   onClose,
   image,
-  url
+  url,
+  highlight
 }: NewsModalProps) => {
   const [share, setShare] = React.useState(false)
 
@@ -62,6 +64,16 @@ export const NewsModal = ({
             w={{base: 'auto', md: '40%'}}
             h={{base: 'auto', md: '60vh'}}
             position="relative">
+            <Text
+              position="absolute"
+              top="4"
+              right="4"
+              color={'agt.blue'}
+              fontWeight={600}
+              fontSize={'md'}
+              letterSpacing={1.1}>
+              {highlight}
+            </Text>
             <Heading mb="3">{heading}</Heading>
             <Text
               css={style.ScrollBar}

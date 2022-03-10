@@ -16,9 +16,14 @@ export interface NewsSectionProps {
 }
 
 const NewsSection = ({heading}: NewsSectionProps) => {
+  const [childId, setChildId] = React.useState<string>()
+  const [url, setUrl] = React.useState<string>()
+
   const index = useJaenPageIndex({
     jaenPageId: 'JaenPage /news/'
   })
+
+  const {isOpen, onOpen, onClose} = useDisclosure()
 
   if (index.children.length === 0) {
     return null
@@ -37,20 +42,27 @@ const NewsSection = ({heading}: NewsSectionProps) => {
         sliderSpacing={{base: 4, md: 8, lg: 12}}
         itemWidth={{base: 350}}
         items={index.children.map(page => {
-          const url = `?${page.jaenPageMetadata.title}`
-          const {isOpen, onOpen, onClose} = useDisclosure()
-
           React.useEffect(() => {
-            if (window && window.location.search === url && !isOpen) {
+            if (
+              window &&
+              window.location.search === `?${page.jaenPageMetadata.title}` &&
+              !isOpen
+            ) {
+              setChildId(page.id)
               onOpen()
               scroller.scrollTo('news', {offset: -200})
             }
           }, [])
-
           return index.withJaenPage(
             page.id,
             <>
-              <Box m={1} onClick={() => onOpen()}>
+              <Box
+                m={1}
+                onClick={() => {
+                  onOpen()
+                  setChildId(page.id)
+                  setUrl(`?${page.jaenPageMetadata.title}`)
+                }}>
                 <AspectRatio ratio={16 / 9}>
                   <Field.Image
                     name="main"
@@ -94,32 +106,6 @@ const NewsSection = ({heading}: NewsSectionProps) => {
                   </Text>
                 </Stack>
               </Box>
-              <NewsModal
-                url={`${url}`}
-                isOpen={isOpen}
-                onClose={onClose}
-                heading={<Field.Text name="heading" defaultValue="Titel" />}
-                text={
-                  <Field.Text
-                    name="description"
-                    defaultValue=" Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-              diam nonumy eirmod tempor invidunt ut labore et dolore magna
-              aliquyam erat, sed diam voluptua. At vero eos et accusam et
-              justo duo dolores et ea rebum."
-                  />
-                }
-                image={
-                  <Field.Image
-                    name="main"
-                    defaultValue={
-                      <StaticImage
-                        src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                        alt="default image"
-                      />
-                    }
-                  />
-                }
-              />
             </>
           )
         })}
@@ -128,6 +114,36 @@ const NewsSection = ({heading}: NewsSectionProps) => {
           bg: useColorModeValue('gray.200', 'gray.600')
         }}
       />
+      {index.withJaenPage(
+        childId || '',
+        <NewsModal
+          url={url || ''}
+          highlight={<Field.Text name="highlight" defaultValue="Aktion" />}
+          isOpen={isOpen}
+          onClose={onClose}
+          heading={<Field.Text name="heading" defaultValue="Titel" />}
+          text={
+            <Field.Text
+              name="description"
+              defaultValue=" Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+              diam nonumy eirmod tempor invidunt ut labore et dolore magna
+              aliquyam erat, sed diam voluptua. At vero eos et accusam et
+              justo duo dolores et ea rebum."
+            />
+          }
+          image={
+            <Field.Image
+              name="main"
+              defaultValue={
+                <StaticImage
+                  src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                  alt="default image"
+                />
+              }
+            />
+          }
+        />
+      )}
     </VStack>
   )
 }
