@@ -9,7 +9,7 @@ import AboutSection from '../components/organisms/sections/AboutSection'
 import FAQSection from '../components/organisms/sections/FAQSection/2'
 import {Image} from '@chakra-ui/image'
 import React from 'react'
-
+import {Element} from 'react-scroll'
 import {PageProps} from 'gatsby'
 import {BaseLayout} from '../layout/BaseLayout'
 import {connectPage, Field} from '@jaenjs/jaen'
@@ -108,9 +108,13 @@ const IndexPage = ({
         data={data.allGoogleReview.nodes}
       />
       <PartnerSection />
-      <NewsSection
-        heading={<Field.Text name="news-heading" defaultValue="Neuigkeiten" />}
-      />
+      <Element name="news">
+        <NewsSection
+          heading={
+            <Field.Text name="news-heading" defaultValue="Neuigkeiten" />
+          }
+        />
+      </Element>
       <AboutSection
         heading={
           <Field.Text name="about-heading" defaultValue="Wer wir sind" />

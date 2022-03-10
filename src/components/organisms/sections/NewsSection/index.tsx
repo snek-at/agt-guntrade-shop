@@ -1,13 +1,15 @@
-import {Box, Heading, Text, HStack} from '@chakra-ui/layout'
+import {Box, Heading, Text} from '@chakra-ui/layout'
 import React from 'react'
-
+import {scroller} from 'react-scroll'
 import {useColorModeValue} from '@chakra-ui/color-mode'
-import {AspectRatio, Center, VStack, Stack} from '@chakra-ui/react'
+import {AspectRatio, VStack, Stack, useDisclosure} from '@chakra-ui/react'
 
 import {Bullet} from '../../../../common/assets'
 import {Field, useJaenPageIndex} from '@jaenjs/jaen'
 import {StaticImage} from 'gatsby-plugin-image'
 import {ResponsiveSlider} from '../../../../layout/ProductSliderLayout/Slider'
+
+import NewsModal from '../../NewsModal'
 
 export interface NewsSectionProps {
   heading: React.ReactNode
@@ -34,42 +36,70 @@ const NewsSection = ({heading}: NewsSectionProps) => {
         breakpoint="base"
         spacing={{base: 4, md: 8, lg: 12}}
         itemWidth={{base: 350}}
-        items={index.children.map(page =>
-          index.withJaenPage(
-            page.id,
-            <Box m={1}>
-              <AspectRatio ratio={16 / 9}>
-                <Field.Image
-                  name="main"
-                  defaultValue={
-                    <StaticImage
-                      src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                      alt="default image"
-                    />
-                  }
-                  style={{
-                    width: '100%',
-                    height: '250px',
-                    objectFit: 'cover'
-                  }}
-                />
-              </AspectRatio>
+        items={index.children.map(page => {
+          const url = `?${page.jaenPageMetadata.title}`
+          const {isOpen, onOpen, onClose} = useDisclosure()
 
-              <Stack pt={4}>
-                <Text
-                  color={'agt.blue'}
-                  fontWeight={600}
-                  fontSize={'sm'}
-                  letterSpacing={1.1}>
-                  <Field.Text name="highlight" defaultValue="Aktion" />
-                </Text>
-                <Heading
-                  color={useColorModeValue('gray.700', 'white')}
-                  fontSize={'2xl'}
-                  fontFamily={'body'}>
-                  <Field.Text name="heading" defaultValue="Titel" />
-                </Heading>
-                <Text color={'gray.500'}>
+          React.useEffect(() => {
+            if (window && window.location.search === url && !isOpen) {
+              onOpen()
+              scroller.scrollTo('news', {offset: -200})
+            }
+          }, [])
+
+          return index.withJaenPage(
+            page.id,
+            <>
+              <Box m={1} onClick={() => onOpen()}>
+                <AspectRatio ratio={16 / 9}>
+                  <Field.Image
+                    name="main"
+                    defaultValue={
+                      <StaticImage
+                        src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                        alt="default image"
+                        onDragStart={e => e.preventDefault()}
+                        draggable="false"
+                      />
+                    }
+                    style={{
+                      width: '100%',
+                      height: '250px',
+                      objectFit: 'cover'
+                    }}
+                  />
+                </AspectRatio>
+                <Stack pt={4}>
+                  <Text
+                    color={'agt.blue'}
+                    fontWeight={600}
+                    fontSize={'sm'}
+                    letterSpacing={1.1}>
+                    <Field.Text name="highlight" defaultValue="Aktion" />
+                  </Text>
+                  <Heading
+                    color={useColorModeValue('gray.700', 'white')}
+                    fontSize={'2xl'}
+                    fontFamily={'body'}>
+                    <Field.Text name="heading" defaultValue="Titel" />
+                  </Heading>
+                  <Text color={'gray.500'}>
+                    <Field.Text
+                      name="description"
+                      defaultValue=" Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+              diam nonumy eirmod tempor invidunt ut labore et dolore magna
+              aliquyam erat, sed diam voluptua. At vero eos et accusam et
+              justo duo dolores et ea rebum."
+                    />
+                  </Text>
+                </Stack>
+              </Box>
+              <NewsModal
+                url={`${url}`}
+                isOpen={isOpen}
+                onClose={onClose}
+                heading={<Field.Text name="heading" defaultValue="Titel" />}
+                text={
                   <Field.Text
                     name="description"
                     defaultValue=" Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
@@ -77,11 +107,22 @@ const NewsSection = ({heading}: NewsSectionProps) => {
               aliquyam erat, sed diam voluptua. At vero eos et accusam et
               justo duo dolores et ea rebum."
                   />
-                </Text>
-              </Stack>
-            </Box>
+                }
+                image={
+                  <Field.Image
+                    name="main"
+                    defaultValue={
+                      <StaticImage
+                        src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                        alt="default image"
+                      />
+                    }
+                  />
+                }
+              />
+            </>
           )
-        )}
+        })}
         progressProps={{
           colorScheme: 'agt.grayScheme',
           bg: useColorModeValue('gray.200', 'gray.600')

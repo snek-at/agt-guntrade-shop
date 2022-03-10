@@ -1,5 +1,4 @@
 import {Button, IconButton} from '@chakra-ui/button'
-import {Image} from '@chakra-ui/image'
 import {Input} from '@chakra-ui/input'
 import {Text, Box, Heading, Flex} from '@chakra-ui/layout'
 import {Modal, ModalContent, ModalOverlay} from '@chakra-ui/modal'
@@ -13,24 +12,23 @@ import * as style from './style'
 
 export interface NewsModalProps {
   isOpen: boolean
-  heading: string
-  text: string
-  imageSrc: string
-  url: string
+  heading: React.ReactNode
+  text: React.ReactNode
   onClose: Function
-  tag: string
+  image: React.ReactNode
+  url: string
 }
 
 export const NewsModal = ({
   isOpen,
   heading,
   text,
-  imageSrc,
-  url,
   onClose,
-  tag
+  image,
+  url
 }: NewsModalProps) => {
   const [share, setShare] = React.useState(false)
+
   const toast = useToast()
   if (isOpen) {
     history.pushState('AGT-Guntrade News', '', url)
@@ -57,30 +55,13 @@ export const NewsModal = ({
             display="flex"
             justifyContent="center"
             alignItems="center">
-            <Image
-              fallback={<Box />}
-              my="auto"
-              alt="newsmodal-image"
-              src={imageSrc}
-              w="100%"
-              borderLeftRadius="5px"
-            />
+            {image}
           </Box>
           <Box
             p="5"
             w={{base: 'auto', md: '40%'}}
             h={{base: 'auto', md: '60vh'}}
             position="relative">
-            <Text
-              position="absolute"
-              top="5"
-              right="5"
-              fontSize="14"
-              fontWeight="bold"
-              casing="uppercase"
-              color="teal">
-              NewsTag
-            </Text>
             <Heading mb="3">{heading}</Heading>
             <Text
               css={style.ScrollBar}
