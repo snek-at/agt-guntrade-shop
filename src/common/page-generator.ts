@@ -1,9 +1,5 @@
 // @ts-nocheck
 
-/* TODO:
-    Collection meta tag to choose hero collections || Random hero collections
-*/
-
 /**
  * First we check whether the first Element is an A we exclude other categories because tags don't include the
  * category type (ABC, BC, ...).
@@ -92,6 +88,16 @@ const getSubcollectionType = (splitHandle: Array<string>) => {
   }
 
   return subcollectionType
+}
+
+const getTotalProducts = (subtitle: string, products: any) => {
+  const subcategoryProducts = products.filter(product =>
+    product.tags.includes(
+      `Kategorie:${subtitle.slice(subtitle.lastIndexOf(':') + 1)}`
+    )
+  )
+
+  return subcategoryProducts.length
 }
 
 const getUnfilteredRelatedProducts = (
@@ -284,26 +290,31 @@ const createCollectionShopAndProductPages = (data, actions) => {
         )
       })
       .sort((a, b) =>
-        a.node.handle.slice(a.node.handle.indexOf('-') + 1) <
-        b.node.handle.slice(a.node.handle.indexOf('-') + 1)
+        a.node.handle.slice(a.node.handle.indexOf('-') + 1) >
+          b.node.handle.slice(a.node.handle.indexOf('-') + 1) ||
+        b.node.handle === edge.node.handle
           ? 1
           : -1
       )
 
-    const items = subcategories.map(subcategory => ({
-      title:
-        subcategory.node.title === edge.node.title
-          ? 'Alle Produkte'
-          : subcategory.node.title.split(':').at(-1),
-      handle:
-        subcategory.node.handle === edge.node.handle
-          ? 'alle-produkte'
-          : subcategory.node.handle,
-      totalProducts: subcategory.node.products
-        ? subcategory.node.products.length
-        : 0,
-      image: subcategory.node.image ? subcategory.node.image : undefined
-    }))
+    const items = subcategories.map(subcategory => {
+      const totalProducts = getTotalProducts(
+        subcategory.node.title,
+        edge.node.products
+      )
+      return {
+        title:
+          subcategory.node.title === edge.node.title
+            ? 'Alle Produkte'
+            : subcategory.node.title.split(':').at(-1),
+        handle:
+          subcategory.node.handle === edge.node.handle
+            ? 'alle-produkte'
+            : subcategory.node.handle,
+        totalProducts: totalProducts,
+        image: subcategory.node.image ? subcategory.node.image : undefined
+      }
+    })
 
     if (edge.node.products.length > 0) {
       actions.createPage({
