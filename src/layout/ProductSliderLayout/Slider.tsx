@@ -99,28 +99,19 @@ const Slider = (props: SliderProps) => {
   }, [pageCount])
 
   const handlePageNavigate = (direction: 'left' | 'right') => {
+    let targetPage: number = curPage
     if (direction === 'left') {
       if (curPage > 0) {
-        if (curPage % 1 !== 0) {
-          setLastPage(curPage)
-          setCurPage(Math.floor(curPage))
-        } else {
-          setLastPage(curPage)
-          setCurPage(curPage - 1)
-        }
+        targetPage = Math.floor(curPage - 1)
       }
     } else {
       if (curPage < pageCount - 1) {
-        if (curPage % 1 !== 0) {
-          setLastPage(curPage)
-          setCurPage(Math.ceil(curPage))
-        } else {
-          setLastPage(curPage)
-          setCurPage(curPage + 1)
-        }
+        targetPage = Math.floor(curPage + 1)
       }
     }
-    calculateDistanceAndAnimate(curPage)
+    calculateDistanceAndAnimate(targetPage)
+    setLastPage(curPage)
+    setCurPage(targetPage)
   }
 
   const NavigationButton = (props: {direction: 'left' | 'right'}) => {
@@ -182,16 +173,29 @@ const Slider = (props: SliderProps) => {
     )
     const position = x.get() === 0 ? lastPage * clickDistance : x.get()
     let targetPx: number
-
-    if (lastPage % 1 !== 0) {
+    if (typeof targetPage === 'undefined') {
       const snapDistance = props.itemWidth + props.spacing
       const scrollHelper = curPage > lastPage ? -0.45 : 0.45
       targetPx =
         Math.round(position / snapDistance + scrollHelper) * snapDistance
     } else {
-      targetPx = (targetPage || 0) * clickDistance
+      targetPx = targetPage * clickDistance
     }
     const solution = targetPx / position
+
+    console.log(
+      'targetPage',
+      targetPage,
+      'position',
+      position,
+      'clickDistance',
+      clickDistance,
+      'targetPx',
+      targetPx,
+      position % clickDistance === 0 || targetPx === 0
+        ? targetPx
+        : position * solution
+    )
 
     animation.start({
       x:
@@ -308,8 +312,10 @@ export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
   const itemsPerRow = props.itemsPerRow
     ? useBreakpointValue(props.itemsPerRow)
     : 1
-  const sliderSpacing = props.spacing ? useBreakpointValue(props.spacing) : 40
-  const gridSpacing = props.grodSpacing
+  const sliderSpacing = props.sliderSpacing
+    ? useBreakpointValue(props.sliderSpacing)
+    : 40
+  const gridSpacing = props.gridSpacing
     ? useBreakpointValue(props.gridSpacing)
     : 20
   const maxWidthInVW = props.maxWidthInVW
