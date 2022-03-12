@@ -17,7 +17,7 @@ export interface NewsModalProps {
   onClose: Function
   image: React.ReactNode
   url: string
-  highligth: React.ReactNode
+  highlight: React.ReactNode
 }
 
 export const NewsModal = ({
@@ -66,7 +66,7 @@ export const NewsModal = ({
             position="relative">
             <Text
               position="absolute"
-              top="4"
+              top="5"
               right="4"
               color={'agt.blue'}
               fontWeight={600}

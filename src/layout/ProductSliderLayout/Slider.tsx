@@ -201,7 +201,8 @@ const Slider = (props: SliderProps) => {
       x:
         position % clickDistance === 0 || targetPx === 0
           ? targetPx
-          : position * solution
+          : position * solution,
+      transition: {duration: '0.2'}
     })
     setCurPage(x.get() / -containerWidth)
   }

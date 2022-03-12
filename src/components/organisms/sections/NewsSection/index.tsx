@@ -10,6 +10,7 @@ import {StaticImage} from 'gatsby-plugin-image'
 import {ResponsiveSlider} from '../../../../layout/ProductSliderLayout/Slider'
 
 import NewsModal from '../../NewsModal'
+import {CardStyle} from './style'
 
 export interface NewsSectionProps {
   heading: React.ReactNode
@@ -62,7 +63,8 @@ const NewsSection = ({heading}: NewsSectionProps) => {
                   onOpen()
                   setChildId(page.id)
                   setUrl(`?${page.jaenPageMetadata.title}`)
-                }}>
+                }}
+                css={CardStyle()}>
                 <AspectRatio ratio={16 / 9}>
                   <Field.Image
                     name="main"
@@ -72,13 +74,12 @@ const NewsSection = ({heading}: NewsSectionProps) => {
                         alt="default image"
                         onDragStart={e => e.preventDefault()}
                         draggable="false"
+                        className="image-container"
+                        imgClassName="image"
                       />
                     }
-                    style={{
-                      width: '100%',
-                      height: '250px',
-                      objectFit: 'cover'
-                    }}
+                    className="image-container"
+                    imgClassName="image"
                   />
                 </AspectRatio>
                 <Stack pt={4}>
@@ -95,7 +96,7 @@ const NewsSection = ({heading}: NewsSectionProps) => {
                     fontFamily={'body'}>
                     <Field.Text name="heading" defaultValue="Titel" />
                   </Heading>
-                  <Text color={'gray.500'}>
+                  <Text color={'gray.500'} noOfLines={4}>
                     <Field.Text
                       name="description"
                       defaultValue=" Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
