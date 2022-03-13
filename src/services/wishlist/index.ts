@@ -6,6 +6,7 @@ export interface WishlistProduct {
   handle: string
   title: string
   price: string
+  reducedPrice: string
   categoriesString: string
   image: {
     alt: string

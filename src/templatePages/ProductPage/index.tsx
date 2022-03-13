@@ -52,6 +52,7 @@ const ProductPage = ({pageContext, path}: ProductPageProps) => {
         handle: pageContext.handle,
         title: pageContext.header.title,
         price: pageContext.productDetail.price,
+        reducedPrice: pageContext.productDetail.discountPrice,
         image: pageContext.imageSlider.featuredImage,
         categoriesString: tagsWithoutCategory,
         quantity: 1

@@ -10,10 +10,10 @@ import FAQSection from '../components/organisms/sections/FAQSection/2'
 import {Image} from '@chakra-ui/image'
 import React from 'react'
 import {Element} from 'react-scroll'
-
 import {PageProps} from 'gatsby'
 import {BaseLayout} from '../layout/BaseLayout'
 import {connectPage, Field} from '@jaenjs/jaen'
+import PartnerSection from '../components/organisms/sections/PartnerSection'
 //#endregion
 
 //#region > Functions
@@ -93,64 +93,66 @@ const IndexPage = ({
   return (
     <BaseLayout withSearch={true} activePath={path}>
       <ScrollSpy />
-      <Element name="hero">
-        <HeroSection
-          categoryProducts={heroProducts}
-          showcaseProducts={showCaseProducts}
-        />
-      </Element>
-      <Element name="featuredproducts">
-        <FeaturedProductsSection
-          getPath={(handle: string) => `/products/${handle}`}
-          products={products}
-        />
-      </Element>
-      <Element name="reviews">
-        <ReviewSection
-          heading={<p>I'm a heading.</p>}
-          data={data.allGoogleReview.nodes}
-        />
-      </Element>
+      <HeroSection
+        categoryProducts={heroProducts}
+        showcaseProducts={showCaseProducts}
+      />
+      <FeaturedProductsSection
+        getPath={(handle: string) => `/products/${handle}`}
+        products={products}
+      />
+      <ReviewSection
+        heading={
+          <Field.Text name="reviews-heading" defaultValue="Bewertungen" />
+        }
+        data={data.allGoogleReview.nodes}
+      />
+      <PartnerSection />
       <Element name="news">
-        <NewsSection heading={<p>I'm a news.</p>} />
-      </Element>
-      <Element name="about">
-        <AboutSection
-          heading={<p>I'm a heading</p>}
-          teaser={<p>I'm a teaser</p>}
-          text={
-            <p>
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-              erat, sed diam voluptua. At vero eos et accusam et justo duo
-              dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-              sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-              amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-              invidunt ut labore et dolore magna aliquyam erat, sed diam
-              voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-              Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
-              dolor sit amet.
-            </p>
-          }
-          backgroundimage={
-            <Image
-              src="https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832_960_720.jpg"
-              alt="alt"
-              className="backgroundimage"
-            />
-          }
-        />
-      </Element>
-      <Element name="faq">
-        <FAQSection
+        <NewsSection
           heading={
-            <Field.Text
-              name="faq-heading"
-              defaultValue="Häufig gestellte Fragen"
-            />
+            <Field.Text name="news-heading" defaultValue="Neuigkeiten" />
           }
         />
       </Element>
+      <AboutSection
+        heading={
+          <Field.Text name="about-heading" defaultValue="Wer wir sind" />
+        }
+        text={
+          <Field.Text
+            name="about-text"
+            rtf
+            defaultValue="Die Firma AGT Gun Trade KG mit eigener Büchsenmacher Werkstätte, hat
+         sich nicht nur auf den Handel mit Jagdwaffen und Sportwaffen deren
+         Munition Wiederladerartikel Optik Zubehör Waffenführerscheine und
+         Kurse Kommissionsverkauf Ankauf von Jagd und Sportwaffen jeglicher
+         Art sowie komplette Sammlung Auflösungen aus Nachlass, Erbschaften
+         in ganz Österreich. (Behördenwege-Formalitäten werden gerne
+         unsererseits erledigt) spezialisiert. SONDERN AUCH AUF
+         Die Entwicklung und Erzeugung von Waffen durch die Haus eigene Büchsenmacher Werkstätte
+         von Ferlacher-Jagdwaffen
+         wie auch auf Reparatur-Instandsetzung von Waffen jeglicher Art,
+         Montagearbeiten,
+         Schäften und Ausfertigen, Tauch und Streichbrünierungen."
+          />
+        }
+        backgroundimage={
+          <Image
+            src="https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832_960_720.jpg"
+            alt="alt"
+            className="backgroundimage"
+          />
+        }
+      />
+      <FAQSection
+        heading={
+          <Field.Text
+            name="faq-heading"
+            defaultValue="Häufig gestellte Fragen"
+          />
+        }
+      />
     </BaseLayout>
   )
 }

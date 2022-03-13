@@ -176,10 +176,10 @@ export const getValuesFromQuery = (query: string | any) => {
 }
 
 export const urqlClient = createClient({
-  url: `https://danielstest-shop.myshopify.com/api/2022-01/graphql.json`,
+  url: `https://daniel-petutschnigg.myshopify.com/api/2022-01/graphql.json`,
   fetchOptions: {
     headers: {
-      'X-Shopify-Storefront-Access-Token': '4bddc6a9d55a36999e044a51d3c2dcf1'
+      'X-Shopify-Storefront-Access-Token': '0d53ceadc2e9061030b091340c84f876'
     }
   }
 })

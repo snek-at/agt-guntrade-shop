@@ -64,7 +64,7 @@ const NavTop = ({links, activePath, search}: NavTopProps) => {
         w="full"
         px={{base: '4', md: '8'}}>
         <Flex
-          py={8}
+          py={4}
           alignItems={'center'}
           justifyContent={'space-between'}
           maxW="8xl"

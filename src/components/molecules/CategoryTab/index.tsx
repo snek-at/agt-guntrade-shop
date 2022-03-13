@@ -64,9 +64,10 @@ const CategoryTab = ({
           initial="enter"
           animate="center"
           exit="exit"
+          px={2}
           transition={{duration: 0.15}}>
           <SimpleGrid
-            columns={{base: 2, md: 3, xl: 6}}
+            columns={{base: 1, sm: 2, md: 3, xl: 6}}
             spacing="5"
             css={style.Borderline}>
             {items.map(item => (

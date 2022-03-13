@@ -8,13 +8,17 @@ import {
   useBreakpointValue,
   SimpleGrid,
   Flex,
-  BoxProps
+  BoxProps,
+  Progress,
+  ProgressProps,
+  useColorModeValue
 } from '@chakra-ui/react'
 import React from 'react'
-import {FaChevronCircleLeft, FaChevronCircleRight} from 'react-icons/fa'
-import {motion, useMotionValue} from 'framer-motion'
+import {FaChevronRight, FaChevronLeft} from 'react-icons/fa'
+import {motion, useMotionValue, useAnimation} from 'framer-motion'
 
 import {useWindowWidth} from '../../common/utils'
+import {CarouselStyle} from './style'
 
 // #region Interfaces
 
@@ -37,6 +41,7 @@ interface SliderProps extends BaseProps {
   containerPadding: number
   maxWidthInVW: number
   screenWidth: number | undefined
+  progressProps: ProgressProps
 }
 
 interface GridProps extends BaseProps {
@@ -45,12 +50,15 @@ interface GridProps extends BaseProps {
 }
 
 interface ResponsiveSliderProps {
+  progressProps?: ProgressProps
   containerPadding?: ResponsiveNumber
-  spacing?: ResponsiveNumber
+  sliderSpacing?: ResponsiveNumber
+  gridSpacing?: ResponsiveNumber
   maxWidthInVW?: ResponsiveNumber
   itemWidth?: ResponsiveNumber
   items: Array<React.ReactNode>
   itemsPerRow?: ResponsiveNumber
+  breakpoint?: 'base' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 }
 
 // #endregion
@@ -60,7 +68,7 @@ const SliderStack = motion<StackProps>(HStack)
 const MotionBox = motion<BoxProps>(Box)
 
 const Slider = (props: SliderProps) => {
-  const [animationDirection, setAnimationDirection] = React.useState<string>('')
+  const animation = useAnimation()
   const [curPage, setCurPage] = React.useState(0)
   const [lastPage, setLastPage] = React.useState(0)
   const [isDragging, setIsDragging] = React.useState(false)
@@ -91,43 +99,36 @@ const Slider = (props: SliderProps) => {
   }, [pageCount])
 
   const handlePageNavigate = (direction: 'left' | 'right') => {
+    let targetPage: number = curPage
     if (direction === 'left') {
       if (curPage > 0) {
-        setAnimationDirection('left')
-        if (curPage % 1 !== 0) {
-          setLastPage(curPage)
-          setCurPage(Math.floor(curPage))
-        } else {
-          setLastPage(curPage)
-          setCurPage(curPage - 1)
-        }
+        targetPage = Math.floor(curPage - 1)
       }
     } else {
       if (curPage < pageCount - 1) {
-        setAnimationDirection('right')
-        if (curPage % 1 !== 0) {
-          setLastPage(curPage)
-          setCurPage(Math.ceil(curPage))
-        } else {
-          setLastPage(curPage)
-          setCurPage(curPage + 1)
-        }
+        targetPage = Math.floor(curPage + 1)
       }
     }
+    calculateDistanceAndAnimate(targetPage)
+    setLastPage(curPage)
+    setCurPage(targetPage)
   }
 
   const NavigationButton = (props: {direction: 'left' | 'right'}) => {
     const customProps: IconButtonProps = {
       'aria-label': `Slide to ${props.direction}`,
-      boxSize: '16',
       position: 'absolute',
+      display: {base: 'none', lg: 'block'},
+      boxSize: '16',
       top: '50%',
       transform: 'translateY(-50%)',
       zIndex: 1,
       cursor: 'pointer',
+      bgColor: 'black',
       _hover: {
         boxShadow: '0px 0px 10px rgba(0,0,0,0.1)'
       },
+      className: 'button',
       isRound: true,
       onClick: () => handlePageNavigate(props.direction)
     }
@@ -137,7 +138,13 @@ const Slider = (props: SliderProps) => {
         <IconButton
           {...customProps}
           left={5}
-          icon={<Icon as={FaChevronCircleLeft} />}
+          icon={
+            <Icon
+              color={useColorModeValue('gray.200', 'gray.600')}
+              boxSize="8"
+              as={FaChevronLeft}
+            />
+          }
         />
       )
     } else {
@@ -145,37 +152,59 @@ const Slider = (props: SliderProps) => {
         <IconButton
           {...customProps}
           right={5}
-          icon={<Icon as={FaChevronCircleRight} />}
+          icon={
+            <Icon
+              color={useColorModeValue('gray.200', 'gray.600')}
+              boxSize="8"
+              as={FaChevronRight}
+            />
+          }
         />
       )
     }
   }
   const x = useMotionValue(0)
 
-  const mathMagic = (targetPage: number) => {
-    const distance = -(
+  const calculateDistanceAndAnimate = (targetPage: number | undefined) => {
+    const clickDistance = -(
       containerWidth +
       props.spacing -
       2 * props.containerPadding
     )
-    const targetPx = targetPage * distance
-    const position = x.get() === 0 ? lastPage * distance : x.get()
+    const position = x.get() === 0 ? lastPage * clickDistance : x.get()
+    let targetPx: number
+    if (typeof targetPage === 'undefined') {
+      const snapDistance = props.itemWidth + props.spacing
+      const scrollHelper = curPage > lastPage ? -0.45 : 0.45
+      targetPx =
+        Math.round(position / snapDistance + scrollHelper) * snapDistance
+    } else {
+      targetPx = targetPage * clickDistance
+    }
     const solution = targetPx / position
 
-    return position % distance === 0 || targetPx === 0
-      ? targetPx
-      : position * solution
-  }
+    console.log(
+      'targetPage',
+      targetPage,
+      'position',
+      position,
+      'clickDistance',
+      clickDistance,
+      'targetPx',
+      targetPx,
+      position % clickDistance === 0 || targetPx === 0
+        ? targetPx
+        : position * solution
+    )
 
-  const variants = {
-    left: {
-      x: mathMagic(curPage),
-      transition: {duration: 0.5}
-    },
-    right: {
-      x: mathMagic(curPage),
-      transition: {duration: 0.5}
-    }
+    animation.start({
+      x:
+        position % clickDistance === 0 || targetPx === 0
+          ? targetPx
+          : position * solution,
+      transition: {duration: '0.2'}
+    })
+    setCurPage(x.get() / -containerWidth)
   }
 
   const handleDragEnd = () => {
@@ -188,32 +217,39 @@ const Slider = (props: SliderProps) => {
     } else {
       setCurPage(pageCandidate)
     }
+    calculateDistanceAndAnimate(undefined)
   }
 
   // product card slider with framer motion
   return (
-    <Flex justifyContent={'center'} position="relative" px="24">
-      <Box maxW={`${maxW}px`}>
-        <Box maxW={`${containerWidth}px`} overflow={'hidden'}>
+    <Flex
+      css={CarouselStyle()}
+      justifyContent={'center'}
+      alignItems={'center'}
+      position="relative"
+      direction={'column'}>
+      <Box maxW={`${maxW}px`} position="relative" className="container">
+        <Box
+          maxW={`${containerWidth}px`}
+          overflow={'hidden'}
+          className="inner-container">
           <MotionBox
             style={{x}}
             drag="x"
-            dragTransition={{timeConstant: 250}}
             cursor={isDragging ? 'grabbing' : 'grab'}
             onDragStart={() => {
               setIsDragging(true)
             }}
             onDragEnd={() => {
+              handleDragEnd()
               setIsDragging(false)
             }}
-            onDragTransitionEnd={() => handleDragEnd()}
             w={`${containerWidth * pageCount}px`}
             dragConstraints={{
               left: -containerWidth * (pageCount - 1) - props.spacing,
               right: 0
             }}
-            variants={variants}
-            animate={animationDirection}>
+            animate={animation}>
             <SliderStack
               spacing={`${props.spacing}px`}
               align={'start'}
@@ -234,6 +270,7 @@ const Slider = (props: SliderProps) => {
         {curPage > 0 && <NavigationButton direction="left" />}
         {curPage < pageCount - 1 && <NavigationButton direction="right" />}
       </Box>
+      <Progress {...props.progressProps} max={pageCount - 1} value={curPage} />
     </Flex>
   )
 }
@@ -242,7 +279,7 @@ const GridLayout = (props: GridProps) => {
   return (
     <Flex justifyContent={'center'}>
       <Box maxWidth={props.maxWidth}>
-        <SimpleGrid columns={props.itemsPerRow} spacing={props.spacing}>
+        <SimpleGrid columns={props.itemsPerRow} spacing={props.spacing / 2}>
           {props.items.map(item => {
             return <Box width={props.itemWidth}>{item}</Box>
           })}
@@ -267,21 +304,50 @@ const GridLayout = (props: GridProps) => {
  * @param props.itemWidth - optional default:280 - type:ResponsiveNumber -  The width of a single Item (in px).
  * @param props.itemsPerRow - optional default:1 - type:ResponsiveNumber - The items per row in the Grid.
  * @param props.containerPadding - optional default:0 - type:ResponsiveNumber - The paddingX on the container useful for hover animations with x effect (in px).
+ * @param props.breakpoint - optional default:md - type:'base'|'sm'|'md'|'lg'|'xl'|'2xl' - The Chakra breakpoint at which the Grid changes into the Slider.
+ * If the value is 'base' no Grid will be displayed.
+ * @param props.progressProps - optional - type:ProgressProps - The styling of the Chakra-UI progress element.
  */
 export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
   const itemWidth = props.itemWidth ? useBreakpointValue(props.itemWidth) : 280
   const itemsPerRow = props.itemsPerRow
     ? useBreakpointValue(props.itemsPerRow)
     : 1
-  const spacing = props.spacing ? useBreakpointValue(props.spacing) : 40
+  const sliderSpacing = props.sliderSpacing
+    ? useBreakpointValue(props.sliderSpacing)
+    : 40
+  const gridSpacing = props.gridSpacing
+    ? useBreakpointValue(props.gridSpacing)
+    : 20
   const maxWidthInVW = props.maxWidthInVW
     ? useBreakpointValue(props.maxWidthInVW)
     : 80
   const containerPadding = props.containerPadding
     ? useBreakpointValue(props.containerPadding)
     : 0
-
+  const breakpoint = props.breakpoint || 'md'
   const screenWidth = useWindowWidth()
+  const baseProgressProps: ProgressProps = {
+    width: `${maxWidthInVW / 2}vw`,
+    height: '5px',
+    mt: 2,
+    borderRadius: 'lg',
+    colorScheme: 'gray'
+  }
+  const progressProps: ProgressProps = {
+    ...baseProgressProps,
+    ...props.progressProps
+  }
+
+  const sliderProps = {
+    progressProps: progressProps,
+    containerPadding: containerPadding,
+    items: props.items,
+    maxWidthInVW: maxWidthInVW,
+    screenWidth: screenWidth,
+    itemWidth: itemWidth,
+    spacing: sliderSpacing
+  }
 
   const returnValue = useBreakpointValue({
     base: (
@@ -289,21 +355,13 @@ export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
         items={props.items}
         maxWidth={(screenWidth || 0) * (maxWidthInVW / 100)}
         itemWidth={itemWidth}
-        spacing={spacing}
+        spacing={gridSpacing}
         itemsPerRow={itemsPerRow}
       />
     ),
-    md: (
-      <Slider
-        containerPadding={containerPadding}
-        items={props.items}
-        maxWidthInVW={maxWidthInVW}
-        screenWidth={screenWidth}
-        itemWidth={itemWidth}
-        spacing={spacing}
-      />
-    )
+    [breakpoint]: <Slider {...sliderProps} />
   })
+
   return <>{returnValue}</>
 }
 // #endregion

@@ -122,7 +122,10 @@ export const WishListLayout = (props: {
   const itemLength = props.items.length
 
   const totalPrice = props.items.reduce(
-    (acc, item) => acc + parseInt(item.price) * item.quantity,
+    (acc, item) =>
+      acc +
+      (item.reducedPrice ? parseInt(item.reducedPrice) : parseInt(item.price)) *
+        item.quantity,
     0
   )
 
@@ -224,6 +227,7 @@ const WishListItem = (props: {
     gatsbyImageData: IGatsbyImageData
   }
   price: string
+  reducedPrice?: string
   quantity: number
   onQuantityChange: (value: number) => void
   onRemove: () => void
@@ -242,7 +246,11 @@ const WishListItem = (props: {
     <Stepper onChange={props.onQuantityChange} value={props.quantity} />
   )
 
-  const price = <Text fontWeight={'semibold'}>{props.price} €</Text>
+  const price = (
+    <Text fontWeight={'semibold'} color={props.reducedPrice ? 'red' : 'black'}>
+      {props.reducedPrice ? props.reducedPrice : props.price} €
+    </Text>
+  )
 
   return (
     <>
