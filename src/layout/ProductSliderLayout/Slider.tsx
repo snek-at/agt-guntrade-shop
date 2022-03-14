@@ -4,6 +4,7 @@ import {
   IconButton,
   IconButtonProps,
   HStack,
+  VStack,
   StackProps,
   useBreakpointValue,
   SimpleGrid,
@@ -42,6 +43,7 @@ interface SliderProps extends BaseProps {
   maxWidthInVW: number
   screenWidth: number | undefined
   progressProps: ProgressProps
+  rows: number
 }
 
 interface GridProps extends BaseProps {
@@ -50,6 +52,7 @@ interface GridProps extends BaseProps {
 }
 
 interface ResponsiveSliderProps {
+  sliderRows?: ResponsiveNumber
   progressProps?: ProgressProps
   containerPadding?: ResponsiveNumber
   sliderSpacing?: ResponsiveNumber
@@ -73,7 +76,6 @@ const Slider = (props: SliderProps) => {
   const [lastPage, setLastPage] = React.useState(0)
   const [isDragging, setIsDragging] = React.useState(false)
 
-  const items = props.items
   const maxW = (props.screenWidth || 0) * (props.maxWidthInVW / 100)
   let possibleCards = Math.floor(maxW / props.itemWidth)
 
@@ -89,7 +91,9 @@ const Slider = (props: SliderProps) => {
     (possibleCards - 1) * props.spacing +
     props.containerPadding * 2
 
-  const pageCount = Math.ceil(items.length / possibleCards)
+  const pageCount = Math.floor(
+    Math.ceil(props.items.length / possibleCards) / props.rows
+  )
 
   React.useEffect(() => {
     if (pageCount < curPage) {
@@ -197,7 +201,8 @@ const Slider = (props: SliderProps) => {
     })
     const potentialPage = x.get() / -containerWidth
     const singleCard = props.itemWidth / -containerWidth
-    setCurPage(-potentialPage < -singleCard ? 0 : -potentialPage)
+    setCurPage(potentialPage < -singleCard ? 0 : potentialPage)
+    console.log(potentialPage, -singleCard, potentialPage < -singleCard)
   }
 
   const handleDragEnd = () => {
@@ -213,6 +218,32 @@ const Slider = (props: SliderProps) => {
     calculateDistanceAndAnimate(undefined)
   }
 
+  const itemsInRows: Array<any> = []
+  const cardsPerRow = Math.ceil(props.items.length / props.rows)
+  let last = 0
+  for (let i = 1; i <= props.rows; i++) {
+    itemsInRows.push(props.items.slice(last, last + cardsPerRow))
+    last += cardsPerRow
+  }
+
+  const rows = (
+    <>
+      {itemsInRows.map(rowitems => (
+        <SliderStack
+          spacing={`${props.spacing}px`}
+          px={`${props.containerPadding}px`}>
+          {rowitems.map((item: any) => (
+            <MotionBox
+              pointerEvents={isDragging ? 'none' : 'auto'}
+              minWidth={`${props.itemWidth}px`}
+              maxW={`${props.itemWidth}px`}>
+              {item}
+            </MotionBox>
+          ))}
+        </SliderStack>
+      ))}
+    </>
+  )
   // product card slider with framer motion
   return (
     <Flex
@@ -243,21 +274,9 @@ const Slider = (props: SliderProps) => {
               right: 0
             }}
             animate={animation}>
-            <SliderStack
-              spacing={`${props.spacing}px`}
-              align={'start'}
-              px={`${props.containerPadding}px`}>
-              {items.map(item => (
-                <>
-                  <MotionBox
-                    pointerEvents={isDragging ? 'none' : 'auto'}
-                    minWidth={`${props.itemWidth}px`}
-                    maxW={`${props.itemWidth}px`}>
-                    {item}
-                  </MotionBox>
-                </>
-              ))}
-            </SliderStack>
+            <VStack align="start" spacing={`${props.spacing}px`}>
+              {rows}
+            </VStack>
           </MotionBox>
         </Box>
         {curPage > 0 && <NavigationButton direction="left" />}
@@ -318,6 +337,7 @@ export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
   const containerPadding = props.containerPadding
     ? useBreakpointValue(props.containerPadding)
     : 0
+  const sliderRows = useBreakpointValue(props.sliderRows || {base: 1})
   const breakpoint = props.breakpoint || 'md'
   const screenWidth = useWindowWidth()
   const baseProgressProps: ProgressProps = {
@@ -333,6 +353,7 @@ export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
   }
 
   const sliderProps = {
+    rows: sliderRows,
     progressProps: progressProps,
     containerPadding: containerPadding,
     items: props.items,

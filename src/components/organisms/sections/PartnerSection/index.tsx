@@ -5,11 +5,10 @@ import React from 'react'
 import {ResponsiveSlider} from '../../../../layout/ProductSliderLayout/Slider'
 import {ImageStyle} from './style'
 
-const PartnerCard = (props: {mt: string}) => {
+const PartnerCard = () => {
   return (
     <Flex
       height="180px"
-      mt={props.mt}
       css={ImageStyle()}
       className="container"
       border="1px"
@@ -31,18 +30,17 @@ const PartnerCard = (props: {mt: string}) => {
 const PartnerSection = () => {
   const items: Array<React.ReactNode> = []
 
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 40; i++) {
     items.push(
-      <Box>
-        <PartnerCard mt={'0px'} />
-        <PartnerCard mt={'10px'} />
-      </Box>
+      <>
+        <PartnerCard />
+      </>
     )
   }
-
   return (
     <Box my="20">
       <ResponsiveSlider
+        sliderRows={{base: 2}}
         breakpoint="base"
         sliderSpacing={{base: 10}}
         items={items}
