@@ -91,7 +91,7 @@ const Slider = (props: SliderProps) => {
     (possibleCards - 1) * props.spacing +
     props.containerPadding * 2
 
-  const pageCount = Math.floor(
+  const pageCount = Math.ceil(
     Math.ceil(props.items.length / possibleCards) / props.rows
   )
 
@@ -179,7 +179,7 @@ const Slider = (props: SliderProps) => {
     let targetPx: number
     if (typeof targetPage === 'undefined') {
       const snapDistance = props.itemWidth + props.spacing
-      const scrollHelper = curPage > lastPage ? -0.45 : 0.45
+      const scrollHelper = curPage > lastPage ? -0.5 : 0.5
       targetPx =
         Math.round(position / snapDistance + scrollHelper) * snapDistance
       if (targetPx > 0) {
