@@ -8,6 +8,7 @@ import {ImageStyle} from './style'
 const PartnerCard = () => {
   return (
     <Flex
+      w="280px"
       height="180px"
       css={ImageStyle()}
       className="container"
