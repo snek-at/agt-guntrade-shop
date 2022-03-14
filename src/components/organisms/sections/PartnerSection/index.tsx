@@ -1,11 +1,12 @@
 import {Box, Flex, useColorModeValue} from '@chakra-ui/react'
+import {Field} from '@jaenjs/jaen'
 import {StaticImage} from 'gatsby-plugin-image'
 import React from 'react'
 
 import {ResponsiveSlider} from '../../../../layout/ProductSliderLayout/Slider'
 import {ImageStyle} from './style'
 
-const PartnerCard = () => {
+const PartnerCard = (props: {identifier: number}) => {
   return (
     <Flex
       w="280px"
@@ -18,13 +19,20 @@ const PartnerCard = () => {
       _hover={{borderColor: 'agt.gray'}}
       justifyContent="center"
       alignItems={'center'}>
-      <StaticImage
-        src="./logoipsum-logo-7.svg"
-        alt="superPartner"
-        imgClassName="image"
+      <Field.Image
+        name={`partner-image-${props.identifier}`}
+        defaultValue={
+          <StaticImage
+            src="./logoipsum-logo-7.svg"
+            alt="superPartner"
+            imgClassName="image"
+            className="image-container"
+            draggable="false"
+            onDragCapture={e => e.preventDefault()}
+          />
+        }
         className="image-container"
-        draggable="false"
-        onDragCapture={e => e.preventDefault()}
+        imgClassName="image"
       />
     </Flex>
   )
@@ -36,7 +44,7 @@ const PartnerSection = () => {
   for (let i = 0; i < 39; i++) {
     items.push(
       <>
-        <PartnerCard />
+        <PartnerCard identifier={i} />
       </>
     )
   }

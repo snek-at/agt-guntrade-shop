@@ -9,10 +9,7 @@ export const ImageStyle = () => css`
     transition: scale 150ms;
     image-rendering: optimizeQuality;
     object-fit: contain;
-    width: 150px;
-  }
-
-  .image {
-    max-height: 150px;
+    max-width: 150px;
+    max-height: 160px;
   }
 `
