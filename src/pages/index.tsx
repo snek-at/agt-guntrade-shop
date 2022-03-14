@@ -41,7 +41,8 @@ const IndexPage = ({
         featuredProducts.filter(
           (product: any) =>
             product?.node?.handle === allProducts[randomIndex]?.node?.handle
-        ).length === 0
+        ).length === 0 &&
+        typeof allProducts[randomIndex] !== 'undefined'
       ) {
         featuredProducts.push(allProducts[randomIndex])
       }
@@ -54,13 +55,11 @@ const IndexPage = ({
       }
       allProducts.splice(randomIndex, 1)
     }
-    return featuredProducts
-      .filter((product: any) => typeof product !== 'undefined')
-      .map((product: any) => {
-        return {
-          ...product.node
-        }
-      })
+    return featuredProducts.map((product: any) => {
+      return {
+        ...product.node
+      }
+    })
   }, [data.newShopifyProduct, data.oldShopifyProduct])
 
   let heroProducts: {
