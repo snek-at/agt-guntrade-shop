@@ -181,8 +181,8 @@ const Slider = (props: SliderProps) => {
       const snapDistance = props.itemWidth + props.spacing
       targetPx =
         (curPage > lastPage
-          ? Math.floor(position / snapDistance)
-          : Math.ceil(position / snapDistance)) * snapDistance
+          ? Math.floor(position / snapDistance - 0.45)
+          : Math.ceil(position / snapDistance + 0.45)) * snapDistance
       if (targetPx > 0) {
         targetPx = 0
       } else if (targetPx < -containerWidth * (pageCount - 1)) {
