@@ -2,16 +2,18 @@ import {css} from '@emotion/react'
 
 export const ImageStyle = () => css`
   &:hover > .image-container {
-    scale: 1.1;
+    transform: scale(1.1);
+    .image {
+      backface-visibility: hidden;
+      transform: translateZ(0);
+    }
   }
 
   .image-container {
-    width: 150px;
-    height: auto;
     transition: scale 150ms;
-  }
-
-  .image {
-    object-fit: contain;
+    image-rendering: optimizeQuality;
+    width: 280;
+    height: 180;
+    object-fit: cover;
   }
 `

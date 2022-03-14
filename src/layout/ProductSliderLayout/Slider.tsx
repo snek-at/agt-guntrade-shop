@@ -196,6 +196,8 @@ const Slider = (props: SliderProps) => {
       x:
         position % clickDistance === 0 || targetPx === 0
           ? targetPx
+          : position * solution > 0
+          ? 0
           : position * solution,
       transition: {duration: '0.2'}
     })

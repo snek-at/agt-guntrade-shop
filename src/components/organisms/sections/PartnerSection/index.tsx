@@ -22,6 +22,8 @@ const PartnerCard = () => {
         alt="superPartner"
         imgClassName="image"
         className="image-container"
+        draggable="false"
+        onDragCapture={e => e.preventDefault()}
       />
     </Flex>
   )
@@ -30,7 +32,7 @@ const PartnerCard = () => {
 const PartnerSection = () => {
   const items: Array<React.ReactNode> = []
 
-  for (let i = 0; i < 40; i++) {
+  for (let i = 0; i < 39; i++) {
     items.push(
       <>
         <PartnerCard />
