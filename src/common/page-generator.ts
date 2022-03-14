@@ -14,7 +14,7 @@
 const getCategoryTagsAndPriorities = (data: any, tags?: Array<string>) => {
   let max = 0
 
-  let categoryTagsAndPrios = data.allShopifyCollection.edges.map(edge => {
+  let categoryTagsAndPrios = data?.allShopifyCollection.edges.map(edge => {
     const firstElement = edge.node.title.split(':')[0]
     const prio = firstElement[0] === 'A' ? firstElement.length : undefined
     if (typeof prio !== 'undefined' && prio > max) {
@@ -22,7 +22,7 @@ const getCategoryTagsAndPriorities = (data: any, tags?: Array<string>) => {
     }
     return {
       priority: prio,
-      tag: data.meta.tags.filter((tag: string) =>
+      tag: data?.meta.tags.filter((tag: string) =>
         tag.endsWith(edge.node.title.split(':').at(-1))
       )
     }
@@ -105,7 +105,7 @@ const getUnfilteredRelatedProducts = (
   handle: string,
   splitHandle: Array<string>
 ) => {
-  const relatedCategories = data.allShopifyCollection.edges.filter(edge => {
+  const relatedCategories = data?.allShopifyCollection.edges.filter(edge => {
     if (splitHandle[0].length === 2 && splitHandle[0][0] === 'b') {
       return (
         edge.node.handle.includes(
@@ -181,7 +181,7 @@ const getFilteredProducts = (unfilteredRelatedProducts, handle, product?) => {
 const createAllProductsShopPage = (data, actions) => {
   const products = []
   const collections = {}
-  data.allShopifyProduct.edges.map(edge => {
+  data?.allShopifyProduct.edges.map(edge => {
     products.push(edge.node)
     const keys = Object.keys(edge.node.collections)
     const handles = []
@@ -202,8 +202,8 @@ const createAllProductsShopPage = (data, actions) => {
       products: {items: products.slice(0, 12)},
       filter: {
         categoryTagsAndPriorities: categoryTagsAndPriorities,
-        allTags: data.meta.tags,
-        productPageTags: data.meta.tags,
+        allTags: data?.meta.tags,
+        productPageTags: data?.meta.tags,
         activeTags: [],
         initialFilters: {
           tags: [],
@@ -269,7 +269,7 @@ const createAllProductsShopPage = (data, actions) => {
 }
 
 const createCollectionShopAndProductPages = (data, actions) => {
-  data.allShopifyCollection.edges.forEach(edge => {
+  data?.allShopifyCollection.edges.forEach(edge => {
     const splitHandle = splitAndCheckHandle(edge.node.handle)
     const subcollectionType = getSubcollectionType(splitHandle)
 
@@ -282,7 +282,7 @@ const createCollectionShopAndProductPages = (data, actions) => {
         .toLowerCase()
         .replaceAll(' ', '-')
 
-    const subcategories = data.allShopifyCollection.edges.filter(edge2 => {
+    const subcategories = data?.allShopifyCollection.edges.filter(edge2 => {
       return (
         edge2.node.handle.startsWith(subcollectionType) ||
         edge.node.handle === edge2.node.handle
@@ -335,7 +335,7 @@ const createCollectionShopAndProductPages = (data, actions) => {
       })
     }
 
-    const activeTags = data.meta.tags.filter(tag => {
+    const activeTags = data?.meta.tags.filter(tag => {
       const splitTitle = edge.node.title.split(':')
       splitTitle.shift()
       let rval = false
@@ -378,7 +378,7 @@ const createCollectionShopAndProductPages = (data, actions) => {
         },
         filter: {
           categoryTagsAndPriorities: categoryTagsAndPriorities,
-          allTags: data.meta.tags,
+          allTags: data?.meta.tags,
           productPageTags: productPageTagsArray,
           activeTags: activeTags,
           initialFilters: {

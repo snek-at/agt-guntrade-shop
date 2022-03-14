@@ -178,24 +178,15 @@ const Slider = (props: SliderProps) => {
       const scrollHelper = curPage > lastPage ? -0.45 : 0.45
       targetPx =
         Math.round(position / snapDistance + scrollHelper) * snapDistance
+      if (targetPx > 0) {
+        targetPx = 0
+      } else if (targetPx < -containerWidth * (pageCount - 1)) {
+        targetPx = (pageCount - 1) * clickDistance
+      }
     } else {
       targetPx = targetPage * clickDistance
     }
     const solution = targetPx / position
-
-    console.log(
-      'targetPage',
-      targetPage,
-      'position',
-      position,
-      'clickDistance',
-      clickDistance,
-      'targetPx',
-      targetPx,
-      position % clickDistance === 0 || targetPx === 0
-        ? targetPx
-        : position * solution
-    )
 
     animation.start({
       x:
@@ -204,7 +195,9 @@ const Slider = (props: SliderProps) => {
           : position * solution,
       transition: {duration: '0.2'}
     })
-    setCurPage(x.get() / -containerWidth)
+    const potentialPage = x.get() / -containerWidth
+    const singleCard = props.itemWidth / -containerWidth
+    setCurPage(-potentialPage < -singleCard ? 0 : -potentialPage)
   }
 
   const handleDragEnd = () => {
