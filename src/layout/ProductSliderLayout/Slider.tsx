@@ -183,10 +183,10 @@ const Slider = (props: SliderProps) => {
     animation.start({
       x:
         position % distance === 0 || targetPx === 0
-          ? targetPx
+          ? Math.round(targetPx)
           : position * solution > 0
           ? 0
-          : position * solution,
+          : Math.round(position * solution),
       transition: {duration: '0.2'}
     })
   }
@@ -229,6 +229,7 @@ const Slider = (props: SliderProps) => {
     <>
       {itemsInRows.map(rowitems => (
         <SliderStack
+          align="start"
           spacing={`${props.spacing}px`}
           px={`${props.containerPadding}px`}>
           {rowitems.map((item: any) => (
