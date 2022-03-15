@@ -2640,10 +2640,10 @@
   resolved "https://registry.yarnpkg.com/@istanbuljs/schema/-/schema-0.1.3.tgz#e45e384e4b8ec16bce2fd903af78450f6bf7ec98"
   integrity sha512-ZXRY4jNvVgSVQ8DL3LTcakaAtXwTVUxE81hslsyD2AtoXW/wVob10HkOJ1X/pAlcI7D+2YoZKg5do8G/w6RYgA==
 
-"@jaenjs/jaen@3.0.0-beta.19":
-  version "3.0.0-beta.19"
-  resolved "https://registry.yarnpkg.com/@jaenjs/jaen/-/jaen-3.0.0-beta.19.tgz#f5a026d4492c48682f0433af2727aa871a64e200"
-  integrity sha512-ce1QaekGM9a2teWC+wjPU5bE0L6ruCzsODVPIRIkh4mfIfhaBhTuZkiSwwv98oVmkrpNeauxUGKWtwkvRzB7VA==
+"@jaenjs/jaen@3.0.0-beta.20":
+  version "3.0.0-beta.20"
+  resolved "https://registry.yarnpkg.com/@jaenjs/jaen/-/jaen-3.0.0-beta.20.tgz#ce43a50f334bde99c45d5c1b1942aba7f590e7ce"
+  integrity sha512-a0Uvtvui2JeflagYKXGiUQYG8KWeNKtpahuRYppN+9puhwjq7v+ACXvyAg3kg3sKFHPuaHqCXVkGpQ3WxIfZUw==
   dependencies:
     "@atlaskit/tree" "^8.4.0"
     "@chakra-ui/gatsby-plugin" "^2.0.2"

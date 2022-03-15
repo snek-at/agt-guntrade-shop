@@ -8,7 +8,8 @@ import {
   Textarea,
   Checkbox,
   Text,
-  Button
+  Button,
+  useToast
 } from '@chakra-ui/react'
 import {Controller, useForm} from 'react-hook-form'
 import {sendEmail} from '../../../services/mail'
@@ -23,6 +24,7 @@ type FormData = {
 }
 
 export const ContactForm = (props: {requestOptions: string[]}) => {
+  const toast = useToast()
   const defaultValues: FormData = {
     name: '',
     lastname: '',
@@ -57,11 +59,20 @@ Anfrage von ${name} ${lastname} (${email}) über AGT Shop.
 ${message}
 `
 
-    sendEmail({
+    await sendEmail({
       fromEmail: email,
       name: `${name} ${lastname}`,
       subject,
       message: body
+    })
+
+    toast({
+      title: 'Anfrage erfolgreich versendet',
+      description:
+        'Vielen Dank für Ihre Anfrage. Wir werden uns so schnell wie möglich bei Ihnen melden.',
+      status: 'success',
+      duration: 9000,
+      isClosable: true
     })
 
     reset()
