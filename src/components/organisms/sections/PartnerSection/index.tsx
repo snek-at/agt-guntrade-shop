@@ -21,7 +21,7 @@ const PartnerCard = (props: {identifier: number}) => {
       setWidth(offsetWidth + (100 - offsetWidth))
       setHeight(offsetHeight + (100 - offsetHeight))
     }
-  }, [])
+  }, [imageRef])
 
   return (
     <Flex

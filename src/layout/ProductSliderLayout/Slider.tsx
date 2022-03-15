@@ -73,7 +73,6 @@ const MotionBox = motion<BoxProps>(Box)
 const Slider = (props: SliderProps) => {
   const animation = useAnimation()
   const [curPage, setCurPage] = React.useState(0)
-  const [lastPage, setLastPage] = React.useState(0)
   const [isDragging, setIsDragging] = React.useState(false)
 
   const maxW = (props.screenWidth || 0) * (props.maxWidthInVW / 100)
@@ -86,18 +85,31 @@ const Slider = (props: SliderProps) => {
     possibleCards -= 1
   }
 
-  const containerWidth =
-    possibleCards * props.itemWidth +
-    (possibleCards - 1) * props.spacing +
-    props.containerPadding * 2
+  const containerWidth = React.useMemo(
+    () =>
+      possibleCards * props.itemWidth +
+      (possibleCards - 1) * props.spacing +
+      props.containerPadding * 2,
+    [props, possibleCards]
+  )
 
-  const pageCount = Math.ceil(
-    Math.ceil(props.items.length / possibleCards) / props.rows
+  const pageCount = React.useMemo(
+    () => Math.ceil(Math.ceil(props.items.length / possibleCards) / props.rows),
+    [props, possibleCards]
+  )
+
+  const cardCount = React.useMemo(
+    () => Math.ceil(props.items.length / props.rows),
+    [props]
+  )
+
+  const snapDistance = React.useMemo(
+    () => (props.itemWidth + props.spacing) / containerWidth,
+    [props, containerWidth]
   )
 
   React.useEffect(() => {
     if (pageCount < curPage) {
-      setLastPage(pageCount - 1)
       setCurPage(pageCount - 1)
     }
   }, [pageCount])
@@ -114,7 +126,6 @@ const Slider = (props: SliderProps) => {
       }
     }
     calculateDistanceAndAnimate(targetPage)
-    setLastPage(curPage)
     setCurPage(targetPage)
   }
 
@@ -169,33 +180,19 @@ const Slider = (props: SliderProps) => {
   }
   const x = useMotionValue(0)
 
-  const calculateDistanceAndAnimate = (targetPage: number | undefined) => {
-    const clickDistance = -(
-      containerWidth +
-      props.spacing -
-      2 * props.containerPadding
-    )
-    const position = x.get() === 0 ? lastPage * clickDistance : x.get()
-    let targetPx: number
-    if (typeof targetPage === 'undefined') {
-      const snapDistance = props.itemWidth + props.spacing
-      targetPx =
-        (curPage > lastPage
-          ? Math.floor(position / snapDistance)
-          : Math.ceil(position / snapDistance)) * snapDistance
-      if (targetPx > 0) {
-        targetPx = 0
-      } else if (targetPx < -containerWidth * (pageCount - 1)) {
-        targetPx = (pageCount - 1) * clickDistance
-      }
-    } else {
-      targetPx = targetPage * clickDistance
-    }
+  const calculateDistanceAndAnimate = (targetPage: number) => {
+    console.log(containerWidth)
+    const distance =
+      targetPage % 1 === 0
+        ? -(containerWidth + props.spacing - 2 * props.containerPadding)
+        : -(containerWidth - 2 * props.containerPadding)
+    const position = x.get() === 0 ? curPage * distance : x.get()
+    const targetPx = targetPage * distance
     const solution = targetPx / position
-
+    console.log('target', targetPx, targetPage, 'calc', position * solution)
     animation.start({
       x:
-        position % clickDistance === 0 || targetPx === 0
+        position % distance === 0 || targetPx === 0
           ? targetPx
           : position * solution > 0
           ? 0
@@ -205,12 +202,25 @@ const Slider = (props: SliderProps) => {
     const potentialPage = x.get() / -containerWidth
     const singleCard = props.itemWidth / -containerWidth
     setCurPage(potentialPage < -singleCard ? 0 : potentialPage)
-    console.log(potentialPage, -singleCard, potentialPage < -singleCard)
   }
 
   const handleDragEnd = () => {
-    setLastPage(curPage)
-    const pageCandidate = x.get() / -containerWidth
+    const position = x.get()
+
+    const pageCandidateWithoutSnap = -(position / containerWidth)
+
+    const pageCandidate =
+      curPage +
+      (pageCandidateWithoutSnap > curPage ? snapDistance : -snapDistance)
+
+    calculateDistanceAndAnimate(
+      pageCandidate > pageCount - 1
+        ? pageCount - 1
+        : pageCandidate < 0
+        ? 0
+        : pageCandidate
+    )
+
     if (pageCandidate > pageCount - 1) {
       setCurPage(pageCount - 1)
     } else if (pageCandidate < 0) {
@@ -218,7 +228,6 @@ const Slider = (props: SliderProps) => {
     } else {
       setCurPage(pageCandidate)
     }
-    calculateDistanceAndAnimate(undefined)
   }
 
   const itemsInRows: Array<any> = []
