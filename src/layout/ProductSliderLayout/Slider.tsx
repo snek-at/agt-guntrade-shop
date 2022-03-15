@@ -98,11 +98,6 @@ const Slider = (props: SliderProps) => {
     [props, possibleCards]
   )
 
-  const cardCount = React.useMemo(
-    () => Math.ceil(props.items.length / props.rows),
-    [props]
-  )
-
   const snapDistance = React.useMemo(
     () => (props.itemWidth + props.spacing) / containerWidth,
     [props, containerWidth]
@@ -181,7 +176,6 @@ const Slider = (props: SliderProps) => {
   const x = useMotionValue(0)
 
   const calculateDistanceAndAnimate = (targetPage: number) => {
-    console.log(containerWidth)
     const distance =
       targetPage % 1 === 0
         ? -(containerWidth + props.spacing - 2 * props.containerPadding)
@@ -189,7 +183,6 @@ const Slider = (props: SliderProps) => {
     const position = x.get() === 0 ? curPage * distance : x.get()
     const targetPx = targetPage * distance
     const solution = targetPx / position
-    console.log('target', targetPx, targetPage, 'calc', position * solution)
     animation.start({
       x:
         position % distance === 0 || targetPx === 0
