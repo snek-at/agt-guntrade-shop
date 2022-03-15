@@ -98,10 +98,7 @@ const Slider = (props: SliderProps) => {
     [props, possibleCards]
   )
 
-  const snapDistance = React.useMemo(
-    () => (props.itemWidth + props.spacing) / containerWidth,
-    [props, containerWidth]
-  )
+  const snapDistance = React.useMemo(() => 1 / possibleCards, [possibleCards])
 
   React.useEffect(() => {
     if (pageCount < curPage) {
@@ -216,7 +213,7 @@ const Slider = (props: SliderProps) => {
     } else if (pageCandidate < 0) {
       setCurPage(0)
     } else {
-      setCurPage(Math.floor(pageCandidate * 100) / 100)
+      setCurPage(Math.floor(pageCandidate * 10000) / 10000)
     }
   }
   console.log(curPage)
