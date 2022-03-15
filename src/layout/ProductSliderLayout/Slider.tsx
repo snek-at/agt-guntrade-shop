@@ -173,10 +173,11 @@ const Slider = (props: SliderProps) => {
   const x = useMotionValue(0)
 
   const calculateDistanceAndAnimate = (targetPage: number) => {
-    const distance =
-      targetPage % 1 === 0
-        ? -(containerWidth + props.spacing - 2 * props.containerPadding)
-        : -(containerWidth - 2 * props.containerPadding)
+    const distance = -(
+      containerWidth +
+      props.spacing -
+      2 * props.containerPadding
+    )
     const position = x.get() === 0 ? curPage * distance : x.get()
     const targetPx = targetPage * distance
     const solution = targetPx / position
@@ -193,30 +194,26 @@ const Slider = (props: SliderProps) => {
 
   const handleDragEnd = () => {
     const position = x.get()
-
     const pageCandidateWithoutSnap = -(position / containerWidth)
-
     const pageCandidate =
       curPage +
-      (pageCandidateWithoutSnap > curPage ? snapDistance : -snapDistance)
+      (pageCandidateWithoutSnap < curPage ? -snapDistance : snapDistance)
 
     calculateDistanceAndAnimate(
       pageCandidate > pageCount - 1
         ? pageCount - 1
         : pageCandidate < 0
         ? 0
-        : pageCandidate
+        : Math.floor(pageCandidate * 100) / 100
     )
-
     if (pageCandidate > pageCount - 1) {
       setCurPage(pageCount - 1)
     } else if (pageCandidate < 0) {
       setCurPage(0)
     } else {
-      setCurPage(Math.floor(pageCandidate * 10000) / 10000)
+      setCurPage(Math.floor(pageCandidate * 100) / 100)
     }
   }
-  console.log(curPage)
   const itemsInRows: Array<any> = []
   const cardsPerRow = Math.ceil(props.items.length / props.rows)
   let last = 0
