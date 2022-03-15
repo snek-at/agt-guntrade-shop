@@ -98,7 +98,7 @@ const FAQSection = ({heading}: FAQSectionProps) => {
           <Heading mb="5" as="h3">
             Jetzt Anfragen
           </Heading>
-          <ContactForm />
+          <ContactForm requestOptions={['Option A', 'Option B', 'Option C']} />
         </Box>
       </Flex>
     </Flex>
