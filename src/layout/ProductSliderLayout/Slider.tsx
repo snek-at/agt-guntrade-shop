@@ -178,16 +178,18 @@ const Slider = (props: SliderProps) => {
       props.spacing -
       2 * props.containerPadding
     )
+
     const position = x.get() === 0 ? curPage * distance : x.get()
     const targetPx = targetPage * distance
     const solution = targetPx / position
+
     animation.start({
       x:
         position % distance === 0 || targetPx === 0
-          ? Math.round(targetPx)
+          ? Math.ceil(targetPx)
           : position * solution > 0
           ? 0
-          : Math.round(position * solution),
+          : Math.ceil(position * solution),
       transition: {duration: '0.2'}
     })
   }
@@ -204,14 +206,26 @@ const Slider = (props: SliderProps) => {
         ? pageCount - 1
         : pageCandidate < 0
         ? 0
-        : Math.floor(pageCandidate * 100) / 100
+        : (pageCandidateWithoutSnap < curPage
+            ? Math.ceil(pageCandidate * 100000)
+            : Math.floor(pageCandidate * 100000)) / 100000
     )
+    console.log(
+      (pageCandidateWithoutSnap < curPage
+        ? Math.ceil(pageCandidate * 100000)
+        : Math.floor(pageCandidate * 100000)) / 100000
+    )
+
     if (pageCandidate > pageCount - 1) {
       setCurPage(pageCount - 1)
     } else if (pageCandidate < 0) {
       setCurPage(0)
     } else {
-      setCurPage(Math.floor(pageCandidate * 100) / 100)
+      setCurPage(
+        (pageCandidateWithoutSnap < curPage
+          ? Math.ceil(pageCandidate * 100000)
+          : Math.floor(pageCandidate * 100000)) / 100000
+      )
     }
   }
   const itemsInRows: Array<any> = []
