@@ -192,9 +192,6 @@ const Slider = (props: SliderProps) => {
           : position * solution,
       transition: {duration: '0.2'}
     })
-    const potentialPage = x.get() / -containerWidth
-    const singleCard = props.itemWidth / -containerWidth
-    setCurPage(potentialPage < -singleCard ? 0 : potentialPage)
   }
 
   const handleDragEnd = () => {
@@ -219,10 +216,10 @@ const Slider = (props: SliderProps) => {
     } else if (pageCandidate < 0) {
       setCurPage(0)
     } else {
-      setCurPage(pageCandidate)
+      setCurPage(Math.floor(pageCandidate * 100) / 100)
     }
   }
-
+  console.log(curPage)
   const itemsInRows: Array<any> = []
   const cardsPerRow = Math.ceil(props.items.length / props.rows)
   let last = 0
