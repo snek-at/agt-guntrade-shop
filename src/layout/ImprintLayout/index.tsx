@@ -7,7 +7,7 @@ import {BaseLayout} from '../BaseLayout'
 import {ContactLayout} from '../ContactLayout'
 import {LegalLayout} from '../LegalLayout'
 import {TermsLayout} from '../TermsLayout'
-// import {MapLayout} from '../MapLayout'
+import {MapLayout} from '../MapLayout'
 
 
 export const ImprintLayout = (props: {activePath: string}) => {
@@ -42,7 +42,7 @@ export const ImprintLayout = (props: {activePath: string}) => {
         />
         <LegalLayout
           heading={<p>Rechtliches</p>}
-          legal={<p></p>>}
+          legal={<p></p>}
           // vat_number={<p>1</p>}
           // tax_id={<p>UID:ATU77453827</p>}
           // court_of_registry={<p>Landesgericht Ried im Innkreis FN: 563839a</p>}
@@ -67,6 +67,8 @@ export const ImprintLayout = (props: {activePath: string}) => {
           gtc={<p>4</p>}
           cancellation_policy={<p>5</p>}
         /> */}
+        {/* 46.53825575917372, 14.292146962563237 */}
+        <MapLayout lat={46.53825} lng={14.29214} zoom={13.60}/>
       </Container>
     </BaseLayout>
   )
