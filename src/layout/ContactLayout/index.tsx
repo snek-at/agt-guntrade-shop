@@ -24,15 +24,16 @@ import {CookieModalService, useCookieState} from '../../services/cookiemodal'
 
 export interface ContactLayoutProps {
   heading: React.ReactNode
-  city: React.ReactNode
-  zip_code: React.ReactNode
-  address: React.ReactNode
-  telephone: React.ReactNode
-  telefax: React.ReactNode
-  whatsapp_telephone: React.ReactNode
-  whatsapp_contactline: React.ReactNode
-  email: React.ReactNode
-  copyrightholder: React.ReactNode
+  contact: React.ReactNode
+  // city: React.ReactNode
+  // zip_code: React.ReactNode
+  // address: React.ReactNode
+  // telephone: React.ReactNode
+  // telefax: React.ReactNode
+  // whatsapp_telephone: React.ReactNode
+  // whatsapp_contactline: React.ReactNode
+  // email: React.ReactNode
+  // copyrightholder: React.ReactNode
 }
 
 export const ContactLayout = (props: ContactLayoutProps) => {
@@ -42,6 +43,8 @@ export const ContactLayout = (props: ContactLayoutProps) => {
       <Heading as="h4" size="md" mt="4">
         {props.heading}
       </Heading>
+      {props.contact}
+      {/*
       {props.city}
       {props.zip_code}
       {props.address}
@@ -51,6 +54,7 @@ export const ContactLayout = (props: ContactLayoutProps) => {
       {props.whatsapp_contactline}
       {props.email}
       {props.copyrightholder}
+      */}
     </>
   )
 }
