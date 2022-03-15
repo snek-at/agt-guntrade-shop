@@ -13,6 +13,7 @@ import {Box, Flex, Heading, Text} from '@chakra-ui/layout'
 import {Select} from '@chakra-ui/select'
 import {Textarea} from '@chakra-ui/textarea'
 import {connectSection, Field} from '@jaenjs/jaen'
+import {ContactForm} from '../../../ContactForm'
 
 const FaqSectionItem = connectSection(
   () => {
@@ -97,78 +98,7 @@ const FAQSection = ({heading}: FAQSectionProps) => {
           <Heading mb="5" as="h3">
             Jetzt Anfragen
           </Heading>
-          <FormControl>
-            <Flex mb="3" direction={{base: 'column', md: 'row'}}>
-              <Box mr="5" w={{base: '100%', md: '50%'}}>
-                <FormLabel htmlFor="first-name">Vorname</FormLabel>
-                <Input
-                  id="first-name"
-                  placeholder="Max"
-                  bg="white"
-                  borderColor="#D4D4D9"
-                />
-              </Box>
-              <Box w={{base: '100%', md: '50%'}}>
-                <FormLabel htmlFor="last-name">Nachname</FormLabel>
-                <Input
-                  id="last-name"
-                  placeholder="Mustermann"
-                  bg="white"
-                  borderColor="#D4D4D9"
-                />
-              </Box>
-            </Flex>
-            <Flex direction={{base: 'column', md: 'row'}}>
-              <Box w={{base: '100%', md: '50%'}} mr="5">
-                <FormLabel htmlFor="email">Email Adresse</FormLabel>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="max.mustermann@example.at"
-                  bg="white"
-                  borderColor="#D4D4D9"
-                />
-              </Box>
-              <Box w={{base: '100%', md: '50%'}}>
-                <FormLabel htmlFor="request-type">
-                  Welches Anliegen haben Sie?
-                </FormLabel>
-                <Select
-                  placeholder="Bitte auswählen"
-                  bg="white"
-                  borderColor="#D4D4D9">
-                  <option value="option1">Option 1</option>
-                  <option value="option2">Option 2</option>
-                  <option value="option3">Option 3</option>
-                </Select>
-              </Box>
-            </Flex>
-            <Box mt="3">
-              <FormLabel htmlFor="message">Nachricht</FormLabel>
-              <Textarea
-                resize="vertical"
-                bg="white"
-                borderColor="#D4D4D9"
-                maxH="45vh"
-              />
-            </Box>
-            <Box>
-              <Flex my="3">
-                <Checkbox
-                  borderColor="#D4D4D9"
-                  bg="white"
-                  h="fit-content"
-                  mt="0.5"
-                  mr="2"
-                />
-                <Text>
-                  Ich habe die AGBs gelesen und stimme der Verarbeitung meiner
-                  Daten zu.
-                </Text>
-              </Flex>
-              <Button colorScheme="agt.grayScheme">Absenden</Button>
-            </Box>
-          </FormControl>
+          <ContactForm requestOptions={['Option A', 'Option B', 'Option C']} />
         </Box>
       </Flex>
     </Flex>

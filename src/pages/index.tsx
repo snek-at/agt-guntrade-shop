@@ -29,23 +29,20 @@ const IndexPage = ({
 }>) => {
   const products = React.useMemo(() => {
     const featuredProducts: Array<any> = []
-
-    const allProducts: Array<any> = new Array<any>(
-      ...data.newShopifyProduct.edges,
-      ...data.oldShopifyProduct.edges
+    const allProducts = data.newShopifyProduct.edges.concat(
+      data.oldShopifyProduct.edges
     )
-
     //change this to change the amount of displayed RelatedProducts
     const iterationLimit = allProducts.length > 12 ? 12 : allProducts.length
 
     for (let i = 0; i < iterationLimit; i++) {
       const randomIndex = Math.floor(Math.random() * allProducts.length)
-
       if (
         featuredProducts.filter(
           (product: any) =>
-            product.node.handle === allProducts[randomIndex].node.handle
-        ).length === 0
+            product?.node?.handle === allProducts[randomIndex]?.node?.handle
+        ).length === 0 &&
+        typeof allProducts[randomIndex] !== 'undefined'
       ) {
         featuredProducts.push(allProducts[randomIndex])
       }
