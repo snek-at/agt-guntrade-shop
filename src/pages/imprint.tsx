@@ -3,6 +3,7 @@ import {navigate, PageProps} from 'gatsby'
 import {ContactLayout} from '../layout/ContactLayout'
 import {LegalLayout} from '../layout/LegalLayout'
 import {TermsLayout} from '../layout/TermsLayout'
+import {MapLayout} from '../layout/MapLayout'
 
 const ImprintPage = ({}: PageProps) => {
   return (
