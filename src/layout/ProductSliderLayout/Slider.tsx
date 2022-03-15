@@ -4,6 +4,7 @@ import {
   IconButton,
   IconButtonProps,
   HStack,
+  VStack,
   StackProps,
   useBreakpointValue,
   SimpleGrid,
@@ -42,6 +43,7 @@ interface SliderProps extends BaseProps {
   maxWidthInVW: number
   screenWidth: number | undefined
   progressProps: ProgressProps
+  rows: number
 }
 
 interface GridProps extends BaseProps {
@@ -50,6 +52,7 @@ interface GridProps extends BaseProps {
 }
 
 interface ResponsiveSliderProps {
+  sliderRows?: ResponsiveNumber
   progressProps?: ProgressProps
   containerPadding?: ResponsiveNumber
   sliderSpacing?: ResponsiveNumber
@@ -70,10 +73,8 @@ const MotionBox = motion<BoxProps>(Box)
 const Slider = (props: SliderProps) => {
   const animation = useAnimation()
   const [curPage, setCurPage] = React.useState(0)
-  const [lastPage, setLastPage] = React.useState(0)
   const [isDragging, setIsDragging] = React.useState(false)
 
-  const items = props.items
   const maxW = (props.screenWidth || 0) * (props.maxWidthInVW / 100)
   let possibleCards = Math.floor(maxW / props.itemWidth)
 
@@ -84,16 +85,23 @@ const Slider = (props: SliderProps) => {
     possibleCards -= 1
   }
 
-  const containerWidth =
-    possibleCards * props.itemWidth +
-    (possibleCards - 1) * props.spacing +
-    props.containerPadding * 2
+  const containerWidth = React.useMemo(
+    () =>
+      possibleCards * props.itemWidth +
+      (possibleCards - 1) * props.spacing +
+      props.containerPadding * 2,
+    [props, possibleCards]
+  )
 
-  const pageCount = Math.ceil(items.length / possibleCards)
+  const pageCount = React.useMemo(
+    () => Math.ceil(Math.ceil(props.items.length / possibleCards) / props.rows),
+    [props, possibleCards]
+  )
+
+  const snapDistance = React.useMemo(() => 1 / possibleCards, [possibleCards])
 
   React.useEffect(() => {
     if (pageCount < curPage) {
-      setLastPage(pageCount - 1)
       setCurPage(pageCount - 1)
     }
   }, [pageCount])
@@ -110,7 +118,6 @@ const Slider = (props: SliderProps) => {
       }
     }
     calculateDistanceAndAnimate(targetPage)
-    setLastPage(curPage)
     setCurPage(targetPage)
   }
 
@@ -165,61 +172,77 @@ const Slider = (props: SliderProps) => {
   }
   const x = useMotionValue(0)
 
-  const calculateDistanceAndAnimate = (targetPage: number | undefined) => {
-    const clickDistance = -(
-      containerWidth +
-      props.spacing -
-      2 * props.containerPadding
-    )
-    const position = x.get() === 0 ? lastPage * clickDistance : x.get()
-    let targetPx: number
-    if (typeof targetPage === 'undefined') {
-      const snapDistance = props.itemWidth + props.spacing
-      const scrollHelper = curPage > lastPage ? -0.45 : 0.45
-      targetPx =
-        Math.round(position / snapDistance + scrollHelper) * snapDistance
-    } else {
-      targetPx = targetPage * clickDistance
-    }
+  const calculateDistanceAndAnimate = (targetPage: number) => {
+    const distance =
+      targetPage % 1 === 0
+        ? -(containerWidth + props.spacing - 2 * props.containerPadding)
+        : -(containerWidth - 2 * props.containerPadding)
+    const position = x.get() === 0 ? curPage * distance : x.get()
+    const targetPx = targetPage * distance
     const solution = targetPx / position
-
-    console.log(
-      'targetPage',
-      targetPage,
-      'position',
-      position,
-      'clickDistance',
-      clickDistance,
-      'targetPx',
-      targetPx,
-      position % clickDistance === 0 || targetPx === 0
-        ? targetPx
-        : position * solution
-    )
-
     animation.start({
       x:
-        position % clickDistance === 0 || targetPx === 0
+        position % distance === 0 || targetPx === 0
           ? targetPx
+          : position * solution > 0
+          ? 0
           : position * solution,
       transition: {duration: '0.2'}
     })
-    setCurPage(x.get() / -containerWidth)
   }
 
   const handleDragEnd = () => {
-    setLastPage(curPage)
-    const pageCandidate = x.get() / -containerWidth
+    const position = x.get()
+
+    const pageCandidateWithoutSnap = -(position / containerWidth)
+
+    const pageCandidate =
+      curPage +
+      (pageCandidateWithoutSnap > curPage ? snapDistance : -snapDistance)
+
+    calculateDistanceAndAnimate(
+      pageCandidate > pageCount - 1
+        ? pageCount - 1
+        : pageCandidate < 0
+        ? 0
+        : pageCandidate
+    )
+
     if (pageCandidate > pageCount - 1) {
       setCurPage(pageCount - 1)
     } else if (pageCandidate < 0) {
       setCurPage(0)
     } else {
-      setCurPage(pageCandidate)
+      setCurPage(Math.floor(pageCandidate * 10000) / 10000)
     }
-    calculateDistanceAndAnimate(undefined)
+  }
+  console.log(curPage)
+  const itemsInRows: Array<any> = []
+  const cardsPerRow = Math.ceil(props.items.length / props.rows)
+  let last = 0
+  for (let i = 1; i <= props.rows; i++) {
+    itemsInRows.push(props.items.slice(last, last + cardsPerRow))
+    last += cardsPerRow
   }
 
+  const rows = (
+    <>
+      {itemsInRows.map(rowitems => (
+        <SliderStack
+          spacing={`${props.spacing}px`}
+          px={`${props.containerPadding}px`}>
+          {rowitems.map((item: any) => (
+            <MotionBox
+              pointerEvents={isDragging ? 'none' : 'auto'}
+              minWidth={`${props.itemWidth}px`}
+              maxW={`${props.itemWidth}px`}>
+              {item}
+            </MotionBox>
+          ))}
+        </SliderStack>
+      ))}
+    </>
+  )
   // product card slider with framer motion
   return (
     <Flex
@@ -250,21 +273,9 @@ const Slider = (props: SliderProps) => {
               right: 0
             }}
             animate={animation}>
-            <SliderStack
-              spacing={`${props.spacing}px`}
-              align={'start'}
-              px={`${props.containerPadding}px`}>
-              {items.map(item => (
-                <>
-                  <MotionBox
-                    pointerEvents={isDragging ? 'none' : 'auto'}
-                    minWidth={`${props.itemWidth}px`}
-                    maxW={`${props.itemWidth}px`}>
-                    {item}
-                  </MotionBox>
-                </>
-              ))}
-            </SliderStack>
+            <VStack align="start" spacing={`${props.spacing}px`}>
+              {rows}
+            </VStack>
           </MotionBox>
         </Box>
         {curPage > 0 && <NavigationButton direction="left" />}
@@ -325,6 +336,7 @@ export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
   const containerPadding = props.containerPadding
     ? useBreakpointValue(props.containerPadding)
     : 0
+  const sliderRows = useBreakpointValue(props.sliderRows || {base: 1})
   const breakpoint = props.breakpoint || 'md'
   const screenWidth = useWindowWidth()
   const baseProgressProps: ProgressProps = {
@@ -340,6 +352,7 @@ export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
   }
 
   const sliderProps = {
+    rows: sliderRows,
     progressProps: progressProps,
     containerPadding: containerPadding,
     items: props.items,

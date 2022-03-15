@@ -1,17 +1,15 @@
 import {css} from '@emotion/react'
 
-export const ImageStyle = () => css`
-  &:hover > .image-container {
-    scale: 1.1;
+export const ImageStyle = (width: number, height: number) => css`
+  &:hover > .ref-container > .image-container {
+    transform: scale(1.1);
   }
 
   .image-container {
-    width: 150px;
-    height: auto;
     transition: scale 150ms;
-  }
-
-  .image {
+    image-rendering: optimizeQuality;
     object-fit: contain;
+    max-height: ${height}px;
+    max-width: ${width}px;
   }
 `
