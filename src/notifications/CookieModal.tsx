@@ -88,7 +88,7 @@ const CookieModal = () => {
           </Lottie>
         </Box>
         <Box>
-          <NotifyField.TextField
+          <NotifyField.Text
             name="text"
             defaultValue="Wir verwenden auf unserer Website Cookies, um die Benutzererfahrung zu
           verbessern. Einige davon sind essenziell für den Betrieb der Website."
