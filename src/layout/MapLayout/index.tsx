@@ -1,53 +1,26 @@
 import React, {useRef, useEffect, useState} from 'react'
-import {Box} from '@chakra-ui/react'
-import mapboxgl from '!mapbox-gl'
+import {Flex, Box, BoxProps} from '@chakra-ui/react'
+import mapboxgl from 'mapbox-gl'
 import {MapStyle} from './style'
+import Map from '../../components/organisms/Map/Map'
 
-mapboxgl.accessToken = process.env.GATSBY_MAPBOX_ACCESS_TOKEN
 
-export interface MapLayoutProps {
-  lng: number
-  lat: number
-  zoom: number
+mapboxgl.accessToken = process.env.GATSBY_MAPBOX_ACCESS_TOKEN!
+
+interface IProps extends BoxProps {
+  location: [number, number],
+  title: string
+  subtitle: string
+  googleMapsLink: string
+  startZoom?: number
+  endZoom?: number
+  interactive?: boolean
 }
 
-export const MapLayout = (props: MapLayoutProps) => {
-  const mapContainer = useRef(null)
-  const map = useRef(null)
-  const [lng, setLng] = useState(props.lng)
-  const [lat, setLat] = useState(props.lat)
-  const [zoom, setZoom] = useState(props.zoom)
-
-  useEffect(() => {
-    // initialize map only once
-    if (map.current) return
-
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [lng, lat],
-      zoom: zoom
-    })
-  })
-
-  useEffect(() => {
-    if (!map.current) {
-      return
-    } else {
-      map.current.on('move', () => {
-        setLng(map.current.getCenter().lng.toFixed(4))
-        setLat(map.current.getCenter().lat.toFixed(4))
-        setZoom(map.current.getZoom().toFixed(2))
-      })
-    }
-  })
-
+export const MapLayout = ({ location, title, subtitle, className, googleMapsLink, startZoom = 10, endZoom = 11, interactive = false, ...props }: IProps) => {
   return (
-    <div>
-      <div className="sidebar">
-        Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
-      </div>
-      <Box ref={mapContainer} css={MapStyle()} className="map-container" />
-    </div>
+    // <div className={styles.container}>
+      <Map lat={-27} lng={153} />
+    // </div>
   )
 }

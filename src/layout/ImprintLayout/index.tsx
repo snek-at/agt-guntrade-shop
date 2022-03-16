@@ -68,7 +68,7 @@ export const ImprintLayout = (props: {activePath: string}) => {
           cancellation_policy={<p>5</p>}
         /> */}
         {/* 46.53825575917372, 14.292146962563237 */}
-        <MapLayout lat={46.53825} lng={14.29214} zoom={13.60}/>
+        <MapLayout location={[46.53825, 14.29214]} title="" subtitle="" googleMapsLink="" />
       </Container>
     </BaseLayout>
   )

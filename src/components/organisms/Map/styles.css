@@ -1,0 +1,16 @@
+/*
+What the Topbar would look like
+This can be changed, it will not have an effect on functionality
+*/
+.topBar {
+    position: absolute;
+    z-index: 10;
+
+    color: white;
+    font-family: monospace;
+    border: 1px solid #ddbdfc;
+    border-radius: 4px;
+    background-color: #757bc8;
+    padding: 5px;
+    margin: 5px;
+}
