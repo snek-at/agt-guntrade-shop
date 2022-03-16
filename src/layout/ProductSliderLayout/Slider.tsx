@@ -210,11 +210,6 @@ const Slider = (props: SliderProps) => {
             ? Math.ceil(pageCandidate * 100000)
             : Math.floor(pageCandidate * 100000)) / 100000
     )
-    console.log(
-      (pageCandidateWithoutSnap < curPage
-        ? Math.ceil(pageCandidate * 100000)
-        : Math.floor(pageCandidate * 100000)) / 100000
-    )
 
     if (pageCandidate > pageCount - 1) {
       setCurPage(pageCount - 1)
@@ -284,6 +279,7 @@ const Slider = (props: SliderProps) => {
               left: -containerWidth * (pageCount - 1) - props.spacing,
               right: 0
             }}
+            dragDirectionLock
             animate={animation}>
             <VStack align="start" spacing={`${props.spacing}px`}>
               {rows}
