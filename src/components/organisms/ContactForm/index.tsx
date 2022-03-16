@@ -9,7 +9,8 @@ import {
   Checkbox,
   Text,
   Button,
-  useToast
+  useToast,
+  HStack
 } from '@chakra-ui/react'
 import {Controller, useForm} from 'react-hook-form'
 import {sendEmail} from '../../../services/mail'
@@ -166,16 +167,13 @@ ${message}
           <FormControl isInvalid={!!errors.agbChecked}>
             <Checkbox
               borderColor="#D4D4D9"
-              bg="white"
               h="fit-content"
               mt="0.5"
               mr="2"
-              {...register('agbChecked', {required: true})}
-            />
-            <Text>
+              {...register('agbChecked', {required: true})}>
               Ich habe die AGBs gelesen und stimme der Verarbeitung meiner Daten
               zu.
-            </Text>
+            </Checkbox>
           </FormControl>
         </Flex>
         <Button

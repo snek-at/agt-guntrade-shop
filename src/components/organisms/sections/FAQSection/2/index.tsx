@@ -9,7 +9,15 @@ import {Button} from '@chakra-ui/button'
 import {Checkbox} from '@chakra-ui/checkbox'
 import {FormControl, FormLabel} from '@chakra-ui/form-control'
 import {Input} from '@chakra-ui/input'
-import {Box, Flex, Heading, Text} from '@chakra-ui/layout'
+import {
+  Box,
+  Center,
+  Container,
+  Flex,
+  Heading,
+  Stack,
+  Text
+} from '@chakra-ui/layout'
 import {Select} from '@chakra-ui/select'
 import {Textarea} from '@chakra-ui/textarea'
 import {connectSection, Field} from '@jaenjs/jaen'
@@ -62,46 +70,48 @@ export interface FAQSectionProps {
 
 const FAQSection = ({heading}: FAQSectionProps) => {
   return (
-    <Flex
-      id="faq"
-      p="20"
-      direction={{base: 'column', md: 'row'}}
-      bg="agt.gray"
-      minH="100vh"
-      justifyContent="center"
-      alignItems="center">
-      <Flex w="100%">
-        <Box w={{base: '100%', md: '50%'}} pr="10" mt="10">
-          <Heading mb="5" color="white">
-            {heading}
-          </Heading>
-          <Field.Section
-            as={Accordion}
-            props={{
-              bg: 'white',
-              borderRadius: '7px',
-              w: '100%',
-              defaultIndex: [0]
-            }}
-            name="faq"
-            displayName="FAQ"
-            sections={[FaqSectionItem]}
-          />
-        </Box>
-        <Box
-          w={{base: '100%', md: '50%'}}
-          bg="agt.lightgray"
-          borderRadius="5px"
-          p="10"
-          h="fit-content"
-          maxH="90vh">
-          <Heading mb="5" as="h3">
-            Jetzt Anfragen
-          </Heading>
-          <ContactForm requestOptions={['Option A', 'Option B', 'Option C']} />
-        </Box>
-      </Flex>
-    </Flex>
+    <Box w="full" bg="agt.gray" py="16">
+      <Container maxW="8xl" h="100%">
+        <Stack
+          id="faq"
+          direction={{base: 'column', md: 'row'}}
+          h="100%"
+          justifyContent="center"
+          alignItems="center"
+          spacing={8}>
+          <Box w={{base: '100%', md: '50%'}} h="100%">
+            <Heading mb="5" color="white">
+              {heading}
+            </Heading>
+            <Field.Section
+              as={Accordion}
+              props={{
+                bg: 'white',
+                borderRadius: '7px',
+                w: '100%',
+                defaultIndex: [0]
+              }}
+              name="faq"
+              displayName="FAQ"
+              sections={[FaqSectionItem]}
+            />
+          </Box>
+          <Box
+            w={{base: '100%', md: '50%'}}
+            bg="agt.lightgray"
+            borderRadius="5px"
+            p="10"
+            h="100%">
+            <Heading mb="5" as="h3">
+              Jetzt Anfragen
+            </Heading>
+            <ContactForm
+              requestOptions={['Option A', 'Option B', 'Option C']}
+            />
+          </Box>
+        </Stack>
+      </Container>
+    </Box>
   )
 }
 
