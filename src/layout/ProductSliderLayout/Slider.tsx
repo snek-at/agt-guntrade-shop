@@ -173,39 +173,43 @@ const Slider = (props: SliderProps) => {
   const x = useMotionValue(0)
 
   const calculateDistanceAndAnimate = (targetPage: number) => {
-    const distance =
-      targetPage % 1 === 0
-        ? -(containerWidth + props.spacing - 2 * props.containerPadding)
-        : -(containerWidth - 2 * props.containerPadding)
+    const distance = -(
+      containerWidth +
+      props.spacing -
+      2 * props.containerPadding
+    )
+
     const position = x.get() === 0 ? curPage * distance : x.get()
     const targetPx = targetPage * distance
     const solution = targetPx / position
+
     animation.start({
       x:
         position % distance === 0 || targetPx === 0
-          ? targetPx
+          ? Math.ceil(targetPx)
           : position * solution > 0
           ? 0
-          : position * solution,
+          : Math.ceil(position * solution),
       transition: {duration: '0.2'}
     })
   }
 
   const handleDragEnd = () => {
     const position = x.get()
-
     const pageCandidateWithoutSnap = -(position / containerWidth)
-
     const pageCandidate =
       curPage +
-      (pageCandidateWithoutSnap > curPage ? snapDistance : -snapDistance)
+      (pageCandidateWithoutSnap < curPage ? -snapDistance : snapDistance
 
     calculateDistanceAndAnimate(
       pageCandidate > pageCount - 1
         ? pageCount - 1
         : pageCandidate < 0
         ? 0
-        : pageCandidate
+        : (pageCandidateWithoutSnap < curPage
+            ? Math.ceil(pageCandidate * 100000)
+            : Math.floor(pageCandidate * 100000)) / 100000
+
     )
 
     if (pageCandidate > pageCount - 1) {
@@ -213,10 +217,13 @@ const Slider = (props: SliderProps) => {
     } else if (pageCandidate < 0) {
       setCurPage(0)
     } else {
-      setCurPage(Math.floor(pageCandidate * 10000) / 10000)
+      setCurPage(
+        (pageCandidateWithoutSnap < curPage
+          ? Math.ceil(pageCandidate * 100000)
+          : Math.floor(pageCandidate * 100000)) / 100000
+      )
     }
   }
-  console.log(curPage)
   const itemsInRows: Array<any> = []
   const cardsPerRow = Math.ceil(props.items.length / props.rows)
   let last = 0
@@ -229,6 +236,7 @@ const Slider = (props: SliderProps) => {
     <>
       {itemsInRows.map(rowitems => (
         <SliderStack
+          align="start"
           spacing={`${props.spacing}px`}
           px={`${props.containerPadding}px`}>
           {rowitems.map((item: any) => (
@@ -272,6 +280,7 @@ const Slider = (props: SliderProps) => {
               left: -containerWidth * (pageCount - 1) - props.spacing,
               right: 0
             }}
+            dragDirectionLock
             animate={animation}>
             <VStack align="start" spacing={`${props.spacing}px`}>
               {rows}

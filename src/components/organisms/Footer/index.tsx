@@ -43,23 +43,28 @@ const Copyright = (props: TextProps) => (
 const SocialMediaLinks = (props: ButtonGroupProps) => (
   <ButtonGroup variant="ghost" color="agt.red" {...props}>
     <IconButton
+      target={'_blank'}
       as="a"
-      href="#"
+      href="https://instagram.com"
       aria-label="Instagram"
       icon={<FiInstagram fontSize="20px" />}
     />
     <IconButton
+      target={'_blank'}
       as="a"
-      href="#"
+      href="https://facebook.com"
       aria-label="Facebook"
       icon={<FiFacebook fontSize="20px" />}
     />
-    <IconButton
-      as="a"
-      href="#"
-      aria-label="GitHub"
-      icon={<FiGithub fontSize="20px" />}
-    />
+    <Link isExternal>
+      <IconButton
+        target={'_blank'}
+        as="a"
+        href="https://github.com/snek-at/agt-guntrade-shop"
+        aria-label="GitHub"
+        icon={<FiGithub fontSize="20px" />}
+      />
+    </Link>
   </ButtonGroup>
 )
 

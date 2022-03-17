@@ -212,7 +212,7 @@ export const useProductSearch = (
   },
   reverse: boolean,
   permanentTags: Array<string> = [],
-  categoryTagsAndPriorities: {
+  categoryTagsAndPriorities?: {
     maxPrio: number
     data: Array<{priority: number; tag: string}>
   }

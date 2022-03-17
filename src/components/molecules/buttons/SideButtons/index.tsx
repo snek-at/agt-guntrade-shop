@@ -4,9 +4,9 @@ import {FiMapPin} from '@react-icons/all-files/fi/FiMapPin'
 import {FiPhoneCall} from '@react-icons/all-files/fi/FiPhoneCall'
 
 export interface SideButtonProps {
-  onSideButton1Click: () => void
-  onSideButton2Click: () => void
-  onSideButton3Click: () => void
+  onMailButtonClick: () => void
+  onLocationButtonClick: () => void
+  onPhoneButtonClick: () => void
 }
 
 const SideButton: React.FC<SideButtonProps> = props => {
@@ -31,7 +31,7 @@ const SideButton: React.FC<SideButtonProps> = props => {
         aria-label="Email"
         icon={<FiMail fontSize="20px" />}
         onClick={() => {
-          props.onSideButton2Click
+          props.onMailButtonClick()
         }}></IconButton>
       <IconButton
         as="a"
@@ -41,7 +41,7 @@ const SideButton: React.FC<SideButtonProps> = props => {
         aria-label="Location"
         icon={<FiMapPin fontSize="20px" />}
         onClick={() => {
-          props.onSideButton1Click
+          props.onLocationButtonClick()
         }}></IconButton>
       <IconButton
         as="a"
@@ -51,7 +51,7 @@ const SideButton: React.FC<SideButtonProps> = props => {
         aria-label="Phone"
         icon={<FiPhoneCall fontSize="20px" />}
         onClick={() => {
-          props.onSideButton3Click
+          props.onPhoneButtonClick()
         }}></IconButton>
     </ButtonGroup>
   )
