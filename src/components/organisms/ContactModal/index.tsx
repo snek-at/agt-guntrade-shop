@@ -22,6 +22,7 @@ import {Textarea} from '@chakra-ui/textarea'
 
 import * as style from './style'
 import {useForm} from 'react-hook-form'
+import {sendEmail} from '../../../services/mail'
 
 export interface ContactModalProps {
   isOpen: boolean
@@ -41,10 +42,13 @@ export const ContactModal = ({
   wishlist,
   onClose
 }: ContactModalProps) => {
+  const toast = useToast()
   const generateEmailContent = () => {
-    const wishlistText = wishlist.map(item => {
-      return `- ${item.quantity} x ${item.title}`
-    })
+    const wishlistText = wishlist
+      .map(item => {
+        return `- ${item.quantity} x ${item.title}`
+      })
+      .join('\n')
 
     const content = `Sehr geehrtes AGT Team,
 ich würde gerne ein Kaufangebot für folgende Artikel einholen:
@@ -80,6 +84,36 @@ Mit freundlichen Grüßen!
   }, [wishlist])
 
   const onSubmit = async (data: typeof defaultValues) => {
+    const {firstName, lastName, email, message} = data
+
+    const subject = `Kaufanfrage für ${wishlist
+      .map(item => item.title)
+      .join(', ')}`
+
+    const body = `
+Anfrage von ${firstName} ${lastName} (${email}) über AGT Shop.
+
+<== Inhalt der Anfrage ==>
+
+${message}
+`
+
+    await sendEmail({
+      fromEmail: email,
+      name: `${firstName} ${lastName}`,
+      subject,
+      message: body
+    })
+
+    toast({
+      title: 'Anfrage erfolgreich versendet',
+      description:
+        'Vielen Dank für Ihre Anfrage. Wir werden uns so schnell wie möglich bei Ihnen melden.',
+      status: 'success',
+      duration: 9000,
+      isClosable: true
+    })
+
     onClose()
   }
 

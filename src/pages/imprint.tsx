@@ -5,9 +5,7 @@ import {LegalLayout} from '../layout/LegalLayout'
 import {TermsLayout} from '../layout/TermsLayout'
 import {MapLayout} from '../layout/MapLayout'
 
-
 const ImprintPage = ({}: PageProps) => {
-
   return (
     <>
       <ContactLayout

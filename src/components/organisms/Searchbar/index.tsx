@@ -40,14 +40,13 @@ export const SearchbarButton = (props: ButtonProps) => {
   return (
     <Button
       maxW="3xl"
+      mx="4"
       flex="1"
       type="button"
-      mx="6"
       lineHeight="1.2"
-      w="100%"
       bg={useColorModeValue('white', 'gray.700')}
       whiteSpace="nowrap"
-      display={{base: 'none', md: 'flex'}}
+      display={'flex'}
       alignItems="center"
       color="gray.400"
       py="3"
@@ -58,7 +57,7 @@ export const SearchbarButton = (props: ButtonProps) => {
       rounded="md"
       {...props}>
       <SearchIcon />
-      <HStack w="full" ml="3" spacing="4px">
+      <HStack w="full" mx="3" spacing="4px">
         <Text textAlign="left" flex="1">
           Finde Artikel
         </Text>
@@ -128,7 +127,6 @@ export const Searchbar = (props: SearchbarProps) => {
   return (
     <>
       <SearchbarButton onClick={onOpen} />
-
       <Modal
         isOpen={isOpen}
         onClose={onClose}
