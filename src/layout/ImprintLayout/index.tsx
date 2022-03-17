@@ -2,13 +2,15 @@ import {
   Heading,
   Container,
   useColorModeValue,
+  Text,
+  Center,
+  Link
 } from '@chakra-ui/react'
 import {BaseLayout} from '../BaseLayout'
 import {ContactLayout} from '../ContactLayout'
 import {LegalLayout} from '../LegalLayout'
 import {TermsLayout} from '../TermsLayout'
-import {MapLayout} from '../MapLayout'
-
+import {GoogleMaps} from '../GoogleMapsLayout'
 
 export const ImprintLayout = (props: {activePath: string}) => {
   return (
@@ -68,7 +70,7 @@ export const ImprintLayout = (props: {activePath: string}) => {
           cancellation_policy={<p>5</p>}
         /> */}
         {/* 46.53825575917372, 14.292146962563237 */}
-        <MapLayout location={[46.53825, 14.29214]} title="" subtitle="" googleMapsLink="" />
+        <GoogleMaps />
       </Container>
     </BaseLayout>
   )
