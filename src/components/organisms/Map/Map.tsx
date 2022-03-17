@@ -1,153 +1,66 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import ReactMapGL from "react-map-gl";
-import {Layer, Marker, Source} from "react-map-gl";
-import Markers from "./Markers";
-import "./styles.css";
-import Props from "./MapProps";
-/*
-Map Component Written By Magnus Jackson on 15/12/2021
+import * as React from 'react'
+import {useMemo} from 'react'
+import Map, {
+  Marker,
+  NavigationControl,
+  FullscreenControl,
+  ScaleControl,
+  GeolocateControl
+} from 'react-map-gl'
 
-Uses react-map-gl for mapping library
-https://visgl.github.io/react-map-gl/
+import 'mapbox-gl/dist/mapbox-gl.css'
 
-Uses Mapbox for Mapping API 
-https://www.mapbox.com/ 
-*/
+import Pin from './pin'
+import {Box} from '@chakra-ui/react'
 
-// Access Token
+const CITIES = [
+  {
+    city: 'New York',
+    population: '8,175,133',
+    image:
+      'http://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Above_Gotham.jpg/240px-Above_Gotham.jpg',
+    state: 'New York',
+    latitude: 40.6643,
+    longitude: -73.9385
+  }
+]
+
 const TOKEN = process.env.GATSBY_MAPBOX_ACCESS_TOKEN
 
+export default function App() {
+  const pins = useMemo(
+    () =>
+      CITIES.map((city, index) => (
+        <Marker
+          key={`marker-${index}`}
+          longitude={city.longitude}
+          latitude={city.latitude}
+          anchor="bottom">
+          <Pin onClick={() => null} />
+        </Marker>
+      )),
+    []
+  )
 
-/*
-Marker Component
-Component itself handles all click, enter, leave, and drag events
-For a list of functionality see the Markers Interface 
-*/
-function Mark(props: Markers) {
-    const [pos, setPos] = useState({lat:props.lat, lng: props.lng});
-
-    function handleClick() {
-        if (typeof props.click === "function") {
-            props.click();
-        }
-    }
-
-    function handleMouseEnter(e: React.MouseEvent) {
-        if (typeof props.MEnter === "function") {
-            props.MEnter(e);
-        }
-    }
-
-    function handleMouseLeave(e: React.MouseEvent) {
-        if (typeof props.MLeave === "function") {
-            props.MLeave(e);
-        }
-    }
-
-    function drag(e: any) {
-        let [lng, lat] = e.lngLat;
-        setPos({lat:lat, lng:lng});
-
-        if (typeof props.dragEnd === "function") {
-            props.dragEnd(e);
-        }
-    }
-
-    return (
-        <div
-        onMouseEnter={e => handleMouseEnter(e)}
-        onMouseLeave={e => handleMouseLeave(e)}>
-            <Marker
-            onClick={handleClick}
-            latitude={pos.lat}
-            longitude={pos.lng}
-            draggable={props.draggable}
-            onDragEnd={(e) => drag(e)}>
-                {props.marker}
-            </Marker>
-        </div>
-    );
-}
-
-/*
-Handle creating and pushing each marker to a marker array 
-
-Each marker is of type Mark
-*/
-function handleMarkers(markers: Markers[] | undefined):any[] {
-    if (typeof markers === "undefined"){
-        return []
-    } else {
-        var returnMarkers:JSX.Element[] = [];
-        markers.forEach((marker) => {
-            returnMarkers.push(<Mark {...marker} />);
-        });
-        return returnMarkers
-    }
-}
-
-/*
-Map made use react-map-gl
-https://visgl.github.io/react-map-gl/ 
-self handles all: geoJSON, Markers, Top Bar Buttons, and Updating
-
-Optional Props:
-    geoJSON as FeatureCollection,
-    zoom as number,
-    width as number (Should specify),
-    height as number (Should specify),
-    buttons as JSX.Element Button Array,
-    markers as Marker Type Array
-
-Required Props:
-    lat as number,
-    Lng as number
-*/
-export default function Map(props: Props):JSX.Element {
-    const data = props.geoJSON;
-
-    const [viewport, setViewport] = useState({
-        width:(props.width) ? props.width : 800,
-        height:(props.height) ? props.height : 600,
-        latitude: props.lat,
-        longitude:props.lng,
-        zoom: (typeof props.zoom !== "undefined") ? props.zoom : 10
-    });
-
-    useEffect(() => {
-        setViewport({
-            width:viewport.width,
-            height: viewport.height,
-            latitude:props.lat,
-            longitude:props.lng,
-            zoom: viewport.zoom
-        });
-    }, [props]);
-
-    const markers = handleMarkers(props.markers);
-
-    return (
-        <div>
-            <div className="topBar">
-                lat: {viewport.latitude.toFixed(3)} | lng: {viewport.longitude.toFixed(3)} {(props.buttons) ? "|" : ""} {props.buttons}
-            </div>
-            <ReactMapGL
-            {...viewport}
-            mapboxAccessToken={TOKEN}
-            mapStyle="mapbox://styles/mapbox/streets-v11"
-            onViewportChange={(nextView:typeof viewport) => setViewport(nextView)}>
-                {/* GeoJSON */}
-                <Source id="my-data" type="geojson" data={data}>
-                    <Layer 
-                    id="point"
-                    type="circle"
-                    paint={{
-                        "circle-radius": 5,
-                        "circle-color": (typeof props.layerColour !== "undefined") ? props.layerColour : "#007cbf"}}/>
-                </Source>
-                {markers}
-            </ReactMapGL>
-        </div>
-    );
+  return (
+    <Box w="100vw" bg="red">
+      <Map
+        initialViewState={{
+          latitude: 40,
+          longitude: -100,
+          zoom: 3.5,
+          bearing: 0,
+          pitch: 0
+        }}
+        style={{width: '100%', height: 400}}
+        mapStyle="mapbox://styles/mapbox/streets-v9"
+        mapboxAccessToken={TOKEN}>
+        <GeolocateControl position="top-left" />
+        <FullscreenControl position="top-left" />
+        <NavigationControl position="top-left" />
+        <ScaleControl />
+        {pins}
+      </Map>
+    </Box>
+  )
 }
