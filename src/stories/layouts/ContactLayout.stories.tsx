@@ -6,4 +6,10 @@ export default {
   component: ContactLayout
 } as Meta
 
-export const Page = () => <ContactLayout heading="Kontakt" contact="" />
+export const Page = () => (
+  <ContactLayout
+    phone="+43 676 3232 12"
+    email="test@test.com"
+    address="Hausergasse 5, 9940 Villach"
+  />
+)

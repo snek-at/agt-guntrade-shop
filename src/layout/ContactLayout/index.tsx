@@ -29,17 +29,9 @@ import {ShopLayout} from '../ShopLayout'
 import {FaAddressBook, FaEnvelopeSquare, FaPhoneSquare} from 'react-icons/fa'
 
 export interface ContactLayoutProps {
-  heading: React.ReactNode
-  contact: React.ReactNode
-  // city: React.ReactNode
-  // zip_code: React.ReactNode
-  // address: React.ReactNode
-  // telephone: React.ReactNode
-  // telefax: React.ReactNode
-  // whatsapp_telephone: React.ReactNode
-  // whatsapp_contactline: React.ReactNode
-  // email: React.ReactNode
-  // copyrightholder: React.ReactNode
+  phone: React.ReactNode
+  email: React.ReactNode
+  address: React.ReactNode
 }
 
 export const ContactLayout = (props: ContactLayoutProps) => {
@@ -56,7 +48,7 @@ export const ContactLayout = (props: ContactLayoutProps) => {
           <VStack spacing={6}>
             <Icon as={FaPhoneSquare} boxSize="16" />
             <Text fontSize="xl" fontWeight="semibold">
-              +49 (0) 1511 / 8888888
+              {props.phone}
             </Text>
           </VStack>
         </Center>
@@ -64,15 +56,15 @@ export const ContactLayout = (props: ContactLayoutProps) => {
           <VStack spacing={6}>
             <Icon as={FaAddressBook} boxSize="16" />
             <Text fontSize="xl" fontWeight="semibold">
-              Reßnig 20, 9170 Ferlach
+              {props.address}
             </Text>
           </VStack>
         </Center>
         <Center>
-          <VStack spacing={6}>
+          <VStack spacing={6} maxW="33%">
             <Icon as={FaEnvelopeSquare} boxSize="16" />
             <Text fontSize="xl" fontWeight="semibold">
-              nicoschett@icloud.com
+              {props.email}
             </Text>
           </VStack>
         </Center>
@@ -80,36 +72,6 @@ export const ContactLayout = (props: ContactLayoutProps) => {
       <Container maxW="8xl" my={8}>
         <ContactForm requestOptions={[]} />
       </Container>
-    </BaseLayout>
-  )
-
-  return (
-    <BaseLayout activePath="/contact" withSearch={true}>
-      <ShopLayout>
-        <Container maxW="4xl">
-          <Flex border={1} borderRadius={'lg'} overflow="hidden">
-            <Flex direction={'column'}>
-              <Heading as="h2" size="xl" mt="4">
-                {props.heading}
-              </Heading>
-              <Text>{props.contact}</Text>
-              <Button variant="ghost">nicoschett@icloud.com</Button>
-              <Button variant="ghost">+43 0676 123345 23</Button>
-              <Button variant="ghost">Hausergasse 5, 9944 Villach</Button>
-            </Flex>
-            <Box
-              maxW="lg"
-              border={1}
-              borderRadius={'lg'}
-              overflow="hidden"
-              bg="white"
-              p={4}
-              m={4}>
-              <ContactForm requestOptions={['a', 'b', 'c']} />
-            </Box>
-          </Flex>
-        </Container>
-      </ShopLayout>
     </BaseLayout>
   )
 }

@@ -113,6 +113,15 @@ const NavTop = ({links, activePath, search}: NavTopProps) => {
             <MenuItem>Link 3</MenuItem>
             </MenuList>
         </Menu> */}
+            <Link
+              as={GatsbyLink}
+              to="/contact"
+              display={{
+                base: 'none',
+                md: 'block'
+              }}>
+              Kontakt
+            </Link>
             <Button
               as={GatsbyLink}
               to="/wishlist"
