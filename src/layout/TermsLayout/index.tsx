@@ -37,7 +37,7 @@ export const TermsLayout = (props: TermsLayoutProps) => {
 
   return (
     <>
-      <Heading as="h4" size="md" mt="4">
+      <Heading as="h4" size="md" mt="4" mb="2">
         {props.heading}
       </Heading>
       {props.terms}
