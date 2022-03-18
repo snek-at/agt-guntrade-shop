@@ -39,9 +39,9 @@ export const ContactLayout = (props: ContactLayoutProps) => {
     <BaseLayout activePath="/contact" withSearch={true}>
       <GoogleMaps />
       <SimpleGrid
-        minChildWidth="120px"
         spacing="40px"
         py={8}
+        columns={[1, 1, 1, 3]}
         bg="agt.gray"
         color="white">
         <Center>
@@ -61,7 +61,7 @@ export const ContactLayout = (props: ContactLayoutProps) => {
           </VStack>
         </Center>
         <Center>
-          <VStack spacing={6} maxW="33%">
+          <VStack spacing={6}>
             <Icon as={FaEnvelopeSquare} boxSize="16" />
             <Text fontSize="xl" fontWeight="semibold">
               {props.email}
