@@ -5,7 +5,7 @@ import {ImprintLayout} from '../layout/ImprintLayout'
 const ImprintPage = ({}: PageProps) => {
   return (
     <>
-      <ImprintLayout activePath="" />
+      <ImprintLayout activePath="/Impressum" />
     </>
   )
 }
