@@ -329,7 +329,7 @@ const createCollectionShopAndProductPages = (data, actions) => {
           },
           productGrid: {
             title: 'Empfohlende Artikel',
-            items: edge.node.products.slice(0, 8)
+            items: edge.node.products.slice(0, 9)
           }
         }
       })

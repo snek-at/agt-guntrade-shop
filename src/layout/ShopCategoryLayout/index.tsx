@@ -19,6 +19,7 @@ import {BaseLayout} from '../BaseLayout'
 import {BannerLayout} from '../BannerLayout'
 
 import {Link as GatsbyLink} from 'gatsby'
+import {generateProductCard} from '../ProductCardLayout'
 
 export type CategoryItem = {
   title: string
@@ -119,7 +120,23 @@ export const ShopCategoryLayout = (props: {
       <ShopLayout>
         <VStack spacing={16} align="left">
           <CategoryGrid {...props.category} />
-          <ProductGrid {...props.productGrid} minChildWidth={200} />
+          <VStack spacing={8}>
+            <Heading textAlign={'center'} size="2xl" borderBottom={'1px solid'}>
+              {props.productGrid.title}
+            </Heading>
+            <SimpleGrid columns={{base: 2, md: 5}} spacing={'4'}>
+              {props.productGrid.items.map((item, key) => {
+                return (
+                  <Link
+                    key={item.id}
+                    as={GatsbyLink}
+                    to={props.productGrid.getPath(item.handle)}>
+                    {generateProductCard(item)}
+                  </Link>
+                )
+              })}
+            </SimpleGrid>
+          </VStack>
         </VStack>
       </ShopLayout>
     </BaseLayout>
