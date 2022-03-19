@@ -9,43 +9,17 @@ import {
   Link,
 } from '@chakra-ui/react'
 import {BaseLayout} from '../BaseLayout'
-import {ContactLayout} from '../ContactLayout'
-import {LegalLayout} from '../LegalLayout'
-import {TermsLayout} from '../TermsLayout'
+import {BannerLayout} from '../BannerLayout'
+import {ImprintContactLayout} from '../ImprintContactLayout'
+import {ImprintLegalLayout} from '../ImprintLegalLayout'
+import {ImprintTermsLayout} from '../ImprintTermsLayout'
 import {GoogleMaps} from '../GoogleMapsLayout'
-
-import {GatsbyImage, IGatsbyImageData, StaticImage} from 'gatsby-plugin-image'
-import {Breadcrumbs, ShopLayout} from '../ShopLayout'
-
-import {GCImage, gridPadBoxes} from '../../common/utils'
-import * as style from './style'
 
 
 export const ImprintLayout = (props: {activePath: string}) => {
   return (
     <BaseLayout withSearch={true} activePath={props.activePath}>
-      <Box position={'relative'} color="white">
-        <style.Banner>
-          <GCImage
-            gimg={
-              <StaticImage
-                src="https://i.imgur.com/8zG2Ymd.jpeg"
-                alt="bg"
-                imgClassName="banner-image"
-              />
-            }
-          />
-        </style.Banner>
-        <Flex position={'absolute'} top="5" w='100%' justifyContent={'center'} alignItems={'center'}>
-          <Box w="8xl">
-            <Breadcrumbs path={props.activePath} />
-            <Heading size="2xl" my="8">
-              Impressum
-            </Heading>
-          </Box>
-
-        </Flex>
-      </Box>
+      <BannerLayout title='Impressum' path={props.activePath} />
       <Container
         as="section"
         maxW="8xl"
@@ -60,7 +34,7 @@ export const ImprintLayout = (props: {activePath: string}) => {
         {/* <Heading as="h1" size="lg" fontWeight="extrabold" >
           Impressum
         </Heading> */}
-        <ContactLayout
+        <ImprintContactLayout
           heading={<p>AGT Gun Trade KG</p>}
           contact={
             <>
@@ -84,7 +58,7 @@ export const ImprintLayout = (props: {activePath: string}) => {
           // email={<p>Email: info@agt-guntrade.at</p>}
           // copyrightholder={<p>9</p>}
         />
-        <LegalLayout
+        <ImprintLegalLayout
           heading={<p>Rechtliches</p>}
           legal={
             <>
@@ -100,7 +74,7 @@ export const ImprintLayout = (props: {activePath: string}) => {
           // trade_register_number={<p>5</p>}
           // ownership={<p>Inh. Patrick Türk</p>}
         />
-        <TermsLayout
+        <ImprintTermsLayout
           heading={<p>Bedingungen</p>}
           terms={
             <>
