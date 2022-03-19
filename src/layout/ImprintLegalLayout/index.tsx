@@ -22,7 +22,7 @@ import React, {useEffect, useState} from 'react'
 import {CheckCircleIcon, EmailIcon, NotAllowedIcon} from '@chakra-ui/icons'
 import {CookieModalService, useCookieState} from '../../services/cookiemodal'
 
-export interface LegalLayoutProps {
+export interface ImprintLegalLayoutProps {
   heading: React.ReactNode
   legal: React.ReactNode
   // vat_number: React.ReactNode
@@ -34,7 +34,7 @@ export interface LegalLayoutProps {
 }
 
 
-export const LegalLayout = (props: LegalLayoutProps) => {
+export const ImprintLegalLayout = (props: ImprintLegalLayoutProps) => {
 
   return (
     <>

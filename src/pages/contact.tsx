@@ -8,6 +8,7 @@ const ImprintPage = connectPage(
     return (
       <>
         <ContactLayout
+          activePath='/Kontakt'
           email={
             <Field.Text name="email" defaultValue={'info@agt-guntrade.at'} />
           }

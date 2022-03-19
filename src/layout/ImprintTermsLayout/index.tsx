@@ -22,7 +22,7 @@ import React, {useEffect, useState} from 'react'
 import {CheckCircleIcon, EmailIcon, NotAllowedIcon} from '@chakra-ui/icons'
 import {CookieModalService, useCookieState} from '../../services/cookiemodal'
 
-export interface TermsLayoutProps {
+export interface ImprintTermsLayoutProps {
   heading: React.ReactNode
   terms: React.ReactNode
   // about: React.ReactNode
@@ -33,7 +33,7 @@ export interface TermsLayoutProps {
 }
 
 
-export const TermsLayout = (props: TermsLayoutProps) => {
+export const ImprintTermsLayout = (props: ImprintTermsLayoutProps) => {
 
   return (
     <>
