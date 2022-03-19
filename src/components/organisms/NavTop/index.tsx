@@ -7,9 +7,15 @@ import {
   Button,
   useDisclosure,
   useColorModeValue,
-  Stack
+  Stack,
+  VStack,
+  Center,
+  Text,
+  Collapse,
+  Icon,
+  Divider
 } from '@chakra-ui/react'
-import {HamburgerIcon, CloseIcon} from '@chakra-ui/icons'
+import {HamburgerIcon, CloseIcon, ChevronDownIcon} from '@chakra-ui/icons'
 import {FiShoppingCart} from '@react-icons/all-files/fi/FiShoppingCart'
 import {Logo} from '../../../common/assets'
 import * as style from './style'
@@ -30,31 +36,73 @@ export interface NavTopProps {
   activePath?: string
 }
 
+const MobileNavItem = ({name, children, path}: NavItem) => {
+  const {isOpen, onToggle} = useDisclosure()
+
+  return (
+    <Stack spacing={4} onClick={children && onToggle}>
+      <Flex
+        py={2}
+        as={GatsbyLink}
+        to={!children ? path : '#'}
+        justify={'space-between'}
+        align={'center'}
+        _hover={{
+          textDecoration: 'none'
+        }}>
+        <Text
+          fontWeight={600}
+          color={useColorModeValue('gray.600', 'gray.200')}>
+          {name}
+        </Text>
+        {children && (
+          <Icon
+            as={ChevronDownIcon}
+            transition={'all .25s ease-in-out'}
+            transform={isOpen ? 'rotate(180deg)' : ''}
+            w={6}
+            h={6}
+          />
+        )}
+      </Flex>
+
+      <Collapse in={isOpen} animateOpacity style={{marginTop: '0!important'}}>
+        <Stack
+          mt={2}
+          pl={4}
+          borderLeft={1}
+          borderStyle={'solid'}
+          borderColor={useColorModeValue('gray.200', 'gray.700')}
+          align={'start'}>
+          {children &&
+            children.map(child => (
+              <Link key={child.name} as={GatsbyLink} to={child.path} py={2}>
+                {child.name}
+              </Link>
+            ))}
+        </Stack>
+      </Collapse>
+    </Stack>
+  )
+}
+
+interface NavItem {
+  name: string
+  path: string
+  children?: Array<NavItem>
+}
+
 const NavTop = ({links, activePath, search}: NavTopProps) => {
-  const {isOpen, onOpen, onClose} = useDisclosure()
+  const {isOpen, onOpen, onClose, onToggle} = useDisclosure()
 
   const cleanedActivePath = activePath?.split('/')[1]
 
-  const allLinkElement = links.map((link, i) => (
-    <Link
-      key={i}
-      as={GatsbyLink}
-      to={link.path}
-      px={2}
-      py={1}
-      rounded={'md'}
-      bg={
-        link.path === `/${cleanedActivePath}`
-          ? useColorModeValue('gray.200', 'gray.600')
-          : 'transparent'
-      }
-      _hover={{
-        textDecoration: 'none',
-        bg: useColorModeValue('gray.200', 'gray.600')
-      }}>
-      {link.name}
-    </Link>
-  ))
+  const searchbar = (
+    <Searchbar
+      searchResultProducts={search.resultProducts}
+      onSearch={term => search.searchProducts(term)}
+    />
+  )
 
   return (
     <>
@@ -70,12 +118,13 @@ const NavTop = ({links, activePath, search}: NavTopProps) => {
           maxW="8xl"
           mx="auto">
           <IconButton
-            size={'md'}
-            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-            aria-label={'Open Menu'}
-            display={{md: 'none'}}
-            onClick={isOpen ? onClose : onOpen}
-            bg={['agt.gray', 'agt.gray', 'agt.gray', 'agt.gray']}
+            onClick={onToggle}
+            icon={
+              isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
+            }
+            variant={'ghost'}
+            aria-label={'Toggle Navigation'}
+            display={{base: 'flex', md: 'none'}}
           />
           <HStack
             as={GatsbyLink}
@@ -87,32 +136,10 @@ const NavTop = ({links, activePath, search}: NavTopProps) => {
             css={style.Logo}>
             <Logo />
           </HStack>
-          <Searchbar
-            searchResultProducts={search.resultProducts}
-            onSearch={term => search.searchProducts(term)}
-          />
+          <Box display={{base: 'none', md: 'block'}} w="100%">
+            <Center>{searchbar}</Center>
+          </Box>
           <HStack spacing={8} alignItems={'center'} justifyContent={'flex-end'}>
-            {/* <Menu>
-            <MenuButton
-            as={Button}
-            rounded={'full'}
-            variant={'link'}
-            cursor={'pointer'}
-            minW={0}>
-            <Avatar
-                size={'sm'}
-                src={
-                'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-                }
-            />
-            </MenuButton>
-            <MenuList>
-            <MenuItem>Link 1</MenuItem>
-            <MenuItem>Link 2</MenuItem>
-            <MenuDivider />
-            <MenuItem>Link 3</MenuItem>
-            </MenuList>
-        </Menu> */}
             <Link
               as={GatsbyLink}
               to="/contact"
@@ -125,36 +152,59 @@ const NavTop = ({links, activePath, search}: NavTopProps) => {
             <Button
               as={GatsbyLink}
               to="/wishlist"
+              display={{
+                base: 'none',
+                sm: 'flex'
+              }}
               size="sm"
               rounded="md"
               color={['white']}
-              bg={['agt.red']}
-              display={{base: 'none', md: 'flex'}}
-              _hover={{
-                bg: ['primary.100', 'primary.100', 'primary.600', 'primary.600']
-              }}
+              colorScheme="agt.redScheme"
               leftIcon={<FaHeart />}>
               Wunschliste
             </Button>
             <IconButton
-              justifyContent={'center'}
-              size={'md'}
-              icon={<FiShoppingCart />}
-              aria-label={'Open Menu'}
-              display={{base: 'flex', md: 'none'}}
-              onClick={isOpen ? onClose : onOpen}
-              bg={['agt.grey']}
+              as={GatsbyLink}
+              to="/wishlist"
+              display={{
+                base: 'flex',
+                sm: 'none'
+              }}
+              icon={<FaHeart />}
+              aria-label="Open wishlist"
+              colorScheme={'agt.redScheme'}
             />
           </HStack>
         </Flex>
 
-        {isOpen ? (
-          <Box pb={4} display={{md: 'none'}}>
-            <Stack as={'nav'} spacing={4}>
-              {allLinkElement}
-            </Stack>
-          </Box>
-        ) : null}
+        <Box>
+          <Collapse in={isOpen} animateOpacity>
+            <Box py="4">
+              <Box
+                display={{base: 'flex', md: 'none'}}
+                w="100%"
+                bg="white"
+                color="black">
+                <Flex direction={'column'} w="100%" py="2">
+                  {searchbar}
+
+                  <VStack spacing={4} py={4} align="left" mx={4}>
+                    {cleanedActivePath && (
+                      <MobileNavItem name="Hauptseite" path="/" />
+                    )}
+                    <MobileNavItem
+                      name="Kategorien"
+                      path="/"
+                      children={links}
+                    />
+                    <Divider />
+                    <MobileNavItem name="Kontakt" path="/contact" />
+                  </VStack>
+                </Flex>
+              </Box>
+            </Box>
+          </Collapse>
+        </Box>
       </Box>
       <Box
         as="nav"
@@ -172,7 +222,30 @@ const NavTop = ({links, activePath, search}: NavTopProps) => {
             as={'nav'}
             spacing={4}
             justifyContent={'space-between'}>
-            {allLinkElement}
+            {links.map((link, i) => (
+              <Link
+                key={i}
+                as={GatsbyLink}
+                to={link.path}
+                px={2}
+                py={1}
+                rounded={'md'}
+                bg={
+                  link.path === `/${cleanedActivePath}`
+                    ? useColorModeValue('gray.200', 'gray.600')
+                    : 'transparent'
+                }
+                _hover={{
+                  textDecoration: 'none',
+                  bg: useColorModeValue('gray.200', 'gray.600')
+                }}
+                _focus={{
+                  textDecoration: 'none',
+                  bg: useColorModeValue('gray.200', 'gray.600')
+                }}>
+                <Text fontSize="lg">{link.name}</Text>
+              </Link>
+            ))}
           </HStack>
         </Flex>
       </Box>

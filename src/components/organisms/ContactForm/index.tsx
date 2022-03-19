@@ -8,8 +8,8 @@ import {
   Select,
   Textarea,
   Checkbox,
-  Text,
-  Button
+  Button,
+  useToast
 } from '@chakra-ui/react'
 import {Controller, useForm} from 'react-hook-form'
 import {sendEmail} from '../../../services/mail'
@@ -28,6 +28,8 @@ interface IProps extends BoxProps {
 }
 
 export const ContactForm = (props: IProps) => {
+  const toast = useToast()
+
   const defaultValues: FormData = {
     name: '',
     lastname: '',
@@ -62,11 +64,20 @@ Anfrage von ${name} ${lastname} (${email}) über AGT Shop.
 ${message}
 `
 
-    sendEmail({
+    await sendEmail({
       fromEmail: email,
       name: `${name} ${lastname}`,
       subject,
       message: body
+    })
+
+    toast({
+      title: 'Anfrage erfolgreich versendet',
+      description:
+        'Vielen Dank für Ihre Anfrage. Wir werden uns so schnell wie möglich bei Ihnen melden.',
+      status: 'success',
+      duration: 9000,
+      isClosable: true
     })
 
     reset()
@@ -161,16 +172,13 @@ ${message}
             <FormControl isInvalid={!!errors.agbChecked}>
               <Checkbox
                 borderColor="#D4D4D9"
-                bg="white"
                 h="fit-content"
                 mt="0.5"
                 mr="2"
-                {...register('agbChecked', {required: true})}
-              />
-              <Text>
+                {...register('agbChecked', {required: true})}>
                 Ich habe die AGBs gelesen und stimme der Verarbeitung meiner Daten
                 zu.
-              </Text>
+              </Checkbox>
             </FormControl>
           </Flex>
           <Button

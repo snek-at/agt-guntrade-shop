@@ -42,6 +42,7 @@ export const ContactModal = ({
   wishlist,
   onClose
 }: ContactModalProps) => {
+  const toast = useToast()
   const generateEmailContent = () => {
     const wishlistText = wishlist
       .map(item => {
@@ -102,6 +103,15 @@ ${message}
       name: `${firstName} ${lastName}`,
       subject,
       message: body
+    })
+
+    toast({
+      title: 'Anfrage erfolgreich versendet',
+      description:
+        'Vielen Dank für Ihre Anfrage. Wir werden uns so schnell wie möglich bei Ihnen melden.',
+      status: 'success',
+      duration: 9000,
+      isClosable: true
     })
 
     onClose()
