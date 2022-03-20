@@ -5,8 +5,7 @@ module.exports = {
   addons: [
     '@snek-at/storybook-addon-chakra-ui',
     '@storybook/addon-links',
-    '@storybook/addon-essentials',
-    'storybook-addon-gatsby'
+    '@storybook/addon-essentials'
   ],
   webpackFinal: config => {
     // Transpile Gatsby module because Gatsby includes un-transpiled ES6 code.
