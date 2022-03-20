@@ -100,7 +100,9 @@ export const NewsModal = ({
                   alignItems="center">
                   <Input
                     isReadOnly
-                    value={window.location.href}
+                    value={
+                      typeof window !== 'undefined' ? window.location.href : ''
+                    }
                     w="fit-content"
                   />
                   <IconButton

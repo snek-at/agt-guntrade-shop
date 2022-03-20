@@ -50,5 +50,5 @@
     "wrap-with-provider.js",
     "src/@chakra-ui/theme.js",
     "src/gatsby-source-shopify/index.js"
-  ]
+, "gatsby-node.ts"  ]
 }

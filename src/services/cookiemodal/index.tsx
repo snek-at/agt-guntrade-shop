@@ -10,7 +10,11 @@ export class CookieModalService {
   static key = 'cookiesettings'
 
   static isStored(): boolean {
-    return localStorage.getItem(CookieModalService.key) !== null
+    if (typeof window !== 'undefined') {
+      return window.localStorage.getItem(CookieModalService.key) !== null
+    }
+
+    return false
   }
 
   static getValues(): CookieValues {

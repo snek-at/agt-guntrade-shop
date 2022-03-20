@@ -7,7 +7,7 @@ import {
 } from '../../common/requests/storefront'
 import {isEqual} from 'lodash'
 import NavContainer from '../../components/organisms/NavContainer'
-import CookieModal from '../../components/molecules/CookieModal'
+import {Link} from 'gatsby'
 
 export const BaseLayoutWithoutSearch: React.FC<{activePath: string}> = ({
   children,
@@ -67,12 +67,9 @@ export const BaseLayoutWithoutSearch: React.FC<{activePath: string}> = ({
         col1={['Startseite', 'Shop', 'Unsere Vertretungen', 'Kontakt']}
         col2h="Rechtliches"
         col2={[
-          'Impressum',
-          'Datenschutz',
-          'AGB’s',
-          'Widerrufsrecht/Formular',
-          'Versand',
-          'Sitemap'
+          <Link to="/imprint">Impressum</Link>,
+          <Link to="/privacy">Datenschutz</Link>,
+          <Link to="/sitemap/sitemap-index.xml">Sitemap</Link>
         ]}
         col3h="Öffnungszeiten"
         col3={[

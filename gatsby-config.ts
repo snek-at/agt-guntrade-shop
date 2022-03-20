@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 import {GatsbyConfig as GatsbyConfigType} from 'gatsby'
 
-import {site} from '../../jaen-data/internal.json'
+import {site} from './jaen-data/internal.json'
 
 dotenv.config()
 

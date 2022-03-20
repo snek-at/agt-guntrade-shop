@@ -26,12 +26,12 @@ import {ReactNode} from 'react'
 import {Logo} from '../../../common/assets'
 
 export interface FooterProps {
-  col1h: string
-  col1: string[]
-  col2h: string
-  col2: string[]
-  col3h: string
-  col3: string[]
+  col1h: React.ReactNode
+  col1: React.ReactNode[]
+  col2h: React.ReactNode
+  col2: React.ReactNode[]
+  col3h: React.ReactNode
+  col3: React.ReactNode[]
 }
 
 const Copyright = (props: TextProps) => (

@@ -1,5 +1,7 @@
 // @ts-nocheck
 
+import path from 'path'
+
 /**
  * First we check whether the first Element is an A we exclude other categories because tags don't include the
  * category type (ABC, BC, ...).
@@ -178,7 +180,7 @@ const getFilteredProducts = (unfilteredRelatedProducts, handle, product?) => {
   return Array.from(filteredRelatedProducts.values())
 }
 
-const createAllProductsShopPage = (data, actions) => {
+export const createAllProductsShopPage = (data, actions) => {
   const products = []
   const collections = {}
   data?.allShopifyProduct.edges.map(edge => {
@@ -195,7 +197,7 @@ const createAllProductsShopPage = (data, actions) => {
 
   actions.createPage({
     path: '/products/',
-    component: require.resolve('../templatePages/ShopPage/index.tsx'),
+    component: path.resolve('src/templatePages/ShopPage/index.tsx'),
     context: {
       skipJaenPage: true,
       header: {title: 'Alle Produkte'},
@@ -235,7 +237,7 @@ const createAllProductsShopPage = (data, actions) => {
 
     actions.createPage({
       path: `/products/${product.handle}/`,
-      component: require.resolve('../templatePages/ProductPage/index.tsx'),
+      component: path.resolve('src/templatePages/ProductPage/index.tsx'),
       context: {
         skipJaenPage: true,
         header: {title: product.title},
@@ -268,7 +270,7 @@ const createAllProductsShopPage = (data, actions) => {
   })
 }
 
-const createCollectionShopAndProductPages = (data, actions) => {
+export const createCollectionShopAndProductPages = (data, actions) => {
   data?.allShopifyCollection.edges.forEach(edge => {
     const splitHandle = splitAndCheckHandle(edge.node.handle)
     const subcollectionType = getSubcollectionType(splitHandle)
@@ -319,7 +321,7 @@ const createCollectionShopAndProductPages = (data, actions) => {
     if (edge.node.products.length > 0) {
       actions.createPage({
         path: slug,
-        component: require.resolve(`../templatePages/CategoryPage/index.tsx`),
+        component: path.resolve(`src/templatePages/CategoryPage/index.tsx`),
         context: {
           skipJaenPage: true,
           category: {
@@ -367,7 +369,7 @@ const createCollectionShopAndProductPages = (data, actions) => {
     slug = slug + '/products/'
     actions.createPage({
       path: slug,
-      component: require.resolve('../templatePages/ShopPage/index.tsx'),
+      component: path.resolve('src/templatePages/ShopPage/index.tsx'),
       context: {
         skipJaenPage: true,
         header: {title: edge.node.title.split(':').at(-1)},
@@ -418,7 +420,7 @@ const createCollectionShopAndProductPages = (data, actions) => {
 
       actions.createPage({
         path: `${slug}${product.handle}/`,
-        component: require.resolve('../templatePages/ProductPage/index.tsx'),
+        component: path.resolve('src/templatePages/ProductPage/index.tsx'),
         context: {
           skipJaenPage: true,
           handle: product.handle,
@@ -448,91 +450,4 @@ const createCollectionShopAndProductPages = (data, actions) => {
       })
     })
   })
-}
-
-export const createPages = async (actions, graphql) => {
-  const {data} = await graphql(`
-    query {
-      meta: allShopifyProduct {
-        tags: distinct(field: tags)
-      }
-      allShopifyCollection {
-        edges {
-          node {
-            title
-            handle
-            image {
-              gatsbyImageData
-            }
-            products {
-              id
-              handle
-              createdAt
-              descriptionHtml
-              title
-              tags
-              status
-              totalInventory
-              contextualPricing {
-                maxVariantPricing {
-                  price {
-                    amount
-                  }
-                  compareAtPrice {
-                    amount
-                  }
-                }
-              }
-              images {
-                shopifyId
-                gatsbyImageData
-              }
-              featuredImage {
-                id
-                gatsbyImageData
-              }
-            }
-          }
-        }
-      }
-      allShopifyProduct(sort: {fields: title, order: ASC}) {
-        edges {
-          node {
-            id
-            handle
-            collections {
-              handle
-            }
-            descriptionHtml
-            title
-            tags
-            status
-            totalInventory
-            createdAt
-            contextualPricing {
-              maxVariantPricing {
-                price {
-                  amount
-                }
-                compareAtPrice {
-                  amount
-                }
-              }
-            }
-            images {
-              shopifyId
-              gatsbyImageData
-            }
-            featuredImage {
-              id
-              gatsbyImageData
-            }
-          }
-        }
-      }
-    }
-  `)
-
-  createAllProductsShopPage(data, actions)
-  createCollectionShopAndProductPages(data, actions)
 }
