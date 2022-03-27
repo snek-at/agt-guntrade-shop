@@ -10,7 +10,7 @@ name: Jaen Publish
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions#on
 on:
   repository_dispatch:
-    types: [UPDATE_JAEN_DATA]
+    types: [update-jaen-data]
 
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs
 jobs:
@@ -20,55 +20,25 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      JAEN_MIGRATION_URL: ${{github.event.client_payload.jaendata_url}}
+      JAEN_PAYLOAD: ${{ toJson(github.event.client_payload) }}
+      JAEN_PAGES_MIGRATION_URL: ${{github.event.client_payload.jaendata_url}}
 
     # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idsteps
     steps:
       # https://help.github.com/en/articles/virtual-environments-for-github-actions#default-environment-variables
       # https://github.com/actions/checkout
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2.3.1
         with:
           path: '.'
 
-      # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsid
-      # - uses: actions/setup-node@v2
-      #   with:
-      #     node-version: '16'
-      #     cache: 'yarn'
-      #     cache-dependency-path: 'yarn.lock'
-
-      # https://github.com/marketplace/actions/cache
-      - name: Gatsby Cache Folder
-        uses: actions/cache@v3
+      - uses: actions/setup-node@v2
         with:
-          key: gatsby-cache-folder
-          path: .cache
-
-      # https://github.com/marketplace/actions/cache
-      - name: Gatsby Public Folder
-        uses: actions/cache@v3
-        with:
-          key: gatsby-public-folder
-          path: public
-
-      # https://github.com/marketplace/actions/cache
-      - name: Yarn cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.yarn-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Yarn install
-        run: 'yarn install --pure-lockfile'
-  
-      - name: Build app
-        run: 'yarn run build:incremental'
+          node-version: '15'
 
       # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsid
       - name: Configure GitHub authentication 🔧
+
         # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsrun
         run: |
           # Git: set identity
@@ -77,19 +47,19 @@ jobs:
           # Git: set remote  
           # https://developer.github.com/apps/building-github-apps/authenticating-with-github-apps/#http-based-git-access-by-an-installation
           git remote set-url origin "https://x-access-token:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
-
-      - name: Deploy jaen-data to Github Pages 🚀
-        working-directory: ${{github.event.client_payload.cwd}}
+      # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsid
+      - name:
+          Deploy jaen-data to Github Pages 🚀
+          # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsrun
         run: |
-          echo ${{github.event.client_payload.cwd}}
-          echo $(pwd)
+          # Create gh-pages branch without history
+          #git checkout --orphan gh-pages
+          git checkout main
 
-          npx jaen build
-
+          yarn install
+          npx jaen-pages build
+          yarn deploy
           # Git: add, commit, and push changes
           git add .
-          git commit -m "jaen(jaen-data): update data" || echo "Nothing to commit, working tree clean."
+          git commit -m "jaen-publish(jaen-data.json): update jaen-data" || echo "Nothing to commit, working tree clean."
           GIT_TRACE=1 git push -f --verbose origin main
-
-          # Deploy
-          yarn deploy

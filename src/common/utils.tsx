@@ -1,8 +1,6 @@
 import {injectable} from 'react-magnetic-di'
 import {Image} from '@chakra-ui/image'
 import React from 'react'
-import {Box} from '@chakra-ui/react'
-import {PageProps} from 'gatsby'
 
 const breakpoints = ['0em', '30em', '48em', '62em', '80em', '96em']
 
@@ -27,10 +25,9 @@ const getWindowWidth = () => {
 }
 
 export const useWindowWidth = () => {
-  const [windowWidth, setWindowWidth] = React.useState<number>()
+  const [windowWidth, setWindowWidth] = React.useState(getWindowWidth())
 
   React.useEffect(() => {
-    setWindowWidth(getWindowWidth())
     const handleResize = () => {
       setWindowWidth(getWindowWidth())
     }
@@ -40,31 +37,4 @@ export const useWindowWidth = () => {
   }, [])
 
   return windowWidth
-}
-/**
- * Create a array of empty boxes to fill the grid
- * if there are less items than the grid size (6-total).
- *
- * @param items
- * @returns
- */
-export function gridPadBoxes(
-  items: any[],
-  gridSize: number = 6,
-  filler: JSX.Element = <Box />
-) {
-  const toFill = gridSize - (items.length % gridSize || gridSize)
-
-  if (toFill > 0) {
-    return Array(toFill).fill(filler)
-  }
-  return []
-}
-
-export const usePrevious = <T extends unknown>(value: T): T | undefined => {
-  const ref = React.useRef<T>()
-  React.useEffect(() => {
-    ref.current = value
-  })
-  return ref.current
 }

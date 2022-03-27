@@ -4,6 +4,7 @@ export const Borderline = css`
   .borderline {
     display: block;
     position: relative;
+    text-align: center;
     border-collapse: collapse;
     text-decoration: none;
     transition: all 150ms;
