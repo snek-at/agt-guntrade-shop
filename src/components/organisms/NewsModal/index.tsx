@@ -1,5 +1,4 @@
 import {Button, IconButton} from '@chakra-ui/button'
-import {Image} from '@chakra-ui/image'
 import {Input} from '@chakra-ui/input'
 import {Text, Box, Heading, Flex} from '@chakra-ui/layout'
 import {Modal, ModalContent, ModalOverlay} from '@chakra-ui/modal'
@@ -13,24 +12,25 @@ import * as style from './style'
 
 export interface NewsModalProps {
   isOpen: boolean
-  heading: string
-  text: string
-  imageSrc: string
-  url: string
+  heading: React.ReactNode
+  text: React.ReactNode
   onClose: Function
-  tag: string
+  image: React.ReactNode
+  url: string
+  highlight: React.ReactNode
 }
 
 export const NewsModal = ({
   isOpen,
   heading,
   text,
-  imageSrc,
-  url,
   onClose,
-  tag
+  image,
+  url,
+  highlight
 }: NewsModalProps) => {
   const [share, setShare] = React.useState(false)
+
   const toast = useToast()
   if (isOpen) {
     history.pushState('AGT-Guntrade News', '', url)
@@ -57,14 +57,7 @@ export const NewsModal = ({
             display="flex"
             justifyContent="center"
             alignItems="center">
-            <Image
-              fallback={<Box />}
-              my="auto"
-              alt="newsmodal-image"
-              src={imageSrc}
-              w="100%"
-              borderLeftRadius="5px"
-            />
+            {image}
           </Box>
           <Box
             p="5"
@@ -74,12 +67,12 @@ export const NewsModal = ({
             <Text
               position="absolute"
               top="5"
-              right="5"
-              fontSize="14"
-              fontWeight="bold"
-              casing="uppercase"
-              color="teal">
-              NewsTag
+              right="4"
+              color={'agt.blue'}
+              fontWeight={600}
+              fontSize={'md'}
+              letterSpacing={1.1}>
+              {highlight}
             </Text>
             <Heading mb="3">{heading}</Heading>
             <Text
@@ -107,7 +100,9 @@ export const NewsModal = ({
                   alignItems="center">
                   <Input
                     isReadOnly
-                    value={window.location.href}
+                    value={
+                      typeof window !== 'undefined' ? window.location.href : ''
+                    }
                     w="fit-content"
                   />
                   <IconButton

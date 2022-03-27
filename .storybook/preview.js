@@ -1,4 +1,4 @@
-import myTheme from '../src/@snek-at/jaen/@chakra-ui/theme'
+import myTheme from '../src/@chakra-ui/gatsby-plugin/theme'
 
 export const parameters = {
   chakra: {theme: myTheme},

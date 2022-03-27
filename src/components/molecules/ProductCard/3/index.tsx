@@ -14,6 +14,7 @@ import {FiShoppingCart} from '@react-icons/all-files/fi/FiShoppingCart'
 
 import {borderline, sideline} from './style'
 import {GatsbyImage, GatsbyImageProps} from 'gatsby-plugin-image'
+import {Skeleton} from '@chakra-ui/react'
 
 const MotionBox = motion<BoxProps>(Box)
 const FadingImage = motion<GatsbyImageProps>(GatsbyImage)
@@ -35,6 +36,7 @@ export interface ProductCardProps {
   reducedprice?: number
   direction?: string
   filters?: string[]
+  isFetching: boolean
 }
 
 const ProductCard = ({
@@ -45,11 +47,16 @@ const ProductCard = ({
   name,
   caliber,
   direction,
-  isNew
+  isNew,
+  isFetching
 }: ProductCardProps) => {
   const sale = typeof reducedprice !== 'undefined'
   const [imageIndex, setImageIndex] = React.useState(0)
   const [visible, setVisible] = React.useState(false)
+
+  if (typeof caliber[0] === 'string') {
+    caliber = caliber[0].split(':')[1]
+  }
 
   return (
     <Flex
@@ -129,14 +136,15 @@ const ProductCard = ({
             {(imageIndex &&
               images.length > 1 &&
               images.map((gatsbyimage, index) => {
-                console.log(gatsbyimage.gatsbyImageData)
                 return (
                   imageIndex === index && (
                     <MotionBox initial={{opacity: 0}} animate={{opacity: 1}}>
-                      <GatsbyImage
-                        image={gatsbyimage.gatsbyImageData}
-                        alt={name}
-                      />
+                      <Skeleton isLoaded={!isFetching}>
+                        <GatsbyImage
+                          image={gatsbyimage.gatsbyImageData}
+                          alt={name}
+                        />
+                      </Skeleton>
                     </MotionBox>
                   )
                 )
@@ -156,14 +164,16 @@ const ProductCard = ({
             </Badge>
           )}
           <Flex>
-            <Box
-              fontSize="2xl"
-              fontWeight="semibold"
-              as="h4"
-              lineHeight="tight"
-              isTruncated>
-              {name}
-            </Box>
+            <Skeleton isLoaded={!isFetching}>
+              <Box
+                fontSize="2xl"
+                fontWeight="semibold"
+                as="h4"
+                lineHeight="tight"
+                isTruncated>
+                {name}
+              </Box>
+            </Skeleton>
             <Spacer />
 
             <Icon
@@ -176,33 +186,37 @@ const ProductCard = ({
             />
           </Flex>
           <Flex>
-            <Badge
-              mt="4"
-              h="1.6em"
-              variant="solid"
-              bg="agt.blue"
-              borderRadius="5px"
-              px="2"
-              fontSize="0.8em">
-              {caliber}
-            </Badge>
+            <Skeleton isLoaded={!isFetching}>
+              <Badge
+                mt="4"
+                h="1.6em"
+                variant="solid"
+                bg="agt.blue"
+                borderRadius="5px"
+                px="2"
+                fontSize="0.8em">
+                {caliber}
+              </Badge>
+            </Skeleton>
             <Spacer />
-            <Flex>
-              <Text
-                mt={sale ? '2' : '0.5'}
-                fontSize={sale ? '21' : '30'}
-                textDecoration={sale ? 'line-through' : 'none'}
-                color={sale ? 'gray.700' : 'black'}>
-                {price}€
-              </Text>
-              {sale ? (
-                <Text fontSize="30" ml="1.5">
-                  {reducedprice}€
+            <Skeleton isLoaded={!isFetching}>
+              <Flex>
+                <Text
+                  mt={sale ? '2' : '0.5'}
+                  fontSize={sale ? '21' : '30'}
+                  textDecoration={sale ? 'line-through' : 'none'}
+                  color={sale ? 'gray.700' : 'black'}>
+                  {price}€
                 </Text>
-              ) : (
-                <></>
-              )}
-            </Flex>
+                {sale ? (
+                  <Text fontSize="30" ml="1.5">
+                    {reducedprice}€
+                  </Text>
+                ) : (
+                  <></>
+                )}
+              </Flex>
+            </Skeleton>
           </Flex>
         </Box>
       </Box>
