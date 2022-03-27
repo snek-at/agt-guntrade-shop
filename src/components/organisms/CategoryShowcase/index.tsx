@@ -1,12 +1,14 @@
 import {Button} from '@chakra-ui/button'
 import {Box, Center, Flex, Text} from '@chakra-ui/layout'
-import CategoryTab, {CategoryItemType} from '../../molecules/CategoryTab'
+import CategoryTab from '../../molecules/CategoryTab'
 import React from 'react'
 import {useBreakpointValue} from '@chakra-ui/media-query'
+import {navigate} from 'gatsby'
 
 interface Tab {
   [category: string]: {
-    items: CategoryItemType[]
+    title: string
+    items: any[]
   }
 }
 
@@ -23,10 +25,20 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
     md: {borderTopLeftRadius: '5px'}
   })
 
+  const getCategoryPath = (tabTitle: string) => {
+    const splitTitle = tabs[tabTitle].title
+      .toLowerCase()
+      .replaceAll(' ', '-')
+      .split(':')
+      .splice(1)
+
+    return splitTitle.map(value => `/${value}`).join('')
+  }
+
   const categories = Object.keys(tabs)
 
   return (
-    <Box zIndex="2" position="relative">
+    <Box zIndex="2" position="relative" mt={-20}>
       <Flex direction={{base: 'column', md: 'row'}}>
         {categories.map((category, index) => {
           return (
@@ -71,6 +83,9 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
               visible={current === category ? 'visible' : 'hidden'}
               items={tabs[category].items}
               direction={direction}
+              getPath={handle => {
+                return `${getCategoryPath(category)}/products/${handle}`
+              }}
             />
           )
         })}
@@ -82,7 +97,9 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
           colorScheme="agt.grayScheme"
           variant="solid"
           size="lg"
-          onClick={() => null}>
+          onClick={() =>
+            navigate(current === 'New' ? '/products' : getCategoryPath(current))
+          }>
           Mehr davon
         </Button>
       </Center>
