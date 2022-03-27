@@ -1,5 +1,4 @@
 import Icon from '@chakra-ui/icon'
-import {Image, ImageProps} from '@chakra-ui/image'
 import {
   Badge,
   Box,
@@ -14,29 +13,32 @@ import React from 'react'
 import {FiShoppingCart} from '@react-icons/all-files/fi/FiShoppingCart'
 
 import {borderline, sideline} from './style'
+import {GatsbyImage, GatsbyImageProps} from 'gatsby-plugin-image'
 
 const MotionBox = motion<BoxProps>(Box)
-const FadingImage = motion<ImageProps>(Image)
+const FadingImage = motion<GatsbyImageProps>(GatsbyImage)
 
 const variants = {
-  intial: (direction: string) =>
-    direction === 'left' ? {display: 'none'} : {display: 'none'},
+  intial: {display: 'none'},
   enter: (direction: string) =>
     direction === 'left' ? {display: 'box', x: -128} : {display: 'box', x: 128},
   exit: {display: 'none'}
 }
 
-export interface FeaturedProductCardProps {
-  images: string[]
+export interface ProductCardProps {
+  images: any[]
   price: number
   name: string
   caliber: string
+  width?: any
+  isNew?: boolean
   reducedprice?: number
   direction?: string
-  isNew: boolean
+  filters?: string[]
 }
 
-const FeaturedProductCard = ({
+const ProductCard = ({
+  width,
   images,
   price,
   reducedprice,
@@ -44,7 +46,7 @@ const FeaturedProductCard = ({
   caliber,
   direction,
   isNew
-}: FeaturedProductCardProps) => {
+}: ProductCardProps) => {
   const sale = typeof reducedprice !== 'undefined'
   const [imageIndex, setImageIndex] = React.useState(0)
   const [visible, setVisible] = React.useState(false)
@@ -52,8 +54,9 @@ const FeaturedProductCard = ({
   return (
     <Flex
       position="relative"
-      w={{base: '300px', xl: '20%'}}
-      onMouseEnter={() => setVisible(true)}
+      w={width}
+      maxW="340px"
+      onMouseOver={() => setVisible(true)}
       onMouseLeave={() => setVisible(false)}>
       {visible && (
         <MotionBox
@@ -76,28 +79,18 @@ const FeaturedProductCard = ({
           zIndex="2"
           variants={variants}
           initial="initial"
-          animate="enter"
+          whileHover="enter"
           exit="exit"
           custom={direction}>
-          {images.map((image, index) => {
+          {images.map((gatsbyimage, index) => {
             if (index !== 0) {
               return (
-                <Image
-                  fallback={<Box />}
-                  _hover={{filter: 'brightness(80%)'}}
-                  onMouseEnter={() => setImageIndex(index)}
-                  onMouseLeave={() => setImageIndex(0)}
-                  position="relative"
-                  zIndex="3"
-                  pointerEvents="all"
-                  w="100px"
-                  src={image}
+                <GatsbyImage
+                  className="sideImageStyle"
+                  image={gatsbyimage.gatsbyImageData}
                   alt={name}
-                  mb="3"
-                  _last={{mb: 0}}
-                  p="2"
-                  bg="agt.lightgray"
-                  borderRadius="5px"
+                  onMouseOver={() => setImageIndex(index)}
+                  onMouseLeave={() => setImageIndex(0)}
                 />
               )
             }
@@ -127,36 +120,38 @@ const FeaturedProductCard = ({
             position="absolute"
             top={2}
             right={2}
-            bg="red.200"
+            bg="blue.200"
             zIndex="2"
           />
         )}
         <Box minH="210px">
           <AnimatePresence>
-            {(imageIndex && (
-              <FadingImage
-                initial={{opacity: 0}}
-                animate={{opacity: 1}}
-                src={images[imageIndex]}
-                alt={name}
-                borderRadius="5px"
-                mt="5"
-                fallback={<Box />}
-              />
-            )) || (
-              <Image
-                src={images[0]}
-                alt={name}
-                borderRadius="5px"
-                mt="5"
-                fallback={<Box />}
-              />
+            {(imageIndex &&
+              images.length > 1 &&
+              images.map((gatsbyimage, index) => {
+                console.log(gatsbyimage.gatsbyImageData)
+                return (
+                  imageIndex === index && (
+                    <MotionBox initial={{opacity: 0}} animate={{opacity: 1}}>
+                      <GatsbyImage
+                        image={gatsbyimage.gatsbyImageData}
+                        alt={name}
+                      />
+                    </MotionBox>
+                  )
+                )
+              })) || (
+              <GatsbyImage image={images[0].gatsbyImageData} alt={name} />
             )}
           </AnimatePresence>
         </Box>
         <Box p="2.5">
           {isNew && (
-            <Badge borderRadius="5px" px="2" fontSize="0.8em" colorScheme="red">
+            <Badge
+              borderRadius="5px"
+              px="2"
+              fontSize="0.8em"
+              colorScheme="blue">
               New
             </Badge>
           )}
@@ -175,7 +170,7 @@ const FeaturedProductCard = ({
               as={FiShoppingCart}
               h={7}
               w={7}
-              _hover={{color: 'agt.red'}}
+              _hover={{color: 'agt.blue'}}
               zIndex="1"
               position="relative"
             />
@@ -185,7 +180,7 @@ const FeaturedProductCard = ({
               mt="4"
               h="1.6em"
               variant="solid"
-              bg="agt.red"
+              bg="agt.blue"
               borderRadius="5px"
               px="2"
               fontSize="0.8em">
@@ -215,4 +210,4 @@ const FeaturedProductCard = ({
   )
 }
 
-export default FeaturedProductCard
+export default ProductCard

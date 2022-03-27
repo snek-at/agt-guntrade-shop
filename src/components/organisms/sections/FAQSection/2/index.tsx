@@ -36,9 +36,9 @@ const FAQSection = ({heading}: FAQSectionProps) => {
               <AccordionButton
                 borderTopRadius="5px"
                 _expanded={{
-                  bg: 'agt.red',
+                  bg: 'agt.blue',
                   color: 'white',
-                  _hover: {bg: '#BD0F1B'}
+                  _hover: {bg: 'agt.red'}
                 }}
                 bg="agt.lightgray"
                 _hover={{bg: '#D4D4D9'}}>
@@ -57,9 +57,9 @@ const FAQSection = ({heading}: FAQSectionProps) => {
             <AccordionItem borderColor="#D4D4D9">
               <AccordionButton
                 _expanded={{
-                  bg: 'agt.red',
+                  bg: 'agt.blue',
                   color: 'white',
-                  _hover: {bg: '#BD0F1B'}
+                  _hover: {bg: 'agt.red'}
                 }}
                 bg="agt.lightgray"
                 _hover={{bg: '#D4D4D9'}}>
@@ -78,9 +78,9 @@ const FAQSection = ({heading}: FAQSectionProps) => {
             <AccordionItem borderColor="#D4D4D9">
               <AccordionButton
                 _expanded={{
-                  bg: 'agt.red',
+                  bg: 'agt.blue',
                   color: 'white',
-                  _hover: {bg: '#BD0F1B'}
+                  _hover: {bg: 'agt.red'}
                 }}
                 bg="agt.lightgray"
                 _hover={{bg: '#D4D4D9'}}>
@@ -101,9 +101,9 @@ const FAQSection = ({heading}: FAQSectionProps) => {
                 borderBottomRadius="5px"
                 _expanded={{
                   borderBottomRadius: '0px',
-                  bg: 'agt.red',
+                  bg: 'agt.blue',
                   color: 'white',
-                  _hover: {bg: '#BD0F1B'}
+                  _hover: {bg: 'agt.red'}
                 }}
                 bg="agt.lightgray"
                 _hover={{bg: '#D4D4D9'}}>

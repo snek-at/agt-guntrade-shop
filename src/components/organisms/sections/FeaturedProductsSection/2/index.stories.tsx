@@ -1,14 +1,14 @@
 import {Story, Meta} from '@storybook/react'
 
-import FeaturedProductsSection, {FeaturedProductsSectionProps} from '.'
+import ProductsSection, {ProductsSectionProps} from '.'
 
 export default {
-  title: 'Stories/IndexPage/FeaturedProductsSection',
-  component: FeaturedProductsSection
+  title: 'Stories/IndexPage/ProductsSection',
+  component: ProductsSection
 } as Meta
 
-const Template: Story<FeaturedProductsSectionProps> = args => (
-  <FeaturedProductsSection {...args} />
+const Template: Story<ProductsSectionProps> = args => (
+  <ProductsSection {...args} />
 )
 
 export const Section2 = Template.bind({})

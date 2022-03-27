@@ -1,20 +1,18 @@
 import {Story, Meta} from '@storybook/react'
 
-import FeaturedProductCard, {FeaturedProductCardProps} from '.'
+import ProductCard, {ProductCardProps} from '.'
 
 export default {
-  title: 'Stories/IndexPage/FeaturedProductsSection',
-  component: FeaturedProductCard
+  title: 'Stories/IndexPage/ProductsSection',
+  component: ProductCard
 } as Meta
 
-const Template: Story<FeaturedProductCardProps> = args => (
-  <FeaturedProductCard {...args} />
-)
+const Template: Story<ProductCardProps> = args => <ProductCard {...args} />
 
-export const Card2 = Template.bind({})
-Card2.args = {
+export const Card3 = Template.bind({})
+Card3.args = {
   name: 'Weapon',
-  description: 'This is a weapon.',
+  caliber: '9mm',
   price: 11.33,
   reducedprice: 12,
   images: [

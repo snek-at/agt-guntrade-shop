@@ -3,7 +3,7 @@ import {css} from '@emotion/react'
 const transform = (visible: boolean) => (visible ? 'scale(1.03)' : 'none')
 const width = (visible: boolean) => (visible ? '100%' : '50%')
 const margin = (visible: boolean) => (visible ? '-50%' : '-25%')
-const borderColor = (visible: boolean) => (visible ? '#ef3340' : '#e6e6e9')
+const borderColor = (visible: boolean) => (visible ? '#2151a1' : '#e6e6e9')
 
 export const borderline = (visible: boolean) => css`
   display: block;

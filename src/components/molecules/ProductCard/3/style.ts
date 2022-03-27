@@ -40,6 +40,21 @@ export const sideline = (visible: boolean, direction: string) => css`
   transition: all 150ms;
   transform: ${transform(visible)};
 
+  .sideImageStyle {
+    display: block;
+    width: 100px;
+    position: relative;
+    z-index: 3;
+    pointer-events: all;
+    margin-bottom: 3;
+    padding: 2;
+    border-radius: 5px;
+  }
+
+  .sideImageStyle:hover {
+    filter: 'brightness(80%)';
+  }
+
   &:after {
     transition: all 250ms;
     transition-delay: 250ms;

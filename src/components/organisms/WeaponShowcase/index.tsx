@@ -116,7 +116,7 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                       mt={{base: '0', md: '10'}}
                       size="lg"
                       borderRadius="5px"
-                      bg="agt.red"
+                      bg="agt.blue"
                       _hover={{bg: 'white', color: 'black'}}
                       variant="solid">
                       LEARN MORE
