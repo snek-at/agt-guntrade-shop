@@ -27,17 +27,48 @@ jobs:
       # https://help.github.com/en/articles/virtual-environments-for-github-actions#default-environment-variables
       # https://github.com/actions/checkout
       - name: Checkout 🛎️
-        uses: actions/checkout@v2.3.1
+        uses: actions/checkout@v3
         with:
           path: '.'
 
-      - uses: actions/setup-node@v2
+      # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsid
+      # - uses: actions/setup-node@v2
+      #   with:
+      #     node-version: '16'
+      #     cache: 'yarn'
+      #     cache-dependency-path: 'yarn.lock'
+
+      # https://github.com/marketplace/actions/cache
+      - name: Gatsby Cache Folder
+        uses: actions/cache@v3
         with:
-          node-version: '14'
+          key: gatsby-cache-folder
+          path: .cache
+
+      # https://github.com/marketplace/actions/cache
+      - name: Gatsby Public Folder
+        uses: actions/cache@v3
+        with:
+          key: gatsby-public-folder
+          path: public
+
+      # https://github.com/marketplace/actions/cache
+      - name: Yarn cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.yarn-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Yarn install
+        run: 'yarn install --pure-lockfile'
+  
+      - name: Build app
+        run: 'yarn run build:incremental'
 
       # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsid
       - name: Configure GitHub authentication 🔧
-
         # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsrun
         run: |
           # Git: set identity
@@ -46,18 +77,6 @@ jobs:
           # Git: set remote  
           # https://developer.github.com/apps/building-github-apps/authenticating-with-github-apps/#http-based-git-access-by-an-installation
           git remote set-url origin "https://x-access-token:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
-      # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsid
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-          cache: 'yarn'
-          cache-dependency-path: 'yarn.lock'
-
-      - name: Prepare jaen
-        working-directory: '.'
-        run: |
-          yarn install
-          yarn build
 
       - name: Deploy jaen-data to Github Pages 🚀
         working-directory: ${{github.event.client_payload.cwd}}
