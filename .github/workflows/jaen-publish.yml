@@ -78,7 +78,7 @@ jobs:
           # https://developer.github.com/apps/building-github-apps/authenticating-with-github-apps/#http-based-git-access-by-an-installation
           git remote set-url origin "https://x-access-token:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
 
-      - name: Deploy jaen-data to Github Pages 🚀
+      - name: Migrate jaen-data
         working-directory: ${{github.event.client_payload.cwd}}
         run: |
           echo ${{github.event.client_payload.cwd}}
@@ -90,6 +90,3 @@ jobs:
           git add .
           git commit -m "jaen(jaen-data): update data" || echo "Nothing to commit, working tree clean."
           GIT_TRACE=1 git push -f --verbose origin main
-
-          # Deploy
-          yarn deploy
