@@ -149,7 +149,7 @@ jobs:
         env:
           SCALE_SERP_APIKEY: ${{ secrets.SCALE_SERP_APIKEY }}
           PLACE_ID: ${{ secrets.PLACE_ID }}
-          SHOPIFY_SHOP_PASSWORD: ${{ secrets.HOPIFY_SHOP_PASSWORD }}
+          SHOPIFY_SHOP_PASSWORD: ${{ secrets.SHOPIFY_SHOP_PASSWORD }}
           SHOP: ${{ secrets.SHOP }}
           SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
           GATSBY_MAPBOX_ACCESS_TOKEN: ${{ secrets.GATSBY_MAPBOX_ACCESS_TOKEN }}
