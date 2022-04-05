@@ -143,6 +143,8 @@ jobs:
 
       # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsid
       - name: Install and Build 🔧
+        # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#
+        working-directory: ${{github.event.client_payload.cwd}}
         # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsenv
         env:
           SCALE_SERP_APIKEY: ${{ secrets.SCALE_SERP_APIKEY }}

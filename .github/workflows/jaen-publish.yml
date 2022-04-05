@@ -85,15 +85,11 @@ jobs:
           git remote set-url origin "https://x-access-token:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
 
       # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsid
-      - name: Migrate Jaen Data to Github 📝
-        # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsenv
-        env:
-          SCALE_SERP_APIKEY: ${{ secrets.SCALE_SERP_APIKEY }}
-          PLACE_ID: ${{ secrets.PLACE_ID }}
-          SHOPIFY_SHOP_PASSWORD: ${{ secrets.HOPIFY_SHOP_PASSWORD }}
-          SHOP: ${{ secrets.SHOP }}
-          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
-          GATSBY_MAPBOX_ACCESS_TOKEN: ${{ secrets.GATSBY_MAPBOX_ACCESS_TOKEN }}
+      - name: Migrate Jaen Data 📝
+        # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#
+        working-directory: ${{github.event.client_payload.cwd}}
+        # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsif
+        if: ${{ github.event_name == 'pull_request' && github.event.action == 'unassigned' }}
         run: |
           # Create gh-pages branch without history
           #git checkout --orphan gh-pages
@@ -106,4 +102,16 @@ jobs:
           git commit -m "jaen-publish(jaen-data.json): update jaen-data" || echo "Nothing to commit, working tree clean."
           GIT_TRACE=1 git push -f --verbose origin main
 
-          yarn deploy:incremental
+      # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsid
+      - name: Deploy to Github 🚀
+        # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#
+        working-directory: ${{github.event.client_payload.cwd}}
+        # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsenv
+        env:
+          SCALE_SERP_APIKEY: ${{ secrets.SCALE_SERP_APIKEY }}
+          PLACE_ID: ${{ secrets.PLACE_ID }}
+          SHOPIFY_SHOP_PASSWORD: ${{ secrets.HOPIFY_SHOP_PASSWORD }}
+          SHOP: ${{ secrets.SHOP }}
+          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+          GATSBY_MAPBOX_ACCESS_TOKEN: ${{ secrets.GATSBY_MAPBOX_ACCESS_TOKEN }}
+        run: yarn deploy:incremental
