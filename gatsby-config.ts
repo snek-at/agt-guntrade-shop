@@ -14,7 +14,7 @@ GatsbyConfig.plugins = [
   {
     resolve: '@jaenjs/jaen',
     options: {
-      jaenProjectId: 1
+      jaenProjectId: 3
     }
   },
   {

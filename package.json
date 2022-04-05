@@ -59,6 +59,7 @@
     "gatsby-plugin-sharp": "^4.7.0",
     "gatsby-plugin-sitemap": "^5.9.0",
     "gatsby-source-filesystem": "^4.7.0",
+    "gatsby-source-shopify": "file:opt/gatsby-source-shopify/gatsby-source-shopify-v6.9.0-next.0.tgz",
     "gatsby-transformer-sharp": "^4.7.0",
     "mapbox-gl": "^2.7.0",
     "prop-types": "^15.7.2",

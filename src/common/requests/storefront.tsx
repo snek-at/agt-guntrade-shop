@@ -1,4 +1,4 @@
-import {getShopifyImage} from '../../../plugins/gatsby-source-shopify'
+import {getShopifyImage} from 'gatsby-source-shopify'
 import queryString from 'query-string'
 import * as React from 'react'
 import {createClient, Provider as UrlqProvider, useQuery} from 'urql'
