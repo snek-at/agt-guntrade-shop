@@ -9,6 +9,7 @@ name: Jaen Publish
 
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions#on
 on:
+  # https://help.github.com/en/articles/workflow-syntax-for-github-actions
   repository_dispatch:
     types: [UPDATE_JAEN_DATA]
 
@@ -18,25 +19,33 @@ jobs:
   jaen-publish:
     # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idruns-on
     runs-on: ubuntu-latest
-
+    # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsenv
     env:
       JAEN_MIGRATION_URL: ${{github.event.client_payload.jaendata_url}}
 
     # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idsteps
     steps:
-      # https://help.github.com/en/articles/virtual-environments-for-github-actions#default-environment-variables
       # https://github.com/actions/checkout
       - name: Checkout 🛎️
         uses: actions/checkout@v3
         with:
+          # Relative path under $GITHUB_WORKSPACE to place the repository
           path: '.'
 
-      # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsid
-      # - uses: actions/setup-node@v2
-      #   with:
-      #     node-version: '16'
-      #     cache: 'yarn'
-      #     cache-dependency-path: 'yarn.lock'
+      # https://dev.to/mpocock1/how-to-cache-nodemodules-in-github-actions-with-yarn-24eh
+      - name: Yarn Cache Directory Path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      # https://github.com/marketplace/actions/cache
+      - name: Yarn Cache Folder
+        uses: actions/cache@v3
+        with:
+          # https://help.github.com/en/articles/virtual-environments-for-github-actions#default-environment-variables
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
       # https://github.com/marketplace/actions/cache
       - name: Gatsby Cache Folder
@@ -53,40 +62,43 @@ jobs:
           path: public
 
       # https://github.com/marketplace/actions/cache
-      - name: Yarn cache
+      - name: Yarn Cache Node
         uses: actions/cache@v3
         with:
-          path: ${{ steps.yarn-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
-      - name: Yarn install
-        run: 'yarn install --pure-lockfile'
-  
-      - name: Build app
-        run: 'yarn run build:incremental'
+      # https://classic.yarnpkg.com/lang/en/docs/cli/install/#toc-yarn-install-pure-lockfile
+      - name: Yarn Install
+        run: yarn install --pure-lockfile
 
       # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsid
-      - name: Configure GitHub authentication 🔧
+      - name: Configure GitHub Authentication 🔧
         # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsrun
         run: |
           # Git: set identity
-          git config --global user.name "snekmin"
-          git config --global user.email "noreply.snek.at@gmail.com"
+          git config user.name "snekmin"
+          git config user.email "noreply.snek.at@gmail.com"
+
           # Git: set remote  
           # https://developer.github.com/apps/building-github-apps/authenticating-with-github-apps/#http-based-git-access-by-an-installation
           git remote set-url origin "https://x-access-token:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
 
-      - name: Migrate jaen-data
-        working-directory: ${{github.event.client_payload.cwd}}
+      # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsid
+      - name: Migrate Jaen Data to Github 📝
+        # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsenv
+        env:
+          GATSBY_GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
         run: |
-          echo ${{github.event.client_payload.cwd}}
-          echo $(pwd)
-
-          npx jaen build
+          # Create gh-pages branch without history
+          #git checkout --orphan gh-pages
+          git checkout main
+          
+          yarn jaen build
 
           # Git: add, commit, and push changes
           git add .
-          git commit -m "jaen(jaen-data): update data" || echo "Nothing to commit, working tree clean."
+          git commit -m "jaen-publish(jaen-data.json): update jaen-data" || echo "Nothing to commit, working tree clean."
           GIT_TRACE=1 git push -f --verbose origin main
+
+          yarn deploy:incremental
