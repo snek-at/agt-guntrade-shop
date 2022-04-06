@@ -1,0 +1,5 @@
+{
+    "componentChunkName": "component---src-pages-news-tsx",
+    "path": "/news/",
+    "result": {"data":{"jaenPage":{"id":"JaenPage /news/","slug":"news","jaenFields":null,"jaenPageMetadata":{"title":"/news/","isBlogPost":null,"image":null,"description":null,"datePublished":null,"canonical":null},"jaenFiles":[],"chapters":null}},"pageContext":{"jaenPageId":"JaenPage /news/"}},
+    "staticQueryHashes": ["1283923735","2561576124","2798305431","2854131132","2898700525","4225539895","55007266","568109149"]}

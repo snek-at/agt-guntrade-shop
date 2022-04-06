@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkagt_guntrade_shop=self.webpackChunkagt_guntrade_shop||[]).push([[883],{35890:function(t,e,n){n.r(e);n(67294);var u=n(88837);e.default=function(){return(0,u.BX)(u.HY,{children:[(0,u.tZ)("h1",{children:"404: Not Found"}),(0,u.tZ)("p",{children:"You just hit a route that doesn't exist... the sadness."})]})}}}]);
+//# sourceMappingURL=component---src-pages-404-js-a21eae1eb2c8deae8c2e.js.map

@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkagt_guntrade_shop=self.webpackChunkagt_guntrade_shop||[]).push([[923],{68923:function(e,n,r){r.r(n),r.d(n,{FilesContainer:function(){return s}});var t=r(3013),u=r(95751),a=r(88837),s=function(){var e=(0,u.useSnekFinder)({mode:"browser"});return(0,a.tZ)(t.Box,{h:"75vh",children:e.finderElement})};n.default=s}}]);
+//# sourceMappingURL=923-f023154728cdfc69cec3.js.map

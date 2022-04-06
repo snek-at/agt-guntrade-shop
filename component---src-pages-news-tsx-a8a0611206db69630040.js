@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkagt_guntrade_shop=self.webpackChunkagt_guntrade_shop||[]).push([[114],{71188:function(e,n,t){t.r(n);var a=t(64731),s=t(88837);n.default=(0,a.connectPage)((function(){return(0,s.tZ)("div",{children:(0,s.tZ)("h1",{children:"News"})})}),{displayName:"NewsPage"})}}]);
+//# sourceMappingURL=component---src-pages-news-tsx-a8a0611206db69630040.js.map

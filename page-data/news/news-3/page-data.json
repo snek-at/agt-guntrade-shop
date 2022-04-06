@@ -1,0 +1,5 @@
+{
+    "componentChunkName": "component---src-templates-news-page-tsx",
+    "path": "/news/news-3",
+    "result": {"data":{"jaenPage":{"id":"JaenPage 8fb0e922-58cc-4f70-ae60-89eed3104d44","slug":"news-3","jaenFields":null,"jaenPageMetadata":{"title":"news-3","isBlogPost":null,"image":null,"description":null,"datePublished":null,"canonical":null},"jaenFiles":[],"chapters":null}},"pageContext":{"jaenPageId":"JaenPage 8fb0e922-58cc-4f70-ae60-89eed3104d44"}},
+    "staticQueryHashes": ["1283923735","2561576124","2798305431","2854131132","2898700525","4225539895","55007266","568109149"]}
