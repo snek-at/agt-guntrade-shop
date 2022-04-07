@@ -11,7 +11,7 @@ name: Publish
 on:
   # https://help.github.com/en/articles/workflow-syntax-for-github-actions
   repository_dispatch:
-    types: [update-jaen-data]
+    types: [UPDATE_JAEN_DATA]
 
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs
 jobs:
