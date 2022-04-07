@@ -1,0 +1,97 @@
+# SPDX-FileCopyrightText: Copyright © 2021 snek.at
+# SPDX-License-Identifier: EUPL-1.2
+#
+# Use of this source code is governed by an EUPL-1.2 license that can be found
+# in the LICENSE file at https://snek.at/license
+
+# https://help.github.com/en/articles/workflow-syntax-for-github-actions#name
+name: Publish
+
+# https://help.github.com/en/articles/workflow-syntax-for-github-actions#on
+on:
+  # https://help.github.com/en/articles/workflow-syntax-for-github-actions
+  repository_dispatch:
+    types: [update-jaen-data]
+
+# https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs
+jobs:
+  jaen-publish:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      # https://dev.to/mpocock1/how-to-cache-nodemodules-in-github-actions-with-yarn-24eh
+      - name: Yarn Cache Directory Path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      # https://github.com/marketplace/actions/cache
+      - name: Yarn Cache Folder
+        uses: actions/cache@v3
+        with:
+          # https://help.github.com/en/articles/virtual-environments-for-github-actions#default-environment-variables
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-
+
+      # https://github.com/marketplace/actions/cache
+      - name: Yarn Cache Node
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+
+      - uses: ./.github/workflows/jaen-publish
+        with:
+          JAEN_MIGRATION_URL: ${{github.event.client_payload.jaendata_url}}
+          WORKING_DIRECTORY: ${{github.event.client_payload.cwd}}
+
+  jaen-deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      # https://dev.to/mpocock1/how-to-cache-nodemodules-in-github-actions-with-yarn-24eh
+      - name: Yarn Cache Directory Path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      # https://github.com/marketplace/actions/cache
+      - name: Yarn Cache Folder
+        uses: actions/cache@v3
+        with:
+          # https://help.github.com/en/articles/virtual-environments-for-github-actions#default-environment-variables
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      # https://github.com/marketplace/actions/cache
+      - name: Yarn Cache Node
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      # https://github.com/marketplace/actions/cache
+      - name: Gatsby Cache Folder
+        uses: actions/cache@v3
+        with:
+          key: gatsby-cache-folder
+          path: .cache
+
+      # https://github.com/marketplace/actions/cache
+      - name: Gatsby Public Folder
+        uses: actions/cache@v3
+        with:
+          key: gatsby-public-folder
+          path: public
+
+
+      - uses: ./.github/workflows/jaen-deploy
+        secrets:
+          SCALE_SERP_APIKEY: ${{ secrets.SCALE_SERP_APIKEY }}
+          PLACE_ID: ${{ secrets.PLACE_ID }}
+          SHOPIFY_SHOP_PASSWORD: ${{ secrets.SHOPIFY_SHOP_PASSWORD }}
+          SHOP: ${{ secrets.SHOP }}
+          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+          GATSBY_MAPBOX_ACCESS_TOKEN: ${{ secrets.GATSBY_MAPBOX_ACCESS_TOKEN }}
