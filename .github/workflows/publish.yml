@@ -88,7 +88,6 @@ jobs:
 
 
       - uses: ./.github/workflows/jaen-deploy
-        with:
         secrets:
           SCALE_SERP_APIKEY: ${{ secrets.SCALE_SERP_APIKEY }}
           PLACE_ID: ${{ secrets.PLACE_ID }}
