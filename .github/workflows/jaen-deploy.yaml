@@ -47,6 +47,42 @@ jobs:
           # Relative path under $GITHUB_WORKSPACE to place the repository
           path: '.'
 
+      # https://dev.to/mpocock1/how-to-cache-nodemodules-in-github-actions-with-yarn-24eh
+      - name: Yarn Cache Directory Path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      # https://github.com/marketplace/actions/cache
+      - name: Yarn Cache Folder
+        uses: actions/cache@v3
+        with:
+          # https://help.github.com/en/articles/virtual-environments-for-github-actions#default-environment-variables
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      # https://github.com/marketplace/actions/cache
+      - name: Yarn Cache Node
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      # https://github.com/marketplace/actions/cache
+      - name: Gatsby Cache Folder
+        uses: actions/cache@v3
+        with:
+          key: gatsby-cache-folder
+          path: .cache
+
+      # https://github.com/marketplace/actions/cache
+      - name: Gatsby Public Folder
+        uses: actions/cache@v3
+        with:
+          key: gatsby-public-folder
+          path: public
+
       # https://classic.yarnpkg.com/lang/en/docs/cli/install/#toc-yarn-install-pure-lockfile
       - name: Yarn Install
         run: yarn install --pure-lockfile
