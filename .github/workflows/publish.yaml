@@ -22,6 +22,7 @@ jobs:
       WORKING_DIRECTORY: ${{github.event.client_payload.cwd}}
 
   jaen-deploy:
+    needs: jaen-publish
     uses: ./.github/workflows/jaen-deploy.yaml
     secrets:
       SCALE_SERP_APIKEY: ${{ secrets.SCALE_SERP_APIKEY }}
