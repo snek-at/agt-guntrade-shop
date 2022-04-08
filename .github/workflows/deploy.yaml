@@ -8,10 +8,7 @@
 name: Publish
 
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions#on
-on:
-  # https://help.github.com/en/articles/workflow-syntax-for-github-actions
-  repository_dispatch:
-    types: [update-jaen-data]
+on: push
 
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs
 jobs:
