@@ -11,24 +11,24 @@ name: Deploy Jaen
 on:
   workflow_call:
     secrets:
-      SCALE_SERP_APIKEY:
-        description: Public URL of the Microsoft Teams incoming webhook. To get the value, make sure that channel in
-        required: true
-      PLACE_ID:
-        description: Public URL of the Microsoft Teams incoming webhook. To get the value, make sure that channel in
-        required: true
+      SCALE_SERP_API_KEY:
+        description: Scale Serp api key.
+        required: false
+      SCALE_SERP_PLACE_ID:
+        description: Place IDs uniquely identify a place in the Google Places database and on Google Maps.
+        required: false
+      SHOPIFY_SHOP:
+        description: Domain of a Shopify shop (hans-franz-juergen.myshopify.com).
+        required: false
       SHOPIFY_SHOP_PASSWORD:
-        description: Public URL of the Microsoft Teams incoming webhook. To get the value, make sure that channel in
-        required: true
-      SHOP:
-        description: Public URL of the Microsoft Teams incoming webhook. To get the value, make sure that channel in
-        required: true
+        description: Personal access token for a Shopify account.
+        required: false
       SENDGRID_API_KEY:
-        description: Public URL of the Microsoft Teams incoming webhook. To get the value, make sure that channel in
-        required: true
+        description: SendGrid api key.
+        required: false
       GATSBY_MAPBOX_ACCESS_TOKEN:
-        description: Public URL of the Microsoft Teams incoming webhook. To get the value, make sure that channel in
-        required: true
+        description: Mapbox access token.
+        required: false
 
 
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs
@@ -105,10 +105,10 @@ jobs:
         working-directory: ${{github.event.client_payload.cwd}}
         # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsenv
         env:
-          SCALE_SERP_APIKEY: ${{ secrets.SCALE_SERP_APIKEY }}
-          PLACE_ID: ${{ secrets.PLACE_ID }}
+          SCALE_SERP_APIKEY: ${{ secrets.SCALE_SERP_API_KEY }}
+          PLACE_ID: ${{ secrets.SCALE_SERP_PLACE_ID }}
+          SHOP: ${{ secrets.SHOPIFY_SHOP }}
           SHOPIFY_SHOP_PASSWORD: ${{ secrets.SHOPIFY_SHOP_PASSWORD }}
-          SHOP: ${{ secrets.SHOP }}
           SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
           GATSBY_MAPBOX_ACCESS_TOKEN: ${{ secrets.GATSBY_MAPBOX_ACCESS_TOKEN }}
         run: yarn deploy:incremental

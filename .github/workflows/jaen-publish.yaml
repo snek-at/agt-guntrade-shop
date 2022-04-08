@@ -12,11 +12,11 @@ on:
   workflow_call:
     inputs:
       JAEN_MIGRATION_URL:
-        description: Public URL of the Microsoft Teams incoming webhook. To get the value, make sure that channel in
+        description: Link to the Jaen migrations file.
         type: string
-        required: true
+        required: false
       WORKING_DIRECTORY:
-        description: Public URL of the Microsoft Teams incoming webhook. To get the value, make sure that channel in
+        description: Path to working directory in a monorepo.
         type: string
         required: false
 
