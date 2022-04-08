@@ -82,7 +82,7 @@ jobs:
         # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#
         working-directory: ${{ inputs.WORKING_DIRECTORY }}
         # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsif
-        if: ${{ JAEN_MIGRATION_URL }}
+        if: ${{ inputs.JAEN_MIGRATION_URL }}
         run: |
           # Create gh-pages branch without history
           #git checkout --orphan gh-pages
