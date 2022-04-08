@@ -14,6 +14,7 @@ on: push
 jobs:
   jaen-deploy:
     uses: ./.github/workflows/jaen-deploy.yaml
+    # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_callsecrets
     secrets:
       SCALE_SERP_APIKEY: ${{ secrets.SCALE_SERP_APIKEY }}
       PLACE_ID: ${{ secrets.PLACE_ID }}

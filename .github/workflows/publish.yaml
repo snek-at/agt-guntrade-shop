@@ -17,6 +17,7 @@ on:
 jobs:
   jaen-publish:
     uses: ./.github/workflows/jaen-publish.yaml
+    # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idwith
     with:
       JAEN_MIGRATION_URL: ${{github.event.client_payload.jaendata_url}}
       WORKING_DIRECTORY: ${{github.event.client_payload.cwd}}
@@ -24,6 +25,7 @@ jobs:
   jaen-deploy:
     needs: jaen-publish
     uses: ./.github/workflows/jaen-deploy.yaml
+    # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_callsecrets
     secrets:
       SCALE_SERP_API_KEY: ${{ secrets.SCALE_SERP_APIKEY }}
       SCALE_SERP_PLACE_ID: ${{ secrets.PLACE_ID }}

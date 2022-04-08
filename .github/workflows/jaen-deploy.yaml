@@ -9,25 +9,32 @@ name: Deploy Jaen
 
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions#on
 on:
+  # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_call
   workflow_call:
+    # https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_callsecrets
     secrets:
       SCALE_SERP_API_KEY:
         description: Scale Serp api key.
+        # https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_callsecretssecret_idrequired
         required: false
       SCALE_SERP_PLACE_ID:
         description: Place IDs uniquely identify a place in the Google Places database and on Google Maps.
+        # https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_callsecretssecret_idrequired
         required: false
       SHOPIFY_SHOP:
         description: Domain of a Shopify shop (hans-franz-juergen.myshopify.com).
+        # https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_callsecretssecret_idrequired
         required: false
       SHOPIFY_SHOP_PASSWORD:
         description: Personal access token for a Shopify account.
         required: false
       SENDGRID_API_KEY:
         description: SendGrid api key.
+        # https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_callsecretssecret_idrequired
         required: false
       GATSBY_MAPBOX_ACCESS_TOKEN:
         description: Mapbox access token.
+        # https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_callsecretssecret_idrequired
         required: false
 
 
@@ -43,6 +50,7 @@ jobs:
       # https://github.com/actions/checkout
       - name: Checkout 🛎️
         uses: actions/checkout@v3
+        # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswith
         with:
           # Relative path under $GITHUB_WORKSPACE to place the repository
           path: '.'
@@ -50,11 +58,13 @@ jobs:
       # https://dev.to/mpocock1/how-to-cache-nodemodules-in-github-actions-with-yarn-24eh
       - name: Yarn Cache Directory Path
         id: yarn-cache-dir-path
+        # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsrun
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
       # https://github.com/marketplace/actions/cache
       - name: Yarn Cache Folder
         uses: actions/cache@v3
+        # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswith
         with:
           # https://help.github.com/en/articles/virtual-environments-for-github-actions#default-environment-variables
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -65,6 +75,7 @@ jobs:
       # https://github.com/marketplace/actions/cache
       - name: Yarn Cache Node
         uses: actions/cache@v3
+        # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswith
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
@@ -72,6 +83,7 @@ jobs:
       # https://github.com/marketplace/actions/cache
       - name: Gatsby Cache Folder
         uses: actions/cache@v3
+        # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswith
         with:
           key: gatsby-cache-folder
           path: .cache
@@ -79,12 +91,14 @@ jobs:
       # https://github.com/marketplace/actions/cache
       - name: Gatsby Public Folder
         uses: actions/cache@v3
+        # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswith
         with:
           key: gatsby-public-folder
           path: public
 
       # https://classic.yarnpkg.com/lang/en/docs/cli/install/#toc-yarn-install-pure-lockfile
       - name: Yarn Install
+        # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsrun
         run: yarn install --pure-lockfile
 
       # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsid
@@ -111,4 +125,5 @@ jobs:
           SHOPIFY_SHOP_PASSWORD: ${{ secrets.SHOPIFY_SHOP_PASSWORD }}
           SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
           GATSBY_MAPBOX_ACCESS_TOKEN: ${{ secrets.GATSBY_MAPBOX_ACCESS_TOKEN }}
+        # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsrun
         run: yarn deploy:incremental

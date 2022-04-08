@@ -9,14 +9,18 @@ name: Jaen Publish
 
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions#on
 on:
+  # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_call
   workflow_call:
+    # https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_callinputs
     inputs:
       JAEN_MIGRATION_URL:
         description: Link to the Jaen migrations file.
+        # https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_callinputsinput_idtype
         type: string
         required: false
       WORKING_DIRECTORY:
         description: Path to working directory in a monorepo.
+        # https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_callinputsinput_idtype
         type: string
         required: false
 
@@ -36,6 +40,7 @@ jobs:
       # https://github.com/actions/checkout
       - name: Checkout 🛎️
         uses: actions/checkout@v3
+        # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswith
         with:
           # Relative path under $GITHUB_WORKSPACE to place the repository
           path: '.'
@@ -43,11 +48,13 @@ jobs:
       # https://dev.to/mpocock1/how-to-cache-nodemodules-in-github-actions-with-yarn-24eh
       - name: Yarn Cache Directory Path
         id: yarn-cache-dir-path
+        # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsrun
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
       # https://github.com/marketplace/actions/cache
       - name: Yarn Cache Folder
         uses: actions/cache@v3
+        # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswith
         with:
           # https://help.github.com/en/articles/virtual-environments-for-github-actions#default-environment-variables
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -57,12 +64,14 @@ jobs:
       # https://github.com/marketplace/actions/cache
       - name: Yarn Cache Node
         uses: actions/cache@v3
+        # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswith
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       # https://classic.yarnpkg.com/lang/en/docs/cli/install/#toc-yarn-install-pure-lockfile
       - name: Yarn Install
+        # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsrun
         run: yarn install --pure-lockfile
 
       # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsid
@@ -83,6 +92,7 @@ jobs:
         working-directory: ${{ inputs.WORKING_DIRECTORY }}
         # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsif
         if: ${{ inputs.JAEN_MIGRATION_URL }}
+        # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsrun
         run: |
           # Create gh-pages branch without history
           #git checkout --orphan gh-pages
