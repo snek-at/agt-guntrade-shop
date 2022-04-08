@@ -16,7 +16,7 @@ on:
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs
 jobs:
   jaen-deploy:
-    uses: ./.github/workflows/jaen-deploy.yml
+    uses: ./.github/workflows/jaen-deploy.yaml
     secrets:
       SCALE_SERP_APIKEY: ${{ secrets.SCALE_SERP_APIKEY }}
       PLACE_ID: ${{ secrets.PLACE_ID }}

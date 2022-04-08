@@ -16,13 +16,13 @@ on:
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs
 jobs:
   jaen-publish:
-    uses: ./.github/workflows/jaen-publish.yml
+    uses: ./.github/workflows/jaen-publish.yaml
     with:
       JAEN_MIGRATION_URL: ${{github.event.client_payload.jaendata_url}}
       WORKING_DIRECTORY: ${{github.event.client_payload.cwd}}
 
   jaen-deploy:
-    uses: ./.github/workflows/jaen-deploy.yml
+    uses: ./.github/workflows/jaen-deploy.yaml
     secrets:
       SCALE_SERP_APIKEY: ${{ secrets.SCALE_SERP_APIKEY }}
       PLACE_ID: ${{ secrets.PLACE_ID }}
