@@ -88,6 +88,18 @@ jobs:
         run: yarn install --pure-lockfile
 
       # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsid
+      - name: Configure GitHub Authentication 🔧
+        # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsrun
+        run: |
+          # Git: set identity
+          git config user.name "snekmin"
+          git config user.email "noreply.snek.at@gmail.com"
+
+          # Git: set remote  
+          # https://developer.github.com/apps/building-github-apps/authenticating-with-github-apps/#http-based-git-access-by-an-installation
+          git remote set-url origin "https://x-access-token:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
+
+      # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsid
       - name: Build and Deploy 🚀
         # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#
         working-directory: ${{github.event.client_payload.cwd}}
