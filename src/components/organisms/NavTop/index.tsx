@@ -142,7 +142,7 @@ const NavTop = ({links, activePath, search}: NavTopProps) => {
           <HStack spacing={8} alignItems={'center'} justifyContent={'flex-end'}>
             <Link
               as={GatsbyLink}
-              to="/contact"
+              to="/kontakt"
               display={{
                 base: 'none',
                 md: 'block'

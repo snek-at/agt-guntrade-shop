@@ -49,7 +49,7 @@ export const ImprintLayout = (props: {activePath: string}) => {
               <p>
                 Weitere Kontakt Möglichkeiten{' '}
                 <a
-                  href="./contact"
+                  href="/kontakt"
                   title="Opens internal link in current window"
                   target="_blank">
                   Kontakt

@@ -20,6 +20,7 @@ import {motion, useMotionValue, useAnimation} from 'framer-motion'
 
 import {useWindowWidth} from '../../common/utils'
 import {CarouselStyle} from './style'
+import {useTheme} from '@emotion/react'
 
 // #region Interfaces
 
@@ -32,6 +33,15 @@ interface ResponsiveNumber {
   '2xl'?: number
 }
 
+interface ResponsiveString {
+  base?: string
+  sm?: string
+  md?: string
+  lg?: string
+  xl?: string
+  '2xl'?: string
+}
+
 interface BaseProps {
   spacing: number
   itemWidth: number
@@ -40,7 +50,7 @@ interface BaseProps {
 
 interface SliderProps extends BaseProps {
   containerPadding: number
-  maxWidthInVW: number
+  maxWidth: number
   screenWidth: number | undefined
   progressProps: ProgressProps
   rows: number
@@ -57,7 +67,7 @@ interface ResponsiveSliderProps {
   containerPadding?: ResponsiveNumber
   sliderSpacing?: ResponsiveNumber
   gridSpacing?: ResponsiveNumber
-  maxWidthInVW?: ResponsiveNumber
+  maxWidth?: ResponsiveString
   itemWidth?: ResponsiveNumber
   items: Array<React.ReactNode>
   itemsPerRow?: ResponsiveNumber
@@ -75,7 +85,9 @@ const Slider = (props: SliderProps) => {
   const [curPage, setCurPage] = React.useState(0)
   const [isDragging, setIsDragging] = React.useState(false)
 
-  const maxW = (props.screenWidth || 0) * (props.maxWidthInVW / 100)
+  const maxWidthInVW = (props.maxWidth * 100) / props.screenWidth
+
+  const maxW = (props.screenWidth || 0) * (maxWidthInVW / 100)
   let possibleCards = Math.floor(maxW / props.itemWidth)
 
   if (
@@ -320,7 +332,7 @@ const GridLayout = (props: GridProps) => {
  *
  * @param props.items - type:Array<React.ReactNode> array of items.
  * @param props.spacing - optional default:40 - type:ResponsiveNumber -  The spacing between the cards (in px).
- * @param props.maxWidthInVW - optional default:80 - type:ResponsiveNumber -  The maxWidth of the slider or grid (in vw).
+ * @param props.maxWidth - optional default:80 - type:ResponsiveNumber -  The maxWidth of the slider or grid (in vw).
  * @param props.itemWidth - optional default:280 - type:ResponsiveNumber -  The width of a single Item (in px).
  * @param props.itemsPerRow - optional default:1 - type:ResponsiveNumber - The items per row in the Grid.
  * @param props.containerPadding - optional default:0 - type:ResponsiveNumber - The paddingX on the container useful for hover animations with x effect (in px).
@@ -329,6 +341,7 @@ const GridLayout = (props: GridProps) => {
  * @param props.progressProps - optional - type:ProgressProps - The styling of the Chakra-UI progress element.
  */
 export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
+  const theme = useTheme()
   const itemWidth = props.itemWidth ? useBreakpointValue(props.itemWidth) : 280
   const itemsPerRow = props.itemsPerRow
     ? useBreakpointValue(props.itemsPerRow)
@@ -339,9 +352,15 @@ export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
   const gridSpacing = props.gridSpacing
     ? useBreakpointValue(props.gridSpacing)
     : 20
-  const maxWidthInVW = props.maxWidthInVW
-    ? useBreakpointValue(props.maxWidthInVW)
-    : 80
+
+  const themeWidth =
+    theme.sizes[useBreakpointValue(props.maxWidth || {base: '18', lg: '8xl'})]
+
+  const maxWidth =
+    typeof themeWidth === 'string'
+      ? parseFloat(themeWidth.replace('rem', '')) * 16
+      : 300
+
   const containerPadding = props.containerPadding
     ? useBreakpointValue(props.containerPadding)
     : 0
@@ -349,7 +368,7 @@ export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
   const breakpoint = props.breakpoint || 'md'
   const screenWidth = useWindowWidth()
   const baseProgressProps: ProgressProps = {
-    width: `${maxWidthInVW / 2}vw`,
+    width: `${maxWidth / 2}`,
     height: '5px',
     mt: 2,
     borderRadius: 'lg',
@@ -365,7 +384,7 @@ export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
     progressProps: progressProps,
     containerPadding: containerPadding,
     items: props.items,
-    maxWidthInVW: maxWidthInVW,
+    maxWidth: maxWidth,
     screenWidth: screenWidth,
     itemWidth: itemWidth,
     spacing: sliderSpacing
@@ -375,7 +394,7 @@ export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
     base: (
       <GridLayout
         items={props.items}
-        maxWidth={(screenWidth || 0) * (maxWidthInVW / 100)}
+        maxWidth={props.maxWidth || '8xl'}
         itemWidth={itemWidth}
         spacing={gridSpacing}
         itemsPerRow={itemsPerRow}
