@@ -75,7 +75,8 @@ const PartnerSection = () => {
         children={items}
         progressProps={{
           colorScheme: 'agt.grayScheme',
-          bg: useColorModeValue('gray.200', 'gray.600')
+          bg: useColorModeValue('gray.200', 'gray.600'),
+          mt: 4
         }}
       />
     </Box>

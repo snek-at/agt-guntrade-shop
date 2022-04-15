@@ -32,7 +32,8 @@ export const ProductSliderLayout = (props: {
         containerPadding={{base: 15}}
         progressProps={{
           colorScheme: 'agt.grayScheme',
-          bgColor: useColorModeValue('gray.200', 'gray.600')
+          bgColor: useColorModeValue('gray.200', 'gray.600'),
+          mt: 4
         }}
       />
     </VStack>

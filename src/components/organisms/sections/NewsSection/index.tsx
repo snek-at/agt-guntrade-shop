@@ -42,6 +42,7 @@ const NewsSection = ({heading}: NewsSectionProps) => {
         breakpoint="base"
         sliderSpacing={{base: 4, md: 8, lg: 12}}
         itemWidth={{base: 350}}
+        progressProps={{mt: 4}}
         children={index.children.map(page => {
           React.useEffect(() => {
             if (
