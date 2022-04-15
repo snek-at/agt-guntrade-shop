@@ -52,7 +52,7 @@ const ReviewSection = ({heading, data}: ReviewSectionProps) => {
       </Box>
 
       <ResponsiveSlider
-        items={reviewsForSlider}
+        children={reviewsForSlider}
         breakpoint="base"
         sliderSpacing={{base: 4, md: 8, lg: 12}}
         progressProps={{

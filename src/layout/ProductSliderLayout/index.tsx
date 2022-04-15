@@ -28,7 +28,7 @@ export const ProductSliderLayout = (props: {
         {props.title}
       </Heading>
       <ResponsiveSlider
-        items={productsForSlider}
+        children={productsForSlider}
         containerPadding={{base: 15}}
         progressProps={{
           colorScheme: 'agt.grayScheme',

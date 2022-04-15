@@ -69,7 +69,7 @@ interface ResponsiveSliderProps {
   gridSpacing?: ResponsiveNumber
   maxWidth?: ResponsiveString
   itemWidth?: ResponsiveNumber
-  items: Array<React.ReactNode>
+  children: Array<React.ReactNode>
   itemsPerRow?: ResponsiveNumber
   breakpoint?: 'base' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 }
@@ -84,8 +84,9 @@ const Slider = (props: SliderProps) => {
   const animation = useAnimation()
   const [curPage, setCurPage] = React.useState(0)
   const [isDragging, setIsDragging] = React.useState(false)
+  const [buttonsDisabled, setButtonsDisabled] = React.useState(false)
 
-  const maxWidthInVW = (props.maxWidth * 100) / props.screenWidth
+  const maxWidthInVW = (props.maxWidth * 100) / (props.screenWidth || 1)
 
   const maxW = (props.screenWidth || 0) * (maxWidthInVW / 100)
   let possibleCards = Math.floor(maxW / props.itemWidth)
@@ -131,6 +132,8 @@ const Slider = (props: SliderProps) => {
     }
     calculateDistanceAndAnimate(targetPage)
     setCurPage(targetPage)
+    setButtonsDisabled(true)
+    setTimeout(() => setButtonsDisabled(false), 150)
   }
 
   const NavigationButton = (props: {direction: 'left' | 'right'}) => {
@@ -149,7 +152,11 @@ const Slider = (props: SliderProps) => {
       },
       className: 'button',
       isRound: true,
-      onClick: () => handlePageNavigate(props.direction)
+      onClick: () => handlePageNavigate(props.direction),
+      isDisabled: buttonsDisabled,
+      _disabled: {
+        cursor: 'pointer'
+      }
     }
 
     if (props.direction === 'left') {
@@ -383,7 +390,7 @@ export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
     rows: sliderRows,
     progressProps: progressProps,
     containerPadding: containerPadding,
-    items: props.items,
+    items: props.children,
     maxWidth: maxWidth,
     screenWidth: screenWidth,
     itemWidth: itemWidth,
@@ -393,7 +400,7 @@ export const ResponsiveSlider = (props: ResponsiveSliderProps) => {
   const returnValue = useBreakpointValue({
     base: (
       <GridLayout
-        items={props.items}
+        items={props.children}
         maxWidth={props.maxWidth || '8xl'}
         itemWidth={itemWidth}
         spacing={gridSpacing}

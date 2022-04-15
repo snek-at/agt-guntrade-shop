@@ -72,7 +72,7 @@ const PartnerSection = () => {
         sliderRows={{base: 2}}
         breakpoint="base"
         sliderSpacing={{base: 10}}
-        items={items}
+        children={items}
         progressProps={{
           colorScheme: 'agt.grayScheme',
           bg: useColorModeValue('gray.200', 'gray.600')
