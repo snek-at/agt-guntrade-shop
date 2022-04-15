@@ -12,7 +12,7 @@ export default {
 export const Basic = () => (
   <ProductGrid
     items={products}
-    getPath={(handle: string) => `/products/${handle}`}
+    getPath={(handle: string) => `/produkte/${handle}`}
   />
 )
 
@@ -20,6 +20,6 @@ export const WithTitle = () => (
   <ProductGrid
     title="Unsere Empfehlungen"
     items={products}
-    getPath={(handle: string) => `/products/${handle}`}
+    getPath={(handle: string) => `/produkte/${handle}`}
   />
 )

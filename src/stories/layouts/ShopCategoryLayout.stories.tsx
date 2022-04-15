@@ -11,7 +11,7 @@ const products = getProductNodes(10)
 
 const categories = getRandomCategoryNodes(5)
 
-const path = '/langwaffen/neuelangwaffen/products'
+const path = '/langwaffen/neuelangwaffen/produkte'
 
 export const Page = () => (
   <ShopCategoryLayout
@@ -24,7 +24,7 @@ export const Page = () => (
     productGrid={{
       title: 'Top Produkte',
       items: products.slice(0, 8),
-      getPath: (handle: string) => `/products/${handle}`
+      getPath: (handle: string) => `/produkte/${handle}`
     }}
   />
 )

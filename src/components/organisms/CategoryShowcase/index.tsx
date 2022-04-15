@@ -84,7 +84,7 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
               items={tabs[category].items}
               direction={direction}
               getPath={handle => {
-                return `${getCategoryPath(category)}/products/${handle}`
+                return `${getCategoryPath(category)}/produkte/${handle}`
               }}
             />
           )
@@ -98,7 +98,7 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
           variant="solid"
           size="lg"
           onClick={() =>
-            navigate(current === 'New' ? '/products' : getCategoryPath(current))
+            navigate(current === 'New' ? '/produkte' : getCategoryPath(current))
           }>
           Mehr davon
         </Button>

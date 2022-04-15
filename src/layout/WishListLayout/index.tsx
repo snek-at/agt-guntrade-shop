@@ -37,7 +37,7 @@ const ContinueShoppingText = () => (
       as={GatsbyLink}
       color={'agt.blue'}
       fontWeight="semibold"
-      to="/products">
+      to="/produkte">
       zu den Artikeln
     </Link>
   </HStack>
@@ -233,7 +233,7 @@ const WishListItem = (props: {
   onRemove: () => void
 }) => {
   const imageWithText = (
-    <Link as={GatsbyLink} to={`/products/${props.handle}`}>
+    <Link as={GatsbyLink} to={`/produkte/${props.handle}`}>
       <ImageWithText
         title={props.title}
         image={props.image}

@@ -13,7 +13,7 @@ export const ProductSliderLayout = (props: {
     () =>
       props.products.map(product => (
         <Link
-          to={`/products/${product.handle}`}
+          to={`/produkte/${product.handle}`}
           draggable="false"
           onDragStart={e => e.preventDefault()}>
           {generateProductCard(product)}

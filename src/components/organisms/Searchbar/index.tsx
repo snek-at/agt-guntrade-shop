@@ -158,7 +158,7 @@ export const Searchbar = (props: SearchbarProps) => {
                   <Divider />
                   <VStack m="4" align="left">
                     {props.searchResultProducts.map((product, index) => (
-                      <Link to={`/products/${product.handle}`} key={index}>
+                      <Link to={`/produkte/${product.handle}`} key={index}>
                         <Box
                           key={index}
                           px="4"

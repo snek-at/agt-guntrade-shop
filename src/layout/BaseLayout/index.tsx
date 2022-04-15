@@ -67,8 +67,8 @@ export const BaseLayoutWithoutSearch: React.FC<{activePath: string}> = ({
         col1={['Startseite', 'Shop', 'Unsere Vertretungen', 'Kontakt']}
         col2h="Rechtliches"
         col2={[
-          <Link to="/imprint">Impressum</Link>,
-          <Link to="/privacy">Datenschutz</Link>,
+          <Link to="/impressum">Impressum</Link>,
+          <Link to="/datenschutz">Datenschutz</Link>,
           <Link to="/sitemap/sitemap-index.xml">Sitemap</Link>
         ]}
         col3h="Öffnungszeiten"

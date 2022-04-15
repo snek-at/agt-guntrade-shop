@@ -95,7 +95,7 @@ const IndexPage = ({
         showcaseProducts={showCaseProducts}
       />
       <FeaturedProductsSection
-        getPath={(handle: string) => `/products/${handle}`}
+        getPath={(handle: string) => `/produkte/${handle}`}
         products={products}
       />
       <ReviewSection

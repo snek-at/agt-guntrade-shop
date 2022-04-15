@@ -81,7 +81,7 @@ const FeaturedProductsSection = ({
           variant="solid"
           size="lg"
           _hover={{bg: 'agt.blueAccent'}}
-          onClick={() => navigate('/products')}>
+          onClick={() => navigate('/produkte')}>
           Mehr davon
         </Button>
       </Center>
