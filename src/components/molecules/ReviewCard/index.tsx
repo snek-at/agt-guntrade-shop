@@ -41,8 +41,8 @@ const ReviewCard = ({
 }: ReviewCardProps) => {
   const [isOpen, setIsOpen] = React.useState(false)
 
-  const queryString = window.location.search.substring(1)
   React.useEffect(() => {
+    const queryString = window.location.search.substring(1)
     if (reviewId === queryString) {
       setIsOpen(true)
     }
@@ -80,6 +80,7 @@ const ReviewCard = ({
         borderRadius="5px"
         boxShadow="lg"
         p="5"
+        maxW="sm"
         onClick={() => onOpen()}
         divider={<StackDivider />}>
         <Text noOfLines={4} minH="100px" mb="1">

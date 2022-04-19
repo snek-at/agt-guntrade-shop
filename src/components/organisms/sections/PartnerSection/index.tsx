@@ -1,9 +1,9 @@
-import {Box, Flex, useColorModeValue} from '@chakra-ui/react'
+import {Box, Container, Flex} from '@chakra-ui/react'
 import {Field} from '@jaenjs/jaen'
 import {StaticImage} from 'gatsby-plugin-image'
 import React from 'react'
+import {Slider} from '@snek-at/uikit'
 
-import {ResponsiveSlider} from '../../../../layout/ProductSliderLayout/Slider'
 import {ImageStyle} from './style'
 
 const PartnerCard = (props: {identifier: number}) => {
@@ -67,18 +67,9 @@ const PartnerSection = () => {
     )
   }
   return (
-    <Box my="20">
-      <ResponsiveSlider
-        sliderRows={{base: 2}}
-        breakpoint="base"
-        sliderSpacing={{base: 10}}
-        items={items}
-        progressProps={{
-          colorScheme: 'agt.grayScheme',
-          bg: useColorModeValue('gray.200', 'gray.600')
-        }}
-      />
-    </Box>
+    <Container my="20" maxW="8xl">
+      <Slider>{items}</Slider>
+    </Container>
   )
 }
 

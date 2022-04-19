@@ -17,7 +17,7 @@ import ReviewCard from '../../../molecules/ReviewCard'
 import {useWindowWidth} from '../../../../common/utils'
 
 import {Bullet} from '../../../../common/assets'
-import {ResponsiveSlider} from '../../../../layout/ProductSliderLayout/Slider'
+import {Slider} from '@snek-at/uikit'
 
 interface ReviewType {
   id: string
@@ -43,25 +43,18 @@ const ReviewSection = ({heading, data}: ReviewSectionProps) => {
   ))
 
   return (
-    <VStack spacing={6} bg="agt.gray" my={4} py={16}>
-      <Box textAlign="center">
+    <Box bg="agt.gray" my={4} py={16}>
+      <VStack textAlign="center">
         <Heading size={'2xl'} color="white" maxW="50vw">
           {heading}
         </Heading>
         <Bullet color="agt.red" w="unset" fontSize="xl" mt="5" mb="10" />
-      </Box>
+      </VStack>
 
-      <ResponsiveSlider
-        items={reviewsForSlider}
-        breakpoint="base"
-        sliderSpacing={{base: 4, md: 8, lg: 12}}
-        progressProps={{
-          colorScheme: 'agt.blueScheme',
-          bgColor: useColorModeValue('gray.200', 'gray.600'),
-          mt: 4
-        }}
-      />
-    </VStack>
+      <Container maxW="8xl" py={16}>
+        <Slider>{reviewsForSlider}</Slider>
+      </Container>
+    </Box>
   )
 }
 
