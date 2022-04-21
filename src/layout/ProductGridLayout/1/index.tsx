@@ -7,8 +7,8 @@ import {
   VStack
 } from '@chakra-ui/react'
 import React from 'react'
-import {gridPadBoxes} from '../../common/utils'
-import {generateProductCard} from '../ProductCardLayout'
+import {gridPadBoxes} from '../../../common/utils'
+import {generateProductCard} from '../../ProductCardLayout/1'
 
 import {Link as GatsbyLink} from 'gatsby'
 
@@ -31,7 +31,7 @@ export const ProductGrid = (props: {
       <SimpleGrid spacing={4} minChildWidth={props.minChildWidth || '200px'}>
         {props.items.map((item, key) => {
           return (
-            <Link key={item.id} as={GatsbyLink} to={props.getPath(item.handle)} _hover={{textDecoration: 'none'}}>
+            <Link key={item.id} as={GatsbyLink} to={props.getPath(item.handle)}>
               {generateProductCard(item)}
             </Link>
           )

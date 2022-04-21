@@ -64,10 +64,10 @@ const FeaturedProductsSection = ({
         </Heading>
         <Bullet color="agt.red" w="unset" fontSize="xl" mt="5" mb="10" />
       </Box>
-      <SimpleGrid columns={{base: 2, md: 4, xl: 6}} spacing="5">
+      <SimpleGrid columns={{base: 2, md: 3, xl: 4}} spacing="5">
         {products.map((item, key) => {
           return (
-            <Link key={key} as={GatsbyLink} to={getPath(item.handle)}>
+            <Link key={key} as={GatsbyLink} to={getPath(item.handle)} _hover={{textDecoration: 'none'}}>
               {generateProductCard(item)}
             </Link>
           )

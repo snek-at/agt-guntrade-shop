@@ -5,10 +5,42 @@ import React from 'react'
 import {useBreakpointValue} from '@chakra-ui/media-query'
 import {navigate} from 'gatsby'
 
+export interface ShopifyNode {
+  id: string
+  handle: string
+  collections: {
+    handle: string
+  }[]
+  descriptionHtml: string
+  title: string
+  tags: string[]
+  status: string
+  totalinventory?: number
+  createdAt: string
+  contextualPricing: {
+    maxVariantPricing: {
+      price: {
+        amount: string
+      }
+      compareAtPrice: {
+        amount: string
+      } | null
+    }
+  }
+  images: {
+    shopifyId: string
+    gatsbyImageData: any
+  }[]
+  featuredImage: {
+    id: string
+    gatsbyImageData: any
+  }
+}
+
 interface Tab {
   [category: string]: {
     title: string
-    items: any[]
+    items: ShopifyNode[]
   }
 }
 
@@ -81,7 +113,7 @@ const CategoryShowcase = ({tabs}: CategoryShowcaseProps) => {
           return (
             <CategoryTab
               visible={current === category ? 'visible' : 'hidden'}
-              items={tabs[category].items}
+              products={tabs[category].items}
               direction={direction}
               getPath={handle => {
                 return `${getCategoryPath(category)}/produkte/${handle}`

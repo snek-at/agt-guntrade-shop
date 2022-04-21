@@ -8,7 +8,12 @@ import {
   VStack,
   Spacer,
   Button,
+  BoxProps,
+  AspectRatio
 } from '@chakra-ui/react'
+
+import { v1 as uuid } from 'uuid';
+
 import {GatsbyImage, IGatsbyImageData} from 'gatsby-plugin-image'
 import React from 'react'
 
@@ -70,18 +75,16 @@ function ImageBoxWithTags(props: {
     gatsbyImageData: IGatsbyImageData
   }
   tags: ProductCardProps['tags']
-}) {
+} & BoxProps) {
   // Box with image as background and tags on bottom
   const {image, tags} = props
 
   return (
     <Box
-      className="pimg background"
-      borderRadius="md"
-      // boxShadow="lg"
-      // bg={useColorModeValue('gray.200', 'gray.600')}
       overflow="hidden"
-      position="relative">
+      position="relative"
+      {...props}
+      >
       <GatsbyImage
         onDragStart={e => e.preventDefault()}
         draggable="false"
@@ -113,6 +116,7 @@ function Price(props: {price: string; discountPrice?: string}) {
   const price = `${parseFloat(props.price).toFixed(2)} €`
   if (props.discountPrice) {
     const discountPrice = `${parseFloat(props.discountPrice).toFixed(2)} €`
+
     // strike through price and put discount price on the right side
     return (
       <Flex
@@ -159,10 +163,16 @@ export interface ProductCardProps {
   discountPrice?: string
   tags: Array<{name: string; color: string}>
   createdAt: string
+  borderline?: boolean
+  left?: boolean
+  bwidth?: string
+  bcolor?: string
 }
 
 export function ProductCardLayout(props: ProductCardProps) {
-  const {id, image, images, name, categoriesString, price, discountPrice, createdAt} =
+  const cardId = uuid()
+
+  const {id, image, images, name, categoriesString, price, discountPrice, createdAt, borderline, left, bwidth, bcolor} =
     props
 
   const getDefaultTags = (tags: typeof props.tags = []) => {
@@ -179,23 +189,33 @@ export function ProductCardLayout(props: ProductCardProps) {
     return tags
   }
 
-  const allimages = [image]
-
-  if (images) {
-    allimages.concat(images)
-  }
-    
-
-  console.log("\n\n\n fuck \n\n\n")
-
-  const [imageIndex, setImageIndex] = React.useState(0)
   const [tags, _] = React.useState(getDefaultTags())
-  
 
+  const radioRef = React.useRef<(HTMLInputElement | null)[]>([])
+
+
+  let enableBorderline = borderline
+  let allimages: ProductCardProps["images"] = []
+
+  if (!Array.isArray(images)) {
+    enableBorderline = false
+
+    if (image) {
+      allimages = [image]
+    }
+  } else {
+    allimages = images
+    console.log("uuf")
+  }
+
+  console.log("test")
+  console.log(images)
+  console.log(allimages)
+  console.log("\n\n")
   return (
     <VStack
       display={"block"}
-      css={cardStyle()}
+      css={cardStyle(enableBorderline, bwidth, bcolor, left)}
       boxSize={'full'}
       cursor="pointer"
       // bg="red"
@@ -213,19 +233,33 @@ export function ProductCardLayout(props: ProductCardProps) {
         // h={'full'}
         minH={'full'}
         borderRadius="5px"
-        border="1px"
-        borderColor="gray.200"
+        // border="1px"
+        // borderColor="gray.200"
         // mt="3"
         >
-        {allimages?.map((image, index) => (
-          <>
-          {index==0 
-            ? <input type="radio" className='radioimg' name={"imgbox-" + id} id={"imgbox-" + id + "-" + index} checked></input>
-            : <input type="radio" className='radioimg' name={"imgbox-" + id} id={"imgbox-" + id + "-" + index} checked={imageIndex === index}></input>
-          }
-          <ImageBoxWithTags image={image} tags={tags} />
-          </>
-        ))}
+        <Box position='relative'>
+          <AspectRatio ratio={10 / 9}>
+            <>
+              <input type="radio" className='radioimg' name={"imgbox-" + cardId} id={"imgbox-" + cardId + "-" + 0} key={0} ref={el => radioRef.current[0] = el} checked></input>
+              {image
+                ? <ImageBoxWithTags image={image} tags={tags} className="main" />
+                : <ImageBoxWithTags image={image} tags={tags} className="main" />
+              }
+            </>
+          </AspectRatio>
+
+          {allimages.map((image, index) => (
+            <>
+              {index!=0 
+                ? <>
+                    <input type="radio" className='radioimg' name={"imgbox-" + cardId} id={"imgbox-" + cardId + "-" + index} key={index} ref={el => radioRef.current[index] = el} ></input>
+                    <ImageBoxWithTags image={image} tags={tags} className="preview" />
+                  </>
+                : <></>
+              }
+            </>
+          ))}
+        </Box>
         <Text fontSize="sm" isTruncated>
           {categoriesString || '-'}
         </Text>
@@ -233,12 +267,13 @@ export function ProductCardLayout(props: ProductCardProps) {
         <Price price={price} discountPrice={discountPrice} />
         <Spacer
           position="absolute"
+          className='bspacer'
           w="0"
           h="100%"
-          right="0"
           top="0"
           borderLeft="1px"
           borderColor="gray.200"
+          transform="scale(0.97)"
         />
         <Box
           className='borderline'
@@ -262,27 +297,26 @@ export function ProductCardLayout(props: ProductCardProps) {
             zIndex={9}
             opacity="0"
             boxSize={'full'}
+            py="0.5rem"
             px="1"
-            w="calc(30% * (1/1.3))"
-            top={0}
-            left="calc(100% * (1/1.3))"
           >
             {allimages.map((image, index) => (
               <>                
-                <label htmlFor={"imgbox-" + id + "-" + index}>
+                <label htmlFor={"imgbox-" + cardId + "-" + index}>
                   <Box
-                    // position="absolute"
-                    className={"iimgbox-" + index}
+                    transform="scale(0.97)"
                     borderBottom="1px"
                     borderColor="gray.200"
+                    py="1"
+                    _hover={{borderColor: 'agt.red'}}
+                    onMouseOver={() => radioRef.current[index]!.checked = true}
+                    onMouseLeave={() => radioRef.current[0]!.checked = true}
                   >
                     <GatsbyImage
                       onDragStart={e => e.preventDefault()}
                       draggable="false"
                       image={image.gatsbyImageData}
                       alt={image.alt}
-                      onMouseOver={() => setImageIndex(index)}
-                      onMouseLeave={() => setImageIndex(0)}
                     />
                   </Box>
                 </label>
@@ -314,6 +348,7 @@ export function generateProductCard(item: any) {
       discountPrice={
         item.contextualPricing.maxVariantPricing.compareAtPrice?.amount
       }
+      borderline={true}
     />
   )
 }
