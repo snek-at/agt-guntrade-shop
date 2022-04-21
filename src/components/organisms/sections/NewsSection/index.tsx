@@ -1,16 +1,25 @@
-import {Box, Heading, Text} from '@chakra-ui/layout'
 import React from 'react'
 import {scroller} from 'react-scroll'
 import {useColorModeValue} from '@chakra-ui/color-mode'
-import {AspectRatio, VStack, Stack, useDisclosure} from '@chakra-ui/react'
+import {
+  AspectRatio,
+  VStack,
+  Stack,
+  useDisclosure,
+  Box,
+  Heading,
+  Text,
+  Container,
+  HStack
+} from '@chakra-ui/react'
 
 import {Bullet} from '../../../../common/assets'
 import {Field, useJaenPageIndex} from '@jaenjs/jaen'
 import {StaticImage} from 'gatsby-plugin-image'
-import {ResponsiveSlider} from '../../../../layout/ProductSliderLayout/Slider'
 
 import NewsModal from '../../NewsModal'
 import {CardStyle} from './style'
+import {Slider} from '@snek-at/uikit'
 
 export interface NewsSectionProps {
   heading: React.ReactNode
@@ -31,39 +40,37 @@ const NewsSection = ({heading}: NewsSectionProps) => {
   }
 
   return (
-    <VStack id="news" spacing={6} mb={4} pb={16}>
-      <Box textAlign="center">
-        <Heading size={'2xl'} maxW="50vw">
-          {heading}
-        </Heading>
-        <Bullet color="agt.red" w="unset" fontSize="xl" mt="5" mb="10" />
-      </Box>
-      <ResponsiveSlider
-        breakpoint="base"
-        sliderSpacing={{base: 4, md: 8, lg: 12}}
-        itemWidth={{base: 350}}
-        progressProps={{mt: 4}}
-        children={index.children.map(page => {
-          React.useEffect(() => {
-            if (
-              window &&
-              window.location.search === `?${page.jaenPageMetadata.title}` &&
-              !isOpen
-            ) {
-              setChildId(page.id)
-              onOpen()
-              scroller.scrollTo('news', {offset: -200})
-            }
-          }, [])
-          return index.withJaenPage(
-            page.id,
-            <>
+    <>
+      <Container maxW="8xl" my={4} py={16}>
+        <VStack textAlign="center">
+          <Heading size={'2xl'} maxW="50vw">
+            {heading}
+          </Heading>
+          <Bullet color="agt.red" w="unset" fontSize="xl" mt="5" mb="10" />
+        </VStack>
+        <Slider>
+          {index.children.map(page => {
+            React.useEffect(() => {
+              if (
+                window &&
+                window.location.search ===
+                  `?${page?.jaenPageMetadata?.title}` &&
+                !isOpen
+              ) {
+                setChildId(page.id)
+                onOpen()
+                scroller.scrollTo('news', {offset: -200})
+              }
+            }, [])
+            return index.withJaenPage(
+              page.id,
               <Box
                 m={1}
+                width={'lg'}
                 onClick={() => {
                   onOpen()
                   setChildId(page.id)
-                  setUrl(`?${page.jaenPageMetadata.title}`)
+                  setUrl(`?${page?.jaenPageMetadata?.title}`)
                 }}
                 css={CardStyle()}>
                 <AspectRatio ratio={16 / 9}>
@@ -108,14 +115,10 @@ const NewsSection = ({heading}: NewsSectionProps) => {
                   </Text>
                 </Stack>
               </Box>
-            </>
-          )
-        })}
-        progressProps={{
-          colorScheme: 'agt.grayScheme',
-          bg: useColorModeValue('gray.200', 'gray.600')
-        }}
-      />
+            )
+          })}
+        </Slider>
+      </Container>
       {index.withJaenPage(
         childId || '',
         <NewsModal
@@ -146,7 +149,7 @@ const NewsSection = ({heading}: NewsSectionProps) => {
           }
         />
       )}
-    </VStack>
+    </>
   )
 }
 
