@@ -31,7 +31,7 @@ const CategoryPage = ({pageContext, path}: CategoryPageProps) => {
           if (totalProducts === 0) {
             return pathname
           } else if (title === 'Alle Produkte') {
-            return `${pathname}/products/`
+            return `${pathname}/produkte/`
           } else if (handle.startsWith('a-')) {
             return `/${splitTitle[splitTitle.length - 1]
               .toLowerCase()
@@ -46,7 +46,7 @@ const CategoryPage = ({pageContext, path}: CategoryPageProps) => {
       productGrid={{
         ...pageContext.productGrid,
         getPath: (handle: string) => {
-          return `/products/${handle}`
+          return `/produkte/${handle}`
         }
       }}
     />

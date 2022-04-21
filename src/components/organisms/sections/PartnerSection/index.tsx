@@ -25,6 +25,7 @@ const PartnerCard = (props: {identifier: number}) => {
 
   return (
     <Flex
+      id="partner"
       w="280px"
       height="180px"
       className="container"
@@ -72,10 +73,11 @@ const PartnerSection = () => {
         sliderRows={{base: 2}}
         breakpoint="base"
         sliderSpacing={{base: 10}}
-        items={items}
+        children={items}
         progressProps={{
           colorScheme: 'agt.grayScheme',
-          bg: useColorModeValue('gray.200', 'gray.600')
+          bg: useColorModeValue('gray.200', 'gray.600'),
+          mt: 4
         }}
       />
     </Box>

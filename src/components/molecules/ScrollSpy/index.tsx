@@ -67,20 +67,52 @@ const ScrollSpy = () => {
         onUpdate={(data: any) => {
           if (typeof data !== 'undefined') setActiveSection(data.id)
         }}
-        currentClassName="active-scroll-spy">
-        <Flex
-          alignItems="center"
+        currentClassName="active-scroll-spyy">
+        <Box
+          className='scrollto'
           bg="agt.gray"
           py="1"
           px="2"
           borderTopRightRadius={'5px'}>
+          {items.map((item, index) => (
+            <Flex
+              className='spyblock'
+              alignItems="center"
+              bg="agt.gray"
+              py="1"
+              onClick={() => scrollTo(item?.name)}>
+              <Spy
+                className='spy '
+                number={index}
+                style={{
+                  color: item?.name != activeSection ? 'transparent' : ''
+                }}
+              />
+              <Text
+                fontWeight={'thin'}
+                ml="2"
+                fontSize={'md'}
+                color="white"
+                className="text"
+                casing={'capitalize'}>
+                {item?.label}
+              </Text>
+            </Flex>
+          ))}
+        </Box>
+        <Flex
+          className='spyblock spyblock-0'
+          alignItems="center"
+          bg="agt.gray"
+          py="1"
+          px="2">
           <Spy
+            className='spy'
             number={allItemNames.indexOf(activeSection)}
             style={{
-              color: 'transparent'
+              color: items.find(item => item.name === activeSection)?.name != activeSection ? 'transparent' : ''
             }}
           />
-
           <Text
             fontWeight={'thin'}
             ml="2"

@@ -95,7 +95,7 @@ const IndexPage = ({
         showcaseProducts={showCaseProducts}
       />
       <FeaturedProductsSection
-        getPath={(handle: string) => `/products/${handle}`}
+        getPath={(handle: string) => `/produkte/${handle}`}
         products={products}
       />
       <ReviewSection
@@ -105,13 +105,11 @@ const IndexPage = ({
         data={data.allGoogleReview.nodes}
       />
       <PartnerSection />
-      <Element name="news">
-        <NewsSection
-          heading={
-            <Field.Text name="news-heading" defaultValue="Neuigkeiten" />
-          }
-        />
-      </Element>
+      <NewsSection
+        heading={
+          <Field.Text name="news-heading" defaultValue="Neuigkeiten" />
+        }
+      />
       <AboutSection
         heading={
           <Field.Text name="about-heading" defaultValue="Wer wir sind" />

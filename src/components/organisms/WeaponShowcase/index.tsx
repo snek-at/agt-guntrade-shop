@@ -155,7 +155,7 @@ let WeaponShowcase = ({weapons}: WeaponShowcaseProps) => {
                       bg="agt.blue"
                       _hover={{bg: 'white', color: 'black'}}
                       variant="solid"
-                      onClick={() => navigate(`/products/${weapon.handle}`)}>
+                      onClick={() => navigate(`/produkte/${weapon.handle}`)}>
                       Mehr davon
                     </Button>
                   </DescriptionBox>

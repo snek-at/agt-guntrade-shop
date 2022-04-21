@@ -9,7 +9,7 @@ export default {
   component: ShopCatalogLayout
 } as Meta
 
-const path = '/langwaffen/neuelangwaffen/products'
+const path = '/langwaffen/neuelangwaffen/produkte'
 
 export const Page = () => (
   <ShopCatalogLayout

@@ -25,9 +25,10 @@ export const Breadcrumbs = (props: {path: string}) => {
     return (
       <BreadcrumbItem key={item}>
         {isLast ? (
-          <Text>{item}</Text>
+          <Text casing={'capitalize'}>{item}</Text>
         ) : (
           <BreadcrumbLink
+            css={{'text-transform': 'capitalize'}}
             as={Link}
             to={`/${pathParts.slice(0, index + 1).join('/')}`}>
             {item}

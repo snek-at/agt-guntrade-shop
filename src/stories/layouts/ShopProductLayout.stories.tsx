@@ -6,7 +6,7 @@ export default {
   component: ShopProductLayout
 } as Meta
 
-const path = '/langwaffen/neuelangwaffen/products/'
+const path = '/langwaffen/neuelangwaffen/produkte/'
 
 const products = getProductNodes(10)
 

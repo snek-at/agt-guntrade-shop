@@ -13,7 +13,7 @@ export const ProductSliderLayout = (props: {
     () =>
       props.products.map(product => (
         <Link
-          to={`/products/${product.handle}`}
+          to={`/produkte/${product.handle}`}
           draggable="false"
           onDragStart={e => e.preventDefault()}>
           {generateProductCard(product)}
@@ -28,11 +28,12 @@ export const ProductSliderLayout = (props: {
         {props.title}
       </Heading>
       <ResponsiveSlider
-        items={productsForSlider}
+        children={productsForSlider}
         containerPadding={{base: 15}}
         progressProps={{
           colorScheme: 'agt.grayScheme',
-          bgColor: useColorModeValue('gray.200', 'gray.600')
+          bgColor: useColorModeValue('gray.200', 'gray.600'),
+          mt: 4
         }}
       />
     </VStack>

@@ -196,7 +196,7 @@ export const createAllProductsShopPage = (data, actions) => {
   const categoryTagsAndPriorities = getCategoryTagsAndPriorities(data)
 
   actions.createPage({
-    path: '/products/',
+    path: '/produkte/',
     component: path.resolve('src/templatePages/ShopPage/index.tsx'),
     context: {
       skipJaenPage: true,
@@ -236,7 +236,7 @@ export const createAllProductsShopPage = (data, actions) => {
     )
 
     actions.createPage({
-      path: `/products/${product.handle}/`,
+      path: `/produkte/${product.handle}/`,
       component: path.resolve('src/templatePages/ProductPage/index.tsx'),
       context: {
         skipJaenPage: true,
@@ -366,7 +366,7 @@ export const createCollectionShopAndProductPages = (data, actions) => {
     )
 
     const oldSlug = slug
-    slug = slug + '/products/'
+    slug = slug + '/produkte/'
     actions.createPage({
       path: slug,
       component: path.resolve('src/templatePages/ShopPage/index.tsx'),

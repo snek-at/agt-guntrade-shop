@@ -1,7 +1,10 @@
 import {Story, Meta} from '@storybook/react'
 
 import ProductsSection, {FeaturedProductsSectionProps, ShopifyNode} from '.'
-import {allShopifyProduct, getProductNodes} from '../../../../../test-data/shopify'
+import {
+  allShopifyProduct,
+  getProductNodes
+} from '../../../../../test-data/shopify'
 
 const products: ShopifyNode[] = getProductNodes(16)
 
@@ -17,5 +20,5 @@ const Template: Story<FeaturedProductsSectionProps> = args => (
 export const Section2 = Template.bind({})
 Section2.args = {
   products: products,
-  getPath: (handle: string) => `/products/${handle}`
+  getPath: (handle: string) => `/produkte/${handle}`
 }

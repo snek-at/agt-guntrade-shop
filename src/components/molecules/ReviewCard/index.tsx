@@ -40,9 +40,9 @@ const ReviewCard = ({
   reviewId
 }: ReviewCardProps) => {
   const [isOpen, setIsOpen] = React.useState(false)
-
-  const queryString = window.location.search.substring(1)
+ 
   React.useEffect(() => {
+    const queryString = window.location.search.substring(1)
     if (reviewId === queryString) {
       setIsOpen(true)
     }

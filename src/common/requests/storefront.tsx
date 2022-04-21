@@ -1,4 +1,4 @@
-import {getShopifyImage} from '../../../plugins/gatsby-source-shopify'
+import {getShopifyImage} from 'gatsby-source-shopify'
 import queryString from 'query-string'
 import * as React from 'react'
 import {createClient, Provider as UrlqProvider, useQuery} from 'urql'
@@ -176,10 +176,10 @@ export const getValuesFromQuery = (query: string | any) => {
 }
 
 export const urqlClient = createClient({
-  url: `https://daniel-petutschnigg.myshopify.com/api/2022-01/graphql.json`,
+  url: `https://hans-franz-juergen.myshopify.com/api/2022-01/graphql.json`,
   fetchOptions: {
     headers: {
-      'X-Shopify-Storefront-Access-Token': '0d53ceadc2e9061030b091340c84f876'
+      'X-Shopify-Storefront-Access-Token': 'a33dc0d5c93f5155bd711a0e3b643fc7'
     }
   }
 })

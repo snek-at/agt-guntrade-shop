@@ -23,8 +23,8 @@ export interface ContactLayoutProps {
 
 export const ContactLayout = (props: ContactLayoutProps) => {
   return (
-    <BaseLayout activePath="/contact" withSearch={true}>
-      <BannerLayout title='Kontakt' path={props.activePath} />
+    <BaseLayout activePath="/kontakt" withSearch={true}>
+      <BannerLayout title="Kontakt" path={props.activePath} />
       <Container
         as="section"
         maxW="8xl"
