@@ -7,7 +7,7 @@ import {
 } from '../../common/requests/storefront'
 import {isEqual} from 'lodash'
 import NavContainer from '../../components/organisms/NavContainer'
-import {Link} from 'gatsby'
+import {Link, navigate} from 'gatsby'
 
 export const BaseLayoutWithoutSearch: React.FC<{activePath: string}> = ({
   children,
@@ -48,9 +48,9 @@ export const BaseLayoutWithoutSearch: React.FC<{activePath: string}> = ({
   return (
     <>
       <SideButton
-        onSideButton1Click={() => null}
-        onSideButton2Click={() => null}
-        onSideButton3Click={() => null}
+        onMailButtonClick={() => navigate("/kontakt/")}
+        onLocationButtonClick={() => navigate("/impressum/")}
+        onPhoneButtonClick={() => navigate("/kontakt/")}
       />
       <NavContainer
         search={{

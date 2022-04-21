@@ -179,12 +179,10 @@ export function ProductCardLayout(props: ProductCardProps) {
     return tags
   }
 
-  const allimages = [image]
+  const allimages = [image].concat(images)
 
-  if (images) {
+  if (images)
     allimages.concat(images)
-  }
-    
 
   console.log("\n\n\n fuck \n\n\n")
 
@@ -219,10 +217,7 @@ export function ProductCardLayout(props: ProductCardProps) {
         >
         {allimages?.map((image, index) => (
           <>
-          {index==0 
-            ? <input type="radio" className='radioimg' name={"imgbox-" + id} id={"imgbox-" + id + "-" + index} checked></input>
-            : <input type="radio" className='radioimg' name={"imgbox-" + id} id={"imgbox-" + id + "-" + index} checked={imageIndex === index}></input>
-          }
+          <input type="radio" className='radioimg' name={"imgbox-" + id} id={"imgbox-" + id + "-" + index} checked={imageIndex === index}></input>
           <ImageBoxWithTags image={image} tags={tags} />
           </>
         ))}
@@ -262,10 +257,10 @@ export function ProductCardLayout(props: ProductCardProps) {
             zIndex={9}
             opacity="0"
             boxSize={'full'}
-            px="1"
-            w="calc(30% * (1/1.3))"
+            // p="5"
+            w="calc(50% * (1/1.5))"
             top={0}
-            left="calc(100% * (1/1.3))"
+            left="calc(100% * (1/1.5))"
           >
             {allimages.map((image, index) => (
               <>                

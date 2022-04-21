@@ -31,7 +31,7 @@ const NewsSection = ({heading}: NewsSectionProps) => {
   }
 
   return (
-    <VStack spacing={6} mb={4} pb={16}>
+    <VStack id="news" spacing={6} mb={4} pb={16}>
       <Box textAlign="center">
         <Heading size={'2xl'} maxW="50vw">
           {heading}

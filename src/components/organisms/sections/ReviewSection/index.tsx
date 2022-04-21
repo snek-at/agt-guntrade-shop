@@ -43,7 +43,7 @@ const ReviewSection = ({heading, data}: ReviewSectionProps) => {
   ))
 
   return (
-    <VStack spacing={6} bg="agt.gray" my={4} py={16}>
+    <VStack id="reviews" spacing={6} bg="agt.gray" my={4} py={16}>
       <Box textAlign="center">
         <Heading size={'2xl'} color="white" maxW="50vw">
           {heading}

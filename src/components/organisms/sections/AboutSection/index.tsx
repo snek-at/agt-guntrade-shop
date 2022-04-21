@@ -76,7 +76,7 @@ const AboutSection = ({
           md: 'row'
         }}>
         <Box w="100%">
-          <Stack direction={{base: 'column', lg: 'row'}}>
+          <Stack id="about" direction={{base: 'column', lg: 'row'}}>
             <Stack flex={1} justify={{lg: 'center'}}>
               <Box>
                 <Heading mb={5} size={'2xl'}>

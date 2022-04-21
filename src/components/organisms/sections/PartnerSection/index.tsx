@@ -25,6 +25,7 @@ const PartnerCard = (props: {identifier: number}) => {
 
   return (
     <Flex
+      id="partner"
       w="280px"
       height="180px"
       className="container"

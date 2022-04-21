@@ -54,15 +54,14 @@ export const cardStyle = () => css`
     &:hover {
       transform: scale(1.03);
       z-index: 999;
-      border-color: rgba(255, 255, 255, 0);
     }
 
     &:hover .borderline {
       position: absolute;
       top: 0;
-      width: 130%;
+      width: 150%;
       height: 100%;
-      right: -30%;
+      right: -50%;
     }
 
     &:hover .borderline:after {
@@ -79,13 +78,13 @@ export const cardStyle = () => css`
       opacity: 1;
     }
     .radioimg {
-      display: none;
+      display: none
     }
     .radioimg + .pimg {
-      display: none;
+      display: none
     }
     .radioimg:checked + .pimg {
-      display: block;
+      display: block
     }
   }
 `

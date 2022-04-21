@@ -1,26 +1,53 @@
 import {css} from '@emotion/react'
 
 export const Spy = css`
-  .active-scroll-spy {
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    display: block;
+    .spyblock-0 {
+      display: none;
+    }
   }
-  svg {
+
+  .scrollto {
+    display: none;
+  }
+
+  &:hover .scrollto {
+    display: block;
+  }
+
+  .active-scroll-spy {
+    color: #eb1933;
+  }
+
+  .spyblock {
+    border-top-right-radius: 5px;
+    
+    &:hover * {
+      color: #eb1933;
+    }
+
     #crosshair4 {
+      
+    }
+
+    &:hover #crosshair4 {
       opacity: 1;
       fill: #eb1933;
-    }
-    &:hover #crosshair4 {
+
       animation-name: spin;
       transform-origin: center;
       animation-duration: 500ms;
       animation-iteration-count: once;
       animation-timing-function: linear;
     }
-    &:hover #squerl2 {
-      filter: drop-shadow(0 4px 10px #2151a1) drop-shadow(0 4px 20px #2151a1);
-    }
-    &:hover #font2 {
-      filter: drop-shadow(0 4px 10px #2151a1) drop-shadow(0 4px 20px #2151a1);
-    }
+  }
+
+  &:hover .spyblock {
+    border-top-right-radius: unset;
   }
 
   @keyframes spin {

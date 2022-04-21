@@ -6,8 +6,7 @@ import {
   HStack,
   Text,
   VStack,
-  Spacer,
-  Button,
+  Button
 } from '@chakra-ui/react'
 import {GatsbyImage, IGatsbyImageData} from 'gatsby-plugin-image'
 import React from 'react'
@@ -76,10 +75,10 @@ function ImageBoxWithTags(props: {
 
   return (
     <Box
-      className="pimg background"
+      className="background"
       borderRadius="md"
-      // boxShadow="lg"
-      // bg={useColorModeValue('gray.200', 'gray.600')}
+      boxShadow="lg"
+      bg={useColorModeValue('gray.200', 'gray.600')}
       overflow="hidden"
       position="relative">
       <GatsbyImage
@@ -149,10 +148,6 @@ export interface ProductCardProps {
     alt: string
     gatsbyImageData: IGatsbyImageData
   }
-  images: {
-    alt: string
-    gatsbyImageData: IGatsbyImageData
-  }[]
   name: string
   categoriesString: string
   price: string
@@ -162,134 +157,41 @@ export interface ProductCardProps {
 }
 
 export function ProductCardLayout(props: ProductCardProps) {
-  const {id, image, images, name, categoriesString, price, discountPrice, createdAt} =
+  const {id, image, name, categoriesString, price, discountPrice, createdAt} =
     props
 
   const getDefaultTags = (tags: typeof props.tags = []) => {
     if (new Date(createdAt).getTime() > Date.now() - 7 * 24 * 60 * 60 * 1000) {
-      tags.push({name: 'Neu', color: 'agt.blue'})
+      tags.push({name: 'Neu', color: '#00ff00'})
     }
 
     if (discountPrice) {
       const percent = (1 - parseFloat(discountPrice) / parseFloat(price)) * -100
 
-      tags.push({name: `${percent.toFixed(0)}%`, color: 'agt.red'})
+      tags.push({name: `${percent.toFixed(0)}%`, color: '#ff0000'})
     }
 
     return tags
   }
 
-  const allimages = [image]
-
-  if (images) {
-    allimages.concat(images)
-  }
-    
-
-  console.log("\n\n\n fuck \n\n\n")
-
-  const [imageIndex, setImageIndex] = React.useState(0)
   const [tags, _] = React.useState(getDefaultTags())
-  
 
   return (
     <VStack
-      display={"block"}
       css={cardStyle()}
       boxSize={'full'}
       cursor="pointer"
-      // bg="red"
       textAlign={{
         base: 'center',
         md: 'left'
       }}>
-      <Box
-        className="pcard"
-        position="relative"
-        cursor="pointer"
-        bg={useColorModeValue('white', 'gray.700')}
-        px={{base: '1', md: '2', lg: '3'}}
-        py="5"
-        // h={'full'}
-        minH={'full'}
-        borderRadius="5px"
-        border="1px"
-        borderColor="gray.200"
-        // mt="3"
-        >
-        {allimages?.map((image, index) => (
-          <>
-          {index==0 
-            ? <input type="radio" className='radioimg' name={"imgbox-" + id} id={"imgbox-" + id + "-" + index} checked></input>
-            : <input type="radio" className='radioimg' name={"imgbox-" + id} id={"imgbox-" + id + "-" + index} checked={imageIndex === index}></input>
-          }
-          <ImageBoxWithTags image={image} tags={tags} />
-          </>
-        ))}
+      <ImageBoxWithTags image={image} tags={tags} />
+      <Box w="100%">
         <Text fontSize="sm" isTruncated>
           {categoriesString || '-'}
         </Text>
         <Text fontWeight="semibold">{name}</Text>
         <Price price={price} discountPrice={discountPrice} />
-        <Spacer
-          position="absolute"
-          w="0"
-          h="100%"
-          right="0"
-          top="0"
-          borderLeft="1px"
-          borderColor="gray.200"
-        />
-        <Box
-          className='borderline'
-          cursor="pointer"
-          bg={useColorModeValue('white', 'gray.700')}
-          px={{base: '1', md: '2', lg: '3'}}
-          py="5"
-          // h={'full'}
-          // minH={'full'}
-          borderRadius="5px"
-          border="1px"
-          borderColor="gray.200"
-          _hover={{
-            before: {borderColor: 'agt.red'},
-            _after: {borderColor: 'agt.red'}
-          }}
-        >
-          <VStack
-            className='imgline'
-            position="absolute"
-            zIndex={9}
-            opacity="0"
-            boxSize={'full'}
-            px="1"
-            w="calc(30% * (1/1.3))"
-            top={0}
-            left="calc(100% * (1/1.3))"
-          >
-            {allimages.map((image, index) => (
-              <>                
-                <label htmlFor={"imgbox-" + id + "-" + index}>
-                  <Box
-                    // position="absolute"
-                    className={"iimgbox-" + index}
-                    borderBottom="1px"
-                    borderColor="gray.200"
-                  >
-                    <GatsbyImage
-                      onDragStart={e => e.preventDefault()}
-                      draggable="false"
-                      image={image.gatsbyImageData}
-                      alt={image.alt}
-                      onMouseOver={() => setImageIndex(index)}
-                      onMouseLeave={() => setImageIndex(0)}
-                    />
-                  </Box>
-                </label>
-              </>
-            ))}
-          </VStack> 
-        </Box>
       </Box>
     </VStack>
   )
@@ -307,7 +209,6 @@ export function generateProductCard(item: any) {
       id={item.id}
       tags={[]}
       image={item.featuredImage}
-      images={item.images}
       name={item.title}
       categoriesString={tagsWithoutCategory}
       price={item.contextualPricing.maxVariantPricing.price.amount}
